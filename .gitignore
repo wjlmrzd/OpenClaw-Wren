@@ -1,0 +1,22 @@
+# Secure storage (contains encrypted tokens)
+secure/
+*.enc
+
+# Environment files (legacy)
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# Config backups
+*.json.bak
+config-backup-*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
