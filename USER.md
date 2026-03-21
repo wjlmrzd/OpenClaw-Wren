@@ -1,16 +1,16 @@
 # USER.md - About Your Human
 
-*Learn about the person you're helping. Update this as you go.*
-
-- **Name:** 
-- **What to call them:** 
-- **Pronouns:** *(optional)*
-- **Timezone:** 
-- **Notes:** 
+- **Name:** Wren
+- **What to call them:** Wren
+- **Pronouns:** *(待了解)*
+- **Timezone:** Asia/Shanghai (GMT+8)
+- **Notes:** 对我报以极高期望，期待高效完成任务
 
 ## Context
 
-*(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)*
+- 重视效率和可靠性
+- 关注安全性和隐私保护
+- 希望我主动学习并提供建议
 
 ---
 

@@ -1,0 +1,8 @@
+{
+  "_comment": "邮件检查配置文件 - 复制此文件并填入真实信息",
+  "host": "imap.example.com",
+  "port": 993,
+  "email": "your-email@example.com",
+  "password": "your-app-password-here",
+  "_note": "建议使用应用专用密码而非主密码"
+}

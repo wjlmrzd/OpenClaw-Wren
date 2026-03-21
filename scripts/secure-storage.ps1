@@ -21,9 +21,9 @@ function Initialize-SecureStorage {
     }
     
     $tokens = @{
-        TELEGRAM_BOT_TOKEN = '8329757047:AAFxkpIJqkm-8HT1ZFz005tjFDeRRRIisH0'
+        TELEGRAM_BOT_TOKEN = '8329757047:AAEas5LRhvSSGBY6t0zsHzyV8nv_8CZyczA'
         TELEGRAM_CHAT_ID = '8542040756'
-        BRAVE_SEARCH_API_KEY = 'BSAD9CpbQ_U660f8h-uoXk2cJJ1gdbQ'
+        BRAVE_SEARCH_API_KEY = 'BSAEro5vT9VIpyMlkPxaYKqTbWqNVhU'
         GATEWAY_AUTH_TOKEN = ''
         GITHUB_TOKEN = ''
     }

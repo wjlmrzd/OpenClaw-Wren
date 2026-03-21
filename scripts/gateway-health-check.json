@@ -1,0 +1,56 @@
+{
+  "name": "gateway-health-monitor",
+  "version": "1.0.0",
+  "description": "OpenClaw Gateway 智能健康监控 - 方案三",
+  "mode": "smart",
+  "checks": {
+    "api": {
+      "enabled": true,
+      "endpoint": "http://127.0.0.1:18789/status",
+      "timeout": 5,
+      "interval": 60
+    },
+    "memory": {
+      "enabled": true,
+      "threshold": 512,
+      "interval": 300
+    },
+    "disk": {
+      "enabled": true,
+      "threshold": 1024,
+      "interval": 600
+    },
+    "config": {
+      "enabled": true,
+      "interval": 300
+    }
+  },
+  "recovery": {
+    "l1_autoFix": {
+      "enabled": true,
+      "actions": ["config_backup_restore", "token_switch"]
+    },
+    "l2_autoRestart": {
+      "enabled": true,
+      "maxPerHour": 3,
+      "cooldownMinutes": 5,
+      "gracefulTimeout": 10
+    },
+    "l3_alert": {
+      "enabled": true,
+      "channels": ["telegram"]
+    }
+  },
+  "predictive": {
+    "enabled": true,
+    "memoryTrendHours": 24,
+    "diskPredictionDays": 7
+  },
+  "notifications": {
+    "telegram": {
+      "enabled": true,
+      "chatId": "8542040756"
+    },
+    "mergeWindowMinutes": 30
+  }
+}
