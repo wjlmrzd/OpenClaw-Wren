@@ -34,3 +34,9 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+## Network
+
+### VPN (Clash Verge)
+- System Proxy: `127.0.0.1:7897`
+- Type: Clash Verge
