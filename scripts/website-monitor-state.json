@@ -1,0 +1,10 @@
+{
+  "initialized": "2026-03-23",
+  "websites": {
+    "CAD 自学网": {
+      "lastCheck": null,
+      "links": [],
+      "note": "首次运行时将抓取并记录初始状态"
+    }
+  }
+}

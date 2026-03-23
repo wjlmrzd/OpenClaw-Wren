@@ -1,7 +1,15 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python3
 """
 邮件检查脚本 - 用于 Cron 任务监控
 检查 IMAP 邮箱的未读邮件，输出摘要
+
+使用方法:
+    python email-checker.py
+
+配置方式 (二选一):
+    1. 环境变量: EMAIL_IMAP_HOST, EMAIL_IMAP_PORT, EMAIL_ADDRESS, EMAIL_PASSWORD
+    2. 配置文件: email-config.json
 """
 
 import imaplib
@@ -11,6 +19,12 @@ import json
 import sys
 import os
 from datetime import datetime, timedelta
+
+# 设置控制台输出编码
+if sys.platform == 'win32':
+    import codecs
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
 
 def decode_mime_words(s):
     """解码 MIME 编码的字符串"""
@@ -109,9 +123,16 @@ def main():
     # 检查是否有配置文件
     config_file = os.path.join(os.path.dirname(__file__), 'email-config.json')
     if os.path.exists(config_file):
-        with open(config_file, 'r', encoding='utf-8') as f:
-            file_config = json.load(f)
-            config.update(file_config)
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                file_config = json.load(f)
+                config.update(file_config)
+        except Exception as e:
+            print(json.dumps({
+                'status': 'error',
+                'message': f'读取配置文件失败：{str(e)}'
+            }, ensure_ascii=False))
+            sys.exit(1)
     
     if not config['email'] or not config['password']:
         print(json.dumps({

@@ -1,0 +1,14 @@
+{
+  "websites": [
+    {
+      "name": "CAD 自学网",
+      "url": "https://www.cadzxw.com",
+      "enabled": true,
+      "categories": ["软件更新", "技术教程"],
+      "priority": "high"
+    }
+  ],
+  "focus_keywords": ["软件", "更新", "技术", "教程", "版本", "发布", "新品", "AI", "人工智能", "社会"],
+  "max_items_per_site": 5,
+  "push_time": "08:00"
+}
