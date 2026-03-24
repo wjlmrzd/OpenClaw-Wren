@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "lastUpdated": 1774317200000,
+  "currentMode": "normal",
+  "quietSchedule": {
+    "start": "22:00",
+    "end": "06:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "userState": {
+    "status": "unknown",
+    "lastActive": null,
+    "inMeeting": false,
+    "manualQuiet": false
+  },
+  "pendingNotifications": [],
+  "statistics": {
+    "today": {
+      "sent": 0,
+      "delayed": 0,
+      "suppressed": 0
+    },
+    "thisWeek": {
+      "sent": 0,
+      "delayed": 0,
+      "suppressed": 0
+    }
+  },
+  "preferences": {
+    "preferredHours": [],
+    "ignoredTypes": [],
+    "priorityTypes": ["task_failed", "system_error", "gateway_down"]
+  },
+  "rules": {
+    "quietHours": {
+      "enabled": true,
+      "emergencyBreakthrough": true
+    },
+    "batchInfoNotifications": true,
+    "learningEnabled": false
+  }
+}

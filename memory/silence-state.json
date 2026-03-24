@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "lastUpdate": 1774317200000,
+  "currentTimeContext": {
+    "period": "work_hours",
+    "isWeekend": false,
+    "isHoliday": false,
+    "nextPeriodChange": "2026-03-24T18:00:00+08:00"
+  },
+  "currentScene": {
+    "inMeeting": false,
+    "isFocusTime": false,
+    "isAway": false,
+    "nextEvent": null
+  },
+  "userStatus": {
+    "lastSeen": null,
+    "status": "unknown",
+    "responseRate": null
+  },
+  "silenceConfig": {
+    "enabled": true,
+    "quietHours": {
+      "start": "22:00",
+      "end": "06:00",
+      "tz": "Asia/Shanghai"
+    },
+    "emergencyKeywords": ["紧急", "故障", "宕机", "危机", "critical", "emergency"],
+    "allowedAgentsInQuietHours": ["🚑 故障自愈员", "🏥 健康监控员", "📡 事件协调员"],
+    "priorityLevels": {
+      "info": "🟢",
+      "notice": "🟡",
+      "warning": "⚠️",
+      "critical": "🔴",
+      "emergency": "🚨"
+    }
+  },
+  "accumulatedEvents": [],
+  "statistics": {
+    "silencedToday": 0,
+    "emergencySent": 0,
+    "lastSilentPeriod": {
+      "start": null,
+      "end": null,
+      "eventsAccumulated": 0
+    }
+  },
+  "calendarIntegration": {
+    "enabled": false,
+    "checkInterval": 300,
+    "keywords": {
+      "meeting": ["会议", "meeting", "call"],
+      "focus": ["专注", "勿扰", "focus", "do not disturb"],
+      "away": ["外出", "出差", "away", "travel"]
+    }
+  }
+}

@@ -160,7 +160,7 @@
 
 ## 📝 下一步行动
 
-### ✅ 已完成 (2026-03-24 09:50)
+### ✅ 已完成 (2026-03-24 10:00)
 
 **第一步：基础修复**
 1. **修复模型配置错误** - 所有 16 个任务的 model 字段已统一为 `dashscope-coding-plan/xxx` 格式
@@ -181,13 +181,27 @@
 7. **创建调度状态文件** - memory/scheduler-state.json
 8. **创建调度备份目录** - memory/scheduler-backups/
 
+**第四步：质量保障**
+9. **创建 Test Runner Agent** - 🧪 回归测试员，每 10 分钟检测变更
+10. **创建测试工具集** - test-runner-tools.ps1 (JSON/模型/Cron 验证)
+11. **创建测试状态文件** - memory/test-runner-state.json
+12. **创建测试报告目录** - memory/test-reports/
+
+**第五步：情境感知**
+13. **创建 Silence Manager Agent** - 🔕 静默管理员，每 30 分钟调整通知策略
+14. **创建静默工具集** - silence-tools.ps1 (时段/场景判断)
+15. **创建静默状态文件** - memory/silence-state.json
+16. **创建静默事件日志** - memory/silenced-events.md
+
 ### 🔄 进行中
 
-- Auto-Healer 已发送首次扫描报告（4 个待修复任务）
-- Scheduler Optimizer 首次运行（优化 08:00 撞车问题）
+- Auto-Healer 等待修复 4 个失败任务
+- Scheduler Optimizer 已优化 08:00 撞车（每日早报 08:15，网关监控 08:05）
+- Test Runner 首次运行待命
+- Silence Manager 已激活（静默时段 22:00-06:00）
 
 ### ⏳ 未来可选优化
 
-1. Test Runner（回归测试员）
-2. 情境感知静默（智能通知）
-3. 任务分批/并行优化
+1. 任务分批/并行优化
+2. 日历集成（自动检测会议）
+3. 用户行为学习（自适应静默）
