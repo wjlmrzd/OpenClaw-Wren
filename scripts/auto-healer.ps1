@@ -1,4 +1,4 @@
-﻿# Auto-Healer - 故障自愈脚本
+# Auto-Healer - 故障自愈脚本
 param([switch]$DryRun)
 
 $workspaceRoot = "D:\OpenClaw\.openclaw\workspace"
@@ -38,14 +38,17 @@ try {
     }
 } catch {}
 
-# Check disk
+# Check disk (D: - Workspace drive)
 Write-Host "[3/5] Checking disk..." -ForegroundColor Yellow
 try {
-    $disk = Get-WmiObject Win32_LogicalDisk -Filter "DeviceID='C:'"
+    $disk = Get-WmiObject Win32_LogicalDisk -Filter "DeviceID='D:'"
     $diskPercent = [math]::Round((($disk.Size - $disk.FreeSpace) / $disk.Size) * 100, 1)
-    Write-Host "  Disk: ${diskPercent}%" -ForegroundColor $(if($diskPercent -gt 85){"Yellow"}else{"Green"})
+    Write-Host "  Disk (D:): ${diskPercent}%" -ForegroundColor $(if($diskPercent -gt 85){"Yellow"}else{"Green"})
     if ($diskPercent -gt 95) {
         $fixActions += @{action="log_cleanup"; reason="disk_critical"}
+        $systemStatus.issuesFound++
+    } elseif ($diskPercent -gt 85) {
+        # Disk warning but not critical yet
         $systemStatus.issuesFound++
     }
 } catch {}
@@ -60,8 +63,53 @@ try {
     $fixActions += @{action="restart_gateway"; reason="gateway_error"}
 }
 
+# Check for timeout errors and fix them
+Write-Host "[5/5] Checking for timeout errors..." -ForegroundColor Yellow
+try {
+    $jobs = openclaw cron list --json 2>$null | ConvertFrom-Json
+    foreach ($job in $jobs) {
+        if ($job.state.lastStatus -eq "error") {
+            $lastError = $job.state.lastError
+            if ($lastError -match "timeout" -or $lastError -match "execution timed out") {
+                $oldTimeout = $job.payload.timeoutSeconds
+                $newTimeout = [math]::Round($oldTimeout * 1.5)
+                Write-Host "  ⚠️ Timeout error in '$($job.name)': $lastError" -ForegroundColor Yellow
+                Write-Host "    → Increasing timeout from ${oldTimeout}s to ${newTimeout}s" -ForegroundColor Cyan
+                
+                $fixActions += @{
+                    action = "update_timeout"
+                    jobId = $job.id
+                    jobName = $job.name
+                    oldTimeout = $oldTimeout
+                    newTimeout = $newTimeout
+                }
+                $systemStatus.issuesFound++
+            } elseif ($lastError -match "Unknown model") {
+                Write-Host "  ⚠️ Model error in '$($job.name)' - need config fix" -ForegroundColor Yellow
+                $fixActions += @{
+                    action = "model_error"
+                    jobId = $job.id
+                    jobName = $job.name
+                    reason = "Model configuration issue - manual fix required"
+                }
+                $systemStatus.issuesFound++
+            } elseif ($lastError -match "No available auth profile") {
+                Write-Host "  ⚠️ Auth cooldown error in '$($job.name)'" -ForegroundColor Yellow
+                $fixActions += @{
+                    action = "auth_cooldown"
+                    jobId = $job.id
+                    jobName = $job.name
+                }
+                $systemStatus.issuesFound++
+            }
+        }
+    }
+} catch {
+    Write-Host "  Error checking jobs: $($_.Exception.Message)" -ForegroundColor Red
+}
+
 # Execute fixes
-Write-Host "[5/5] Executing fixes..." -ForegroundColor Yellow
+Write-Host "[6/5] Executing fixes..." -ForegroundColor Yellow
 if ($fixActions.Count -eq 0) {
     Write-Host "  OK No fixes needed" -ForegroundColor Green
 } else {
@@ -70,6 +118,16 @@ if ($fixActions.Count -eq 0) {
             Write-Host "  [DRY] $($action.action)" -ForegroundColor Cyan
         } else {
             Write-Host "  -> $($action.action)" -ForegroundColor Yellow
+            if ($action.action -eq "update_timeout") {
+                # Update timeout in cron job
+                $patch = @{
+                    payload = @{
+                        timeoutSeconds = $action.newTimeout
+                    }
+                }
+                openclaw cron update --id $($action.jobId) --patch ($patch | ConvertTo-Json -Compress) | Out-Null
+                Write-Host "    ✓ Updated timeout: $($action.jobName)" -ForegroundColor Green
+            }
         }
     }
 }

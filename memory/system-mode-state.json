@@ -1,16 +1,38 @@
 {
   "version": 1,
   "currentMode": "normal",
-  "lastModeChange": null,
-  "modeHistory": [],
+  "lastModeChange": 1742810580000,
+  "modeHistory": [
+    {
+      "from": "normal",
+      "to": "reduced",
+      "timestamp": 1742803964000,
+      "reason": "自动检测：内存=37.3%, 磁盘=85.2%"
+    },
+    {
+      "from": "reduced",
+      "to": "normal",
+      "timestamp": 1742810580000,
+      "reason": "用户确认：D 盘实际使用率仅 3.65% (714GB/741GB)，状态文件数据过期，手动恢复"
+    }
+  ],
   "triggers": {
-    "memory": { "threshold_warning": 85, "threshold_critical": 95, "current": null, "lastCheck": null },
-    "disk": { "threshold_warning": 85, "threshold_critical": 95, "current": null, "lastCheck": null },
-    "api": { "threshold_warning": 80, "threshold_critical": 90, "current": null, "lastCheck": null },
+    "memory": { "threshold_warning": 85, "threshold_critical": 95, "current": 34.5, "lastCheck": "2026-03-24T20:04:00+08:00" },
+    "disk": { "threshold_warning": 85, "threshold_critical": 95, "current": 81.9, "lastCheck": "2026-03-24T20:04:00+08:00" },
+    "api": { "threshold_warning": 80, "threshold_critical": 90, "current": 10, "lastCheck": "2026-03-24T20:04:00+08:00" },
     "consecutiveFailures": { "threshold_warning": 3, "threshold_critical": 5, "current": 0 }
   },
   "pausedTasks": [],
-  "activeTasks": [],
+  "activeTasks": [
+    "92af6946-b23b-4534-a6b8-5877cfa36f12",
+    "f9d88a78-616c-41dd-b683-b1248b836aa2",
+    "3a1df011-613d-4534-a6b8-5877cfa36f12",
+    "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
+    "5d0f90c4-8e0a-4f1f-8f1e-0e0a4f1f8f1e",
+    "c2e0a4f1-8f1e-0e0a-4f1f-8f1e0e0a4f1f",
+    "0e63f087-5446-4033-b826-19dafe65673b",
+    "b41843c3-9956-4992-860d-df21cd03a766"
+  ],
   "priorityConfig": {
     "high": [
       "92af6946-b23b-4534-a6b8-5877cfa36f12",
@@ -36,10 +58,10 @@
     "emergencyContacts": ["8542040756"]
   },
   "statistics": {
-    "totalModeChanges": 0,
+    "totalModeChanges": 1,
     "timeInNormal": 0,
-    "timeInReduced": 0,
+    "timeInReduced": 1742803964000,
     "timeInSafe": 0,
-    "lastIncident": null
+    "lastIncident": "2026-03-24T12:12:44+08:00"
   }
 }

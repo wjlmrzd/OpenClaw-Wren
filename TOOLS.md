@@ -40,3 +40,22 @@ Add whatever helps you do your job. This is your cheat sheet.
 ### VPN (Clash Verge)
 - System Proxy: `127.0.0.1:7897`
 - Type: Clash Verge
+
+## Software Installation
+
+### 默认软件安装路径
+- **位置**: `E:\software\`
+- **用途**: 专门用于安装各种软件
+- **说明**: 所有新软件默认安装到此目录，避免 C 盘空间占用
+
+---
+
+**已安装**:
+- Node.js → `E:\software\nodejs\`
+
+**待安装**:
+- Obsidian → `E:\software\Obsidian\` (用户手动安装中)
+- 其他工具 → `E:\software\<工具名>\`
+
+**待安装**:
+- 其他工具 → `E:\software\<工具名>\`

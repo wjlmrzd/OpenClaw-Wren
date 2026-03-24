@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "lastCheck": "2026-03-24T22:00:38+08:00",
+  "lastNotification": null,
+  "systemHealth": "healthy",
+  "issuesFound": 3,
+  "issuesFixed": 0,
+  "alertsGenerated": 0,
+  "consecutiveFailures": {},
+  "knownIssues": [
+    {
+      "taskId": "0e63f087-5446-4033-b826-19dafe65673b",
+      "taskName": "📰 每日早报",
+      "errorType": "timeout",
+      "lastError": null,
+      "knownSince": "2026-03-24T09:15:00+08:00"
+    },
+    {
+      "taskId": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+      "taskName": "💼 项目顾问",
+      "errorType": "error",
+      "lastError": null,
+      "knownSince": "2026-03-24T09:15:00+08:00"
+    },
+    {
+      "taskId": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
+      "taskName": "💾 备份管理员",
+      "errorType": "error",
+      "lastError": null,
+      "knownSince": "2026-03-24T12:20:00+08:00"
+    }
+  ],
+  "notificationHistory": [
+    {
+      "timestamp": "2026-03-24T12:20:00+08:00",
+      "action": "notification_sent",
+      "reason": "发现新问题: 备份管理员任务进入错误状态",
+      "issues": [
+        {
+          "taskId": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
+          "taskName": "💾 备份管理员",
+          "errorType": "error"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-24T09:15:00+08:00",
+      "action": "notification_sent",
+      "reason": "发现新问题: 每日早报和项目顾问任务进入错误状态",
+      "issues": [
+        {
+          "taskId": "0e63f087-5446-4033-b826-19dafe65673b",
+          "taskName": "📰 每日早报",
+          "errorType": "timeout"
+        },
+        {
+          "taskId": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+          "taskName": "💼 项目顾问",
+          "errorType": "error"
+        }
+      ]
+    }
+  ]
+}
