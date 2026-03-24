@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "lastCheck": 1774317000000,
+  "fileHashes": {
+    "openclaw.json": null,
+    "cron/jobs.json": null,
+    "scripts/auto-healer.ps1": null,
+    "scripts/event-hub-tools.ps1": null
+  },
+  "lastTestRun": {
+    "timestamp": null,
+    "trigger": null,
+    "changedFiles": [],
+    "results": {
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "warnings": 0
+    },
+    "reportPath": null
+  },
+  "tests": {
+    "core": [
+      { "id": "T001", "name": "JSON 语法验证", "severity": "critical" },
+      { "id": "T002", "name": "模型名称验证", "severity": "critical" },
+      { "id": "T003", "name": "Cron 表达式验证", "severity": "critical" },
+      { "id": "T004", "name": "Gateway 健康检查", "severity": "critical" },
+      { "id": "T005", "name": "PowerShell 语法", "severity": "warning" }
+    ],
+    "extended": [
+      { "id": "T101", "name": "任务撞车检测", "severity": "info" },
+      { "id": "T102", "name": "API 配额预估", "severity": "info" },
+      { "id": "T103", "name": "超时配置合理性", "severity": "info" }
+    ]
+  },
+  "statistics": {
+    "totalRuns": 0,
+    "passRate": 0,
+    "commonFailures": []
+  },
+  "config": {
+    "checkIntervalMinutes": 10,
+    "notifyOnSuccess": false,
+    "notifyOnFailure": true,
+    "autoRollback": false,
+    "monitoredFiles": [
+      "openclaw.json",
+      "cron/jobs.json",
+      "scripts/*.ps1",
+      "agents/main/openclaw.json"
+    ]
+  }
+}

@@ -2,9 +2,61 @@
   "initialized": "2026-03-23",
   "websites": {
     "CAD 自学网": {
-      "lastCheck": null,
-      "links": [],
-      "note": "首次运行时将抓取并记录初始状态"
+      "lastCheck": "2026-03-24T08:55:00+08:00",
+      "status": "monitoring",
+      "method": "search_engine",
+      "knownPages": [
+        "https://www.cadzxw.com/",
+        "https://www.cadzxw.com/chajianku",
+        "https://www.cadzxw.com/56064.html",
+        "https://www.cadzxw.com/tuwenjiaocheng/",
+        "https://www.cadzxw.com/autocadxiazai.html",
+        "https://www.cadzxw.com/download.html",
+        "https://www.cadzxw.com/56069.html",
+        "https://www.cadzxw.com/53151.html",
+        "https://www.cadzxw.com/29218.html",
+        "https://www.cadzxw.com/course"
+      ],
+      "note": "使用搜索引擎监控（site:cadzxw.com），每日对比新增页面"
+    },
+    "绿软小站": {
+      "lastCheck": "2026-03-24T08:58:00+08:00",
+      "status": "initialized",
+      "method": "search_engine",
+      "knownPages": [
+        "https://www.gndown.com/",
+        "https://www.gndown.com/15019.html",
+        "https://www.gndown.com/category/windows/wangluoliulan",
+        "https://www.gndown.com/297.html",
+        "https://www.gndown.com/category/windows",
+        "https://www.gndown.com/9862.html",
+        "https://www.gndown.com/6556.html",
+        "https://www.gndown.com/4587.html",
+        "https://www.gndown.com/3683.html",
+        "https://www.gndown.com/9837.html"
+      ],
+      "note": "绿色软件下载站，使用搜索引擎监控（site:gndown.com）"
+    },
+    "APSGO 软件商城": {
+      "lastCheck": "2026-03-24T09:00:00+08:00",
+      "status": "initialized",
+      "method": "search_engine",
+      "knownPages": [
+        "https://apsgo.com/",
+        "https://movavivideoeditor.apsgo.com/",
+        "https://eset-nod32.apsgo.com/",
+        "https://screensaver-wonder.apsgo.com/en",
+        "https://winsnap.apsgo.com/",
+        "https://fences.apsgo.com/",
+        "https://stickypassword.apsgo.com/",
+        "https://vidhub.apsgo.com/",
+        "https://windowmizer.apsgo.com/",
+        "https://internet-download-manager.apsgo.com/",
+        "https://xmind-pro.apsgo.com/"
+      ],
+      "note": "正版软件销售平台，使用搜索引擎监控（site:apsgo.com）"
     }
-  }
+  },
+  "lastRun": "2026-03-24T09:00:00+08:00",
+  "todayNewPages": []
 }

@@ -1,0 +1,21 @@
+﻿[Log Cleanup Complete]
+
+Space Before Cleanup:
+  Total: 690.87 GB
+  Used: 37.27 GB
+  Free: 653.6 GB
+  Free Percent: 94.61%
+
+Space After Cleanup:
+  Total: 690.87 GB
+  Used: 37.27 GB
+  Free: 653.6 GB
+  Free Percent: 94.61%
+
+Space Saved: 0 GB
+
+Compressed Files:
+  None
+
+Deleted Files:
+  None

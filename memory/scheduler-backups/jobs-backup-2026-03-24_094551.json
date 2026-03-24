@@ -1,0 +1,540 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f",
+      "agentId": "main",
+      "name": "openclaw-security-audit",
+      "enabled": true,
+      "createdAtMs": 1773964384754,
+      "updatedAtMs": 1774108861461,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */6 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "运行 openclaw security audit，生成通俗易懂的报告，发送到 Telegram 给 8542040756",
+        "model": "glm-5",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774108800022,
+        "lastStatus": "ok",
+        "lastDurationMs": 61439,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "f36fe701-5c76-47ad-8cb8-1a996a37d1b5",
+      "agentId": "main",
+      "name": "gateway-predictive-check",
+      "enabled": false,
+      "createdAtMs": 1773972791986,
+      "updatedAtMs": 1774088622304,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-03-21T10:15:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行 Gateway 预测性维护检查，分析内存趋势和磁盘空间，生成报告发送到 Telegram 8542040756",
+        "model": "qwen3-coder-plus",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "lastRunAtMs": 1774088608331,
+        "lastStatus": "ok",
+        "lastDurationMs": 13973,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
+      "agentId": "main",
+      "name": "gateway-health-monitor",
+      "enabled": true,
+      "createdAtMs": 1774081729036,
+      "updatedAtMs": 1774123221535,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */2 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行 Gateway 健康检查监控: powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\gateway-monitor.ps1 -Mode smart",
+        "model": "qwen3-coder-plus",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774123200009,
+        "lastStatus": "ok",
+        "lastDurationMs": 21526,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "0e63f087-5446-4033-b826-19dafe65673b",
+      "agentId": "main",
+      "name": "每日早报",
+      "enabled": true,
+      "createdAtMs": 1774082243279,
+      "updatedAtMs": 1774082243279,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "生成今日早报：1.上海天气 2.今日日程安排 3.重要邮件摘要 4.科技/AI 行业资讯。以简洁格式发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774137600000
+      }
+    },
+    {
+      "id": "bbb84048-a39e-4b80-bb2a-70421578eb7f",
+      "agentId": "main",
+      "name": "晚间提醒",
+      "enabled": true,
+      "createdAtMs": 1774082243310,
+      "updatedAtMs": 1774082243310,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 18 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "工作日晚间提醒：1.检查今日待办完成情况 2.明日重要日程预览 3.温馨提醒。发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774260000000
+      }
+    },
+    {
+      "id": "2428c991-f51e-47d7-8b6d-0035b8aba1e1",
+      "agentId": "main",
+      "name": "每周总结",
+      "enabled": true,
+      "createdAtMs": 1774082243339,
+      "updatedAtMs": 1774082243339,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 17 * * 5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "生成本周工作总结：1.本周完成事项回顾 2.重要事件记录 3.下周计划建议。发送到 Telegram 8542040756",
+        "model": "glm-5",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774602000000
+      }
+    },
+    {
+      "id": "ff84d0e6-543e-403f-b5c2-b17de3c7d745",
+      "agentId": "main",
+      "name": "日历检查",
+      "enabled": true,
+      "createdAtMs": 1774082243368,
+      "updatedAtMs": 1774082243368,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 7 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "检查今日及明日日程安排，提醒重要会议和截止日期。发送到 Telegram 8542040756",
+        "model": "minimax-m2.5",
+        "timeoutSeconds": 90
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774134000000
+      }
+    },
+    {
+      "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
+      "agentId": "main",
+      "name": "邮件监控",
+      "enabled": true,
+      "createdAtMs": 1774082243397,
+      "updatedAtMs": 1774128621666,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "检查邮箱未读邮件（运行 Python 脚本：python D:\\OpenClaw\\.openclaw\\workspace\\scripts\\email-checker.py），如有紧急邮件则摘要通知。发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 90
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774128600008,
+        "lastStatus": "ok",
+        "lastDurationMs": 21658,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
+      "agentId": "main",
+      "name": "Workspace 备份",
+      "enabled": true,
+      "createdAtMs": 1774082243428,
+      "updatedAtMs": 1774105361587,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 23 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "检查 workspace 文件变更，执行 git commit 和 push 自动备份。报告备份状态到 Telegram 8542040756",
+        "model": "qwen3-coder-next",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774191600000,
+        "lastRunAtMs": 1774105256481,
+        "lastStatus": "ok",
+        "lastDurationMs": 105106,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "bb0ed170-fa8f-4441-8016-c2119809b436",
+      "agentId": "main",
+      "name": "模型使用报告",
+      "enabled": true,
+      "createdAtMs": 1774082243468,
+      "updatedAtMs": 1774082243468,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "统计本周各模型 Token 使用情况和成本，生成使用报告。发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 150
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774180800000
+      }
+    },
+    {
+      "id": "791c995e-4758-469d-ac35-608da1627167",
+      "agentId": "main",
+      "name": "OpenClaw 运营总监",
+      "enabled": true,
+      "createdAtMs": 1774082747020,
+      "updatedAtMs": 1774082747020,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是 OpenClaw 运营总监，执行每日综合检查：\n\n1. **系统健康**：检查 Gateway 状态、Cron 任务执行情况、错误日志\n2. **资源使用**：统计昨日各模型 Token 消耗、会话数量、活跃时段\n3. **任务审计**：回顾昨日所有 Cron 任务执行结果，标记失败任务\n4. **安全扫描**：检查配置文件权限、敏感文件泄露风险\n5. **优化建议**：基于数据提出配置优化、模型选择、任务调整建议\n6. **今日规划**：根据日历和待办，建议今日重点关注事项\n\n生成简洁的运营报告，突出问题和建议，发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774141200000
+      }
+    },
+    {
+      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+      "agentId": "main",
+      "name": "项目顾问",
+      "enabled": true,
+      "createdAtMs": 1774082903927,
+      "updatedAtMs": 1774108248374,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是用户的专属项目顾问，负责代码生成全流程指导：\n\n**今日检查**：\n1. 查看 workspace 中新增/修改的代码文件\n2. 检查 git 提交记录，了解项目进展\n3. 识别未完成的功能或待修复的问题\n\n**项目支持**：\n1. **需求分析** - 帮助用户将想法拆解为可实现的功能列表\n2. **技术规划** - 推荐合适的技术栈、架构设计、目录结构\n3. **代码生成** - 协助编写代码、审查代码质量、提供优化建议\n4. **测试验收** - 生成测试用例、检查边界条件、验证功能完整性\n5. **进度跟踪** - 维护项目待办清单，标记完成/进行中/阻塞状态\n\n**输出要求**：\n- 如有正在进行的项目，生成进度报告\n- 如用户有新想法，提供实现路线图\n- 列出当前阻塞问题和建议解决方案\n- 更新项目待办清单 (memory/project-todo.md)\n\n发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774180800000,
+        "lastRunAtMs": 1774094468885,
+        "lastStatus": "error",
+        "lastDurationMs": 499,
+        "lastError": "Error: No available auth profile for dashscope-coding-plan (all in cooldown or unavailable).",
+        "consecutiveErrors": 1
+      }
+    },
+    {
+      "id": "f66daaf2-736d-422c-8a46-ae0de25e4d5a",
+      "agentId": "main",
+      "name": "任务协调员",
+      "enabled": true,
+      "createdAtMs": 1774083054046,
+      "updatedAtMs": 1774098342228,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是 OpenClaw 任务协调员（总理），负责整合各任务输出：\n\n**今日整合**：\n1. 收集今日所有 Cron 任务的执行结果（早报、日历、健康监控、安全审计、项目顾问等）\n2. 识别需要跨任务协作的事项\n3. 标记未完成或失败的任务\n4. 汇总关键信息，生成综合日报\n\n**任务分配检查**：\n1. 检查是否有新任务需要创建\n2. 评估现有任务的执行频率是否合理\n3. 建议任务优化方案\n\n**输出要求**：\n- 生成简洁的「每日综合报告」\n- 突出需要用户关注的重点事项\n- 列出建议调整的任务配置\n- 发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774184400000,
+        "lastRunAtMs": 1774098074516,
+        "lastStatus": "ok",
+        "lastDurationMs": 267712,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "d61d271a-3e97-4f8a-b9bd-858b78e3bef7",
+      "agentId": "main",
+      "name": "错误恢复官",
+      "enabled": true,
+      "createdAtMs": 1774083650602,
+      "updatedAtMs": 1774128642885,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是错误恢复官，负责自动重试失败的任务：\n\n**检查内容**：\n1. 查看所有 Cron 任务的 lastStatus 和 consecutiveErrors\n2. 识别失败任务（lastStatus=\"error\"）\n3. 分析失败原因（lastError 字段）\n\n**恢复策略**：\n- 模型错误 → 建议更新模型配置\n- 超时错误 → 建议增加 timeoutSeconds\n- 临时错误 → 自动触发重试（cron.run）\n- 连续错误≥3 → 发送告警通知\n\n**输出要求**：\n- 列出当前失败任务及原因\n- 执行自动重试（如适用）\n- 发送恢复报告到 Telegram 8542040756",
+        "model": "qwen3-coder-plus",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774128621666,
+        "lastStatus": "ok",
+        "lastDurationMs": 21219,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "af025901-6ebc-4541-9698-91c5db9907e6",
+      "agentId": "main",
+      "name": "日志清理员",
+      "enabled": true,
+      "createdAtMs": 1774083650634,
+      "updatedAtMs": 1774119663696,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是日志清理员，负责日志轮转和空间管理：\n\n**清理任务**：\n1. 检查 sessions/*.jsonl 文件大小\n2. 压缩超过 7 天的会话日志\n3. 删除超过 30 天的压缩日志\n4. 清理 cron 运行历史记录（保留最近 50 条）\n5. 检查 workspace/logs 目录，轮转大文件\n\n**输出要求**：\n- 报告清理前后的磁盘空间\n- 列出被压缩/删除的文件\n- 发送到 Telegram 8542040756",
+        "model": "qwen3-coder-next",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774206000000,
+        "lastRunAtMs": 1774119642386,
+        "lastStatus": "ok",
+        "lastDurationMs": 21310,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
+      "agentId": "main",
+      "name": "配置审计师",
+      "enabled": true,
+      "createdAtMs": 1774083650667,
+      "updatedAtMs": 1774123285114,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */4 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是配置审计师，负责配置变更追踪和备份：\n\n**审计内容**：\n1. 检查 openclaw.json 的 lastTouchedAt 是否更新\n2. 对比 cron/jobs.json 的变更\n3. 检查 credentials/ 目录文件权限\n4. 验证敏感文件是否被意外提交到 git\n\n**备份任务**：\n1. 创建配置文件快照到 memory/config-backups/\n2. 生成变更差异报告\n3. 如检测到重大变更，发送确认提醒\n\n**输出要求**：\n- 配置变更摘要（如有）\n- 备份位置报告\n- 安全风险提示\n- 发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774137600000,
+        "lastRunAtMs": 1774123263981,
+        "lastStatus": "ok",
+        "lastDurationMs": 21133,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
+      "agentId": "main",
+      "name": "资源守护者",
+      "enabled": true,
+      "createdAtMs": 1774083650701,
+      "updatedAtMs": 1774123306381,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */2 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是资源守护者，负责监控 API 使用频率和系统资源：\n\n**监控内容**：\n1. 统计过去 1 小时各模型的请求次数（Coding Plan 限制：每小时请求数）\n2. 检查是否接近每小时配额限制\n3. 监控 Gateway 内存和 CPU 使用率\n4. 检查磁盘空间使用率\n\n**预警策略**：\n- 请求次数>80% 配额 → 发送预警\n- 内存>90% → 建议重启 Gateway\n- 磁盘>85% → 触发日志清理\n\n**输出要求**：\n- 资源使用仪表板\n- 预警信息（如有）\n- 优化建议\n- 发送到 Telegram 8542040756",
+        "model": "qwen3.5-plus",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774123285114,
+        "lastStatus": "ok",
+        "lastDurationMs": 21267,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "b65e9a07-abbb-4a2d-b2a1-0396e912308e",
+      "agentId": "main",
+      "name": "灾难恢复官",
+      "enabled": true,
+      "createdAtMs": 1774083650748,
+      "updatedAtMs": 1774083650748,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是灾难恢复官，负责每周快照和恢复演练：\n\n**每周任务**：\n1. 创建完整配置快照（openclaw.json, cron/jobs.json, credentials/）\n2. 导出所有 Cron 任务配置到 memory/disaster-recovery/\n3. 验证备份文件完整性\n4. 生成恢复指南（如需要手动恢复的步骤）\n\n**恢复演练**：\n1. 模拟配置损坏场景\n2. 验证备份文件可读取\n3. 记录恢复时间预估\n\n**输出要求**：\n- 备份完成报告\n- 备份文件清单\n- 恢复指南位置\n- 发送到 Telegram 8542040756",
+        "model": "glm-5",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "runningAtMs": 1774130400019
+      }
+    }
+  ]
+}
