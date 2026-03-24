@@ -1,0 +1,14 @@
+{
+  "allowedUsers": [
+    "8542040756"
+  ],
+  "allowedUsernames": [
+    "Wren"
+  ],
+  "highRiskCommands": [
+    "/restart",
+    "/safe-mode"
+  ],
+  "confirmTimeoutMinutes": 5,
+  "notes": "Telegram 控制层白名单配置 - 仅允许指定用户执行运维指令"
+}
