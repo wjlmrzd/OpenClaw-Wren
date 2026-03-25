@@ -1,5 +1,248 @@
 # MEMORY.md - Long-Term Memory
 
+## 2026-03-25: 飞书集成完成 - 下班提醒上线 ✅
+
+**事件**: 完成飞书自建应用集成，实现下班自动提醒功能
+
+### 配置信息
+
+| 项目 | 值 |
+|------|-----|
+| App ID | `cli_a92bb7f3923a5ccb` |
+| User ID (open_id) | `ou_a5c4938f3a1fb4354f765ff9c3fcc68c` |
+| 手机号 | +8618768309459 |
+
+### 创建的脚本
+
+1. **`scripts/send-feishu-offwork-reminder.ps1`** - 发送下班提醒
+   - 编码：UTF-8 with BOM（支持中文）
+   - Emoji：使用 Unicode 转义（避免编码问题）
+   - 用户 ID：从环境变量或默认值获取
+
+2. **`scripts/query-feishu-users.ps1`** - 查询可访问用户列表
+   - 用于获取正确的用户 ID
+
+### Cron 任务
+
+**💬 飞书下班提醒**
+- **ID**: `93a63a28-8825-4a68-9c85-5706d9e011ec`
+- **频率**: 每周一至周五 18:00
+- **内容**: "🕐 下班时间到！辛苦一天了，早点回家休息吧~ 🏠"
+
+### 问题解决
+
+1. **编码问题** → 使用 UTF-8 with BOM 保存脚本
+2. **Emoji 乱码** → 使用 `[char]::ConvertFromUtf32()` 转义
+3. **用户 ID 无效** → 通过 API 查询获取正确的 open_id
+4. **跨租户错误** → 确认使用 open_id 而非 union_id
+
+### 测试验证
+
+✅ 测试消息发送成功 (Message ID: om_x100b530d92ab90acb391b6a33dfc4a5)
+
+---
+
+## 2026-03-25: 配置敏感信息脱敏 - 环境变量迁移 ✅
+
+**事件**: 将 `openclaw.json` 中的敏感信息迁移到 `.env` 文件，实现配置脱敏
+
+### 迁移的敏感信息
+
+| 变量名 | 用途 |
+|--------|------|
+| `TELEGRAM_BOT_TOKEN` | Telegram Bot 令牌 |
+| `FEISHU_APP_ID` | 飞书应用 ID |
+| `FEISHU_APP_SECRET` | 飞书应用密钥 ⚠️ |
+| `FEISHU_DEFAULT_USER` | 飞书默认用户 ID |
+| `GATEWAY_CONTROL_TOKEN` | Gateway 控制令牌 |
+| `GATEWAY_AUTH_TOKEN` | Gateway 认证令牌 |
+| `PADDLEOCR_ACCESS_TOKEN` | PaddleOCR API 令牌 |
+| `HTTP_PROXY` / `HTTPS_PROXY` | 网络代理配置 |
+
+### 创建的文件
+
+1. **`.env`** - 真实环境变量值（⚠️ 已加入 .gitignore）
+2. **`.env.example`** - 模板文件（可安全提交到版本控制）
+3. **`.gitignore`** - 确保 `.env` 不会被提交
+
+### 配置修改
+
+**`openclaw.json`** 中的敏感值已替换为环境变量引用：
+```json
+{
+  "browser": {
+    "controlToken": "${GATEWAY_CONTROL_TOKEN}"
+  },
+  "channels": {
+    "telegram": {
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "proxy": "${HTTP_PROXY}"
+    },
+    "feishu": {
+      "accounts": {
+        "main": {
+          "appId": "${FEISHU_APP_ID}",
+          "appSecret": "${FEISHU_APP_SECRET}",
+          "defaultUser": "${FEISHU_DEFAULT_USER}"
+        }
+      }
+    }
+  },
+  "gateway": {
+    "auth": {
+      "token": "${GATEWAY_AUTH_TOKEN}"
+    }
+  },
+  "env": {
+    "PADDLEOCR_OCR_API_URL": "${PADDLEOCR_OCR_API_URL}",
+    "PADDLEOCR_ACCESS_TOKEN": "${PADDLEOCR_ACCESS_TOKEN}"
+  }
+}
+```
+
+### 安全最佳实践
+
+1. ✅ `.env` 文件已加入 `.gitignore`，不会提交到版本控制
+2. ✅ 提供 `.env.example` 模板，方便团队共享配置结构
+3. ✅ 配置文件 `openclaw.json` 可安全提交（不含真实密钥）
+4. ⚠️ 建议定期轮换敏感令牌（尤其是已泄露的）
+
+### 重要提醒
+
+由于之前在聊天中明文分享了飞书 App Secret，建议：
+1. 在飞书开放平台重新生成 App Secret
+2. 更新 `.env` 文件中的 `FEISHU_APP_SECRET`
+3. 重启 Gateway 应用新配置
+
+---
+
+## 2026-03-25: Telegram 图片发送失败 - SSRF 防护修复 ✅
+
+**事件**: Telegram Bot 发送图片/视频/sticker 时报错 `SSRF protection blocked request to internal address`
+
+### 问题原因
+
+1. `telegram/bot/delivery.js` 中的 `fetchRemoteMedia()` 调用没有传入 `ssrfPolicy` 参数
+2. SSRF 防护检查 DNS 解析结果，当 Clash TUN 模式将 `api.telegram.org` 解析到 fake IP（如 `127.0.0.1`）时触发拦截
+
+### 修复内容
+
+**修改文件**: `C:/Users/Administrator/AppData/Roaming/npm/node_modules/openclaw-cn/dist/telegram/bot/delivery.js`
+
+**第 275 行**（sticker 下载）：
+```javascript
+// 修改前
+const response = await fetchRemoteMedia(fileUrl);
+
+// 修改后
+const response = await fetchRemoteMedia(fileUrl, {
+  ssrfPolicy: { allowedHostnames: ["api.telegram.org"] }
+});
+```
+
+**第 348 行**（图片/视频/文档下载）：
+```javascript
+// 修改前
+const response = await fetchRemoteMedia(fileUrl);
+
+// 修改后
+const response = await fetchRemoteMedia(fileUrl, {
+  ssrfPolicy: { allowedHostnames: ["api.telegram.org"] }
+});
+```
+
+### 重要教训
+
+- ❌ 不要只配置 Clash 规则来绕过（治标不治本）
+- ✅ 直接修复代码，明确允许 `api.telegram.org` 绕过 SSRF 检查
+- 📝 已记录到 Obsidian 笔记：`knowledge/问题/Telegram 图片发送失败-SSRF 防护拦截.md`
+
+### 未来参考
+
+如果 OpenClaw 更新后问题重现，检查 `delivery.js` 中所有 `fetchRemoteMedia()` 调用是否都包含：
+```javascript
+ssrfPolicy: { allowedHostnames: ["api.telegram.org"] }
+```
+
+---
+
+## 2026-03-25: Obsidian 笔记模型策略上线 ✅
+
+**事件**: 完成 Obsidian 笔记专用模型策略，实现根据任务类型自动选择模型
+
+### 模型分工（专用于 Obsidian）
+
+| 角色 | 模型 | 职责 | 要求 |
+|------|------|------|------|
+| 📝 **知识节点生成** | qwen3.5-plus | 创建笔记、扩展内容、建立双链 | 结构化输出、至少 2 个关联 |
+| 🔍 **复盘与总结** | glm-5 | 复盘笔记、原因分析、改进建议 | 必须包含"原因 + 改进" |
+| 🏗️ **结构优化** | qwen3-coder-plus | 修正 Markdown、生成 Mermaid、清理结构 | 不改变语义、只优化格式 |
+
+### 自动调度逻辑
+
+- 包含"笔记/Obsidian/知识/节点" → qwen3.5-plus
+- 包含"复盘/总结/分析/原因" → glm-5
+- 包含"结构/格式/markdown/图" → qwen3-coder-plus
+
+### 失败降级机制
+
+- 第 1 次失败 → 重试当前模型
+- 第 2 次失败 → 切换模型 (qwen↔glm)
+- 第 3 次失败 → qwen3-coder-plus 兜底
+
+### 知识库保护机制
+
+- ❌ 不允许创建重复主题文件
+- ✅ 相似笔记必须合并
+- ✅ 孤立笔记必须补充关联
+- 📥 所有新笔记先进入 `00-Inbox/`
+- 📂 再由整理任务归档
+
+### 新增文件
+
+| 文件 | 用途 |
+|------|------|
+| `scripts/obsidian-model-scheduler.ps1` | Obsidian 专用调度器 |
+| `scripts/obsidian-model-strategy.md` | 策略规格文档 |
+| `memory/obsidian-model-state.json` | 状态追踪 |
+| `memory/obsidian-model-log.md` | 执行日志 |
+
+### 使用方式
+
+```powershell
+# 分析任务类型
+.\obsidian-model-scheduler.ps1 -AnalyzeOnly -Task "创建 Obsidian 知识笔记"
+
+# 查看统计报告
+.\obsidian-model-scheduler.ps1 -Report
+```
+
+### 测试验证
+
+✅ 知识类任务识别测试通过 → qwen3.5-plus
+✅ 分析类任务识别测试通过 → glm-5
+✅ 结构类任务识别测试通过 → qwen3-coder-plus
+✅ 知识整理员 Cron 任务创建成功
+
+### Cron 任务
+
+**🧠 知识整理员**
+- **ID**: `5eb5b368-9dc1-42d8-aebb-0ddc35effa3e`
+- **频率**: 每天 02:00
+- **模型**: qwen3.5-plus
+- **职责**: 扫描 Inbox、分类笔记、建立双链
+- **脚本**: `scripts/obsidian-knowledge-organizer.ps1`
+
+### 重要原则
+
+1. ❌ 仅用于 Obsidian 笔记操作
+2. ❌ 不影响其他 Cron 任务和 Agent
+3. ✅ 必须保持模型职责清晰
+4. ✅ 必须执行知识库保护机制
+5. ✅ 必须记录每次模型选择
+
+---
+
 ## 2026-03-24: 配置修改与重启的重要教训
 
 **事件：** 我擅自将 Telegram 的 `streamMode` 从 `potential` 改为 `full`，没有验证该值是否有效就自动重启 gateway，导致服务中断。
@@ -332,3 +575,90 @@
 **答案**: ✅ **会！系统已具备完全自治能力！**
 
 ---
+
+---
+
+## 2026-03-25: 超时任务优化 - 运动提醒员和每日早报 ✅
+
+**事件**: 优化 2 个连续超时的 Cron 任务，解决执行超时问题
+
+### 问题任务
+
+| 任务 | ID | 原超时 | 执行时间 | 状态 |
+|------|-----|--------|----------|------|
+| 🏃 运动提醒员 | `58540a34-62ab-46a7-a713-cac112e5cd48` | 120 秒 | 120023ms | ❌ 超时 |
+| 📰 每日早报 | `0e63f087-5446-4033-b826-19dafe65673b` | 450 秒 | 450017ms | ❌ 超时 |
+
+### 优化方案
+
+**🏃 运动提醒员**:
+- timeout: 120s → 180s (+50%)
+- 简化任务描述，明确要求 ≤200 字
+- 添加"超时保护：简化逻辑，快速响应"提示
+
+**📰 每日早报**:
+- timeout: 450s → 600s (+33%)
+- 简化模块：4 个→3 个（移除日程模块）
+- 添加降级策略：某模块超时则跳过继续
+- 限制输出长度：≤500 字
+- 限制资讯数量：2 条
+
+### 根本原因
+
+1. **运动提醒员**: 超时时间偏紧，模型响应时间接近临界值
+2. **每日早报**: 多模块串行执行，外部调用（web_search、email-checker）不稳定导致超时
+
+### 观察计划
+
+- **观察期**: 2026-03-25 至 2026-04-01 (7 天)
+- **成功标准**: 连续 7 天无超时错误
+- **监控方式**: 每日检查 cron 任务 state
+
+### 相关文件
+
+- `memory/task-timeout-optimization.md` - 详细优化报告
+- `memory/task-timeout-log.md` - 执行日志
+
+---
+
+## 2026-03-24: Obsidian 知识管理系统上线 ✅
+
+**事件**: 完成 Obsidian 知识管理系统搭建，实现结构化知识记录和自动关联
+
+### 核心能力
+
+1. **统一笔记格式** - 所有笔记遵循标准结构（概述、要点、说明、关联、元数据）
+2. **自动双链关联** - 使用 [[双链]] 建立概念网络，自动创建缺失笔记的空壳
+3. **每日自动整理** - Cron 任务每天 02:00 扫描、修复、优化知识库
+4. **触发式写入** - 新概念/问题/方案自动记录到对应分类
+
+### 目录结构
+
+`
+knowledge/
+├── 知识/       # 通用概念、理论
+├── 项目/       # 进行中任务
+├── 问题/       # 问题及解决方案
+└── 系统设计/   # 架构、规范
+`
+
+### 新增组件
+
+- **脚本**: scripts/knowledge-organizer.ps1 - 整理脚本
+- **Cron**: 🧠 知识整理员 (31710f2b-127c-48a9-add1-d23498a57ef6) - 每天 02:00
+- **笔记**: 7 篇核心文档（管理规范、双链笔记、知识图谱、第二大脑等）
+
+### 质量指标
+
+- 断链率 < 5%
+- 孤立笔记 < 10%
+- 元数据完整度 = 100%
+
+### 文件位置
+
+- 知识库：D:\OpenClaw\.openclaw\workspace\knowledge\
+- 整理日志：memory/knowledge-organizer-log.md
+- 整理报告：memory/knowledge-organizer-report.md
+- 状态文件：memory/knowledge-organizer-state.json
+
+**目标**: 构建长期可扩展的"第二大脑"，而非零散笔记

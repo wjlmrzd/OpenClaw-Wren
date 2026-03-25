@@ -1,0 +1,18 @@
+{
+  "name": "🧠 知识整理员",
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 2 * * *",
+    "tz": "Asia/Shanghai"
+  },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "运行 Obsidian 知识整理员：powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\obsidian-knowledge-organizer.ps1 -VaultPath \"E:\\software\\Obsidian\\vault\"，生成整理报告发送到 Telegram 8542040756",
+    "model": "qwen3.5-plus",
+    "timeoutSeconds": 180
+  },
+  "sessionTarget": "isolated",
+  "delivery": {
+    "mode": "announce"
+  }
+}

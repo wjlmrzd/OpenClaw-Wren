@@ -1,0 +1,37 @@
+{
+  "lastCheck": "2026-03-25T20:03:00+08:00",
+  "metrics": {
+    "memory": {
+      "totalGB": 16,
+      "availableGB": 8.02,
+      "usedPercent": 49.9,
+      "status": "healthy"
+    },
+    "cpu": {
+      "usedPercent": 2.0,
+      "status": "healthy"
+    },
+    "disk": {
+      "C": {
+        "totalGB": 117.4,
+        "freeGB": 15.9,
+        "usedPercent": 86.5,
+        "status": "warning"
+      },
+      "D": {
+        "totalGB": 690.9,
+        "freeGB": 661.6,
+        "usedPercent": 4.2,
+        "status": "healthy"
+      }
+    }
+  },
+  "alerts": [
+    {
+      "level": "warning",
+      "source": "disk",
+      "message": "C 盘使用率 86.5% 超过 85% 阈值",
+      "recommendation": "建议清理临时文件和日志"
+    }
+  ]
+}

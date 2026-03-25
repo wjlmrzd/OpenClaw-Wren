@@ -1,0 +1,30 @@
+{
+  "lastAudit": "2026-03-25T12:20:52+08:00",
+  "lastAuditBy": "配置审计师",
+  "cronJobId": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
+  "status": "completed",
+  "securityLevel": "low",
+  "issuesFound": [],
+  "backupCreated": "memory/config-backups/openclaw-20260325-122052.json",
+  "reportSaved": "memory/config-audit-2026-03-25-1220.md",
+  "notificationSent": true,
+  "notificationReason": "非静默时段，发送常规审计摘要",
+  "nextAudit": "2026-03-25T16:20:00+08:00",
+  "checks": {
+    "openclawJsonBackup": "pass",
+    "cronJobsCheck": "pass",
+    "credentialsDir": "pass",
+    "gitSensitiveFiles": "pass"
+  },
+  "taskStatus": {
+    "total": 25,
+    "ok": 23,
+    "error": 2,
+    "errorTasks": ["📰 每日早报", "🏃 运动提醒员"]
+  },
+  "auditHistory": [
+    {"time": "2026-03-25T04:20:00+08:00", "status": "pass", "issues": 0},
+    {"time": "2026-03-25T08:20:00+08:00", "status": "pass", "issues": 0},
+    {"time": "2026-03-25T12:20:00+08:00", "status": "pass", "issues": 0}
+  ]
+}

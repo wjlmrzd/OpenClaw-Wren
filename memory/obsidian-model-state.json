@@ -1,0 +1,50 @@
+﻿{
+    "modelStats":  {
+                       "qwen3.5-plus":  {
+                                            "total":  0,
+                                            "success":  0,
+                                            "failure":  0,
+                                            "successRate":  1.0,
+                                            "lastUsed":  null
+                                        },
+                       "glm-5":  {
+                                     "total":  0,
+                                     "success":  0,
+                                     "failure":  0,
+                                     "successRate":  1.0,
+                                     "lastUsed":  null
+                                 },
+                       "qwen3-coder-plus":  {
+                                                "total":  0,
+                                                "success":  0,
+                                                "failure":  0,
+                                                "successRate":  1.0,
+                                                "lastUsed":  null
+                                            }
+                   },
+    "taskTypeStats":  {
+                          "knowledge":  {
+                                            "total":  0,
+                                            "success":  0,
+                                            "successRate":  1.0
+                                        },
+                          "analysis":  {
+                                           "total":  0,
+                                           "success":  0,
+                                           "successRate":  1.0
+                                       },
+                          "structure":  {
+                                            "total":  0,
+                                            "success":  0,
+                                            "successRate":  1.0
+                                        }
+                      },
+    "protectionStats":  {
+                            "duplicatesDetected":  0,
+                            "notesMerged":  0,
+                            "orphansLinked":  0,
+                            "inboxProcessed":  0
+                        },
+    "lastUpdated":  "2026-03-25T02:00:19Z",
+    "version":  "1.0"
+}

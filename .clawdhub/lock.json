@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "paddleocr-doc-parsing": {
+      "version": "2.0.9",
+      "installedAt": 1774411960633
+    },
+    "paddleocr-text-recognition": {
+      "version": "1.0.12",
+      "installedAt": 1774411967121
+    }
+  }
+}
