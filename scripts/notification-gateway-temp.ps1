@@ -1,5 +1,5 @@
-# Notification Gateway Script - For Cron Task Invocation
-# Usage: powershell -File scripts/notification-gateway.ps1 -Action <action> [parameters]
+# 通知网关脚本 - 供 Cron 任务调用
+# 使用方式: powershell -File scripts/notification-gateway.ps1 -Action <action> [参数]
 
 param(
     [Parameter(Mandatory=$true)]
@@ -14,7 +14,7 @@ param(
 
 $statePath = "$PSScriptRoot\..\memory\notification-state.json"
 
-# Ensure state file exists
+# 确保状态文件存在
 if (-not (Test-Path $statePath)) {
     $defaultState = @{
         version = 1
@@ -32,47 +32,10 @@ if (-not (Test-Path $statePath)) {
     $defaultState | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
 }
 
-# Load state
-$stateContent = Get-Content $statePath -Raw -ErrorAction SilentlyContinue
-if ($stateContent) {
-    try {
-        $state = $stateContent | ConvertFrom-Json -AsHashtable -ErrorAction Stop
-    }
-    catch {
-        # If AsHashtable fails, try regular conversion then manually convert
-        try {
-            $tempState = $stateContent | ConvertFrom-Json -ErrorAction Stop
-            $state = @{}
-            $tempState.PSObject.Properties | ForEach-Object {
-                $state[$_.Name] = $_.Value
-            }
-        }
-        catch {
-            $state = $null
-        }
-    }
-} 
+# 加载状态
+$state = Get-Content $statePath -Raw | ConvertFrom-Json -AsHashtable
 
-if (-not $state) {
-    # Fallback: recreate state file if corrupted or missing
-    $defaultState = @{
-        version = 1
-        currentMode = "work_hours"
-        silentHours = @{ start = 22; end = 6; timezone = "Asia/Shanghai" }
-        silentDigest = @{ enabled = $true; pendingMessages = @(); lastDigestSent = $null }
-        severityFilter = @{
-            workHours = @("info", "warning", "critical", "emergency")
-            evening = @("warning", "critical", "emergency")
-            silent = @("critical", "emergency")
-        }
-        statistics = @{ today = @{ sent = 0; suppressed = 0; queued = 0 } }
-        overrides = @{ alwaysNotifySources = @(); emergencyContacts = @("8542040756") }
-    }
-    $defaultState | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
-    $state = $defaultState
-}
-
-# Get current time period mode
+# 获取当前时段模式
 function Get-CurrentModeFunc {
     $hour = (Get-Date).Hour
     if ($hour -ge 22 -or $hour -lt 6) { return "silent" }
@@ -80,11 +43,11 @@ function Get-CurrentModeFunc {
     else { return "work_hours" }
 }
 
-# Update current mode (if needed)
+# 更新当前模式（如果需要）
 $currentMode = Get-CurrentModeFunc
 if ($state.currentMode -ne $currentMode) {
     $state.currentMode = $currentMode
-    $state.lastModeChange = [int64]([Math]::Round((Get-Date).ToFileTime() / 10000))
+    $state.lastModeChange = [int64]((Get-Date -UFormat %s) * 1000)
     $state | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
 }
 
@@ -112,7 +75,7 @@ switch ($Action) {
     
     "queue" {
         $pendingMessage = @{
-            timestamp = [int64]([Math]::Round((Get-Date).ToFileTime() / 10000))
+            timestamp = [int64]((Get-Date -UFormat %s) * 1000)
             severity = $Severity
             source = $Source
             message = $Message
@@ -128,14 +91,14 @@ switch ($Action) {
         
         if ($pending.Count -eq 0) {
             $output = @"
-[Notification Summary] 
-Date: $(Get-Date -Format 'yyyy-MM-dd')
+🌅 早晨摘要 - $(Get-Date -Format 'yyyy-MM-dd')
 
-Status: All systems normal
-- No warnings or critical events
-- All tasks completed successfully
+✅ 夜间平静
+- 系统运行正常
+- 无警告/紧急事件
+- 所有任务执行成功
 
-Have a great day! 
+祝您有美好的一天！☀️
 "@
             Write-Output $output
         }
@@ -144,23 +107,22 @@ Have a great day!
             $critical = @($pending | Where-Object { $_.severity -eq "critical" })
             $emergency = @($pending | Where-Object { $_.severity -eq "emergency" })
             
-            $status = "Normal"
-            if ($emergency.Count -gt 0) { $status = "Issues detected" }
-            elseif ($critical.Count -gt 0) { $status = "Needs attention" }
+            $status = "✅ 正常"
+            if ($emergency.Count -gt 0) { $status = "🔴 异常" }
+            elseif ($critical.Count -gt 0) { $status = "⚠️ 需关注" }
             
             $output = @"
-[Notification Summary] 
-Date: $(Get-Date -Format 'yyyy-MM-dd')
+🌅 早晨摘要 - $(Get-Date -Format 'yyyy-MM-dd')
 
-Overview:
-- Status: $status
-- Total events: $($pending.Count)
-- Suppressed notifications: $($state.statistics.today.suppressed)
+📊 夜间概览:
+- 系统状态: $status
+- 事件总数: $($pending.Count) 条
+- 通知抑制: $($state.statistics.today.suppressed) 条
 
 "@
             
             if ($warnings.Count -gt 0) {
-                $output += "Warnings ($($warnings.Count)):`n"
+                $output += "⚠️ 夜间警告 ($($warnings.Count) 条):`n"
                 foreach ($w in $warnings) {
                     $time = [DateTimeOffset]::FromUnixTimeMilliseconds($w.timestamp).ToLocalTime().ToString("HH:mm")
                     $output += "- $time - $($w.source): $($w.message)`n"
@@ -169,7 +131,7 @@ Overview:
             }
             
             if ($critical.Count -gt 0 -or $emergency.Count -gt 0) {
-                $output += "Critical events ($($critical.Count + $emergency.Count)):`n"
+                $output += "🔴 紧急事件 ($($critical.Count + $emergency.Count) 条):`n"
                 foreach ($c in ($critical + $emergency)) {
                     $time = [DateTimeOffset]::FromUnixTimeMilliseconds($c.timestamp).ToLocalTime().ToString("HH:mm")
                     $output += "- $time - $($c.source): $($c.message)`n"
@@ -177,15 +139,15 @@ Overview:
                 $output += "`n"
             }
             
-            $output += "Today's focus:`n"
+            $output += "📋 今日关注:`n"
             if ($emergency.Count -gt 0) {
-                $output += "- Immediate action required`n"
+                $output += "🆘 有紧急事件需要立即处理`n"
             }
             elseif ($critical.Count -gt 0) {
-                $output += "- Review critical items`n"
+                $output += "⚠️ 有需要关注的问题`n"
             }
             else {
-                $output += "- No special items`n"
+                $output += "✅ 无特殊事项`n"
             }
             
             Write-Output $output
@@ -195,7 +157,7 @@ Overview:
     "clear-pending" {
         $count = $state.silentDigest.pendingMessages.Count
         $state.silentDigest.pendingMessages = @()
-        $state.silentDigest.lastDigestSent = [int64]([Math]::Round((Get-Date).ToFileTime() / 10000))
+        $state.silentDigest.lastDigestSent = [int64]((Get-Date -UFormat %s) * 1000)
         $state | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
         
         Write-Host "[CLEARED] $count messages"

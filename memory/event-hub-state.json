@@ -1,30 +1,34 @@
 {
-  "version": 1,
-  "lastCheck": 1774316700000,
-  "systemHealth": {
-    "memory": { "value": 49.42, "unit": "percent", "trend": "stable", "lastUpdated": 1774316700000 },
-    "disk": { "value": 5.4, "unit": "percent", "trend": "stable", "lastUpdated": 1774316700000 },
-    "apiQuota": { "value": null, "unit": "percent", "resetAt": null },
-    "gateway": { "status": "healthy", "uptime": null, "lastCheck": 1774316700000 }
-  },
-  "activeEvents": [],
-  "recentActions": [
-    {
-      "timestamp": 1774316700000,
-      "action": "initial_status_check",
-      "result": "all_systems_normal"
+  "lastCheck": "2026-03-26T22:01:00+08:00",
+  "status": "healthy",
+  "metrics": {
+    "memory": {
+      "percentUsed": 45.2,
+      "status": "healthy",
+      "threshold": 85
+    },
+    "disk": {
+      "freeGB": 661.27,
+      "percentUsed": 4.3,
+      "status": "healthy",
+      "threshold": 85
+    },
+    "gateway": {
+      "status": "healthy",
+      "lastCheck": "2026-03-26T22:01:00+08:00"
+    },
+    "apiQuota": {
+      "status": "unknown",
+      "percentUsed": null
     }
-  ],
-  "thresholds": {
-    "memory": { "warning": 85, "critical": 95 },
-    "disk": { "warning": 85, "critical": 95 },
-    "apiQuota": { "warning": 80, "critical": 95 },
-    "taskFailures": { "warning": 3, "critical": 5 }
   },
-  "linkedAgents": {
-    "logCleaner": "af025901-6ebc-4541-9698-91c5db9907e6",
-    "autoHealer": "f9d88a78-616c-41dd-b683-b1248b836aa2",
-    "healthMonitor": "92af6946-b23b-4534-a6b8-5877cfa36f12",
-    "resourceGuardian": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1"
-  }
+  "cronTaskScan": {
+    "totalTasks": 28,
+    "runningTasks": 2,
+    "failedTasks": 0,
+    "tasksWithErrors": []
+  },
+  "events": [],
+  "actions": {},
+  "lastEventTime": null
 }

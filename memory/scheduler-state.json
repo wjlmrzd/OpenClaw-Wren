@@ -1,67 +1,14 @@
 {
-  "version": 1,
-  "lastAnalysis": 1774316700000,
-  "taskStats": [
+  "lastAnalysis": "2026-03-26T18:02:00+08:00",
+  "totalTasks": 17,
+  "collisionRisk": 0,
+  "heavyTasks": 3,
+  "recentOptimizations": [
     {
-      "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-      "name": "📰 每日早报",
-      "schedule": "0 8 * * *",
-      "avgDurationMs": 450000,
-      "lastDurationMs": 450017,
-      "timeoutSeconds": 900,
-      "collisionRisk": "high",
-      "collidesWith": ["🌐 网站监控员"],
-      "priority": "medium"
-    },
-    {
-      "jobId": "b41843c3-9956-4992-860d-df21cd03a766",
-      "name": "🌐 网站监控员",
-      "schedule": "0 8 * * *",
-      "avgDurationMs": 180000,
-      "lastDurationMs": 75112,
-      "timeoutSeconds": 180,
-      "collisionRisk": "high",
-      "collidesWith": ["📰 每日早报"],
-      "priority": "low"
-    },
-    {
-      "jobId": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
-      "name": "💾 备份管理员",
-      "schedule": "0 23 * * *",
-      "avgDurationMs": 120000,
-      "lastDurationMs": 120031,
-      "timeoutSeconds": 1800,
-      "collisionRisk": "low",
-      "collidesWith": [],
-      "priority": "high"
-    },
-    {
-      "jobId": "af025901-6ebc-4541-9698-91c5db9907e6",
-      "name": "🧹 日志清理员",
-      "schedule": "0 3 * * *",
-      "avgDurationMs": 180000,
-      "lastDurationMs": 180030,
-      "timeoutSeconds": 1800,
-      "collisionRisk": "low",
-      "collidesWith": [],
-      "priority": "medium"
+      "timestamp": "2026-03-26T18:02:00+08:00",
+      "action": "backup_created",
+      "description": "Created backup of jobs.json before analysis",
+      "backupFile": "jobs-backup-2026-03-26_180241.json"
     }
-  ],
-  "optimizations": [],
-  "dependencies": {
-    "0e63f087-5446-4033-b826-19dafe65673b": {
-      "requires": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
-      "minGapSeconds": 300
-    },
-    "791c995e-4758-469d-ac35-608da1627167": {
-      "requires": ["0e63f087-5446-4033-b826-19dafe65673b", "92af6946-b23b-4534-a6b8-5877cfa36f12"],
-      "minGapSeconds": 900
-    }
-  },
-  "thresholds": {
-    "collisionWindowMinutes": 5,
-    "heavyTaskTimeoutSeconds": 1800,
-    "apiIntensiveModels": ["qwen3.5-plus", "glm-5"],
-    "maxConcurrentApiTasks": 2
-  }
+  ]
 }

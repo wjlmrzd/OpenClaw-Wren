@@ -1,163 +1,137 @@
 {
-  "lastCheck": "2026-03-25T22:30:27+08:00",
+  "lastCheck": "2026-03-26T22:00:23+08:00",
   "lastNotification": "2026-03-25T18:00:58+08:00",
   "systemHealth": "healthy",
-  "issuesFound": 2,
+  "issuesFound": 0,
   "issuesFixed": 0,
   "alertsGenerated": 0,
-  "knownIssues": [
-    {
-      "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-      "jobName": "🏃 运动提醒",
-      "error": "Error: cron: job execution timed out",
-      "consecutiveErrors": 1,
-      "lastSeen": "2026-03-25T22:00:38+08:00"
-    },
-    {
-      "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-      "jobName": "📰 每日早报",
-      "error": "Error: cron: job execution timed out",
-      "consecutiveErrors": 1,
-      "lastSeen": "2026-03-25T22:00:38+08:00"
-    }
-  ],
-  "consecutiveFailures": {
-    "58540a34-62ab-46a7-a713-cac112e5cd48": 1,
-    "0e63f087-5446-4033-b826-19dafe65673b": 1
-  },
+  "knownIssues": [],
+  "consecutiveFailures": {},
   "notificationHistory": [
     {
-      "timestamp": "2026-03-25T21:30:XX+08:00",
+      "timestamp": "2026-03-26T02:07:30+08:00",
       "action": "silent",
-      "reason": "已发现相同超时问题，状态未变化",
-      "issues": [
-        {
-          "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-          "jobName": "🏃 运动提醒",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        },
-        {
-          "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-          "jobName": "📰 每日早报",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        }
-      ]
+      "reason": "系统健康，无问题需要修复"
     },
     {
-      "timestamp": "2026-03-25T20:05:50+08:00",
+      "timestamp": "2026-03-26T02:30:28+08:00",
       "action": "silent",
-      "reason": "已发现相同超时问题，状态未变化",
-      "issues": [
-        {
-          "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-          "jobName": "🏃 运动提醒",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        },
-        {
-          "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-          "jobName": "📰 每日早报",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        }
-      ]
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
     },
     {
-      "timestamp": "2026-03-25T18:30:37+08:00",
+      "timestamp": "2026-03-26T03:07:34+08:00",
       "action": "silent",
-      "reason": "系统健康，仅发现已存在的超时问题，状态未变化",
-      "issues": [
-        {
-          "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-          "jobName": "🏃 运动提醒",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        },
-        {
-          "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-          "jobName": "📰 每日早报",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        }
-      ]
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
     },
     {
-      "timestamp": "2026-03-25T18:00:58+08:00",
+      "timestamp": "2026-03-26T03:30:21+08:00",
       "action": "silent",
-      "reason": "仅发现已存在的超时问题，状态未变化",
-      "issues": [
-        {
-          "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-          "jobName": "🏃 运动提醒",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        },
-        {
-          "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-          "jobName": "📰 每日早报",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        }
-      ]
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
     },
     {
-      "timestamp": "2026-03-25T17:30:35+08:00",
+      "timestamp": "2026-03-26T04:02:35+08:00",
       "action": "silent",
-      "reason": "仅发现已存在的超时问题，状态未变化",
-      "issues": [
-        {
-          "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-          "jobName": "🏃 运动提醒",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        },
-        {
-          "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-          "jobName": "📰 每日早报",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        }
-      ]
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
     },
     {
-      "timestamp": "2026-03-25T17:01:19+08:00",
+      "timestamp": "2026-03-26T04:30:22+08:00",
       "action": "silent",
-      "reason": "仅发现已存在的超时问题，状态未变化",
-      "issues": [
-        {
-          "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-          "jobName": "🏃 运动提醒",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        },
-        {
-          "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-          "jobName": "📰 每日早报",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        }
-      ]
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
     },
     {
-      "timestamp": "2026-03-25T16:30:20+08:00",
+      "timestamp": "2026-03-26T05:00:41+08:00",
       "action": "silent",
-      "reason": "仅发现已存在的超时问题，状态未变化",
-      "issues": [
-        {
-          "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48",
-          "jobName": "🏃 运动提醒",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        },
-        {
-          "jobId": "0e63f087-5446-4033-b826-19dafe65673b",
-          "jobName": "📰 每日早报",
-          "error": "Error: cron: job execution timed out",
-          "consecutiveErrors": 1
-        }
-      ]
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
+    },
+    {
+      "timestamp": "2026-03-26T05:30:19+08:00",
+      "action": "silent",
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
+    },
+    {
+      "timestamp": "2026-03-26T06:00:37+08:00",
+      "action": "silent",
+      "reason": "问题状态无变化（2 个已知超时问题，未恶化）"
+    },
+    {
+      "timestamp": "2026-03-26T06:32:38+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T07:00:43+08:00",
+      "action": "silent",
+      "reason": "系统健康，发现 1 个轻微问题但无需修复"
+    },
+    {
+      "timestamp": "2026-03-26T07:30:20+08:00",
+      "action": "silent",
+      "reason": "问题状态无变化（每日早报超时问题，consecutiveErrors=1，未达阈值）"
+    },
+    {
+      "timestamp": "2026-03-26T08:03:28+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T08:30:29+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T09:00:44+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T09:31:47+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T09:37:28+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T10:30:32+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T11:30:25+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T12:03:39+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T13:00:42+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T16:01:28+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T18:00:37+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T20:06:57+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
+    },
+    {
+      "timestamp": "2026-03-26T22:00:23+08:00",
+      "action": "silent",
+      "reason": "系统健康，无问题需要修复"
     }
   ]
 }

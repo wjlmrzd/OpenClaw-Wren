@@ -189,7 +189,7 @@ Write-Host "======================================"
 Write-Host ""
 
 # 1. 测试配置语法
-$openclawJson = Test-JsonSyntax "D:\OpenClaw\.openclaw\openclaw.json"
+$openclawJson = Test-JsonSyntax "C:\Users\Administrator\AppData\Roaming\npm\node_modules\openclaw-cn\openclaw.json"
 $cronJobsJson = Test-JsonSyntax "D:\OpenClaw\.openclaw\cron\jobs.json"
 
 # 2. 测试模型名称
