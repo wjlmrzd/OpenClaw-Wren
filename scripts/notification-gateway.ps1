@@ -1,203 +1,144 @@
-# Notification Gateway Script - For Cron Task Invocation
-# Usage: powershell -File scripts/notification-gateway.ps1 -Action <action> [parameters]
+# Notification Gateway for OpenClaw
+# Handles intelligent notification management based on time and severity
 
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("get-mode", "should-notify", "send", "queue", "get-digest", "clear-pending")]
+    [ValidateSet("get-mode", "send")]
     [string]$Action,
     
-    [string]$Severity = "info",
-    [string]$Source = "",
-    [string]$Message = "",
-    [string]$Target = "8542040756"
+    [ValidateSet("info", "attention", "warning", "critical", "crisis")]
+    [string]$Severity,
+    
+    [string]$Message
 )
 
-$statePath = "$PSScriptRoot\..\memory\notification-state.json"
+# Define paths
+$notificationStateFile = "D:\OpenClaw\.openclaw\workspace\memory\notification-state.json"
+$currentTime = Get-Date
+$currentHour = $currentTime.Hour
 
-# Ensure state file exists
-if (-not (Test-Path $statePath)) {
-    $defaultState = @{
-        version = 1
-        currentMode = "work_hours"
-        silentHours = @{ start = 22; end = 6; timezone = "Asia/Shanghai" }
-        silentDigest = @{ enabled = $true; pendingMessages = @(); lastDigestSent = $null }
-        severityFilter = @{
-            workHours = @("info", "warning", "critical", "emergency")
-            evening = @("warning", "critical", "emergency")
-            silent = @("critical", "emergency")
-        }
-        statistics = @{ today = @{ sent = 0; suppressed = 0; queued = 0 } }
-        overrides = @{ alwaysNotifySources = @(); emergencyContacts = @("8542040756") }
+# Determine current mode based on time
+function Get-NotificationMode {
+    if ($currentHour -ge 6 -and $currentHour -lt 9) {
+        return "morning"  # 06:00-09:00
     }
-    $defaultState | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
+    elseif (($currentHour -ge 9 -and $currentHour -lt 12) -or ($currentHour -ge 14 -and $currentHour -lt 18)) {
+        return "working-hours"  # 09:00-12:00, 14:00-18:00
+    }
+    elseif ($currentHour -ge 18 -and $currentHour -lt 22) {
+        return "evening"  # 18:00-22:00
+    }
+    else {
+        return "sleep-time"  # 22:00-06:00 (includes overnight)
+    }
 }
 
-# Load state
-$stateContent = Get-Content $statePath -Raw -ErrorAction SilentlyContinue
-if ($stateContent) {
-    try {
-        $state = $stateContent | ConvertFrom-Json -AsHashtable -ErrorAction Stop
+# Ensure notification state file exists
+if (!(Test-Path $notificationStateFile)) {
+    $initialState = @{
+        queue = @()
+        lastUpdated = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
     }
-    catch {
-        # If AsHashtable fails, try regular conversion then manually convert
-        try {
-            $tempState = $stateContent | ConvertFrom-Json -ErrorAction Stop
-            $state = @{}
-            $tempState.PSObject.Properties | ForEach-Object {
-                $state[$_.Name] = $_.Value
-            }
-        }
-        catch {
-            $state = $null
-        }
-    }
-} 
-
-if (-not $state) {
-    # Fallback: recreate state file if corrupted or missing
-    $defaultState = @{
-        version = 1
-        currentMode = "work_hours"
-        silentHours = @{ start = 22; end = 6; timezone = "Asia/Shanghai" }
-        silentDigest = @{ enabled = $true; pendingMessages = @(); lastDigestSent = $null }
-        severityFilter = @{
-            workHours = @("info", "warning", "critical", "emergency")
-            evening = @("warning", "critical", "emergency")
-            silent = @("critical", "emergency")
-        }
-        statistics = @{ today = @{ sent = 0; suppressed = 0; queued = 0 } }
-        overrides = @{ alwaysNotifySources = @(); emergencyContacts = @("8542040756") }
-    }
-    $defaultState | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
-    $state = $defaultState
-}
-
-# Get current time period mode
-function Get-CurrentModeFunc {
-    $hour = (Get-Date).Hour
-    if ($hour -ge 22 -or $hour -lt 6) { return "silent" }
-    elseif ($hour -ge 18 -and $hour -lt 22) { return "evening" }
-    else { return "work_hours" }
-}
-
-# Update current mode (if needed)
-$currentMode = Get-CurrentModeFunc
-if ($state.currentMode -ne $currentMode) {
-    $state.currentMode = $currentMode
-    $state.lastModeChange = [int64]([Math]::Round((Get-Date).ToFileTime() / 10000))
-    $state | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
+    $initialState | ConvertTo-Json | Out-File -FilePath $notificationStateFile -Encoding UTF8
 }
 
 switch ($Action) {
     "get-mode" {
-        Write-Output $state.currentMode
-    }
-    
-    "should-notify" {
-        $mode = $state.currentMode
-        $allowedSeverities = $state.severityFilter[$mode]
-        $shouldNotify = $allowedSeverities -contains $Severity
-        
-        if ($state.overrides.alwaysNotifySources -contains $Source) {
-            $shouldNotify = $true
-        }
-        
-        Write-Output $shouldNotify
+        $mode = Get-NotificationMode
+        Write-Output $mode
     }
     
     "send" {
-        Write-Host "[NOTIFY] Severity=$Severity, Message=$Message"
-        exit 0
-    }
-    
-    "queue" {
-        $pendingMessage = @{
-            timestamp = [int64]([Math]::Round((Get-Date).ToFileTime() / 10000))
+        if ([string]::IsNullOrEmpty($Severity) -or [string]::IsNullOrEmpty($Message)) {
+            Write-Error "Severity and Message are required for send action"
+            exit 1
+        }
+        
+        # Determine if notification should be sent based on current mode and severity
+        $currentMode = Get-NotificationMode
+        $shouldSend = $false
+        $actionResult = "QUEUE"
+        
+        switch ($currentMode) {
+            "working-hours" {
+                # All levels allowed during working hours
+                $shouldSend = $true
+                $actionResult = "SEND"
+            }
+            "morning" {
+                # All levels allowed in morning
+                $shouldSend = $true
+                $actionResult = "SEND"
+            }
+            "evening" {
+                # Only warning and above during evening
+                if ($Severity -in @("warning", "critical", "crisis")) {
+                    $shouldSend = $true
+                    $actionResult = "SEND"
+                }
+            }
+            "sleep-time" {
+                # Only critical and crisis during sleep time
+                if ($Severity -in @("critical", "crisis")) {
+                    $shouldSend = $true
+                    $actionResult = "SEND"
+                }
+            }
+        }
+        
+        # Load current notification state
+        $notificationState = Get-Content $notificationStateFile | ConvertFrom-Json -AsHashtable
+        
+        # Create notification object
+        $notification = @{
             severity = $Severity
-            source = $Source
             message = $Message
+            timestamp = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
+            shouldSend = $shouldSend
         }
         
-        $state.silentDigest.pendingMessages += $pendingMessage
-        $state.statistics.today.queued++
-        $state | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
-    }
-    
-    "get-digest" {
-        $pending = $state.silentDigest.pendingMessages
-        
-        if ($pending.Count -eq 0) {
-            $output = @"
-[Notification Summary] 
-Date: $(Get-Date -Format 'yyyy-MM-dd')
-
-Status: All systems normal
-- No warnings or critical events
-- All tasks completed successfully
-
-Have a great day! 
-"@
-            Write-Output $output
+        # Add to queue if not being sent immediately
+        if ($actionResult -eq "QUEUE") {
+            $notificationState.queue += $notification
         }
-        else {
-            $warnings = @($pending | Where-Object { $_.severity -eq "warning" })
-            $critical = @($pending | Where-Object { $_.severity -eq "critical" })
-            $emergency = @($pending | Where-Object { $_.severity -eq "emergency" })
+        
+        # Update last updated time
+        $notificationState.lastUpdated = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
+        
+        # Write updated state back to file
+        $notificationState | ConvertTo-Json -Depth 10 | Out-File -FilePath $notificationStateFile -Encoding UTF8
+        
+        # Check if we need to flush the queue (more than 10 items)
+        $queueCount = $notificationState.queue.Count
+        if ($queueCount -gt 10) {
+            $actionResult = "FLUSH"
             
-            $status = "Normal"
-            if ($emergency.Count -gt 0) { $status = "Issues detected" }
-            elseif ($critical.Count -gt 0) { $status = "Needs attention" }
+            # Count severity types in queue
+            $severityCounts = @{
+                critical = 0
+                crisis = 0
+                warning = 0
+                attention = 0
+                info = 0
+            }
             
-            $output = @"
-[Notification Summary] 
-Date: $(Get-Date -Format 'yyyy-MM-dd')
-
-Overview:
-- Status: $status
-- Total events: $($pending.Count)
-- Suppressed notifications: $($state.statistics.today.suppressed)
-
-"@
-            
-            if ($warnings.Count -gt 0) {
-                $output += "Warnings ($($warnings.Count)):`n"
-                foreach ($w in $warnings) {
-                    $time = [DateTimeOffset]::FromUnixTimeMilliseconds($w.timestamp).ToLocalTime().ToString("HH:mm")
-                    $output += "- $time - $($w.source): $($w.message)`n"
+            foreach ($item in $notificationState.queue) {
+                if ($severityCounts.ContainsKey($item.severity)) {
+                    $severityCounts[$item.severity]++
                 }
-                $output += "`n"
             }
             
-            if ($critical.Count -gt 0 -or $emergency.Count -gt 0) {
-                $output += "Critical events ($($critical.Count + $emergency.Count)):`n"
-                foreach ($c in ($critical + $emergency)) {
-                    $time = [DateTimeOffset]::FromUnixTimeMilliseconds($c.timestamp).ToLocalTime().ToString("HH:mm")
-                    $output += "- $time - $($c.source): $($c.message)`n"
-                }
-                $output += "`n"
-            }
-            
-            $output += "Today's focus:`n"
-            if ($emergency.Count -gt 0) {
-                $output += "- Immediate action required`n"
-            }
-            elseif ($critical.Count -gt 0) {
-                $output += "- Review critical items`n"
-            }
-            else {
-                $output += "- No special items`n"
-            }
-            
-            Write-Output $output
+            # Generate summary
+            Write-Output "🔔 通知队列摘要"
+            Write-Output ""
+            Write-Output "📊 累积通知：$queueCount 条"
+            Write-Output "- 紧急：$([int]$severityCounts.critical) 条（已发送）"
+            Write-Output "- 警告：$([int]$severityCounts.warning) 条"
+            Write-Output "- 信息：$([int]$severityCounts.info) 条"
+            Write-Output ""
+            Write-Output "📋 详情：memory/notification-state.json"
         }
-    }
-    
-    "clear-pending" {
-        $count = $state.silentDigest.pendingMessages.Count
-        $state.silentDigest.pendingMessages = @()
-        $state.silentDigest.lastDigestSent = [int64]([Math]::Round((Get-Date).ToFileTime() / 10000))
-        $state | ConvertTo-Json -Depth 10 | Out-File $statePath -Encoding UTF8
         
-        Write-Host "[CLEARED] $count messages"
+        Write-Output $actionResult
     }
 }

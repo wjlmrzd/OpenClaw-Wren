@@ -1,15 +1,19 @@
 {
-  "lastAudit": "2026-03-25T12:20:52+08:00",
+  "lastAudit": "2026-03-29T16:44:49+08:00",
   "lastAuditBy": "配置审计师",
   "cronJobId": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
   "status": "completed",
   "securityLevel": "low",
   "issuesFound": [],
-  "backupCreated": "memory/config-backups/openclaw-20260325-122052.json",
-  "reportSaved": "memory/config-audit-2026-03-25-1220.md",
+  "warnings": [
+    "ClawTeam-OpenClaw 子模块 8 天未更新 (最后: 2026-03-21)",
+    "项目顾问任务有 1 次模型认证错误"
+  ],
+  "backupCreated": "memory/config-backups/openclaw_2026-03-29_164449.json",
+  "reportSaved": "memory/config-audit-report-2026-03-29-1644.md",
   "notificationSent": true,
   "notificationReason": "非静默时段，发送常规审计摘要",
-  "nextAudit": "2026-03-25T16:20:00+08:00",
+  "nextAudit": "2026-03-29T20:44:00+08:00",
   "checks": {
     "openclawJsonBackup": "pass",
     "cronJobsCheck": "pass",
@@ -17,14 +21,22 @@
     "gitSensitiveFiles": "pass"
   },
   "taskStatus": {
-    "total": 25,
-    "ok": 23,
-    "error": 2,
-    "errorTasks": ["📰 每日早报", "🏃 运动提醒员"]
+    "total": 18,
+    "ok": 17,
+    "error": 1,
+    "errorTasks": ["📋 项目顾问"]
+  },
+  "configChanges": {
+    "openclaw": {
+      "lastTouchedAt": "2026-03-29T04:00:27.587Z",
+      "previousBackup": "2026-03-26T04:00:33.784Z",
+      "change": "wizard doctor 执行，重新注册 minimax-coding-plan:default 认证档案",
+      "severity": "low"
+    }
   },
   "auditHistory": [
-    {"time": "2026-03-25T04:20:00+08:00", "status": "pass", "issues": 0},
-    {"time": "2026-03-25T08:20:00+08:00", "status": "pass", "issues": 0},
-    {"time": "2026-03-25T12:20:00+08:00", "status": "pass", "issues": 0}
+    {"time": "2026-03-29T08:44:00+08:00", "status": "pass", "issues": 0},
+    {"time": "2026-03-29T12:44:00+08:00", "status": "pass", "issues": 0},
+    {"time": "2026-03-29T16:44:00+08:00", "status": "pass", "issues": 0}
   ]
 }

@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "lastTouchedVersion": "0.1.9",
+    "lastTouchedAt": "2026-03-27T10:00:28.827Z"
+  },
+  "env": {
+    "PADDLEOCR_OCR_API_URL": "${PADDLEOCR_OCR_API_URL}",
+    "PADDLEOCR_ACCESS_TOKEN": "${PADDLEOCR_ACCESS_TOKEN}"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-27T10:00:28.803Z",
+    "lastRunVersion": "0.1.9",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local"
+  },
+  "logging": {
+    "level": "debug"
+  },
+  "browser": {
+    "enabled": true,
+    "controlToken": "${GATEWAY_CONTROL_TOKEN}"
+  },
+  "auth": {
+    "profiles": {
+      "dashscope-coding-plan:default": {
+        "provider": "dashscope-coding-plan",
+        "mode": "api_key"
+      }
+    },
+    "order": {
+      "dashscope-coding-plan": [
+        "dashscope-coding-plan:default"
+      ]
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "dashscope-coding-plan": {
+        "baseUrl": "https://coding.dashscope.aliyuncs.com/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "qwen3.5-plus",
+            "name": "qwen3.5-plus",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen3-coder-plus",
+            "name": "qwen3-coder-plus",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen3-coder-next",
+            "name": "qwen3-coder-next",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "glm-5",
+            "name": "glm-5",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "glm-4.7",
+            "name": "glm-4.7",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "kimi-k2.5",
+            "name": "kimi-k2.5",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "minimax-m2.5",
+            "name": "minimax-m2.5",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "dashscope-coding-plan/kimi-k2.5"
+      },
+      "imageModel": {
+        "primary": "dashscope-coding-plan/qwen3.5-plus"
+      },
+      "models": {
+        "dashscope-coding-plan/qwen3.5-plus": {
+          "alias": "qwen3.5-plus"
+        },
+        "dashscope-coding-plan/qwen3-coder-plus": {
+          "alias": "qwen3-coder-plus"
+        },
+        "dashscope-coding-plan/qwen3-coder-next": {
+          "alias": "qwen3-coder-next"
+        },
+        "dashscope-coding-plan/glm-5": {
+          "alias": "glm-5"
+        },
+        "dashscope-coding-plan/glm-4.7": {
+          "alias": "glm-4.7"
+        },
+        "dashscope-coding-plan/kimi-k2.5": {
+          "alias": "kimi-k2.5"
+        },
+        "dashscope-coding-plan/minimax-m2.5": {
+          "alias": "minimax-m2.5"
+        }
+      },
+      "workspace": "D:\\OpenClaw\\.openclaw\\workspace",
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    }
+  },
+  "tools": {
+    "media": {
+      "image": {
+        "enabled": true,
+        "maxBytes": 10485760
+      },
+      "audio": {
+        "enabled": true,
+        "maxBytes": 20971520,
+        "models": [
+          {
+            "type": "cli",
+            "command": "whisper",
+            "args": [
+              "--model",
+              "base",
+              "{{MediaPath}}"
+            ],
+            "timeoutSeconds": 60
+          }
+        ]
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "session-memory": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "boot-md": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "name": "WrenBot",
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "groupPolicy": "allowlist",
+      "streamMode": "partial",
+      "proxy": "${HTTP_PROXY}"
+    },
+    "feishu": {
+      "defaultAccount": "main",
+      "accounts": {
+        "main": {
+          "appId": "${FEISHU_APP_ID}",
+          "appSecret": "${FEISHU_APP_SECRET}",
+          "botName": "OpenClaw",
+          "enabled": true,
+          "dmPolicy": "pairing",
+          "groupPolicy": "allowlist",
+          "defaultUser": "${FEISHU_DEFAULT_USER}"
+        }
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "controlUi": {
+      "enabled": true,
+      "basePath": "/openclaw",
+      "allowInsecureAuth": false
+    },
+    "auth": {
+      "mode": "token",
+      "token": "${GATEWAY_AUTH_TOKEN}"
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    }
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      },
+      "feishu": {
+        "enabled": true
+      }
+    }
+  }
+}

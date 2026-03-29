@@ -186,6 +186,62 @@ Think of it like a human reviewing their journal and updating their mental model
 
 The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
 
+## 🔄 Memory Read-Write Loop (Obsidian-based)
+
+> 基于 Obsidian 的"冷热记忆"循环系统 - Wren 的第二大脑
+
+### 📁 Memory 结构 (Obsidian Vault)
+
+```
+Memory/
+├── Index.md      # 记忆总索引 - 查字典的入口
+├── Journal/      # 每日对话碎片摘要 (热记忆)
+│   └── YYYY-MM-DD.md
+└── Atlas/        # 提炼的知识、偏好、决策 (冷记忆)
+    ├── 基础信息.md
+    ├── AI助手偏好设置.md
+    ├── 设备信息.md
+    ├── 工程规范.md
+    └── 工作流程偏好.md
+```
+
+### 📖 读取规则 (Cold → Hot)
+
+**触发时机：**
+1. **新会话开启时** → 优先读取 `Memory/Index.md` + 最新 Journal
+2. **遇到不确定信息时** → 检索 `Memory/` 文件夹，不猜测
+3. **任务执行前** → 核对 `Memory/Atlas/` 中的偏好设置
+
+**优先级：** Memory/Index.md → Memory/Journal/ → Memory/Atlas/
+
+### ✏️ 写入规则 (Hot → Cold)
+
+**触发时机：**
+- 完成重要阶段性讨论
+- Wren 提供新信息
+- 关键决策/偏好变更
+
+**操作流程：**
+1. 摘要提取 → 关键点总结为 Markdown 片段
+2. 异步写入 → 追加到 `Memory/Journal/今日笔记`
+3. 索引更新 → 长期有效知识同步更新 `Memory/Atlas/`
+4. Index 更新 → 在 Index.md 中标注新文件
+
+### 🧠 核心原则
+
+- **抗遗忘**: 写入 Obsidian 的 .md 文件物理存在，不会被压缩
+- **结构化检索**: 通过 Index.md 查字典，而非扫描所有文件
+- **热到冷循环**: Journal 碎片定期整理归纳到 Atlas
+
+### ⚠️ 配置文件检查结果
+
+Wren 提到的 `memoryFlush` 配置项在当前 OpenClaw 版本 (0.1.9) 中不存在。
+现有相关配置：
+- `hooks.internal.entries.session-memory.enabled: true` ✅ (已启用)
+- `hooks.internal.entries.boot-md.enabled: true` ✅ (已启用)
+
+---
+
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.

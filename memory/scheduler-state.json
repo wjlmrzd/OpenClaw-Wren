@@ -1,14 +1,36 @@
 {
-  "lastAnalysis": "2026-03-26T18:02:00+08:00",
-  "totalTasks": 17,
-  "collisionRisk": 0,
-  "heavyTasks": 3,
-  "recentOptimizations": [
+  "lastAnalysisAt": "2026-03-27T18:02:00+08:00",
+  "totalTasks": 18,
+  "collisionRiskPairs": [],
+  "heavyTasks": [
     {
-      "timestamp": "2026-03-26T18:02:00+08:00",
-      "action": "backup_created",
-      "description": "Created backup of jobs.json before analysis",
-      "backupFile": "jobs-backup-2026-03-26_180241.json"
+      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+      "name": "项目顾问",
+      "schedule": "0 20 * * *",
+      "timeoutSeconds": 540,
+      "lastDurationMs": 499,
+      "lastError": "Error: No available auth profile for dashscope-coding-plan (all in cooldown or unavailable).",
+      "consecutiveErrors": 1
+    }
+  ],
+  "dependencyIssues": [
+    {
+      "issue": "项目顾问依赖可能存在问题",
+      "task": "项目顾问",
+      "currentSchedule": "0 20 * * *",
+      "recommendation": "检查是否应与其他任务建立依赖关系"
+    }
+  ],
+  "optimizationHistory": [
+    {
+      "date": "2026-03-27T12:03:00+08:00",
+      "action": "Initial analysis completed",
+      "details": "Total tasks: 18, Collision risk: 0 pairs, Heavy tasks: 1"
+    },
+    {
+      "date": "2026-03-27T18:02:00+08:00",
+      "action": "Scheduled optimization analysis",
+      "details": "No collision risks detected, no optimizations needed at this cycle"
     }
   ]
 }

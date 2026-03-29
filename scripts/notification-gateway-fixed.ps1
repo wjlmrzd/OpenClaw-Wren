@@ -1,163 +1,144 @@
-﻿# 通知网关脚本 - 供 Cron 任务调用
-# 使用方式: powershell -File scripts/notification-gateway.ps1 -Action <action> [参数]
+# Notification Gateway for OpenClaw
+# Handles intelligent notification management based on time and severity
 
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("get-mode", "should-notify", "send", "queue", "get-digest", "clear-pending")]
+    [ValidateSet("get-mode", "send")]
     [string]$Action,
     
-    [string]$Severity = "info",
-    [string]$Source = "",
-    [string]$Message = "",
-    [string]$Target = "8542040756"
+    [ValidateSet("info", "attention", "warning", "critical", "crisis")]
+    [string]$Severity,
+    
+    [string]$Message
 )
 
-$statePath = "$PSScriptRoot\..\memory\notification-state.json"
+# Define paths
+$notificationStateFile = "D:\OpenClaw\.openclaw\workspace\memory\notification-state.json"
+$currentTime = Get-Date
+$currentHour = $currentTime.Hour
 
-# 确保状态文件存在
-if (-not (Test-Path $statePath)) {
-    $defaultState = @{
-        version = 1
-        currentMode = "work_hours"
-        silentHours = @{ start = 22; end = 6; timezone = "Asia/Shanghai" }
-        silentDigest = @{ enabled = $true; pendingMessages = @(); lastDigestSent = $null }
-        severityFilter = @{
-            workHours = @("info", "warning", "critical", "emergency")
-            evening = @("warning", "critical", "emergency")
-            silent = @("critical", "emergency")
-        }
-        statistics = @{ today = @{ sent = 0; suppressed = 0; queued = 0 } }
-        overrides = @{ alwaysNotifySources = @(); emergencyContacts = @("8542040756") }
+# Determine current mode based on time
+function Get-NotificationMode {
+    if ($currentHour -ge 6 -and $currentHour -lt 9) {
+        return "morning"  # 06:00-09:00
     }
-    $defaultState | ConvertTo-Json -Depth 10 | Set-Content $statePath -Encoding UTF8
+    elseif (($currentHour -ge 9 -and $currentHour -lt 12) -or ($currentHour -ge 14 -and $currentHour -lt 18)) {
+        return "working-hours"  # 09:00-12:00, 14:00-18:00
+    }
+    elseif ($currentHour -ge 18 -and $currentHour -lt 22) {
+        return "evening"  # 18:00-22:00
+    }
+    else {
+        return "sleep-time"  # 22:00-06:00 (includes overnight)
+    }
 }
 
-# 加载状态
-$state = Get-Content $statePath -Raw | ConvertFrom-Json
-
-# 获取当前时段模式
-function Get-CurrentModeFunc {
-    $hour = (Get-Date).Hour
-    if ($hour -ge 22 -or $hour -lt 6) { return "silent" }
-    elseif ($hour -ge 18 -and $hour -lt 22) { return "evening" }
-    else { return "work_hours" }
+# Ensure notification state file exists
+if (!(Test-Path $notificationStateFile)) {
+    $initialState = @{
+        queue = @()
+        lastUpdated = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
+    }
+    $initialState | ConvertTo-Json -Encoding UTF8 | Out-File -FilePath $notificationStateFile -Encoding UTF8
 }
-
-# 更新当前模式
-$state.currentMode = Get-CurrentModeFunc
-$state | ConvertTo-Json -Depth 10 | Set-Content $statePath -Encoding UTF8
 
 switch ($Action) {
     "get-mode" {
-        Write-Output $state.currentMode
-    }
-    
-    "should-notify" {
-        $mode = $state.currentMode
-        $allowedSeverities = $state.severityFilter.$mode
-        $shouldNotify = $allowedSeverities -contains $Severity
-        
-        if ($state.overrides.alwaysNotifySources -contains $Source) {
-            $shouldNotify = $true
-        }
-        
-        Write-Output $shouldNotify
+        $mode = Get-NotificationMode
+        Write-Output $mode
     }
     
     "send" {
-        Write-Host "[NOTIFY] Severity=$Severity, Message=$Message"
-        exit 0
-    }
-    
-    "queue" {
-        $pendingMessage = @{
-            timestamp = [int64]((Get-Date -UFormat %s) + "000")
+        if ([string]::IsNullOrEmpty($Severity) -or [string]::IsNullOrEmpty($Message)) {
+            Write-Error "Severity and Message are required for send action"
+            exit 1
+        }
+        
+        # Determine if notification should be sent based on current mode and severity
+        $currentMode = Get-NotificationMode
+        $shouldSend = $false
+        $actionResult = "QUEUE"
+        
+        switch ($currentMode) {
+            "working-hours" {
+                # All levels allowed during working hours
+                $shouldSend = $true
+                $actionResult = "SEND"
+            }
+            "morning" {
+                # All levels allowed in morning
+                $shouldSend = $true
+                $actionResult = "SEND"
+            }
+            "evening" {
+                # Only warning and above during evening
+                if ($Severity -in @("warning", "critical", "crisis")) {
+                    $shouldSend = $true
+                    $actionResult = "SEND"
+                }
+            }
+            "sleep-time" {
+                # Only critical and crisis during sleep time
+                if ($Severity -in @("critical", "crisis")) {
+                    $shouldSend = $true
+                    $actionResult = "SEND"
+                }
+            }
+        }
+        
+        # Load current notification state
+        $notificationState = Get-Content $notificationStateFile | ConvertFrom-Json -AsHashtable
+        
+        # Create notification object
+        $notification = @{
             severity = $Severity
-            source = $Source
             message = $Message
+            timestamp = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
+            shouldSend = $shouldSend
         }
         
-        $state.silentDigest.pendingMessages += $pendingMessage
-        $state.statistics.today.queued++
-        $state | ConvertTo-Json -Depth 10 | Set-Content $statePath -Encoding UTF8
-        
-        Write-Host "[QUEUED] Severity=$Severity, Message=$Message"
-    }
-    
-    "get-digest" {
-        $pending = $state.silentDigest.pendingMessages
-        
-        if ($pending.Count -eq 0) {
-            $output = @"
-🌅 早晨摘要 - $(Get-Date -Format 'yyyy-MM-dd')
-
-✅ 夜间平静
-- 系统运行正常
-- 无警告/紧急事件
-- 所有任务执行成功
-
-祝您有美好的一天！☀️
-"@
-            Write-Output $output
+        # Add to queue if not being sent immediately
+        if ($actionResult -eq "QUEUE") {
+            $notificationState.queue += $notification
         }
-        else {
-            $warnings = @($pending | Where-Object { $_.severity -eq "warning" })
-            $critical = @($pending | Where-Object { $_.severity -eq "critical" })
-            $emergency = @($pending | Where-Object { $_.severity -eq "emergency" })
+        
+        # Update last updated time
+        $notificationState.lastUpdated = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
+        
+        # Write updated state back to file
+        $notificationState | ConvertTo-Json -Depth 10 -Encoding UTF8 | Out-File -FilePath $notificationStateFile -Encoding UTF8
+        
+        # Check if we need to flush the queue (more than 10 items)
+        $queueCount = $notificationState.queue.Count
+        if ($queueCount -gt 10) {
+            $actionResult = "FLUSH"
             
-            $status = "✅ 正常"
-            if ($emergency.Count -gt 0) { $status = "🔴 异常" }
-            elseif ($critical.Count -gt 0) { $status = "⚠️ 需关注" }
+            # Count severity types in queue
+            $severityCounts = @{
+                critical = 0
+                crisis = 0
+                warning = 0
+                attention = 0
+                info = 0
+            }
             
-            $output = @"
-🌅 早晨摘要 - $(Get-Date -Format 'yyyy-MM-dd')
-
-📊 夜间概览:
-- 系统状态: $status
-- 事件总数: $($pending.Count) 条
-- 通知抑制: $($state.statistics.today.suppressed) 条
-
-"@
-            
-            if ($warnings.Count -gt 0) {
-                $output += "⚠️ 夜间警告 ($($warnings.Count) 条):`n"
-                foreach ($w in $warnings) {
-                    $time = [DateTimeOffset]::FromUnixTimeMilliseconds($w.timestamp).ToLocalTime().ToString("HH:mm")
-                    $output += "- $time - $($w.source): $($w.message)`n"
+            foreach ($item in $notificationState.queue) {
+                if ($severityCounts.ContainsKey($item.severity)) {
+                    $severityCounts[$item.severity]++
                 }
-                $output += "`n"
             }
             
-            if ($critical.Count -gt 0 -or $emergency.Count -gt 0) {
-                $output += "🔴 紧急事件 ($($critical.Count + $emergency.Count) 条):`n"
-                foreach ($c in ($critical + $emergency)) {
-                    $time = [DateTimeOffset]::FromUnixTimeMilliseconds($c.timestamp).ToLocalTime().ToString("HH:mm")
-                    $output += "- $time - $($c.source): $($c.message)`n"
-                }
-                $output += "`n"
-            }
-            
-            $output += "📋 今日关注:`n"
-            if ($emergency.Count -gt 0) {
-                $output += "🆘 有紧急事件需要立即处理`n"
-            }
-            elseif ($critical.Count -gt 0) {
-                $output += "⚠️ 有需要关注的问题`n"
-            }
-            else {
-                $output += "✅ 无特殊事项`n"
-            }
-            
-            Write-Output $output
+            # Generate summary
+            Write-Output "``[Notify]`` 通知队列摘要"
+            Write-Output ""
+            Write-Output "``[Notify]`` 累积通知：$queueCount 条"
+            Write-Output "``[Notify]`` - 紧急：$([int]$severityCounts.critical) 条（已发送）"
+            Write-Output "``[Notify]`` - 警告：$([int]$severityCounts.warning) 条"
+            Write-Output "``[Notify]`` - 信息：$([int]$severityCounts.info) 条"
+            Write-Output ""
+            Write-Output "``[Notify]`` 详情：memory/notification-state.json"
         }
-    }
-    
-    "clear-pending" {
-        $count = $state.silentDigest.pendingMessages.Count
-        $state.silentDigest.pendingMessages = @()
-        $state.silentDigest.lastDigestSent = [int64]((Get-Date -UFormat %s) + "000")
-        $state | ConvertTo-Json -Depth 10 | Set-Content $statePath -Encoding UTF8
         
-        Write-Host "[CLEARED] $count messages"
+        Write-Output $actionResult
     }
 }

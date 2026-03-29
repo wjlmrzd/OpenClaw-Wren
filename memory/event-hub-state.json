@@ -1,21 +1,28 @@
 {
-  "lastCheck": "2026-03-26T22:01:00+08:00",
+  "lastCheck": "2026-03-27T20:03:00+08:00",
   "status": "healthy",
   "metrics": {
     "memory": {
-      "percentUsed": 45.2,
+      "availableMB": 6875,
+      "totalGB": 15.86,
+      "percentUsed": 57.0,
       "status": "healthy",
       "threshold": 85
     },
     "disk": {
-      "freeGB": 661.27,
+      "freeGB": 661.5,
+      "totalGB": 690.9,
       "percentUsed": 4.3,
+      "percentFree": 95.7,
       "status": "healthy",
       "threshold": 85
     },
     "gateway": {
       "status": "healthy",
-      "lastCheck": "2026-03-26T22:01:00+08:00"
+      "rpcProbe": "normal",
+      "cronOperations": "normal",
+      "bindAddress": "127.0.0.1:18789",
+      "lastCheck": "2026-03-27T20:03:00+08:00"
     },
     "apiQuota": {
       "status": "unknown",
@@ -24,11 +31,14 @@
   },
   "cronTaskScan": {
     "totalTasks": 28,
-    "runningTasks": 2,
+    "runningTasks": 4,
     "failedTasks": 0,
-    "tasksWithErrors": []
+    "tasksWithErrors": [],
+    "scanStatus": "complete",
+    "scanTime": "2026-03-27T20:03:00+08:00"
   },
   "events": [],
   "actions": {},
-  "lastEventTime": null
+  "lastEventTime": null,
+  "nextCheck": "2026-03-27T22:03:00+08:00"
 }

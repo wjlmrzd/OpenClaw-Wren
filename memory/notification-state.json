@@ -1,49 +1,19 @@
-﻿{
-    "silentHours":  {
-                        "end":  6,
-                        "timezone":  "Asia/Shanghai",
-                        "start":  22
-                    },
-    "severityFilter":  {
-                           "evening":  [
-                                           "warning",
-                                           "critical",
-                                           "emergency"
-                                       ],
-                           "workHours":  [
-                                             "info",
-                                             "warning",
-                                             "critical",
-                                             "emergency"
-                                         ],
-                           "silent":  [
-                                          "critical",
-                                          "emergency"
-                                      ]
-                       },
-    "version":  1,
-    "lastModeChange":  13418993016326,
-    "overrides":  {
-                      "emergencyContacts":  [
-                                                "8542040756"
-                                            ],
-                      "alwaysNotifySources":  [
-
-                                              ]
-                  },
-    "currentMode":  "evening",
-    "statistics":  {
-                       "today":  {
-                                     "sent":  0,
-                                     "queued":  1,
-                                     "suppressed":  0
-                                 }
-                   },
-    "silentDigest":  {
-                         "lastDigestSent":  13418975000104,
-                         "pendingMessages":  [
-
-                                             ],
-                         "enabled":  true
-                     }
+{
+  "current_mode": "normal",
+  "notifications_queue": [],
+  "silence_start": null,
+  "silence_end": null,
+  "stats": {
+    "total_sent": 0,
+    "total_queued": 0,
+    "total_discarded": 0
+  },
+  "severity_counts": {
+    "info": 0,
+    "attention": 0,
+    "warning": 0,
+    "emergency": 0,
+    "crisis": 0
+  },
+  "last_updated": "2026-03-27T12:04:00+08:00"
 }

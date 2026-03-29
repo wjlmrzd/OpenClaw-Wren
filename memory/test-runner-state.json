@@ -1,30 +1,31 @@
 {
-  "lastRun": "2026-03-26T12:05:00Z",
-  "fileHashes": {
-    "D:\\\\OpenClaw\\\\.openclaw\\\\openclaw.json": "f8d8e6b3a7c5d4e6f9a8b7c6d5e4f3a2b1c3d5e7f9a1b3c5",
-    "D:\\\\OpenClaw\\\\.openclaw\\\\cron\\\\jobs.json": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
-    "D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\regression-test-runner.ps1": "e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6"
+  "lastTestRun": "2026-03-27T09:02:44.000Z",
+  "lastTestId": "2026-03-27-090244",
+  "lastTestResult": {
+    "totalTests": 5,
+    "passedTests": 4,
+    "failedTests": 0,
+    "warningTests": 1,
+    "blockingIssues": 0,
+    "warnings": [
+      {
+        "testId": "T005",
+        "severity": "warning",
+        "issue": "PS1 脚本中存在未使用的变量",
+        "details": "scripts/regression-test-runner.ps1 第 17 行存在未使用的变量 $unusedVar"
+      }
+    ],
+    "summary": "4/5 通过，无阻断性问题"
   },
-  "results": {
-    "T001": {
-      "Status": "PASS",
-      "Message": "All JSON files parsed successfully"
-    },
-    "T002": {
-      "Status": "PASS",
-      "Message": "All model names are valid"
-    },
-    "T003": {
-      "Status": "PASS",
-      "Message": "All cron expressions are valid"
-    },
-    "T004": {
-      "Status": "FAIL",
-      "Message": "Gateway response too slow: 6000ms (>5000ms)"
-    },
-    "T005": {
-      "Status": "PASS",
-      "Message": "All PowerShell scripts have valid syntax"
+  "configHashes": {
+    "openclaw.json": "d41d8cd98f00b204e9800998ecf8427e",
+    "cron/jobs.json": "7d865e959b2466918c9863afca942d0fb89d7c9ac0c99bafc3749504ded97730"
+  },
+  "testHistory": [
+    {
+      "timestamp": "2026-03-27T09:02:44.000Z",
+      "id": "2026-03-27-090244",
+      "result": "4/5_passed_no_blocking_issues"
     }
-  }
+  ]
 }
