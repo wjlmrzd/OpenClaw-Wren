@@ -665,6 +665,49 @@ knowledge/
 
 ---
 
+## 2026-03-29: CAD 属性块转换器项目文档完成 ✅
+
+**事件**: 为 CadAttrBlockConverter 项目编写了详细的项目报告和安装配置指南
+
+### 文档位置
+
+| 文档 | 路径 |
+|------|------|
+| 📋 项目报告 | `CadAttrBlockConverter/项目报告-属性块转换器.md` |
+| 📖 安装配置指南 | `CadAttrBlockConverter/安装配置指南.md` |
+| 📄 README | `CadAttrBlockConverter/README.md` |
+
+### 项目信息摘要
+
+- **插件名称**: 属性块转换器 (CadAttrBlockConverter)
+- **版本**: v4.32.0
+- **开发框架**: .NET Framework 4.8
+- **适用 AutoCAD**: 2020-2022+ (64-bit)
+- **编译输出**: `CadAttrBlockConverter\属性块转换器\bin\x64\Debug\属性块转换器.dll`
+
+### 核心功能
+
+1. 模板拾取 - 支持图块和多段线
+2. 属性区域管理 - LCS/WCS 坐标转换
+3. 文字提取 - TEXT/MTEXT 框选提取
+4. 图块转换 - V5.0 Explode 算法修复
+5. 模板库 - XML 序列化保存/加载
+
+### 安装方式
+
+1. 复制 DLL 到 AutoCAD Support 目录
+2. `NETLOAD` 手动加载 或 启用自动加载
+
+### 项目文件
+
+- `PluginEntry.cs` - 入口 & 命令
+- `Core/BlockSwapper.cs` - 转换核心 (V5.0)
+- `Core/TextExtractor.cs` - 文字提取
+- `Core/SpatialZone.cs` - 属性区域
+- `UI/MainPalette.cs` - 主面板 (5 Tab)
+
+---
+
 ## 2026-03-29: 璁板繂璇诲啓寰幆绯荤粺涓婄嚎
 
 **浜嬩欢**: Wren 鎻愬嚭浜嗗熀浜?Obsidian 鐨?鍐风儹璁板繂"寰幆绯荤粺骞跺凡瀹炴柦

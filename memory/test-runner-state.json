@@ -1,31 +1,167 @@
-{
-  "lastTestRun": "2026-03-27T09:02:44.000Z",
-  "lastTestId": "2026-03-27-090244",
-  "lastTestResult": {
-    "totalTests": 5,
-    "passedTests": 4,
-    "failedTests": 0,
-    "warningTests": 1,
-    "blockingIssues": 0,
-    "warnings": [
-      {
-        "testId": "T005",
-        "severity": "warning",
-        "issue": "PS1 脚本中存在未使用的变量",
-        "details": "scripts/regression-test-runner.ps1 第 17 行存在未使用的变量 $unusedVar"
-      }
-    ],
-    "summary": "4/5 通过，无阻断性问题"
-  },
-  "configHashes": {
-    "openclaw.json": "d41d8cd98f00b204e9800998ecf8427e",
-    "cron/jobs.json": "7d865e959b2466918c9863afca942d0fb89d7c9ac0c99bafc3749504ded97730"
-  },
-  "testHistory": [
-    {
-      "timestamp": "2026-03-27T09:02:44.000Z",
-      "id": "2026-03-27-090244",
-      "result": "4/5_passed_no_blocking_issues"
-    }
-  ]
+﻿{
+    "warnings":  1,
+    "passed":  4,
+    "tests":  [
+                  {
+                      "status":  "PASS",
+                      "name":  "T001",
+                      "desc":  "JSON Syntax Validation",
+                      "details":  [
+                                      "OK: jobs.json"
+                                  ]
+                  },
+                  {
+                      "name":  "T002",
+                      "errors":  [
+
+                                 ],
+                      "details":  [
+                                      "OK: openclaw-security-audit -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: gateway-predictive-check -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: gateway-health-monitor -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 每日早报 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 晚间提醒 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 每周总结 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 日历检查 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 邮件监控 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: Workspace 备份 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 模型使用报告 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: OpenClaw 运营总监 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 项目顾问 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 灾难恢复员 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 错误恢复员 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 日志清理员 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 配置审计员 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 资源守护者 -\u003e minimax-coding-plan/minimax-2.7",
+                                      "OK: 错误恢复员 -\u003e minimax-coding-plan/minimax-2.7"
+                                  ],
+                      "desc":  "Model Name Validation",
+                      "status":  "PASS"
+                  },
+                  {
+                      "name":  "T003",
+                      "errors":  [
+
+                                 ],
+                      "details":  [
+                                      "OK: openclaw-security-audit -\u003e 0 */6 * * *",
+                                      "OK: gateway-health-monitor -\u003e 10 8 * * *",
+                                      "OK: 每日早报 -\u003e 25 8 * * *",
+                                      "OK: 晚间提醒 -\u003e 0 18 * * 1-5",
+                                      "OK: 每周总结 -\u003e 0 17 * * 5",
+                                      "OK: 日历检查 -\u003e 0 7 * * *",
+                                      "OK: 邮件监控 -\u003e */30 * * * *",
+                                      "OK: Workspace 备份 -\u003e 0 23 * * *",
+                                      "OK: 模型使用报告 -\u003e 0 20 * * 0",
+                                      "OK: OpenClaw 运营总监 -\u003e 30 9 * * *",
+                                      "OK: 项目顾问 -\u003e 0 20 * * *",
+                                      "OK: 灾难恢复员 -\u003e 0 21 * * *",
+                                      "OK: 错误恢复员 -\u003e */30 * * * *",
+                                      "OK: 日志清理员 -\u003e 0 3 * * *",
+                                      "OK: 配置审计员 -\u003e 0 */4 * * *",
+                                      "OK: 资源守护者 -\u003e 0 */2 * * *",
+                                      "OK: 错误恢复员 -\u003e 0 6 * * 0"
+                                  ],
+                      "desc":  "Cron Expression Validation",
+                      "status":  "PASS"
+                  },
+                  {
+                      "status":  "PASS",
+                      "name":  "T004",
+                      "desc":  "Gateway Health Check",
+                      "details":  [
+                                      "HTTP 200 in 350ms"
+                                  ]
+                  },
+                  {
+                      "name":  "T005",
+                      "errors":  [
+                                     "check-urls-health.ps1: 4 syntax issue(s)",
+                                     "check_bookmarks_ps.ps1: 95 syntax issue(s)",
+                                     "download-plugins.ps1: 5 syntax issue(s)",
+                                     "event-hub-tools.ps1: 2 syntax issue(s)",
+                                     "event-hub.ps1: 14 syntax issue(s)",
+                                     "event-logger.ps1: 2 syntax issue(s)",
+                                     "log-rotate.ps1: 2 syntax issue(s)",
+                                     "notification-coordinator.ps1: 10 syntax issue(s)",
+                                     "notification-gateway-fixed.ps1: 4 syntax issue(s)",
+                                     "scheduler-optimizer.ps1: 6 syntax issue(s)",
+                                     "silence-tools.ps1: 3 syntax issue(s)",
+                                     "system-mode-tools.ps1: 17 syntax issue(s)",
+                                     "telegram-commander.ps1: 42 syntax issue(s)",
+                                     "test-runner-tools.ps1: 11 syntax issue(s)",
+                                     "update-model-config.ps1: 4 syntax issue(s)"
+                                 ],
+                      "details":  [
+                                      "OK: auto-healer-v2.ps1",
+                                      "OK: batch-model-update.ps1",
+                                      "OK: batch-update-models.ps1",
+                                      "OK: build-calendar.ps1",
+                                      "OK: check-bookmarks.ps1",
+                                      "OK: check-json.ps1",
+                                      "OK: check-obsidian-plugins.ps1",
+                                      "OK: clean-c-drive.ps1",
+                                      "OK: clean-temp.ps1",
+                                      "OK: cleanup-safe.ps1",
+                                      "OK: config-backup.ps1",
+                                      "OK: daily-light-maintenance.ps1",
+                                      "OK: disaster-recovery-controller.ps1",
+                                      "OK: disk-analysis.ps1",
+                                      "OK: disk-scan.ps1",
+                                      "OK: disk-scan2.ps1",
+                                      "OK: download-obsidian-plugins.ps1",
+                                      "OK: download-plugin-assets.ps1",
+                                      "OK: download-plugin-files.ps1",
+                                      "OK: download-plugins-from-releases.ps1",
+                                      "OK: download-plugins2.ps1",
+                                      "OK: download-plugins3.ps1",
+                                      "OK: finalize-plugins.ps1",
+                                      "OK: find-big-users.ps1",
+                                      "OK: find-correct-plugins.ps1",
+                                      "OK: find-leidian.ps1",
+                                      "OK: find-obsidian.ps1",
+                                      "OK: find-packages-deep.ps1",
+                                      "OK: fix-calendar.ps1",
+                                      "OK: fix-network.ps1",
+                                      "OK: gateway-monitor.ps1",
+                                      "OK: knowledge-evolver.ps1",
+                                      "OK: list-cron-jobs.ps1",
+                                      "OK: list-subdirs.ps1",
+                                      "OK: log-cleanup-batch.ps1",
+                                      "OK: log-event.ps1",
+                                      "OK: obsidian-install-helper.ps1",
+                                      "OK: obsidian-knowledge-organizer.ps1",
+                                      "OK: obsidian-model-scheduler.ps1",
+                                      "OK: obsidian-optimize.ps1",
+                                      "OK: obsidian-plugin-install.ps1",
+                                      "OK: obsidian-plugins.ps1",
+                                      "OK: organize-vault.ps1",
+                                      "OK: query-feishu-users.ps1",
+                                      "OK: quick-clean-scan.ps1",
+                                      "OK: regression-test-runner.ps1",
+                                      "OK: regression-test-simple.ps1",
+                                      "OK: regression-test.ps1",
+                                      "OK: remove-anythingllm.ps1",
+                                      "OK: resource-check.ps1",
+                                      "OK: resource-guardian-simple.ps1",
+                                      "OK: scan-admin-dirs.ps1",
+                                      "OK: scan-c-drive.ps1",
+                                      "OK: scan-user-dirs.ps1",
+                                      "OK: secure-config.ps1",
+                                      "OK: secure-storage.ps1",
+                                      "OK: send-feishu-offwork-reminder.ps1",
+                                      "OK: setup-obsidian-plugins.ps1",
+                                      "OK: stability-protector.ps1",
+                                      "OK: switch-all-models-v2.ps1",
+                                      "OK: system-mode-controller.ps1",
+                                      "OK: test-detect-changes.ps1",
+                                      "OK: test-net.ps1",
+                                      "OK: ui-install-plugins.ps1"
+                                  ],
+                      "desc":  "PowerShell Syntax Check",
+                      "status":  "WARN"
+                  }
+              ],
+    "failed":  0,
+    "timestamp":  "2026-03-29 21:17:24"
 }
