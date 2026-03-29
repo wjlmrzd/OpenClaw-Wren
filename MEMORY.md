@@ -578,6 +578,40 @@ ssrfPolicy: { allowedHostnames: ["api.telegram.org"] }
 
 ---
 
+## 2026-03-29: 回归测试脚本修复 ✅
+
+**事件**: 修复回归测试员 cron job 执行失败问题
+
+### 问题
+
+1. **PowerShell 编码错误** - cron job payload 中包含内联 PowerShell 中文代码，被系统截断/损坏
+   - 错误: `����λ�� ��:12 �ַ�: 2` (应该是中文但显示乱码)
+   
+2. **`openclaw cron runs` 命令** - 原 runner 脚本使用位置参数而非 `--id` 标志
+
+### 修复
+
+1. **简化回归测试脚本** - `regression-test-runner.ps1` 重写为简洁版本，直接运行测试函数
+2. **更新 cron job payload** - 移除内联 PowerShell，改为调用脚本文件
+
+### 测试结果
+
+| 测试 | 状态 |
+|------|------|
+| T001 JSON 语法 | ✅ PASS |
+| T002 模型名称 | ✅ PASS |
+| T003 Cron 表达式 | ✅ PASS |
+| T004 Gateway 健康 | ✅ PASS |
+| T005 PS 语法检查 | ⚠️ WARN (旧存档脚本) |
+
+### 教训
+
+- ❌ 避免在 cron job payload 中使用内联 PowerShell + 中文
+- ✅ 直接调用 `.ps1` 脚本文件更稳定
+- ✅ 编码问题通常由系统截断或字符集转换引起
+
+---
+
 ## 2026-03-25: 超时任务优化 - 运动提醒员和每日早报 ✅
 
 **事件**: 优化 2 个连续超时的 Cron 任务，解决执行超时问题
