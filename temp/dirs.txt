@@ -1,0 +1,60 @@
+﻿=== E:\ ===
+beifen
+cad2022
+Catalog.wci
+openclaw-data
+QQ_Install
+software
+Tenorshare
+tmp
+
+=== D:\my project (if exists) ===
+NOT FOUND
+
+=== Search all drives for directories ===
+Drive C:
+  Autodesk
+  Catalog.wci
+  inetpub
+  Intel
+  leidian
+  PerfLogs
+  Program Files
+  Program Files (x86)
+  Sandbox
+  tmp
+  Users
+  Windows
+Drive D:
+  .clawdhub
+  .github
+  cad-lsp-manager
+  CAD_PluginLoader
+  ClawTeam-OpenClaw
+  code-review
+  config
+  credentials
+  cron
+  docs
+  memory
+  notes
+  OpenClaw
+  scripts
+  sessions
+  skills
+  temp
+Drive E:
+  beifen
+  cad2022
+  Catalog.wci
+  openclaw-data
+  QQ_Install
+  software
+  Tenorshare
+  tmp
+Drive H:
+  123云盘
+  OneDrive
+  天翼云盘
+  百度网盘
+  阿里云盘Open

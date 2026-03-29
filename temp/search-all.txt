@@ -1,0 +1,10 @@
+﻿=== Searching D:\ for projects/folders ===
+[DIR] $RECYCLE.BIN
+[DIR] 3e3cb7afe9186b77757e4507497921
+[DIR] 4cfaf3306f4945fd95e2a03193abecf1
+[DIR] LISP学习资料精选
+[DIR] OpenClawWorkspace
+[DIR] tmp
+[DIR] 下载
+
+=== Checking for 'my' pattern ===

@@ -1,0 +1,15 @@
+﻿=== D:\OpenClaw for convert/attribute/block ===
+
+=== Desktop/Documents for convert/attribute/block ===
+
+=== E:\ for convert/attribute/block ===
+E:\cad2022
+E:\cad2022\AutoCAD 2022
+E:\cad2022\AutoCAD_2022_Simplified_Chinese_Win_64bit_dlm
+E:\cad2022\AutoCAD 2022\Sample\VisualLISP
+E:\cad2022\AutoCAD 2022\Support\BlockOnBoarding
+E:\cad2022\AutoCAD 2022\Support\BlockRecentOnBoarding
+E:\cad2022\AutoCAD 2022\Tutorial\VisualLISP
+E:\cad2022\AutoCAD 2022\zh-CN\ACADLP
+E:\cad2022\AutoCAD_2022_Simplified_Chinese_Win_64bit_dlm\x64\acad
+E:\cad2022\AutoCAD_2022_Simplified_Chinese_Win_64bit_dlm\x64\acadprivate

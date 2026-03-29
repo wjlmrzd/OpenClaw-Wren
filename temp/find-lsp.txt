@@ -1,0 +1,45 @@
+﻿=== D:\OpenClaw .lsp files ===
+D:\OpenClaw\.openclaw\workspace\cad-lsp-manager\LSPManager.lsp
+D:\OpenClaw\.openclaw\workspace\cad-lsp-manager\LSPManager_v2.lsp
+D:\OpenClaw\.openclaw\workspace\CAD_PluginLoader\PluginLoader.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-acad-flatten.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-acad.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-block.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-date.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-dbx.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-dict.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-editor.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-entity.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-error.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-file.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-geom.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-layer.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-linetype.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-list.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-logging.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-math.lsp
+D:\OpenClaw\plugins\AutoCAD-Utils\utils\utils-matrix.lsp
+=== D:\OpenClawWorkspace .lsp files ===
+=== C:\Users\Administrator\Desktop .lsp files ===
+=== C:\Users\Administrator\Documents .lsp files ===
+=== E:\cad2022 .lsp files ===
+E:\cad2022\AutoCAD 2022\Express\acadinfo.lsp
+E:\cad2022\AutoCAD 2022\Express\acet-wmf.lsp
+E:\cad2022\AutoCAD 2022\Express\acetauto.lsp
+E:\cad2022\AutoCAD 2022\Express\acetess.lsp
+E:\cad2022\AutoCAD 2022\Express\acettxt.lsp
+E:\cad2022\AutoCAD 2022\Express\aceturl.lsp
+E:\cad2022\AutoCAD 2022\Express\aliasedit.lsp
+E:\cad2022\AutoCAD 2022\Express\aspace.lsp
+E:\cad2022\AutoCAD 2022\Express\attout.lsp
+E:\cad2022\AutoCAD 2022\Express\blockq.lsp
+E:\cad2022\AutoCAD 2022\Express\blocktoxref.lsp
+E:\cad2022\AutoCAD 2022\Express\blocktoxrefsup.lsp
+E:\cad2022\AutoCAD 2022\Express\breakl.lsp
+E:\cad2022\AutoCAD 2022\Express\bscale.lsp
+E:\cad2022\AutoCAD 2022\Express\burst.lsp
+E:\cad2022\AutoCAD 2022\Express\cdorder.lsp
+E:\cad2022\AutoCAD 2022\Express\clipit.lsp
+E:\cad2022\AutoCAD 2022\Express\copym.lsp
+E:\cad2022\AutoCAD 2022\Express\count.lsp
+E:\cad2022\AutoCAD 2022\Express\ddins2.lsp
