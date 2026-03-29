@@ -1,19 +1,19 @@
 {
-  "lastCheck": "2026-03-27T20:03:00+08:00",
+  "lastCheck": "2026-03-29T22:11:00+08:00",
   "status": "healthy",
   "metrics": {
     "memory": {
-      "availableMB": 6875,
+      "percentUsed": 73.2,
       "totalGB": 15.86,
-      "percentUsed": 57.0,
+      "usedGB": 11.61,
+      "freeGB": 4.25,
       "status": "healthy",
       "threshold": 85
     },
     "disk": {
-      "freeGB": 661.5,
-      "totalGB": 690.9,
-      "percentUsed": 4.3,
-      "percentFree": 95.7,
+      "freeGB": 661.6,
+      "totalGB": 738,
+      "percentFree": null,
       "status": "healthy",
       "threshold": 85
     },
@@ -22,7 +22,7 @@
       "rpcProbe": "normal",
       "cronOperations": "normal",
       "bindAddress": "127.0.0.1:18789",
-      "lastCheck": "2026-03-27T20:03:00+08:00"
+      "lastCheck": "2026-03-29T22:11:00+08:00"
     },
     "apiQuota": {
       "status": "unknown",
@@ -31,14 +31,93 @@
   },
   "cronTaskScan": {
     "totalTasks": 28,
-    "runningTasks": 4,
-    "failedTasks": 0,
-    "tasksWithErrors": [],
+    "runningTasks": 0,
+    "failedTasks": 3,
+    "tasksWithErrors": [
+      {
+        "name": "🏥 健康监控员",
+        "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
+        "lastStatus": "error",
+        "lastDurationMs": 120019,
+        "consecutiveErrors": 4,
+        "errorType": "timeout",
+        "note": "timeout 120s，连续失败已达4次"
+      },
+      {
+        "name": "🧪 回归测试员",
+        "id": "e4248abd-0b9b-4540-9bc5-633547462443",
+        "lastStatus": "error",
+        "lastDurationMs": 300017,
+        "consecutiveErrors": 1,
+        "errorType": "timeout"
+      },
+      {
+        "name": "🧠 调度优化员",
+        "id": "b6bc413c-0228-48c8-b42c-0af833216d2c",
+        "lastStatus": "error",
+        "lastDurationMs": 300002,
+        "consecutiveErrors": 1,
+        "errorType": "timeout"
+      }
+    ],
     "scanStatus": "complete",
-    "scanTime": "2026-03-27T20:03:00+08:00"
+    "scanTime": "2026-03-29T22:11:00+08:00"
   },
-  "events": [],
-  "actions": {},
-  "lastEventTime": null,
-  "nextCheck": "2026-03-27T22:03:00+08:00"
+  "events": [
+    {
+      "time": "2026-03-29T22:11:00+08:00",
+      "code": "TASK_CONSECUTIVE_FAILURES_UPGRADED",
+      "source": "📡 事件协调员",
+      "severity": "warning",
+      "description": "🏥 健康监控员连续失败升级到 4 次（上次 3 次），超时问题持续存在",
+      "data": {
+        "task": "🏥 健康监控员",
+        "taskId": "92af6946-b23b-4534-a6b8-5877cfa36f12",
+        "consecutiveErrors": 4,
+        "errorType": "timeout",
+        "lastDurationMs": 120019
+      },
+      "action": "已触发故障自愈员（上次22:00已执行一次），系统进入持续监控",
+      "result": "pending"
+    },
+    {
+      "time": "2026-03-29T22:11:00+08:00",
+      "code": "TASK_STATUS_NEW",
+      "source": "📡 事件协调员",
+      "severity": "info",
+      "description": "🧪 回归测试员、🧠 调度优化员出现超时错误（首次）",
+      "data": {
+        "tasks": ["🧪 回归测试员", "🧠 调度优化员"],
+        "errorType": "timeout",
+        "consecutiveErrors": 1
+      },
+      "action": "观察中（各仅1次失败）",
+      "result": "ok"
+    },
+    {
+      "time": "2026-03-29T21:03:00+08:00",
+      "code": "TASK_CONSECUTIVE_FAILURES_THRESHOLD",
+      "source": "📡 事件协调员",
+      "severity": "warning",
+      "description": "🏥 健康监控员连续失败 3 次，达到阈值",
+      "data": {
+        "task": "🏥 健康监控员",
+        "taskId": "92af6946-b23b-4534-a6b8-5877cfa36f12",
+        "consecutiveErrors": 3,
+        "errorType": "timeout"
+      },
+      "action": "已触发故障自愈员",
+      "result": "pending"
+    }
+  ],
+  "actions": {
+    "autoHealerTrigger": {
+      "attempted": true,
+      "lastRanAt": "2026-03-29T22:00:00+08:00",
+      "reason": "consecutive failures on health monitor"
+    }
+  },
+  "lastEventTime": "2026-03-29T22:11:00+08:00",
+  "nextCheck": "2026-03-30T00:11:00+08:00",
+  "notes": "静默时段（22:00-06:00）。系统资源健康（内存73.2%，磁盘661.6GB）。健康监控员超时问题持续（4次），已由故障自愈员处理。回归测试员和调度优化员各首次超时，观察中。网关运行正常。"
 }

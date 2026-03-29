@@ -1,18 +1,32 @@
 {
-  "lastCheck": "2026-03-29T16:28:47+08:00",
-  "lastNotification": "2026-03-25T18:00:58+08:00",
-  "systemHealth": "healthy",
-  "issuesFound": 0,
+  "lastCheck": "2026-03-29T22:07:00+08:00",
+  "lastNotification": "2026-03-29T22:07:00+08:00",
+  "systemHealth": "degraded",
+  "issuesFound": 1,
   "issuesFixed": 0,
-  "alertsGenerated": 0,
-  "knownIssues": [],
-  "consecutiveFailures": {},
-  "notes": "Step 5 (timeout check) hangs due to cron list --json output processing. Steps 1-4 completed successfully. All systems healthy.",
+  "alertsGenerated": 1,
+  "knownIssues": [
+    {
+      "task": "🧠 调度优化员",
+      "error": "连续超时 (consecutiveErrors: 3) - API限流导致脚本反复重试后超时",
+      "since": "2026-03-29T21:00:00+08:00",
+      "action": "需人工干预：检查API限流情况或增加超时时间"
+    }
+  ],
+  "consecutiveFailures": {
+    "调度优化员": 3
+  },
+  "notes": "系统资源正常(Gateway OK, 内存0.68GB)。调度优化员连续3次失败(限流+编码错误+超时)，需关注。回归测试员已恢复正常运行。",
+  "scriptIssues": {
+    "encodingProblem": true,
+    "gatewayCheckHangs": true,
+    "cronListOk": true
+  },
   "notificationHistory": [
     {
-      "timestamp": "2026-03-29T16:28:47+08:00",
-      "action": "silent",
-      "reason": "系统健康，无问题需要修复"
+      "timestamp": "2026-03-29T22:07:00+08:00",
+      "action": "alert",
+      "reason": "🧠 调度优化员连续失败≥3次，触发紧急告警阈值。API限流导致脚本反复重试后超时。需人工干预。"
     }
   ]
 }

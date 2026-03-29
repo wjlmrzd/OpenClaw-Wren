@@ -1,36 +1,59 @@
 {
-  "lastAnalysisAt": "2026-03-29T18:12:00+08:00",
-  "analysisCycle": 3,
+  "lastAnalysisAt": "2026-03-29T21:06:00+08:00",
+  "analysisCycle": 4,
   "totalTasks": 26,
   "activeTasks": 26,
   "enabledTasks": 26,
   "collisionRiskPairs": [],
-  "collisionNote": "5-7 tasks fire at :00 every hour (by design, all running ok)",
-  "riskLevel": "LOW",
+  "riskLevel": "MEDIUM",
   "heavyTasks": [],
   "dependencyIssues": [],
+  "apiRateLimitCrisis": {
+    "severity": "HIGH",
+    "affectedTasks": [
+      { "name": "🧠 知识整理员", "jobId": "7677e68c-a6e7-4d92-8d31-09fb24bb5769", "consecutiveFailures": 3, "lastError": "API rate limit" },
+      { "name": "🧬 知识演化员", "jobId": "13f18a92-372a-4076-9b97-08f0efa2377f", "consecutiveFailures": 3, "lastError": "API rate limit" },
+      { "name": "🧹 日志清理员", "jobId": "af025901-6ebc-4541-9698-91c5db9907e6", "consecutiveFailures": 2, "lastError": "API rate limit" },
+      { "name": "🏃 运动提醒员", "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48", "consecutiveFailures": 3, "lastError": "API rate limit" },
+      { "name": "🌐 网站监控员", "jobId": "b41843c3-9956-4992-860d-df21cd03a766", "consecutiveFailures": 2, "lastError": "API rate limit" },
+      { "name": "🛡️ 安全审计员", "jobId": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f", "consecutiveFailures": 1, "lastError": "API rate limit" },
+      { "name": "🧪 灾难演练员", "jobId": "806f7f0b-f566-452e-a656-6910e5d7531a", "consecutiveFailures": 1, "lastError": "API rate limit" }
+    ],
+    "analysis": "Rate limits are cascading through night batch (02:00-04:00). Knowledge整理员 (02:00), 日志清理员 (03:00), 知识演化员 (04:00) are all in rapid succession, depleting API quota. 运动提醒员 (07:00) and others also affected. Root cause: multiple API-intensive tasks within short time windows.",
+    "recommendedAction": "Stagger nightly batch tasks to spread API load. Already applied: 知识演化员 04:00→04:30, 日志清理员 03:00→03:45. Consider also moving 知识整理员 from 02:00 to 02:30 in next cycle."
+  },
   "systemObservations": {
     "hourlyCollision": {
-      "description": "5-7 tasks trigger at :00 every hour (健康监控员, 事件协调员, 回归测试员, 资源守护者, 故障自愈员, 邮件监控员, 通知协调员, 调度优化员)",
+      "description": "8 tasks at :00 (健康监控员, 邮件监控员, 事件协调员, 回归测试员, 资源守护者, 故障自愈员, 通知协调员, 调度优化员)",
       "risk": "LOW",
-      "reason": "All completing successfully (lastStatus=ok), actual durations ~23-301s well below timeout configs (120-600s)"
+      "reason": "All completing within 5-50s, status=ok. Recent email timeout (180s) is anomaly, otherwise healthy."
     },
-    "nightlyMaintenance": {
-      "description": "日志清理员(03:00) + 每日维护员(03:30) + 知识演化员(04:00)",
+    "nightlyMaintenanceOptimized": {
+      "description": "日志清理员→03:45, 每日维护员→03:30, 知识演化员→04:30, 知识整理员→02:00",
       "risk": "LOW",
-      "reason": "30min intervals sufficient, all <30s execution"
+      "reason": "Staggered from 02:00-04:00 cascade. Still potential overlap with hourly tasks but significantly improved."
     },
     "morning08": {
-      "description": "网站监控员 at 08:10 (daily morning report task no longer in active list)",
-      "risk": "LOW",
-      "reason": "No collision at 08:00"
+      "description": "网站监控员 08:10 only. No 每日早报 task exists.",
+      "risk": "NONE",
+      "reason": "08:00 collision previously mentioned is resolved."
+    },
+    "knowledgeOrganizerScriptBug": {
+      "description": "scripts/knowledge-organizer.ps1 has wrong path (OpenClaw vs workspace/knowledge) and Windows 260-char path limit issues",
+      "risk": "MEDIUM",
+      "reason": "Script keeps hitting rate limits AND path errors. Needs fix before it can succeed."
     }
   },
   "optimizationHistory": [
     {
-      "date": "2026-03-27T12:03:00+08:00",
-      "action": "Initial analysis completed",
-      "details": "Total tasks: 18, Collision risk: 0 pairs, Heavy tasks: 1"
+      "date": "2026-03-29T21:06:00+08:00",
+      "action": "Night batch staggered to reduce API rate limit cascade",
+      "details": "知识演化员 04:00→04:30 (30min offset), 日志清理员 03:00→03:45 (45min offset). Both had consecutive API rate limit failures. New schedule: 02:00 知识整理员 | 03:30 每日维护员 | 03:45 日志清理员 | 04:30 知识演化员."
+    },
+    {
+      "date": "2026-03-29T18:12:00+08:00",
+      "action": "Scheduled optimization analysis",
+      "details": "No collision risks detected, no optimizations needed at this cycle"
     },
     {
       "date": "2026-03-27T18:02:00+08:00",
@@ -38,10 +61,10 @@
       "details": "No collision risks detected, no optimizations needed at this cycle"
     },
     {
-      "date": "2026-03-29T18:12:00+08:00",
-      "action": "Scheduled optimization analysis",
-      "details": "Total tasks: 26, Collision risk: 0 pairs (hourly :00 collision is by design and healthy), No timeout issues, System healthy, Silent period (18:00-22:00) - no Telegram sent"
+      "date": "2026-03-27T12:03:00+08:00",
+      "action": "Initial analysis completed",
+      "details": "Total tasks: 18, Collision risk: 0 pairs, Heavy tasks: 1"
     }
   ],
-  "recommendation": "No optimization needed. Hourly :00 collision is intentional design. All tasks executing within their timeout budgets. Next review in 6 hours."
+  "recommendation": "API rate limit crisis detected and partially addressed. Night batch staggered. Next cycle should: (1) consider moving 知识整理员 02:00→02:30, (2) investigate knowledge-organizer.ps1 path bug, (3) monitor if rate limits decrease after stagger. Gateway healthy."
 }
