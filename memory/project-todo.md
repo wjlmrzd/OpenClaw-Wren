@@ -1,11 +1,87 @@
 # 项目待办清单
 
 > 由"项目顾问" Cron 任务自动维护
-> 最后更新：2026-03-27 20:00
+> 最后更新：2026-03-29 20:00
 
 ---
 
 ## 📋 当前项目
+
+### CadAttrBlockConverter (属性块转换器) 🆕
+**状态**: 🟢 活跃  
+**创建日期**: 2026-03-29  
+**优先级**: 高
+
+#### 当前版本：v4.32.0
+**说明**: AutoCAD 插件，用于将图纸中的普通图块/多段线转换为带属性的图块
+
+#### 功能列表
+- [x] 普通图块 → 属性块转换
+- [x] 动态块 → 属性块 (自动解析)
+- [x] 多段线 → 属性块
+- [x] 多行文字 (MTEXT) 支持
+- [x] 批量转换
+- [x] 模板保存/加载 (XML)
+- [x] 原文字备份 (移至隐藏图层)
+- [x] Ctrl+Z 撤销支持
+- [x] 深色主题 UI (VS Code 风格)
+- [x] 自动加载注册
+
+#### 技术栈
+- .NET Framework 4.8
+- C# 9.0
+- WinForms (内嵌面板)
+- AutoCAD ObjectARX
+
+#### 项目结构
+```
+CadAttrBlockConverter/
+├── 属性块转换器.csproj    # 项目文件
+├── PluginEntry.cs         # 插件入口
+├── Core/                  # 核心逻辑 (BlockSwapper, TextExtractor, etc.)
+├── UI/                    # 界面 (5 Tab 主面板)
+└── Properties/           # 版本: v4.32.0
+```
+
+#### 进度记录
+| 日期 | 完成内容 | 备注 |
+|-----|---------|------|
+| 2026-03-29 | 项目发现 | 今天检查 workspace 时发现 |
+| 2026-03-29 | 项目报告生成 | 详细分析文档完成 |
+
+#### 待办
+- [ ] 编译验证 (检查 build.bat)
+- [ ] VS Build Tools 环境确认
+- [ ] 功能测试验证
+- [ ] 安装部署验证
+
+---
+
+### trae-agent (Trae Agent 工具) 🆕
+**状态**: 🔍 探索中  
+**创建日期**: 2026-03-29  
+**优先级**: 中
+
+#### 项目说明
+Trae IDE 的 Agent 工具项目，基于 Python (uv 包管理)
+
+#### 技术栈
+- Python (pyproject.toml)
+- uv 包管理器
+- pre-commit hooks
+
+#### 文件
+- `.pre-commit-config.yaml` - pre-commit 配置
+- `Makefile` - 构建脚本
+- `trae_config.json/yaml.example` - 配置示例
+- `uv.lock` - 依赖锁定
+
+#### 待办
+- [ ] 了解项目用途
+- [ ] 查看 README.md
+- [ ] 确认与 OpenClaw 的集成可能性
+
+---
 
 ### PaddleOCR 集成 (Telegram 图片文字识别)
 **状态**: ✅ 已完成  
