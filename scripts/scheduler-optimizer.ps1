@@ -1,283 +1,289 @@
-# Scheduler Optimizer - 调度优化器
+# ============================================================
+# Scheduler Optimizer - 调度优化器 (自动执行版)
 # 分析 Cron 任务执行时间，检测冲突，自动优化调度
-
+# ============================================================
 param(
-    [switch]$Analyze,
-    [switch]$Optimize,
-    [switch]$Report
+    [switch]$AnalyzeOnly,
+    [switch]$AutoExecute,
+    [int]$MaxChangesPerRun = 3
 )
 
+$ErrorActionPreference = "Continue"
 $workspaceRoot = "D:\OpenClaw\.openclaw\workspace"
 $cronJobsPath = "D:\OpenClaw\.openclaw\cron\jobs.json"
-$optimizerStatePath = Join-Path $workspaceRoot "memory\scheduler-optimizer-state.json"
-$optimizationReportPath = Join-Path $workspaceRoot "memory\scheduler-optimization-report.json"
+$statePath = Join-Path $workspaceRoot "memory\scheduler-state.json"
 
-Write-Host "=== Scheduler Optimizer 调度优化器 ===" -ForegroundColor Cyan
-Write-Host "分析时间：$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor Gray
-Write-Host ""
+# ============================================================
+# 1. 读取任务配置
+# ============================================================
+Write-Host "=== Scheduler Optimizer ===" -ForegroundColor Cyan
+Write-Host "[1/6] 读取任务配置..." -ForegroundColor Yellow
 
-# ==================== 1. 读取 Cron 任务配置 ====================
-Write-Host "[1/5] 读取 Cron 任务配置..." -ForegroundColor Yellow
+$jobsData = Get-Content $cronJobsPath -Raw | ConvertFrom-Json
+$jobs = $jobsData.jobs
+Write-Host ("  总任务数: {0}" -f $jobs.Count) -ForegroundColor Gray
 
-$jobs = @()
-if (Test-Path $cronJobsPath) {
-    try {
-        $jobsData = Get-Content $cronJobsPath -Raw | ConvertFrom-Json
-        $jobs = $jobsData.jobs | Where-Object { $_.enabled -eq $true }
-        Write-Host "  读取到 $($jobs.Count) 个启用的任务" -ForegroundColor Green
-    } catch {
-        Write-Host "  ✗ 无法读取 jobs.json: $($_.Exception.Message)" -ForegroundColor Red
-        exit 1
+# ============================================================
+# 2. 解析 cron 表达式
+# ============================================================
+Write-Host "[2/6] 解析 cron 表达式..." -ForegroundColor Yellow
+
+function Parse-CronExpr($expr) {
+    $parts = $expr -split '\s+'
+    if ($parts.Count -lt 5) { return @() }
+
+    $minute = $parts[0]
+    $hour   = $parts[1]
+
+    $minutes = @()
+    if ($minute -eq '*') {
+        $minutes = @(0..59)
+    } elseif ($minute -match '^\*/(\d+)$') {
+        $step = [int]$matches[1]
+        for ($i = 0; $i -lt 60; $i += $step) { $minutes += $i }
+    } elseif ($minute -match '^(\d+)-(\d+)$') {
+        for ($i = [int]$matches[1]; $i -le [int]$matches[2]; $i++) { $minutes += $i }
+    } elseif ($minute -match '^(\d+),(\d+)') {
+        $minutes = [int[]] ($minute -split ',')
+    } else {
+        $minutes = @([int]$minute)
     }
-} else {
-    Write-Host "  ✗ jobs.json 不存在" -ForegroundColor Red
-    exit 1
+
+    $hours = @()
+    if ($hour -eq '*') {
+        $hours = @(0..23)
+    } elseif ($hour -match '^\*/(\d+)$') {
+        $step = [int]$matches[1]
+        for ($i = 0; $i -lt 24; $i += $step) { $hours += $i }
+    } elseif ($hour -match '^(\d+)-(\d+)$') {
+        for ($i = [int]$matches[1]; $i -le [int]$matches[2]; $i++) { $hours += $i }
+    } elseif ($hour -match '^\*/(\d+)\s') {
+        $step = [int]($hour -replace '^\*/', '')
+        for ($i = 0; $i -lt 24; $i += $step) { $hours += $i }
+    } elseif ($hour -match '^(\d+),(\d+)') {
+        $hours = [int[]] ($hour -split ',')
+    } else {
+        $hours = @([int]$hour)
+    }
+
+    $result = @()
+    foreach ($h in $hours) {
+        foreach ($m in $minutes) {
+            $result += "{0:D2}:{1:D2}" -f $h, $m
+        }
+    }
+    return $result
 }
 
-# ==================== 2. 分析任务执行时间分布 ====================
-Write-Host "[2/5] 分析任务执行时间分布..." -ForegroundColor Yellow
-
-$hourlyDistribution = @{}
-for ($i = 0; $i -lt 24; $i++) {
-    $hourlyDistribution[$i] = @{
-        count = 0
-        tasks = @()
-        load = "low"
-    }
-}
-
+$timeSlots = @{}
 foreach ($job in $jobs) {
-    $schedule = $job.schedule
-    if ($schedule.kind -eq "cron") {
-        $expr = $schedule.expr
-        # 解析 cron 表达式的小时部分
-        if ($expr -match '^0\s+(\d+|\*|(\d+-\d+)(/\d+)?)\s') {
-            $hourPart = $matches[1]
-            
-            if ($hourPart -eq "*") {
-                # 每小时执行
-                for ($h = 0; $h -lt 24; $h++) {
-                    $hourlyDistribution[$h].count++
-                    $hourlyDistribution[$h].tasks += $job.name
-                }
-            } elseif ($hourPart -match '^(\d+)-(\d+)$') {
-                # 小时范围
-                $startHour = [int]$matches[1]
-                $endHour = [int]$matches[2]
-                for ($h = $startHour; $h -le $endHour; $h++) {
-                    $hourlyDistribution[$h].count++
-                    $hourlyDistribution[$h].tasks += $job.name
-                }
-            } elseif ($hourPart -match '^\d+$') {
-                # 具体小时
-                $hour = [int]$hourPart
-                $hourlyDistribution[$hour].count++
-                $hourlyDistribution[$hour].tasks += $job.name
+    if ($job.enabled -ne $true) { continue }
+    $expr = $job.schedule.expr
+    $times = Parse-CronExpr $expr
+    $timeout = $job.payload.timeoutSeconds
+    $isHeavy = ($timeout -gt 180)
+
+    foreach ($t in $times) {
+        if (-not $timeSlots.ContainsKey($t)) { $timeSlots[$t] = @() }
+        $timeSlots[$t] += @{
+            id     = $job.id
+            name   = $job.name
+            expr   = $expr
+            timeout = $timeout
+            isHeavy = $isHeavy
+        }
+    }
+}
+
+Write-Host ("  解析了 {0} 个时间点" -f $timeSlots.Count) -ForegroundColor Gray
+
+# ============================================================
+# 3. 检测碰撞风险
+# ============================================================
+Write-Host "[3/6] 检测碰撞风险..." -ForegroundColor Yellow
+
+$highRiskSlots = @()
+$mediumRiskSlots = @()
+
+foreach ($slot in $timeSlots.Keys) {
+    $tasks = $timeSlots[$slot]
+    if ($tasks.Count -ge 4) {
+        $highRiskSlots += $slot
+    } elseif ($tasks.Count -ge 3) {
+        $heavyCount = ($tasks | Where-Object { $_.isHeavy }).Count
+        if ($heavyCount -ge 2) {
+            $highRiskSlots += $slot
+        } else {
+            $mediumRiskSlots += $slot
+        }
+    }
+}
+
+$highCount = $highRiskSlots.Count
+$mediumCount = $mediumRiskSlots.Count
+
+$highColor = if ($highCount -gt 0) { "Red" } else { "Green" }
+$medColor  = if ($mediumCount -gt 0) { "Yellow" } else { "Green" }
+
+Write-Host ("  HIGH 风险: {0} 个时间点" -f $highCount) -ForegroundColor $highColor
+Write-Host ("  MEDIUM 风险: {0} 个时间点" -f $mediumCount) -ForegroundColor $medColor
+
+# ============================================================
+# 4. 生成优化方案
+# ============================================================
+Write-Host "[4/6] 生成优化方案..." -ForegroundColor Yellow
+
+$plannedChanges = @()
+
+foreach ($slot in ($highRiskSlots + $mediumRiskSlots)) {
+    $tasks = $timeSlots[$slot]
+    $hour = [int]($slot -split ':')[0]
+
+    $movable = $tasks | Where-Object {
+        $tMinute = [int](($_.expr -split '\s+')[0])
+        (($tMinute % 5) -eq 0) -and ($tasks.Count -gt 1)
+    }
+
+    $sorted = $movable | Sort-Object { -$_.timeout }
+    $toMove = $sorted | Select-Object -Skip 1
+
+    $offset = 5
+    foreach ($task in $toMove) {
+        if ($plannedChanges.Count -ge $MaxChangesPerRun) { break }
+
+        $parts = ($task.expr -split '\s+')
+        $oldMinute = [int]$parts[0]
+        $newMinute = $oldMinute + $offset
+        if ($newMinute -ge 60) {
+            $newMinute = $newMinute - 60
+            $offset = 1
+        }
+
+        $newSlot = "{0:D2}:{1:D2}" -f $hour, $newMinute
+        $newCount = if ($timeSlots.ContainsKey($newSlot)) { $timeSlots[$newSlot].Count } else { 0 }
+
+        if ($newCount -le 1) {
+            $parts[0] = $newMinute.ToString()
+            $newExpr = $parts -join ' '
+
+            $plannedChanges += @{
+                taskId  = $task.id
+                taskName = $task.name
+                oldExpr = $task.expr
+                newExpr = $newExpr
+                oldSlot = $slot
+                newSlot = $newSlot
+                reason  = "reduce_collision"
             }
+            $msg = "  -> {0}: {1} -> {2}" -f $task.name, $slot, $newSlot
+            Write-Host $msg -ForegroundColor Yellow
         }
     }
 }
 
-# 计算负载等级
-foreach ($hour in $hourlyDistribution.Keys) {
-    $count = $hourlyDistribution[$hour].count
-    if ($count -ge 4) {
-        $hourlyDistribution[$hour].load = "critical"
-    } elseif ($count -ge 2) {
-        $hourlyDistribution[$hour].load = "high"
-    } elseif ($count -eq 1) {
-        $hourlyDistribution[$hour].load = "medium"
+Write-Host ("  计划调整: {0} 个任务" -f $plannedChanges.Count) -ForegroundColor Gray
+
+# ============================================================
+# 5. 自动执行优化
+# ============================================================
+Write-Host "[5/6] 应用优化..." -ForegroundColor Yellow
+
+$appliedChanges = @()
+$failedChanges = @()
+$cliPath = "openclaw"
+
+foreach ($change in $plannedChanges) {
+    if ($AnalyzeOnly) {
+        Write-Host ("  [ANALYZE-ONLY] 跳过: {0}" -f $change.taskName) -ForegroundColor Cyan
+        continue
     }
-}
 
-# 输出时间分布
-Write-Host "  24 小时任务分布:" -ForegroundColor Gray
-$criticalHours = @()
-$highLoadHours = @()
-for ($h = 0; $h -lt 24; $h++) {
-    $dist = $hourlyDistribution[$h]
-    if ($dist.count -gt 0) {
-        $color = switch ($dist.load) {
-            "critical" { "Red"; $criticalHours += $h }
-            "high" { "Yellow"; $highLoadHours += $h }
-            "medium" { "Cyan" }
-            default { "Gray" }
-        }
-        $timeStr = "{0:D2}:00" -f $h
-        Write-Host "    $timeStr - $($dist.count) 个任务 [$($dist.load)]" -ForegroundColor $color
-    }
-}
-
-# ==================== 3. 检测任务冲突 ====================
-Write-Host "[3/5] 检测任务冲突..." -ForegroundColor Yellow
-
-$conflicts = @()
-$highLoadTasks = @("备份管理员", "日志清理员", "安全审计员", "每日早报", "网站监控员")
-
-# 检查高负载任务是否在同一时间
-foreach ($hour in $criticalHours) {
-    $tasksAtHour = $hourlyDistribution[$hour].tasks
-    $highLoadAtHour = $tasksAtHour | Where-Object { $_ -in $highLoadTasks }
-    
-    if ($highLoadAtHour.Count -ge 2) {
-        $conflicts += @{
-            hour = $hour
-            tasks = $highLoadAtHour
-            severity = "critical"
-            reason = "multiple_high_load_tasks"
-        }
-        Write-Host "  ⚠ 冲突：${hour}:00 - $($highLoadAtHour -join ', ')" -ForegroundColor Red
-    }
-}
-
-foreach ($hour in $highLoadHours) {
-    $tasksAtHour = $hourlyDistribution[$hour].tasks
-    if ($tasksAtHour.Count -ge 3) {
-        $conflicts += @{
-            hour = $hour
-            tasks = $tasksAtHour
-            severity = "warning"
-            reason = "too_many_tasks"
-        }
-        Write-Host "  ⚡ 拥挤：${hour}:00 - $($tasksAtHour.Count) 个任务" -ForegroundColor Yellow
-    }
-}
-
-if ($conflicts.Count -eq 0) {
-    Write-Host "  ✓ 未检测到严重冲突" -ForegroundColor Green
-} else {
-    Write-Host "  发现 $($conflicts.Count) 个冲突" -ForegroundColor Red
-}
-
-# ==================== 4. 生成优化建议 ====================
-Write-Host "[4/5] 生成优化建议..." -ForegroundColor Yellow
-
-$optimizations = @()
-
-# 优化策略：错开高负载任务
-foreach ($conflict in $conflicts) {
-    if ($conflict.severity -eq "critical") {
-        # 为每个高负载任务建议新的执行时间
-        $tasksToMove = $conflict.tasks[1..($conflict.tasks.Count - 1)]  # 保留第一个，移动其他
-        
-        foreach ($taskName in $tasksToMove) {
-            $job = $jobs | Where-Object { $_.name -eq $taskName }
-            if ($job) {
-                $currentExpr = $job.schedule.expr
-                $newHour = ($conflict.hour + 1) % 24  # 移动到下一小时
-                
-                # 生成新的 cron 表达式
-                $parts = $currentExpr -split '\s+'
-                if ($parts.Count -ge 2) {
-                    $parts[1] = $newHour.ToString()
-                    $newExpr = $parts -join ' '
-                    
-                    $optimizations += @{
-                        taskId = $job.id
-                        taskName = $taskName
-                        currentSchedule = $currentExpr
-                        suggestedSchedule = $newExpr
-                        reason = "avoid_conflict_with_$($conflict.tasks[0])"
-                        priority = "high"
-                    }
-                    
-                    Write-Host "  → 建议：$taskName 从 ${conflict.hour}:00 移至 ${newHour}:00" -ForegroundColor Yellow
-                }
+    try {
+        $result = & $cliPath cron update $change.taskId --schedule $change.newExpr 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host ("  OK {0}: {1} -> {2}" -f $change.taskName, $change.oldSlot, $change.newSlot) -ForegroundColor Green
+            $appliedChanges += @{
+                taskId   = $change.taskId
+                taskName = $change.taskName
+                oldExpr  = $change.oldExpr
+                newExpr  = $change.newExpr
+                oldSlot  = $change.oldSlot
+                newSlot  = $change.newSlot
+                status   = "success"
+                appliedAt = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
             }
+        } else {
+            Write-Host ("  FAIL {0}: {1}" -f $change.taskName, $result) -ForegroundColor Red
+            $failedChanges += $change
         }
+    } catch {
+        Write-Host ("  ERROR {0}: {1}" -f $change.taskName, $_.Exception.Message) -ForegroundColor Red
+        $failedChanges += $change
     }
 }
 
-# 检查 08:00 附近的任务（早报/网站监控）
-$eightAmTasks = $hourlyDistribution[8].tasks
-if ($eightAmTasks.Count -ge 2) {
-    Write-Host "  ℹ 08:00 有 $($eightAmTasks.Count) 个任务，建议错开" -ForegroundColor Yellow
-    
-    # 将网站监控移到 08:10
-    $webMonitorJob = $jobs | Where-Object { $_.name -eq "🌐 网站监控员" }
-    if ($webMonitorJob) {
-        $currentExpr = $webMonitorJob.schedule.expr
-        $newExpr = $currentExpr -replace '^0 8', '10 8'
-        
-        $optimizations += @{
-            taskId = $webMonitorJob.id
-            taskName = $webMonitorJob.name
-            currentSchedule = $currentExpr
-            suggestedSchedule = $newExpr
-            reason = "avoid_conflict_with_daily_report"
-            priority = "medium"
-        }
-        
-        Write-Host "  → 建议：网站监控员从 08:00 移至 08:10" -ForegroundColor Yellow
+# ============================================================
+# 6. 更新状态文件
+# ============================================================
+Write-Host "[6/6] 更新状态文件..." -ForegroundColor Yellow
+
+$existingState = @{}
+if (Test-Path $statePath) {
+    try {
+        $raw = Get-Content $statePath -Raw
+        $existingState = $raw | ConvertFrom-Json
+    } catch { $existingState = @{} }
+}
+
+$history = @()
+if ($existingState.optimizationHistory) {
+    $history = @($existingState.optimizationHistory)
+}
+
+if ($appliedChanges.Count -gt 0) {
+    $detailParts = $appliedChanges | ForEach-Object { "$($_.taskName) $($_.oldSlot)->$($_.newSlot)" }
+    $history += @{
+        date    = (Get-Date -Format "yyyy-MM-ddTHH:mm:ss+08:00")
+        action  = "auto_staggered_scheduling"
+        details = ("Adjusted {0} tasks: {1}" -f $appliedChanges.Count, ($detailParts -join ', '))
     }
 }
 
-# ==================== 5. 应用优化（可选） ====================
-Write-Host "[5/5] 应用优化..." -ForegroundColor Yellow
-
-$appliedCount = 0
-
-if ($Optimize -and $optimizations.Count -gt 0) {
-    Write-Host "  ⚠ 自动优化功能需要确认，当前仅生成建议" -ForegroundColor Yellow
-    Write-Host "  要应用优化，请手动更新 jobs.json 或使用 -Report 查看详细建议" -ForegroundColor Gray
-} else {
-    Write-Host "  ℹ 跳过优化应用 (使用 -Optimize 启用)" -ForegroundColor Gray
+$newState = @{
+    lastAnalysisAt    = (Get-Date -Format "yyyy-MM-ddTHH:mm:ss+08:00")
+    analysisCycle     = if ($existingState.analysisCycle) { $existingState.analysisCycle + 1 } else { 1 }
+    totalTasks        = $jobs.Count
+    highRiskSlots     = $highCount
+    mediumRiskSlots   = $mediumCount
+    plannedChanges    = $plannedChanges.Count
+    appliedChanges    = $appliedChanges.Count
+    failedChanges     = $failedChanges.Count
+    optimizationHistory = $history
+    riskLevel         = if ($highCount -gt 0) { "HIGH" } elseif ($mediumCount -gt 0) { "MEDIUM" } else { "LOW" }
+    recommendation    = if ($highCount -gt 0) { ("CRITICAL: {0} HIGH-risk slots" -f $highCount) } elseif ($mediumCount -gt 0) { ("WARN: {0} MEDIUM-risk slots" -f $mediumCount) } else { "OK: No collision risks" }
 }
 
-# ==================== 保存状态和报告 ====================
-$optimizerState = [PSCustomObject]@{
-    lastAnalysis = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
-    totalTasks = $jobs.Count
-    hourlyDistribution = $hourlyDistribution
-    conflicts = $conflicts
-    optimizations = $optimizations
-    appliedCount = $appliedCount
+$newState | ConvertTo-Json -Depth 10 | Set-Content -Path $statePath -Encoding UTF8
+
+# ============================================================
+# 输出摘要
+# ============================================================
+Write-Host ""
+Write-Host "=== 优化完成 ===" -ForegroundColor Cyan
+Write-Host ("  HIGH 风险: {0}" -f $highCount) -ForegroundColor $highColor
+Write-Host ("  MEDIUM 风险: {0}" -f $mediumCount) -ForegroundColor $medColor
+Write-Host ("  计划调整: {0}" -f $plannedChanges.Count) -ForegroundColor Gray
+$appColor = if ($appliedChanges.Count -gt 0) { "Green" } else { "Gray" }
+Write-Host ("  实际应用: {0}" -f $appliedChanges.Count) -ForegroundColor $appColor
+$failColor = if ($failedChanges.Count -gt 0) { "Red" } else { "Gray" }
+Write-Host ("  失败: {0}" -f $failedChanges.Count) -ForegroundColor $failColor
+
+# 输出 JSON 供 agent 读取
+$result = @{
+    highRiskSlots   = $highRiskSlots
+    mediumRiskSlots = $mediumRiskSlots
+    plannedChanges  = $plannedChanges
+    appliedChanges  = $appliedChanges
+    failedChanges   = $failedChanges
 }
-
-$optimizerState | ConvertTo-Json -Depth 10 | Set-Content -Path $optimizerStatePath
-
-# 生成详细报告
-$report = [PSCustomObject]@{
-    timestamp = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
-    summary = @{
-        totalTasks = $jobs.Count
-        criticalHours = $criticalHours.Count
-        highLoadHours = $highLoadHours.Count
-        conflictsDetected = $conflicts.Count
-        optimizationsSuggested = $optimizations.Count
-    }
-    conflicts = $conflicts
-    optimizations = $optimizations
-    recommendations = @(
-        if ($criticalHours.Count -gt 0) { "避免在 $($criticalHours -join ', ') 点安排高负载任务" }
-        if ($conflicts.Count -gt 0) { "优先解决 $($conflicts.Count) 个任务冲突" }
-        if ($optimizations.Count -gt 0) { "应用 $($optimizations.Count) 个调度优化建议" }
-        "保持每小时任务数 ≤ 2 个以确保稳定性"
-    )
-}
-
-$report | ConvertTo-Json -Depth 10 | Set-Content -Path $optimizationReportPath
-
-# ==================== 输出报告 ====================
-if ($Report) {
-    Write-Host ""
-    Write-Host "=== 调度优化报告 ===" -ForegroundColor Cyan
-    Write-Host "任务总数：$($jobs.Count)" -ForegroundColor Yellow
-    Write-Host "冲突检测：$($conflicts.Count)" -ForegroundColor $(if ($conflicts.Count -gt 0) { "Red" } else { "Green" })
-    Write-Host "优化建议：$($optimizations.Count)" -ForegroundColor Yellow
-    Write-Host ""
-    
-    if ($optimizations.Count -gt 0) {
-        Write-Host "优化建议详情:" -ForegroundColor Cyan
-        foreach ($opt in $optimizations) {
-            Write-Host "  任务：$($opt.taskName)"
-            Write-Host "    当前：$($opt.currentSchedule)"
-            Write-Host "    建议：$($opt.suggestedSchedule)"
-            Write-Host "    原因：$($opt.reason)"
-            Write-Host ""
-        }
-    }
-}
-
-# 返回 JSON 结果
-$optimizerState | ConvertTo-Json -Depth 10
+$result | ConvertTo-Json -Depth 5
