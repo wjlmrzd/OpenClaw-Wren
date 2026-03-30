@@ -815,4 +815,4 @@ Memory/
 ### 閰嶇疆鏂囦欢妫€鏌ョ粨鏋?
 Wren 鎻愬埌鐨?memoryFlush 鍦ㄥ綋鍓嶇増鏈?(0.1.9) 涓嶅瓨鍦ㄣ€?鐜版湁 hooks 宸插惎鐢?
 - session-memory: true
-- boot-md: true
+- boot-md: true\
