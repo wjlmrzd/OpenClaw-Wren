@@ -70,7 +70,7 @@
                       "name":  "T004",
                       "desc":  "Gateway Health Check",
                       "details":  [
-                                      "HTTP 200 in 350ms"
+                                      "HTTP 200 in 331ms"
                                   ]
                   },
                   {
@@ -138,6 +138,7 @@
                                       "OK: organize-vault.ps1",
                                       "OK: query-feishu-users.ps1",
                                       "OK: quick-clean-scan.ps1",
+                                      "OK: quick-health-check.ps1",
                                       "OK: regression-test-runner.ps1",
                                       "OK: regression-test-simple.ps1",
                                       "OK: regression-test.ps1",
@@ -163,5 +164,5 @@
                   }
               ],
     "failed":  0,
-    "timestamp":  "2026-03-29 21:17:24"
+    "timestamp":  "2026-03-30 00:09:40"
 }

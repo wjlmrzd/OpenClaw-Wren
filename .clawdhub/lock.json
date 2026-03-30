@@ -8,6 +8,18 @@
     "paddleocr-text-recognition": {
       "version": "1.0.12",
       "installedAt": 1774411967121
+    },
+    "clawsec": {
+      "version": "1.0.0",
+      "installedAt": 1774799581125
+    },
+    "verified-capability-evolver": {
+      "version": "1.0.3",
+      "installedAt": 1774799590436
+    },
+    "cs-skill-security-auditor": {
+      "version": "1.0.0",
+      "installedAt": 1774799600084
     }
   }
 }

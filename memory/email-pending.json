@@ -1,9 +1,9 @@
 {
-  "lastCheck": "2026-03-29T21:02:00+08:00",
+  "lastCheck": "2026-03-30T00:03:00+08:00",
   "pendingEmails": [
     {
       "subject": "小龙虾(Openclaw)助手上线啦",
-      "from": "仙踪问道 <docs@mail.riyuexinzhu.com>",
+      "from": "仙踪问道 <docs@mail.riyuexiovzhu.com>",
       "date": "2026-03-26 11:45",
       "urgent": false
     },
@@ -30,8 +30,14 @@
       "from": "京东JD.com <customer_service@jd.com>",
       "date": "2026-03-28 22:12",
       "urgent": false
+    },
+    {
+      "subject": "京东已收到您的订单【3452218008******】，欢迎您随时关注订单状态！",
+      "from": "京东JD.com <customer_service@jd.com>",
+      "date": "2026-03-29 21:06",
+      "urgent": false
     }
   ],
-  "lastSent": "2026-03-29T21:02:00+08:00",
-  "totalPending": 5
+  "totalPending": 6,
+  "lastSent": null
 }

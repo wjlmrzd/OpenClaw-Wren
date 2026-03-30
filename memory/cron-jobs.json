@@ -1,4 +1,4 @@
-{
+﻿{
   "jobs": [
     {
       "id": "f36fe701-5c76-47ad-8cb8-1a996a37d1b5",
@@ -6,7 +6,7 @@
       "name": "gateway-predictive-check",
       "enabled": true,
       "createdAtMs": 1773972791986,
-      "updatedAtMs": 1774451358845,
+      "updatedAtMs": 1774771740380,
       "schedule": {
         "kind": "at",
         "at": "2026-03-21T10:15:00.000Z"
@@ -15,8 +15,8 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "执行 Gateway 预测性维护检查，分析内存趋势和磁盘空间，生成报告发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
+        "message": "鎵ц Gateway 棰勬祴鎬х淮鎶ゆ鏌ワ紝鍒嗘瀽鍐呭瓨瓒嬪娍鍜岀鐩樼┖闂达紝鐢熸垚鎶ュ憡鍙戦€佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
         "timeoutSeconds": 120
       },
       "delivery": {
@@ -30,85 +30,53 @@
       }
     },
     {
-      "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
+      "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
       "agentId": "main",
-      "name": "📧 邮件监控员",
+      "name": "馃彞 鍋ュ悍鐩戞帶鍛?,
       "enabled": true,
-      "createdAtMs": 1774082243397,
-      "updatedAtMs": 1774474821497,
+      "createdAtMs": 1774081729036,
+      "updatedAtMs": 1774800180053,
       "schedule": {
         "kind": "cron",
-        "expr": "*/20 * * * *",
+        "expr": "0 * * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "检查邮箱未读邮件（运行 Python 脚本：python D:\\OpenClaw\\.openclaw\\workspace\\scripts\\email-checker.py）。\n\n**发送策略**：\n- 有新邮件：立即整理摘要发送到 Telegram 8542040756\n- 无新邮件：静默处理，不发送消息\n\n**静默时段**：22:00 - 06:00\n- 静默时段内：仅发送**紧急邮件**（标记为高优先级、来自重要联系人）\n- 普通邮件：延迟到 06:00 后统一发送\n\n**检查频率**：每 20 分钟一次",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
+        "message": "鎵ц Gateway 鍋ュ悍妫€鏌ョ洃鎺э細powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\gateway-monitor.ps1 -Mode smart\n\n**闈欓粯鏃舵**锛?2:00 - 06:00\n- 闈欓粯鏃舵鍐咃細浠呭彂閫?*涓ラ噸璀︽姤**锛圙ateway 瀹曟満銆佹棤娉曢噸鍚級\n- 鏅€氬仴搴锋姤鍛婏細寤惰繜鍒?06:00 鍚庡彂閫?,
+        "model": "minimax-coding-plan/minimax-2.7",
         "timeoutSeconds": 180
       },
       "delivery": {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1774476000000,
-        "lastRunAtMs": 1774474800018,
-        "lastStatus": "ok",
-        "lastDurationMs": 21479,
-        "consecutiveErrors": 0,
-        "runningAtMs": 1774476000023
-      }
-    },
-    {
-      "id": "ccb233d7-0977-4d57-aba7-7564a67041d8",
-      "agentId": "main",
-      "name": "🚑 故障自愈员",
-      "enabled": true,
-      "createdAtMs": 1774315999745,
-      "updatedAtMs": 1774474250561,
-      "schedule": {
-        "expr": "*/30 * * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是 Auto-Healer 故障自愈员，负责自动修复系统故障。\n\n**执行流程**：\n1. 运行自愈脚本：powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\auto-healer.ps1\n2. 分析脚本输出的修复计划\n3. 执行自动修复\n\n**通知策略 (重要)**：\n\n| 情况 | Telegram 通知 | 日志记录 |\n|------|-------------|----------|\n| ✅ 系统健康，无问题 | ❌ 静默 | ✅ |\n| ✅ 问题已自动修复 | ❌ 静默 | ✅ |\n| ⚠️ 发现新问题 (首次) | ✅ 发送 | ✅ |\n| ⚠️ 问题状态变化 (恶化/好转) | ✅ 发送 | ✅ |\n| 🔴 连续失败≥3 次 | ✅ 紧急告警 | ✅ |\n| 🔴 需要人工干预 | ✅ 发送 | ✅ |\n\n**静默规则**：\n- 如果本次检查结果与上次相同 → 静默\n- 如果所有问题都已自动修复 → 静默\n- 如果系统健康 → 静默\n\n**状态追踪**：\n- 读取 `memory/auto-healer-state.json` 对比上次状态\n- 仅在有**新变化**时发送通知\n\n**输出要求**：\n- 有真正需要关注的变化时 → 发送到 Telegram 8542040756\n- 否则 → 仅记录日志，不发送消息\n\n**执行频率**：每 30 分钟\n**超时限制**：300 秒\n**模型：** dashscope-coding-plan/qwen3.5-plus",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774476000000,
-        "lastRunAtMs": 1774474200027,
-        "lastStatus": "ok",
-        "lastDurationMs": 50534,
-        "consecutiveErrors": 0,
-        "runningAtMs": 1774476016471
+        "nextRunAtMs": 1774803600000,
+        "lastRunAtMs": 1774800000022,
+        "lastStatus": "error",
+        "lastDurationMs": 180031,
+        "consecutiveErrors": 7,
+        "lastError": "Error: cron: job execution timed out"
       }
     },
     {
       "id": "3a1df011-613d-4528-a274-530cfd84f4fb",
       "agentId": "main",
-      "name": "📡 事件协调员",
+      "name": "馃摗 浜嬩欢鍗忚皟鍛?,
       "createdAtMs": 1774316390613,
-      "updatedAtMs": 1774475746793,
+      "updatedAtMs": 1774800873979,
       "schedule": {
         "kind": "cron",
-        "expr": "*/5 * * * *",
+        "expr": "0 * * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "你是 OpenClaw 事件协调员 (Event Hub)，负责让各 Agent 协同工作。\n\n## 核心职责\n\n### 1. 系统状态检查 (每 5 分钟)\n读取并更新 memory/event-hub-state.json：\n- 内存使用率 (通过任务管理器或性能计数器)\n- 磁盘空间 (D 盘剩余空间)\n- API 配额使用情况\n- Gateway 健康状态\n\n### 2. 事件检测与决策\n\n**资源事件：**\n- 内存 > 85% → 触发 🧹 日志清理员\n- 内存 > 95% → 触发 🚑 故障自愈员 (重启 Gateway)\n- 磁盘 > 85% → 触发 🧹 日志清理员\n- API 使用 > 80% → 延迟非关键任务 (📰 每日早报、🌐 网站监控员)\n\n**任务事件：**\n- 扫描 cron 任务失败记录\n- 连续失败≥3 次 → 通知 🚑 故障自愈员\n- 任务队列堆积 → 调整执行顺序\n\n**Gateway 事件：**\n- 健康检查失败 → 尝试重启\n- 重启后验证所有任务\n\n### 3. 事件联动执行\n\n使用 openclaw cron run 触发对应 Agent：\n- 日志清理：openclaw cron run --id \"af025901-6ebc-4541-9698-91c5db9907e6\"\n- 健康检查：openclaw cron run --id \"92af6946-b23b-4534-a6b8-5877cfa36f12\"\n- 故障自愈：openclaw cron run --id \"ccb233d7-0977-4d57-aba7-7564a67041d8\"\n\n### 4. 事件日志\n\n记录到 memory/event-log.md：\n```\n## YYYY-MM-DD\n\n### HH:MM - 事件代码\n- **来源**: Agent 名称\n- **数据**: 关键指标\n- **动作**: 执行的联动\n- **结果**: ✅/❌\n```\n\n### 5. 通知策略\n\n| 严重性 | Telegram | 日志 |\n|--------|---------|------|\n| 🟢 信息 | ❌ | ✅ |\n| 🟡 注意 | ❌ | ✅ |\n| ⚠️ 警告 | ✅ (摘要) | ✅ |\n| 🔴 紧急 | ✅ (立即) | ✅ |\n\n**静默时段 (22:00-06:00)**：仅发送紧急事件\n\n### 6. 输出要求\n\n**有事件时：**\n```\n📡 Event Hub 报告 - HH:mm\n\n🔴/⚠️ 事件：[事件名称]\n来源：[Agent]\n影响：[描述]\n动作：[已执行的联动]\n状态：✅ 已解决 / ⏳ 处理中\n```\n\n**无事件时：** 静默\n\n---\n\n**执行频率：** 每 5 分钟\n**超时限制：** 180 秒\n**模型：** dashscope-coding-plan/qwen3.5-plus",
+        "message": "浣犳槸 OpenClaw 浜嬩欢鍗忚皟鍛?(Event Hub)锛岃礋璐ｈ鍚?Agent 鍗忓悓宸ヤ綔銆俓n\n## 鏍稿績鑱岃矗\n\n### 1. 绯荤粺鐘舵€佹鏌?(姣?2 灏忔椂)\n璇诲彇骞舵洿鏂?memory/event-hub-state.json锛歕n- 鍐呭瓨浣跨敤鐜?(閫氳繃浠诲姟绠＄悊鍣ㄦ垨鎬ц兘璁℃暟鍣?\n- 纾佺洏绌洪棿 (D 鐩樺墿浣欑┖闂?\n- API 閰嶉浣跨敤鎯呭喌\n- Gateway 鍋ュ悍鐘舵€乗n\n**妫€鏌ユ柟娉?*锛氫娇鐢?openclaw gateway status 鑾峰彇 Gateway 鐘舵€侊紝鑰岄潪鐩存帴鎵ц PowerShell\n\n### 2. 浜嬩欢妫€娴嬩笌鍐崇瓥\n\n**璧勬簮浜嬩欢锛?*\n- 鍐呭瓨 > 85% 鈫?瑙﹀彂 馃Ч 鏃ュ織娓呯悊鍛榎n- 鍐呭瓨 > 95% 鈫?瑙﹀彂 馃殤 鏁呴殰鑷剤鍛?(閲嶅惎 Gateway)\n- 纾佺洏 > 85% 鈫?瑙﹀彂 馃Ч 鏃ュ織娓呯悊鍛榎n- API 浣跨敤 > 80% 鈫?寤惰繜闈炲叧閿换鍔?(馃摪 姣忔棩鏃╂姤銆侌煂?缃戠珯鐩戞帶鍛?\n\n**浠诲姟浜嬩欢锛?*\n- 鎵弿 cron 浠诲姟澶辫触璁板綍\n- 杩炵画澶辫触鈮? 娆?鈫?閫氱煡 馃殤 鏁呴殰鑷剤鍛榎n- 浠诲姟闃熷垪鍫嗙Н 鈫?璋冩暣鎵ц椤哄簭\n\n**Gateway 浜嬩欢锛?*\n- 鍋ュ悍妫€鏌ュけ璐?鈫?灏濊瘯閲嶅惎\n- 閲嶅惎鍚庨獙璇佹墍鏈変换鍔n\n### 3. 浜嬩欢鑱斿姩鎵ц\n\n浣跨敤 openclaw cron run 瑙﹀彂瀵瑰簲 Agent锛歕n- 鏃ュ織娓呯悊锛歰penclaw cron run --id \"af025901-6ebc-4541-9698-91c5db9907e6\"\n- 鍋ュ悍妫€鏌ワ細openclaw cron run --id \"92af6946-b23b-4534-a6b8-5877cfa36f12\"\n- 鏁呴殰鑷剤锛歰penclaw cron run --id \"ccb233d7-0977-4d57-aba7-7564a67041d8\"\n\n### 4. 浜嬩欢鏃ュ織\n\n璁板綍鍒?memory/event-log.md锛歕n```\n## YYYY-MM-DD\n\n### HH:MM - 浜嬩欢浠ｇ爜\n- **鏉ユ簮**: Agent 鍚嶇О\n- **鏁版嵁**: 鍏抽敭鎸囨爣\n- **鍔ㄤ綔**: 鎵ц鐨勮仈鍔╘n- **缁撴灉**: 鉁?鉂孿n```\n\n### 5. 閫氱煡绛栫暐\n\n| 涓ラ噸鎬?| Telegram | 鏃ュ織 |\n|--------|---------|------|\n| 馃煝 淇℃伅 | 鉂?| 鉁?|\n| 馃煛 娉ㄦ剰 | 鉂?| 鉁?|\n| 鈿狅笍 璀﹀憡 | 鉁?(鎽樿) | 鉁?|\n| 馃敶 绱ф€?| 鉁?(绔嬪嵆) | 鉁?|\n\n**闈欓粯鏃舵 (22:00-06:00)**锛氫粎鍙戦€佺揣鎬ヤ簨浠禱n\n**杩囨护瑙勫垯**锛歕n- 鉂?PowerShell 缂栫爜閿欒銆佹墽琛屽け璐ョ瓑鎶€鏈粏鑺?鈫?**涓嶅彂閫?Telegram**\n- 鉂?鍗曚釜鍛戒护澶辫触浣嗙郴缁熸暣浣撳仴搴?鈫?**涓嶅彂閫?Telegram**\n- 鉁?绯荤粺绾ч棶棰橈紙鍐呭瓨/纾佺洏涓寸晫銆丟ateway 瀹曟満銆佷换鍔¤繛缁け璐ワ級鈫?**鍙戦€?Telegram**\n\n### 6. 杈撳嚭瑕佹眰\n\n**鏈変簨浠舵椂锛?*\n```\n馃摗 Event Hub 鎶ュ憡 - HH:mm\n\n馃敶/鈿狅笍 浜嬩欢锛歔浜嬩欢鍚嶇О]\n鏉ユ簮锛歔Agent]\n褰卞搷锛歔鎻忚堪]\n鍔ㄤ綔锛歔宸叉墽琛岀殑鑱斿姩]\n鐘舵€侊細鉁?宸茶В鍐?/ 鈴?澶勭悊涓璡n```\n\n**鏃犱簨浠舵椂锛?* 闈欓粯\n\n---\n\n**鎵ц棰戠巼锛?* 姣?2 灏忔椂\n**瓒呮椂闄愬埗锛?* 180 绉抃n**妯″瀷锛?* dashscope-coding-plan/qwen3.5-plus",
         "model": "dashscope-coding-plan/qwen3.5-plus",
         "timeoutSeconds": 180
       },
@@ -116,416 +84,114 @@
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1774476000000,
-        "lastRunAtMs": 1774475700027,
-        "lastStatus": "ok",
-        "lastDurationMs": 46766,
-        "consecutiveErrors": 0,
-        "runningAtMs": 1774476313823
-      },
-      "enabled": true
-    },
-    {
-      "id": "b6bc413c-0228-48c8-b42c-0af833216d2c",
-      "agentId": "main",
-      "name": "🧠 调度优化员",
-      "createdAtMs": 1774316672112,
-      "updatedAtMs": 1774457395974,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */6 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是 OpenClaw 调度优化员 (Scheduler Optimizer)，负责优化 cron 任务执行时间，避免撞车和资源争抢。\n\n## 核心职责\n\n### 1. 分析任务时间分布 (每 6 小时)\n\n读取 cron/jobs.json，分析：\n- 所有任务的 schedule.expr\n- 历史执行时间 (state.lastDurationMs)\n- 超时配置 (payload.timeoutSeconds)\n- 失败记录 (state.consecutiveErrors)\n\n### 2. 检测撞车风险\n\n**撞车定义：**\n- 2 个或以上任务在同一时间执行 (±5 分钟)\n- 且都使用 API 密集型操作 (web_fetch, model inference)\n- 或都是重任务 (timeout > 1800s)\n\n**当前撞车点：**\n- 08:00 → 📰 每日早报 (15 分钟) + 🌐 网站监控员 (3 分钟)\n\n### 3. 自动优化策略\n\n**A. 错峰调整：**\n- 重任务单独时段 (02:00-05:00 或 23:00-01:00)\n- API 密集型任务分散执行\n- 依赖任务保持时间间隔 (如早报在邮件检查后 5 分钟)\n\n**B. 超时优化：**\n- 连续 3 次超时 → timeout × 1.5\n- 连续 3 次执行时间 < timeout 50% → timeout × 0.7\n\n**C. 动态调整：**\n- 检测到撞车 → 立即调整低优先级任务\n- API 配额紧张 → 延迟非关键任务 30 分钟\n\n### 4. 依赖关系管理\n\n**已知依赖：**\n- 📰 每日早报 依赖 📧 邮件监控员 (至少间隔 5 分钟)\n- 📊 运营总监 依赖 📰 每日早报 (至少间隔 15 分钟)\n- 🧹 日志清理员 依赖 ⚖️ 资源守护者 (至少间隔 30 分钟)\n\n### 5. 输出要求\n\n**有优化时发送 Telegram：**\n```\n🧠 调度优化报告 - HH:mm\n\n📊 分析结果:\n- 总任务数：X\n- 撞车风险：Y 对\n- 重任务：Z 个\n\n🔧 优化动作:\n1. [任务名] 08:00 → 08:15\n   理由：避开 [撞车任务]\n\n2. [任务名] timeout 900s → 1200s\n   理由：连续超时\n\n📈 预期改进:\n- 撞车次数：3 → 0\n- 失败率：15% → 5%\n```\n\n**无优化时：** 静默，仅更新 memory/scheduler-state.json\n\n### 6. 特殊规则\n\n- 修改 jobs.json 前必须备份到 memory/scheduler-backups/\n- 每次最多调整 3 个任务 (避免大幅变动)\n- 静默时段 (22:00-06:00) 不发送普通优化通知\n- 重大调整 (>30 分钟偏移) 需要 Telegram 确认\n\n---\n\n**执行频率：** 每 6 小时\n**超时限制：** 300 秒\n**模型：** dashscope-coding-plan/qwen3-coder-plus",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774476000000,
-        "lastRunAtMs": 1774457379469,
-        "lastStatus": "ok",
-        "lastDurationMs": 16505,
-        "consecutiveErrors": 0,
-        "runningAtMs": 1774476385095
+        "nextRunAtMs": 1774803600000,
+        "lastRunAtMs": 1774800348613,
+        "lastStatus": "error",
+        "lastDurationMs": 180187,
+        "consecutiveErrors": 1,
+        "lastError": "Error: cron: job execution timed out"
       },
       "enabled": true
     },
     {
       "id": "e4248abd-0b9b-4540-9bc5-633547462443",
       "agentId": "main",
-      "name": "🧪 回归测试员",
+      "name": "馃И 鍥炲綊娴嬭瘯鍛?,
       "createdAtMs": 1774317181904,
-      "updatedAtMs": 1774474325644,
+      "updatedAtMs": 1774801553393,
       "schedule": {
-        "expr": "*/30 * * * *",
         "kind": "cron",
+        "expr": "0 * * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "你是 OpenClaw 回归测试员 (Test Runner)，负责在配置/代码变更后自动执行测试，防止破坏性变更。\n\n## 核心职责\n\n### 1. 变更检测 (每 30 分钟)\n\n监控以下文件变化：\n- `openclaw.json` - Gateway 配置\n- `cron/jobs.json` - Cron 任务配置\n- `scripts/*.ps1` - PowerShell 脚本\n- `agents/main/openclaw.json` - Agent 配置\n\n**检测方法：**\n- 计算文件哈希值对比\n- 检测修改时间\n\n### 2. 核心测试用例\n\n**T001 - JSON 语法验证：**\n- 验证所有 JSON 文件可正确解析\n- 失败 → 阻断级别告警\n\n**T002 - 模型名称验证：**\n- 验证所有任务的 model 字段使用有效值\n- 允许模型：\n  - dashscope-coding-plan/qwen3.5-plus\n  - dashscope-coding-plan/qwen3-coder-plus\n  - dashscope-coding-plan/qwen3-coder-next\n  - dashscope-coding-plan/glm-5\n  - dashscope-coding-plan/glm-4.7\n  - dashscope-coding-plan/kimi-k2.5\n  - dashscope-coding-plan/minimax-m2.5\n- 失败 → 阻断级别告警\n\n**T003 - Cron 表达式验证：**\n- 验证所有 schedule.expr 格式正确 (5-6 部分)\n- 失败 → 阻断级别告警\n\n**T004 - Gateway 健康检查：**\n- 访问 http://127.0.0.1:18789/status\n- 响应时间 < 5 秒\n- 失败 → 阻断级别告警\n\n**T005 - PowerShell 语法检查：**\n- 验证 scripts/*.ps1 语法正确\n- 失败 → 警告级别\n\n### 3. 测试流程\n\n```\n检测到文件变更\n    ↓\n备份当前配置到 memory/test-backups/\n    ↓\n执行核心测试 (T001-T004)\n    ↓\n生成测试报告\n    ↓\n有失败 → Telegram 告警 + 修复建议\n全部通过 → 静默 (仅记录日志)\n```\n\n### 4. 输出格式\n\n**测试失败时发送 Telegram：**\n```\n🧪 回归测试报告 - HH:mm\n\n❌ 发现失败 (X/5 测试)\n\n🔴 阻断性问题:\n1. T002 - 模型名称验证失败\n   任务：💼 项目顾问\n   错误：Unknown model: anthropic/qwen3.5-plus\n   建议：使用 dashscope-coding-plan/qwen3.5-plus\n\n🔧 建议动作:\n1. 修复模型名称\n2. 重新运行测试：openclaw cron run --id \"{jobId}\"\n\n📋 详情：memory/test-reports/YYYY-MM-DD-HHmmss.md\n```\n\n**测试通过时：** 静默，仅更新 memory/test-runner-state.json\n\n### 5. 联动机制\n\n- 发现模型错误 → 通知 🚑 故障自愈员\n- 发现配置问题 → 通知 📝 配置审计师\n- Gateway 不健康 → 通知 🏥 健康监控员\n\n### 6. 特殊规则\n\n- 静默时段 (22:00-06:00) 仅发送阻断性告警\n- 每次测试前必须备份配置\n- 连续 3 次测试失败 → 升级告警\n\n---\n\n**执行频率：** 每 30 分钟  \n**超时限制：** 300 秒  \n**模型：** dashscope-coding-plan/qwen3-coder-plus",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
+        "message": "鎵ц鍥炲綊娴嬭瘯楠岃瘉閰嶇疆瀹屾暣鎬э細\n\n1. 杩愯娴嬭瘯鑴氭湰锛歚powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\regression-test-runner.ps1`\n\n2. 妫€鏌ョ粨鏋滄枃浠讹細`D:\\OpenClaw\\.openclaw\\workspace\\memory\\test-runner-state.json`\n\n3. 楠岃瘉娴嬭瘯閫氳繃锛坧assed/5锛夛細\n   - T001: JSON 璇硶楠岃瘉\n   - T002: 妯″瀷鍚嶇О楠岃瘉\n   - T003: Cron 琛ㄨ揪寮忛獙璇乗n   - T004: Gateway 鍋ュ悍妫€鏌n   - T005: PowerShell 璇硶妫€鏌n\n**闈欓粯鏃舵 (22:00-06:00)**锛歕n- 浠呴樆鏂€уけ璐?(T001-T004) 鍙戦€?Telegram\n- 璀﹀憡绾у埆 (T005) 绱Н鍒版棭鏅ㄦ憳瑕乗n- 鍏ㄩ儴閫氳繃 鈫?闈欓粯\n\n**鏈夐樆鏂€уけ璐ユ椂鍙戦€?Telegram 8542040756**锛歕n- 鎶ュ憡澶辫触鐨勬祴璇曠紪鍙峰拰鍘熷洜\n- 寤鸿淇鍔ㄤ綔\n\n**杈撳嚭鏍煎紡**锛歕n```\n馃И 鍥炲綊娴嬭瘯鎶ュ憡 - HH:mm\n\n鉁?閫氳繃: X/5\n馃敶 澶辫触: T00X - [鍘熷洜]\n\n馃敡 寤鸿: [淇鍔ㄤ綔]\n```\n\n瓒呮椂闄愬埗锛?00 绉抃n妯″瀷锛歞ashscope-coding-plan/qwen3-coder-plus",
+        "model": "minimax-coding-plan/minimax-2.7",
         "timeoutSeconds": 300
       },
       "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774476000000,
-        "lastRunAtMs": 1774474318264,
-        "lastStatus": "ok",
-        "lastDurationMs": 7380,
-        "consecutiveErrors": 0,
-        "runningAtMs": 1774476000019
-      },
-      "enabled": true
-    },
-    {
-      "id": "7eb7f35e-fe72-4a90-bfc6-ed59392b10f6",
-      "agentId": "main",
-      "name": "🔔 通知协调员",
-      "createdAtMs": 1774332005489,
-      "updatedAtMs": 1774474333707,
-      "schedule": {
-        "expr": "*/30 * * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是 OpenClaw 通知协调员 (Notification Coordinator)，负责智能管理所有 Telegram 通知，避免打扰用户。\n\n## 核心职责\n\n### 1. 情境检测 (每 30 分钟)\n\n**检测内容：**\n- 当前时间是否在静默时段 (22:00-06:00)\n- 使用 `scripts/notification-gateway.ps1 -Action get-mode` 获取当前模式\n\n**时段划分：**\n- 🌅 早晨 (06:00-09:00) - 正常通知\n- ☀️ 工作时间 (09:00-12:00, 14:00-18:00) - 正常通知\n- 🌆 傍晚 (18:00-22:00) - 仅警告及以上\n- 🌙 睡眠时间 (22:00-06:00) - 仅紧急及以上\n\n### 2. 通知决策\n\n**严重性级别：**\n- 🟢 信息：日常报告、完成通知\n- 🟡 注意：警告、非紧急问题\n- ⚠️ 警告：需要关注的问题\n- 🔴 紧急：系统故障、数据丢失风险\n- 🔥 危机：立即干预，否则严重后果\n\n**决策规则：**\n- 工作时间 → 允许所有级别\n- 傍晚时段 → 仅警告及以上\n- 睡眠时间 → 仅紧急及以上（其他累积到早晨摘要）\n\n### 3. 通知队列管理\n\n**队列操作：**\n- 待发送通知存入 `memory/notification-state.json`\n- 队列按严重性排序\n- 队列按来源分组\n\n**摘要生成触发条件：**\n- 静默时段结束（06:00）→ 由 🌅 早晨摘要 发送\n- 队列累积超过 10 条\n\n### 4. 与其他 Agent 的协作\n\n其他 Agent 发送通知前调用：\n```powershell\nscripts/notification-gateway.ps1 -Action send -Severity [级别] -Message \"[内容]\"\n```\n\n返回结果：\n- `SEND` → 立即发送 Telegram\n- `QUEUE` → 加入待发送队列\n- `FLUSH` → 发送摘要\n\n### 5. 输出要求\n\n**主动检查时（每 30 分钟）：** 静默，仅更新状态文件\n\n**队列累积超过 10 条时：**\n```\n🔔 通知队列摘要\n\n📊 累积通知：X 条\n- 紧急：X 条（已发送）\n- 警告：Y 条\n- 信息：Z 条\n\n📋 详情：memory/notification-state.json\n```\n\n**无事件时：** 静默\n\n---\n\n**执行频率：** 每 30 分钟  \n**超时限制：** 180 秒  \n**模型：** dashscope-coding-plan/qwen3-coder-plus",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1774476000000,
-        "lastRunAtMs": 1774474325644,
+        "nextRunAtMs": 1774803600000,
+        "lastRunAtMs": 1774800574289,
         "lastStatus": "ok",
-        "lastDurationMs": 8063,
-        "consecutiveErrors": 0,
-        "runningAtMs": 1774476000019
-      },
-      "enabled": true
-    },
-    {
-      "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
-      "agentId": "main",
-      "name": "🏥 健康监控员",
-      "enabled": true,
-      "createdAtMs": 1774081729036,
-      "updatedAtMs": 1774470602403,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 */2 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行 Gateway 健康检查监控：powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\gateway-monitor.ps1 -Mode smart\n\n**静默时段**：22:00 - 06:00\n- 静默时段内：仅发送**严重警报**（Gateway 宕机、无法重启）\n- 普通健康报告：延迟到 06:00 后发送",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
-        "timeoutSeconds": 120
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774477800000,
-        "lastRunAtMs": 1774470600019,
-        "lastStatus": "ok",
-        "lastDurationMs": 2384,
+        "lastDurationMs": 21780,
         "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "58540a34-62ab-46a7-a713-cac112e5cd48",
-      "agentId": "main",
-      "name": "🏃 运动提醒员",
-      "enabled": true,
-      "createdAtMs": 1774147675119,
-      "updatedAtMs": 1774451985054,
-      "schedule": {
-        "expr": "0 7 * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
       },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "发送简短运动提醒到 Telegram 8542040756。\n\n**任务要求**：\n1. 语气温暖简洁（≤200 字）\n2. 包含：运动项目 + 饮食建议 + 爱好时间\n3. 快速响应，避免复杂查询\n\n**超时保护**：简化逻辑，快速响应",
-        "timeoutSeconds": 180,
-        "model": "dashscope-coding-plan/qwen3-coder-next"
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774479600000,
-        "consecutiveErrors": 1,
-        "lastRunAtMs": 1774393209444,
-        "lastStatus": "error",
-        "lastDurationMs": 120023,
-        "lastError": "Error: cron: job execution timed out"
-      }
-    },
-    {
-      "id": "e15879fd-59a5-446a-8290-7682fddaca63",
-      "agentId": "main",
-      "name": "🏃 跑步训练提醒-周四",
-      "enabled": true,
-      "createdAtMs": 1774443508427,
-      "updatedAtMs": 1774443508427,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 7 * * 4",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：轻松跑 6km\n\n📋 内容：6km，配速 5'30\"，心率 140-155 BPM\n⏱️ 预计用时：约 33 分钟\n🎯 重点：恢复为主，保持轻松",
-        "model": "dashscope-coding-plan/qwen3-coder-next",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774479600000
-      }
-    },
-    {
-      "id": "0e63f087-5446-4033-b826-19dafe65673b",
-      "agentId": "main",
-      "name": "📰 每日早报",
-      "enabled": true,
-      "createdAtMs": 1774082243279,
-      "updatedAtMs": 1774451985101,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 8 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "生成今日早报（简化版，避免超时）：\n\n**执行顺序**（总时限 600 秒）：\n1. 🌤️ 天气 (90 秒) - 调用 weather 技能获取上海天气\n2. 📧 邮件 (120 秒) - 运行 email-checker.py，仅显示前 3 封重要邮件\n3. 📰 资讯 (120 秒) - 使用 web_search 获取 2 条 AI/科技新闻\n\n**输出要求**：\n- 总长度 ≤ 500 字\n- 使用 emoji 分隔模块\n- 发送到 Telegram 8542040756\n\n**降级策略**：\n- 如某模块超时，跳过该模块继续下一个\n- 至少发送已完成的模块\n\n**超时保护**：总超时 600 秒",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774483200000,
-        "lastRunAtMs": 1774396800014,
-        "lastStatus": "error",
-        "consecutiveErrors": 1,
-        "lastDurationMs": 450017,
-        "lastError": "Error: cron: job execution timed out"
-      }
+      "enabled": true
     },
     {
       "id": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
       "agentId": "main",
-      "name": "⚖️ 资源守护者",
+      "name": "鈿栵笍 璧勬簮瀹堟姢鑰?,
       "enabled": true,
       "createdAtMs": 1774083650701,
-      "updatedAtMs": 1774468936508,
+      "updatedAtMs": 1774800885261,
       "schedule": {
         "kind": "cron",
-        "expr": "0 */4 * * *",
+        "expr": "0 */2 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "你是资源守护者，负责监控 API 使用频率和系统资源：\n\n**监控内容**：\n1. 统计过去 4 小时各模型的请求次数（Coding Plan 限制：每小时请求数）\n2. 检查是否接近每小时配额限制\n3. 监控 Gateway 内存和 CPU 使用率\n4. 检查磁盘空间使用率\n\n**预警策略**：\n- 请求次数>80% 配额 → 发送预警\n- 内存>90% → 建议重启 Gateway\n- 磁盘>85% → 触发日志清理\n\n**静默时段**：22:00 - 06:00\n- 静默时段内：仅发送**严重警告**（内存>95%、磁盘>95%、API 配额耗尽）\n- 普通预警：延迟到 06:00 后发送\n\n**输出要求**：\n- 资源使用仪表板\n- 预警信息（如有）\n- 优化建议\n- 发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
+        "message": "浣犳槸璧勬簮瀹堟姢鑰咃紝璐熻矗鐩戞帶 API 浣跨敤棰戠巼鍜岀郴缁熻祫婧愶細\n\n**鐩戞帶鍐呭**锛歕n1. 缁熻杩囧幓 4 灏忔椂鍚勬ā鍨嬬殑璇锋眰娆℃暟锛圕oding Plan 闄愬埗锛氭瘡灏忔椂璇锋眰鏁帮級\n2. 妫€鏌ユ槸鍚︽帴杩戞瘡灏忔椂閰嶉闄愬埗\n3. 鐩戞帶 Gateway 鍐呭瓨鍜?CPU 浣跨敤鐜嘰n4. 妫€鏌ョ鐩樼┖闂翠娇鐢ㄧ巼\n\n**棰勮绛栫暐**锛歕n- 璇锋眰娆℃暟>80% 閰嶉 鈫?鍙戦€侀璀n- 鍐呭瓨>90% 鈫?寤鸿閲嶅惎 Gateway\n- 纾佺洏>85% 鈫?瑙﹀彂鏃ュ織娓呯悊\n\n**闈欓粯鏃舵**锛?2:00 - 06:00\n- 闈欓粯鏃舵鍐咃細浠呭彂閫?*涓ラ噸璀﹀憡**锛堝唴瀛?95%銆佺鐩?95%銆丄PI 閰嶉鑰楀敖锛塡n- 鏅€氶璀︼細寤惰繜鍒?06:00 鍚庡彂閫乗n\n**閲嶈锛氳繃婊ゆ妧鏈敊璇?*\n浠ヤ笅鎯呭喌**涓嶅彂閫?Telegram**锛屼粎璁板綍鏃ュ織锛歕n- PowerShell 缂栫爜閿欒锛堝 \"位\" 绫讳贡鐮侊級\n- 鍛戒护鎵ц澶辫触浣嗙郴缁熸暣浣撳仴搴穃n- 闈炲叧閿€ф墽琛岄敊璇痋n\n**杈撳嚭瑕佹眰**锛歕n- 璧勬簮浣跨敤浠〃鏉匡紙浠呭湪鏈夐璀︽椂鍙戦€侊級\n- 棰勮淇℃伅锛堝鏈夛級\n- 浼樺寲寤鸿\n- 鍙戦€佸埌 Telegram 8542040756\n\n**娉ㄦ剰**锛氬仴搴风姸鎬佹姤鍛婏紙鏃犻璀︽椂锛夆啋 闈欓粯锛屼笉鍙戦€?,
+        "model": "dashscope-coding-plan/qwen3.5-plus",
         "timeoutSeconds": 450
       },
       "delivery": {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1774483200000,
-        "lastRunAtMs": 1774468853226,
+        "nextRunAtMs": 1774807200000,
+        "lastRunAtMs": 1774800204067,
         "lastStatus": "ok",
-        "lastDurationMs": 83282,
+        "lastDurationMs": 42907,
         "consecutiveErrors": 0
       }
     },
     {
-      "id": "b41843c3-9956-4992-860d-df21cd03a766",
+      "id": "ccb233d7-0977-4d57-aba7-7564a67041d8",
       "agentId": "main",
-      "name": "🌐 网站监控员",
+      "name": "馃殤 鏁呴殰鑷剤鍛?,
       "enabled": true,
-      "createdAtMs": 1774233586955,
-      "updatedAtMs": 1774446846903,
+      "createdAtMs": 1774315999745,
+      "updatedAtMs": 1774800348613,
       "schedule": {
         "kind": "cron",
-        "expr": "10 8 * * *",
+        "expr": "0 */2 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "你是网站更新监控员，负责抓取用户关注的网站并整理每日更新内容。\n\n**监控网站列表**（配置文件：scripts/website-monitor-config.json）：\n1. CAD 自学网 (https://www.cadzxw.com) - 关注：软件更新、技术教程\n\n**任务流程**：\n1. 读取配置文件获取网站列表和关注关键词\n2. 使用 web_fetch 抓取各网站首页内容\n3. 对比上次抓取结果（scripts/website-monitor-state.json），识别新增内容\n4. 筛选用户关注的内容（软件更新、技术更新、社会实况）\n5. 对每条更新生成简短摘要（50-100 字）\n6. 整理格式发送到 Telegram\n\n**推送格式**：\n```\n📰 网站更新日报 - YYYY-MM-DD\n\n🔹 [网站名称] ([N] 条更新)\n1. [标题] - [简短摘要] → [链接]\n2. ...\n\n---\n💡 提示：回复\"添加网站 [URL]\"可添加新监控网站\n```\n\n**注意事项**：\n- 如无更新，发送\"今日无新内容\"即可\n- 同一网站最多推送 5 条更新\n- 避免重复推送相同内容\n- 首次运行时创建 state 文件记录初始状态\n\n发送到 Telegram 8542040756",
+        "message": "浣犳槸 Auto-Healer 鏁呴殰鑷剤鍛橈紝璐熻矗鑷姩淇绯荤粺鏁呴殰銆俓n\n**鎵ц娴佺▼**锛歕n1. 杩愯鑷剤鑴氭湰锛歱owershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\auto-healer.ps1\n2. 鍒嗘瀽鑴氭湰杈撳嚭鐨勪慨澶嶈鍒抃n3. 鎵ц鑷姩淇\n\n**閫氱煡绛栫暐 (閲嶈)**锛歕n\n| 鎯呭喌 | Telegram 閫氱煡 | 鏃ュ織璁板綍 |\n|------|-------------|----------|\n| 鉁?绯荤粺鍋ュ悍锛屾棤闂 | 鉂?闈欓粯 | 鉁?|\n| 鉁?闂宸茶嚜鍔ㄤ慨澶?| 鉂?闈欓粯 | 鉁?|\n| 鈿狅笍 鍙戠幇鏂伴棶棰?(棣栨) | 鉁?鍙戦€?| 鉁?|\n| 鈿狅笍 闂鐘舵€佸彉鍖?(鎭跺寲/濂借浆) | 鉁?鍙戦€?| 鉁?|\n| 馃敶 杩炵画澶辫触鈮? 娆?| 鉁?绱ф€ュ憡璀?| 鉁?|\n| 馃敶 闇€瑕佷汉宸ュ共棰?| 鉁?鍙戦€?| 鉁?|\n\n**闈欓粯瑙勫垯**锛歕n- 濡傛灉鏈妫€鏌ョ粨鏋滀笌涓婃鐩稿悓 鈫?闈欓粯\n- 濡傛灉鎵€鏈夐棶棰橀兘宸茶嚜鍔ㄤ慨澶?鈫?闈欓粯\n- 濡傛灉绯荤粺鍋ュ悍 鈫?闈欓粯\n\n**閲嶈锛氳繃婊ゆ妧鏈敊璇?*\n浠ヤ笅鎯呭喌**涓嶅彂閫?Telegram**锛屼粎璁板綍鏃ュ織锛歕n- PowerShell 缂栫爜閿欒锛堝 \"位\" 绫讳贡鐮侊級\n- 鍗曚釜鍛戒护鎵ц澶辫触浣嗙郴缁熸暣浣撳仴搴穃n- 鑴氭湰鎵ц瓒呮椂锛坱imeout锛塡n- 闈炲叧閿€ф墽琛岄敊璇痋n\n**鐘舵€佽拷韪?*锛歕n- 璇诲彇 `memory/auto-healer-state.json` 瀵规瘮涓婃鐘舵€乗n- 浠呭湪鏈?*鏂板彉鍖?*鏃跺彂閫侀€氱煡\n\n**杈撳嚭瑕佹眰**锛歕n- 鏈夌湡姝ｉ渶瑕佸叧娉ㄧ殑鍙樺寲鏃?鈫?鍙戦€佸埌 Telegram 8542040756\n- 鍚﹀垯 鈫?浠呰褰曟棩蹇楋紝涓嶅彂閫佹秷鎭痋n\n**鎵ц棰戠巼**锛氭瘡 30 鍒嗛挓\n**瓒呮椂闄愬埗**锛?00 绉掞紙10鍒嗛挓锛塡n**妯″瀷锛?* dashscope-coding-plan/qwen3.5-plus",
         "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774483800000,
-        "lastRunAtMs": 1774310962187,
-        "lastStatus": "ok",
-        "lastDurationMs": 75112,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
-      "agentId": "main",
-      "name": "📝 配置审计师",
-      "enabled": true,
-      "createdAtMs": 1774083650667,
-      "updatedAtMs": 1774470116678,
-      "schedule": {
-        "kind": "cron",
-        "expr": "20 */4 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是配置审计师，负责配置变更追踪和备份：\n\n**审计内容**：\n1. 检查 openclaw.json 的 lastTouchedAt 是否更新\n2. 对比 cron/jobs.json 的变更\n3. 检查 credentials/ 目录文件权限\n4. 验证敏感文件是否被意外提交到 git\n\n**备份任务**：\n1. 创建配置文件快照到 memory/config-backups/\n2. 生成变更差异报告\n3. 如检测到重大变更，发送确认提醒\n\n**静默时段**：22:00 - 06:00\n- 静默时段内：仅发送**安全警报**（凭证泄露、未授权修改）\n- 普通审计日志：延迟到 06:00 后发送\n\n**输出要求**：\n- 配置变更摘要（如有）\n- 备份位置报告\n- 安全风险提示\n- 发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
-        "timeoutSeconds": 330
+        "timeoutSeconds": 600
       },
       "delivery": {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1774484400000,
-        "lastRunAtMs": 1774470015177,
+        "nextRunAtMs": 1774807200000,
+        "lastRunAtMs": 1774800246974,
         "lastStatus": "ok",
-        "lastDurationMs": 101501,
+        "lastDurationMs": 101639,
         "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "070cc25e-f1db-40e6-b5e9-722374ccdfeb",
-      "agentId": "main",
-      "name": "提醒：给陆转坐标",
-      "enabled": true,
-      "deleteAfterRun": true,
-      "createdAtMs": 1774424321523,
-      "updatedAtMs": 1774424321523,
-      "schedule": {
-        "kind": "at",
-        "at": "2026-03-26T00:30:00.000Z"
-      },
-      "sessionTarget": "main",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "systemEvent",
-        "text": "⏰ 提醒：给陆转坐标"
-      },
-      "state": {
-        "nextRunAtMs": 1774485000000
-      }
-    },
-    {
-      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
-      "agentId": "main",
-      "name": "💼 项目顾问",
-      "enabled": true,
-      "createdAtMs": 1774082903927,
-      "updatedAtMs": 1774446489612,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 20 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是用户的专属项目顾问，负责代码生成全流程指导：\n\n**今日检查**：\n1. 查看 workspace 中新增/修改的代码文件\n2. 检查 git 提交记录，了解项目进展\n3. 识别未完成的功能或待修复的问题\n\n**项目支持**：\n1. **需求分析** - 帮助用户将想法拆解为可实现的功能列表\n2. **技术规划** - 推荐合适的技术栈、架构设计、目录结构\n3. **代码生成** - 协助编写代码、审查代码质量、提供优化建议\n4. **测试验收** - 生成测试用例、检查边界条件、验证功能完整性\n5. **进度跟踪** - 维护项目待办清单，标记完成/进行中/阻塞状态\n\n**输出要求**：\n- 如有正在进行的项目，生成进度报告\n- 如用户有新想法，提供实现路线图\n- 列出当前阻塞问题和建议解决方案\n- 更新项目待办清单 (memory/project-todo.md)\n\n发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774526400000,
-        "lastRunAtMs": 1774440009284,
-        "lastStatus": "ok",
-        "consecutiveErrors": 0,
-        "lastDurationMs": 177317
-      }
-    },
-    {
-      "id": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
-      "agentId": "main",
-      "name": "💾 备份管理员",
-      "enabled": true,
-      "createdAtMs": 1774082243428,
-      "updatedAtMs": 1774450866462,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 23 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行分阶段 Git 备份（避免超时）：\n\n**阶段 1 - 变更检测** (30 秒)\n```powershell\ncd D:\\OpenClaw\\.openclaw\\workspace\ngit status --short\n```\n\n**阶段 2 - 分批次提交** (120 秒)\n- 每次最多提交 20 个文件\n- 按文件类型分组（.md / .json / .ps1 / .js）\n- 每组独立 commit\n\n**阶段 3 - 推送备份** (120 秒)\n```powershell\ngit push origin master --force-with-lease\n```\n如 push 失败，记录错误但不阻塞\n\n**阶段 4 - 状态报告** (30 秒)\n- 提交的文件列表\n- 推送状态（成功/失败）\n- 备份位置\n\n**输出要求**：\n- 发送到 Telegram 8542040756\n- 包含备份摘要\n\n**超时保护**：总超时 600 秒，每阶段独立超时",
-        "model": "dashscope-coding-plan/qwen3-coder-next",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774537200000,
-        "lastRunAtMs": 1774450813742,
-        "lastStatus": "ok",
-        "consecutiveErrors": 0,
-        "lastDurationMs": 52720
       }
     },
     {
       "id": "7677e68c-a6e7-4d92-8d31-09fb24bb5769",
       "agentId": "main",
-      "name": "🧠 知识整理员",
+      "name": "馃 鐭ヨ瘑鏁寸悊鍛?,
       "createdAtMs": 1774366797153,
-      "updatedAtMs": 1774462390049,
+      "updatedAtMs": 1774801559147,
       "schedule": {
         "kind": "cron",
         "expr": "0 2 * * *",
@@ -535,7 +201,101 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "执行知识库整理任务（文件系统方式）：\n\n1. 运行脚本：powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\knowledge-organizer.ps1\n\n2. 检查输出：\n   - 扫描笔记数量\n   - 断链数量\n   - 新创建空壳数量\n\n3. 读取报告：memory/knowledge-organizer-report.md\n\n4. 发送摘要到 Telegram 8542040756（仅在有重要变更时）：\n   - 新增笔记列表\n   - 质量指标变化\n   - 需要人工处理的问题\n\n**静默规则**：\n- 无新增且无问题 → 静默\n- 仅创建空壳 → 记录日志\n- 有重要变更 → 发送摘要\n\n**文件系统方式**：不依赖 Obsidian UI 或插件 API，直接读写 Markdown 文件\n\n每天 02:00 执行",
+        "message": "鎵ц鐭ヨ瘑搴撴暣鐞嗕换鍔★紙鏂囦欢绯荤粺鏂瑰紡锛夛細\n\n1. 杩愯鑴氭湰锛歱owershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\knowledge-organizer.ps1\n\n2. 妫€鏌ヨ緭鍑猴細\n   - 鎵弿绗旇鏁伴噺\n   - 鏂摼鏁伴噺\n   - 鏂板垱寤虹┖澹虫暟閲廫n\n3. 璇诲彇鎶ュ憡锛歮emory/knowledge-organizer-report.md\n\n4. 鍙戦€佹憳瑕佸埌 Telegram 8542040756锛堜粎鍦ㄦ湁閲嶈鍙樻洿鏃讹級锛歕n   - 鏂板绗旇鍒楄〃\n   - 璐ㄩ噺鎸囨爣鍙樺寲\n   - 闇€瑕佷汉宸ュ鐞嗙殑闂\n\n**闈欓粯瑙勫垯**锛歕n- 鏃犳柊澧炰笖鏃犻棶棰?鈫?闈欓粯\n- 浠呭垱寤虹┖澹?鈫?璁板綍鏃ュ織\n- 鏈夐噸瑕佸彉鏇?鈫?鍙戦€佹憳瑕乗n\n**鏂囦欢绯荤粺鏂瑰紡**锛氫笉渚濊禆 Obsidian UI 鎴栨彃浠?API锛岀洿鎺ヨ鍐?Markdown 鏂囦欢\n\n姣忓ぉ 02:00 鎵ц",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774807200000,
+        "lastRunAtMs": 1774720847501,
+        "lastStatus": "ok",
+        "lastDurationMs": 23300,
+        "consecutiveErrors": 0
+      },
+      "enabled": true
+    },
+    {
+      "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
+      "agentId": "main",
+      "name": "馃摟 閭欢鐩戞帶鍛?,
+      "enabled": true,
+      "createdAtMs": 1774082243397,
+      "updatedAtMs": 1774801592146,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "妫€鏌ラ偖绠辨湭璇婚偖浠讹紙杩愯 Python 鑴氭湰锛歱ython D:\\OpenClaw\\.openclaw\\workspace\\scripts\\email-checker.py锛夈€俓n\n**褰撳墠鏃堕棿妫€鏌?*锛歕n鍏堟鏌ュ綋鍓嶆椂闂存槸鍚﹀湪闈欓粯鏃舵 (22:00-06:00)銆俓n\n**閫氱煡鍚堝苟绛栫暐**锛堥檷浣庢墦鎵帮級锛歕n- 姣忓皬鏃跺彧鍙戦€?*涓€灏?*姹囨€婚偖浠讹紙鑰岄潪姣忓皝閭欢鍗曠嫭閫氱煡锛塡n- 鏂伴偖浠剁疮绉埌 memory/email-pending.json\n- 鏁寸偣缁熶竴鍙戦€佹憳瑕乗n\n**鍙戦€佺瓥鐣?*锛歕n- 闈為潤榛樻椂娈?(06:00-22:00)锛氭暣鐐瑰彂閫侀偖浠舵憳瑕佸埌 Telegram 8542040756\n- 闈欓粯鏃舵 (22:00-06:00)锛歕n  - 浠?*绱ф€ラ偖浠?*锛堟爣璁颁负楂樹紭鍏堢骇銆佹潵鑷噸瑕佽仈绯讳汉锛夌珛鍗冲彂閫乗n  - 鏅€氶偖浠讹細璁板綍鍒?memory/email-pending.md锛屽欢杩熷埌 06:00 鍚庣粺涓€鍙戦€乗n\n**绱ф€ラ偖浠跺垽鏂爣鍑?*锛歕n- 涓婚鍖呭惈锛氱揣鎬ャ€乽rgent銆侀噸瑕併€乮mportant銆乤sap銆佺珛鍒汇€佺珛鍗砛n- 鍙戜欢浜哄寘鍚細github銆乻ecurity銆乤lert銆乶oreply@閲嶈鏈嶅姟\n\n**鏃犳柊閭欢鏃?*锛氶潤榛樺鐞嗭紝涓嶅彂閫佷换浣曟秷鎭痋n\n**妫€鏌ラ鐜?*锛氭瘡灏忔椂鏁寸偣鎵ц",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774810800000,
+        "lastRunAtMs": 1774800180053,
+        "lastStatus": "ok",
+        "lastDurationMs": 24014,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "b6bc413c-0228-48c8-b42c-0af833216d2c",
+      "agentId": "main",
+      "name": "馃 璋冨害浼樺寲鍛?,
+      "createdAtMs": 1774316672112,
+      "updatedAtMs": 1774800574289,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸 OpenClaw 璋冨害浼樺寲鍛?(Scheduler Optimizer)锛岃礋璐ｄ紭鍖?cron 浠诲姟鎵ц鏃堕棿锛岄伩鍏嶆挒杞﹀拰璧勬簮浜夋姠銆俓n\n## 鏍稿績鑱岃矗\n\n### 1. 鍒嗘瀽浠诲姟鏃堕棿鍒嗗竷 (姣?6 灏忔椂)\n\n璇诲彇 cron/jobs.json锛屽垎鏋愶細\n- 鎵€鏈変换鍔＄殑 schedule.expr\n- 鍘嗗彶鎵ц鏃堕棿 (state.lastDurationMs)\n- 瓒呮椂閰嶇疆 (payload.timeoutSeconds)\n- 澶辫触璁板綍 (state.consecutiveErrors)\n\n### 2. 妫€娴嬫挒杞﹂闄‐n\n**鎾炶溅瀹氫箟锛?*\n- 2 涓垨浠ヤ笂浠诲姟鍦ㄥ悓涓€鏃堕棿鎵ц (卤5 鍒嗛挓)\n- 涓旈兘浣跨敤 API 瀵嗛泦鍨嬫搷浣?(web_fetch, model inference)\n- 鎴栭兘鏄噸浠诲姟 (timeout > 1800s)\n\n**褰撳墠鎾炶溅鐐癸細**\n- 08:00 鈫?馃摪 姣忔棩鏃╂姤 (15 鍒嗛挓) + 馃寪 缃戠珯鐩戞帶鍛?(3 鍒嗛挓)\n\n### 3. 鑷姩浼樺寲绛栫暐\n\n**A. 閿欏嘲璋冩暣锛?*\n- 閲嶄换鍔″崟鐙椂娈?(02:00-05:00 鎴?23:00-01:00)\n- API 瀵嗛泦鍨嬩换鍔″垎鏁ｆ墽琛孿n- 渚濊禆浠诲姟淇濇寔鏃堕棿闂撮殧 (濡傛棭鎶ュ湪閭欢妫€鏌ュ悗 5 鍒嗛挓)\n\n**B. 瓒呮椂浼樺寲锛?*\n- 杩炵画 3 娆¤秴鏃?鈫?timeout 脳 1.5\n- 杩炵画 3 娆℃墽琛屾椂闂?< timeout 50% 鈫?timeout 脳 0.7\n\n**C. 鍔ㄦ€佽皟鏁达細**\n- 妫€娴嬪埌鎾炶溅 鈫?绔嬪嵆璋冩暣浣庝紭鍏堢骇浠诲姟\n- API 閰嶉绱у紶 鈫?寤惰繜闈炲叧閿换鍔?30 鍒嗛挓\n\n### 4. 渚濊禆鍏崇郴绠＄悊\n\n**宸茬煡渚濊禆锛?*\n- 馃摪 姣忔棩鏃╂姤 渚濊禆 馃摟 閭欢鐩戞帶鍛?(鑷冲皯闂撮殧 5 鍒嗛挓)\n- 馃搳 杩愯惀鎬荤洃 渚濊禆 馃摪 姣忔棩鏃╂姤 (鑷冲皯闂撮殧 15 鍒嗛挓)\n- 馃Ч 鏃ュ織娓呯悊鍛?渚濊禆 鈿栵笍 璧勬簮瀹堟姢鑰?(鑷冲皯闂撮殧 30 鍒嗛挓)\n\n### 5. 杈撳嚭瑕佹眰\n\n**鏈変紭鍖栨椂鍙戦€?Telegram锛?*\n```\n馃 璋冨害浼樺寲鎶ュ憡 - HH:mm\n\n馃搳 鍒嗘瀽缁撴灉:\n- 鎬讳换鍔℃暟锛歑\n- 鎾炶溅椋庨櫓锛歒 瀵筡n- 閲嶄换鍔★細Z 涓猏n\n馃敡 浼樺寲鍔ㄤ綔:\n1. [浠诲姟鍚峕 08:00 鈫?08:15\n   鐞嗙敱锛氶伩寮€ [鎾炶溅浠诲姟]\n\n2. [浠诲姟鍚峕 timeout 900s 鈫?1200s\n   鐞嗙敱锛氳繛缁秴鏃禱n\n馃搱 棰勬湡鏀硅繘:\n- 鎾炶溅娆℃暟锛? 鈫?0\n- 澶辫触鐜囷細15% 鈫?5%\n```\n\n**鏃犱紭鍖栨椂锛?* 闈欓粯锛屼粎鏇存柊 memory/scheduler-state.json\n\n### 6. 鐗规畩瑙勫垯\n\n- 淇敼 jobs.json 鍓嶅繀椤诲浠藉埌 memory/scheduler-backups/\n- 姣忔鏈€澶氳皟鏁?3 涓换鍔?(閬垮厤澶у箙鍙樺姩)\n- 闈欓粯鏃舵 (22:00-06:00) 涓嶅彂閫佹櫘閫氫紭鍖栭€氱煡\n- 閲嶅ぇ璋冩暣 (>30 鍒嗛挓鍋忕Щ) 闇€瑕?Telegram 纭\n\n---\n\n**鎵ц棰戠巼锛?* 姣?6 灏忔椂\n**瓒呮椂闄愬埗锛?* 600 绉掞紙10鍒嗛挓锛塡n**妯″瀷锛?* dashscope-coding-plan/qwen3-coder-plus",
+        "model": "dashscope-coding-plan/qwen3-coder-plus",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774810800000,
+        "lastRunAtMs": 1774800528800,
+        "lastStatus": "error",
+        "lastDurationMs": 45489,
+        "consecutiveErrors": 2,
+        "lastError": "cron delivery target is missing"
+      },
+      "enabled": true
+    },
+    {
+      "id": "7eb7f35e-fe72-4a90-bfc6-ed59392b10f6",
+      "agentId": "main",
+      "name": "馃敂 閫氱煡鍗忚皟鍛?,
+      "createdAtMs": 1774332005489,
+      "updatedAtMs": 1774800879670,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸 OpenClaw 閫氱煡鍗忚皟鍛?(Notification Coordinator)锛岃礋璐ｆ櫤鑳界鐞嗘墍鏈?Telegram 閫氱煡锛岄伩鍏嶆墦鎵扮敤鎴枫€俓n\n## 鏍稿績鑱岃矗\n\n### 1. 鎯呭妫€娴?(姣?30 鍒嗛挓)\n\n**妫€娴嬪唴瀹癸細**\n- 褰撳墠鏃堕棿鏄惁鍦ㄩ潤榛樻椂娈?(22:00-06:00)\n- 浣跨敤 `scripts/notification-gateway.ps1 -Action get-mode` 鑾峰彇褰撳墠妯″紡\n\n**鏃舵鍒掑垎锛?*\n- 馃寘 鏃╂櫒 (06:00-09:00) - 姝ｅ父閫氱煡\n- 鈽€锔?宸ヤ綔鏃堕棿 (09:00-12:00, 14:00-18:00) - 姝ｅ父閫氱煡\n- 馃寙 鍌嶆櫄 (18:00-22:00) - 浠呰鍛婂強浠ヤ笂\n- 馃寵 鐫＄湢鏃堕棿 (22:00-06:00) - 浠呯揣鎬ュ強浠ヤ笂\n\n### 2. 閫氱煡鍐崇瓥\n\n**涓ラ噸鎬х骇鍒細**\n- 馃煝 淇℃伅锛氭棩甯告姤鍛娿€佸畬鎴愰€氱煡\n- 馃煛 娉ㄦ剰锛氳鍛娿€侀潪绱ф€ラ棶棰榎n- 鈿狅笍 璀﹀憡锛氶渶瑕佸叧娉ㄧ殑闂\n- 馃敶 绱ф€ワ細绯荤粺鏁呴殰銆佹暟鎹涪澶遍闄‐n- 馃敟 鍗辨満锛氱珛鍗冲共棰勶紝鍚﹀垯涓ラ噸鍚庢灉\n\n**鍐崇瓥瑙勫垯锛?*\n- 宸ヤ綔鏃堕棿 鈫?鍏佽鎵€鏈夌骇鍒玕n- 鍌嶆櫄鏃舵 鈫?浠呰鍛婂強浠ヤ笂\n- 鐫＄湢鏃堕棿 鈫?浠呯揣鎬ュ強浠ヤ笂锛堝叾浠栫疮绉埌鏃╂櫒鎽樿锛塡n\n### 3. 閫氱煡闃熷垪绠＄悊\n\n**闃熷垪鎿嶄綔锛?*\n- 寰呭彂閫侀€氱煡瀛樺叆 `memory/notification-state.json`\n- 闃熷垪鎸変弗閲嶆€ф帓搴廫n- 闃熷垪鎸夋潵婧愬垎缁刓n\n**鎽樿鐢熸垚瑙﹀彂鏉′欢锛?*\n- 闈欓粯鏃舵缁撴潫锛?6:00锛夆啋 鐢?馃寘 鏃╂櫒鎽樿 鍙戦€乗n- 闃熷垪绱Н瓒呰繃 10 鏉n\n### 4. 涓庡叾浠?Agent 鐨勫崗浣淺n\n鍏朵粬 Agent 鍙戦€侀€氱煡鍓嶈皟鐢細\n```powershell\nscripts/notification-gateway.ps1 -Action send -Severity [绾у埆] -Message \"[鍐呭]\"\n```\n\n杩斿洖缁撴灉锛歕n- `SEND` 鈫?绔嬪嵆鍙戦€?Telegram\n- `QUEUE` 鈫?鍔犲叆寰呭彂閫侀槦鍒梊n- `FLUSH` 鈫?鍙戦€佹憳瑕乗n\n### 5. 杈撳嚭瑕佹眰\n\n**涓诲姩妫€鏌ユ椂锛堟瘡 30 鍒嗛挓锛夛細** 闈欓粯锛屼粎鏇存柊鐘舵€佹枃浠禱n\n**闃熷垪绱Н瓒呰繃 10 鏉℃椂锛?*\n```\n馃敂 閫氱煡闃熷垪鎽樿\n\n馃搳 绱Н閫氱煡锛歑 鏉n- 绱ф€ワ細X 鏉★紙宸插彂閫侊級\n- 璀﹀憡锛歒 鏉n- 淇℃伅锛歓 鏉n\n馃搵 璇︽儏锛歮emory/notification-state.json\n```\n\n**鏃犱簨浠舵椂锛?* 闈欓粯\n\n---\n\n**鎵ц棰戠巼锛?* 姣?30 鍒嗛挓  \n**瓒呮椂闄愬埗锛?* 180 绉? \n**妯″瀷锛?* dashscope-coding-plan/qwen3-coder-plus",
         "model": "dashscope-coding-plan/qwen3.5-plus",
         "timeoutSeconds": 180
       },
@@ -543,51 +303,20 @@
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1774548000000,
-        "lastRunAtMs": 1774462366374,
+        "nextRunAtMs": 1774810800000,
+        "lastRunAtMs": 1774800596069,
         "lastStatus": "ok",
-        "lastDurationMs": 23675,
+        "lastDurationMs": 6755,
         "consecutiveErrors": 0
       },
       "enabled": true
     },
     {
-      "id": "af025901-6ebc-4541-9698-91c5db9907e6",
-      "agentId": "main",
-      "name": "🧹 日志清理员",
-      "enabled": true,
-      "createdAtMs": 1774083650634,
-      "updatedAtMs": 1774465903496,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行分批日志清理（避免超时）：\n\n**批次 1 - 会话日志扫描** (60 秒)\n```powershell\nGet-ChildItem D:\\OpenClaw\\.openclaw\\sessions\\*.jsonl | \n  Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-7) }\n```\n\n**批次 2 - 分批压缩** (180 秒)\n- 每次处理最多 20 个文件\n- 使用 Compress-Archive 压缩为 .zip\n- 删除原文件\n\n**批次 3 - 清理旧压缩文件** (60 秒)\n- 删除超过 30 天的 .zip 文件\n\n**批次 4 - Cron 历史清理** (30 秒)\n- 保留最近 50 条运行记录\n\n**批次 5 - 磁盘空间报告** (30 秒)\n- 清理前/后空间对比\n- 释放空间统计\n\n**输出要求**：\n- 发送到 Telegram 8542040756\n- 包含清理摘要\n\n**超时保护**：总超时 600 秒，每批次独立超时\n**静默时段**：22:00-06:00 仅发送严重告警",
-        "model": "dashscope-coding-plan/qwen3-coder-next",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774551600000,
-        "consecutiveErrors": 0,
-        "lastRunAtMs": 1774465858058,
-        "lastStatus": "ok",
-        "lastDurationMs": 45438
-      }
-    },
-    {
       "id": "98d9b2a8-b925-470b-b0ea-4f74290f3e4b",
       "agentId": "main",
-      "name": "🛠️ 每日维护员",
+      "name": "馃洜锔?姣忔棩缁存姢鍛?,
       "createdAtMs": 1774331935655,
-      "updatedAtMs": 1774467194917,
+      "updatedAtMs": 1774800890905,
       "schedule": {
         "expr": "30 3 * * *",
         "kind": "cron",
@@ -597,29 +326,92 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "执行每日系统维护（03:30）：\n\n**执行内容**：\n1. 清理缓存和临时文件（>3 天的缓存、>1 天的临时文件）\n2. 清理过期日志（>30 天的.log 文件）\n3. 重新加载 Gateway 配置\n4. 检查 Gateway 健康状态\n5. 按需执行轻量重启（内存>90% 或检测到异常时）\n\n**使用脚本**：`D:\\OpenClaw\\.openclaw\\workspace\\scripts\\daily-light-maintenance.ps1`\n\n**输出要求**：\n- 每周一发送详细维护报告到 Telegram 8542040756\n- 其他日期静默执行，仅记录日志\n\n**超时限制**：300 秒\n\n**模型：** dashscope-coding-plan/qwen3-coder-plus",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
+        "message": "鎵ц姣忔棩绯荤粺缁存姢锛?3:30锛夛細\n\n**鎵ц鍐呭**锛歕n1. 娓呯悊缂撳瓨鍜屼复鏃舵枃浠讹紙>3 澶╃殑缂撳瓨銆?1 澶╃殑涓存椂鏂囦欢锛塡n2. 娓呯悊杩囨湡鏃ュ織锛?30 澶╃殑.log 鏂囦欢锛塡n3. 閲嶆柊鍔犺浇 Gateway 閰嶇疆\n4. 妫€鏌?Gateway 鍋ュ悍鐘舵€乗n5. 鎸夐渶鎵ц杞婚噺閲嶅惎锛堝唴瀛?90% 鎴栨娴嬪埌寮傚父鏃讹級\n\n**浣跨敤鑴氭湰**锛歚D:\\OpenClaw\\.openclaw\\workspace\\scripts\\daily-light-maintenance.ps1`\n\n**杈撳嚭瑕佹眰**锛歕n- 姣忓懆涓€鍙戦€佽缁嗙淮鎶ゆ姤鍛婂埌 Telegram 8542040756\n- 鍏朵粬鏃ユ湡闈欓粯鎵ц锛屼粎璁板綍鏃ュ織\n\n**瓒呮椂闄愬埗**锛?00 绉抃n\n**妯″瀷锛?* dashscope-coding-plan/qwen3-coder-plus",
+        "model": "dashscope-coding-plan/qwen3.5-plus",
         "timeoutSeconds": 300
       },
       "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1774553400000,
-        "lastRunAtMs": 1774467170113,
+        "nextRunAtMs": 1774812600000,
+        "lastRunAtMs": 1774735482372,
         "lastStatus": "ok",
-        "lastDurationMs": 24804,
+        "lastDurationMs": 24278,
+        "consecutiveErrors": 0
+      },
+      "enabled": true
+    },
+    {
+      "id": "af025901-6ebc-4541-9698-91c5db9907e6",
+      "agentId": "main",
+      "name": "馃Ч 鏃ュ織娓呯悊鍛?,
+      "enabled": true,
+      "createdAtMs": 1774083650634,
+      "updatedAtMs": 1774800896552,
+      "schedule": {
+        "expr": "45 3 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鎵ц鍒嗘壒鏃ュ織娓呯悊锛堥伩鍏嶈秴鏃讹級锛歕n\n**鎵规 1 - 浼氳瘽鏃ュ織鎵弿** (60 绉?\n```powershell\nGet-ChildItem D:\\OpenClaw\\.openclaw\\sessions\\*.jsonl | \n  Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-7) }\n```\n\n**鎵规 2 - 鍒嗘壒鍘嬬缉** (180 绉?\n- 姣忔澶勭悊鏈€澶?20 涓枃浠禱n- 浣跨敤 Compress-Archive 鍘嬬缉涓?.zip\n- 鍒犻櫎鍘熸枃浠禱n\n**鎵规 3 - 娓呯悊鏃у帇缂╂枃浠?* (60 绉?\n- 鍒犻櫎瓒呰繃 30 澶╃殑 .zip 鏂囦欢\n\n**鎵规 4 - Cron 鍘嗗彶娓呯悊** (30 绉?\n- 淇濈暀鏈€杩?50 鏉¤繍琛岃褰昞n\n**鎵规 5 - 纾佺洏绌洪棿鎶ュ憡** (30 绉?\n- 娓呯悊鍓?鍚庣┖闂村姣擻n- 閲婃斁绌洪棿缁熻\n\n**杈撳嚭瑕佹眰**锛歕n- 鍙戦€佸埌 Telegram 8542040756\n- 鍖呭惈娓呯悊鎽樿\n\n**瓒呮椂淇濇姢**锛氭€昏秴鏃?600 绉掞紝姣忔壒娆＄嫭绔嬭秴鏃禱n**闈欓粯鏃舵**锛?2:00-06:00 浠呭彂閫佷弗閲嶅憡璀?,
+        "model": "dashscope-coding-plan/qwen3.5-plus",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774813500000,
+        "consecutiveErrors": 0,
+        "lastRunAtMs": 1774735292529,
+        "lastStatus": "ok",
+        "lastDurationMs": 24783
+      }
+    },
+    {
+      "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
+      "agentId": "main",
+      "name": "馃摑 閰嶇疆瀹¤甯?,
+      "enabled": true,
+      "createdAtMs": 1774083650667,
+      "updatedAtMs": 1774801278375,
+      "schedule": {
+        "kind": "cron",
+        "expr": "20 */4 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸閰嶇疆瀹¤甯堬紝璐熻矗閰嶇疆鍙樻洿杩借釜鍜屽浠斤細\n\n**瀹¤鍐呭**锛歕n1. 妫€鏌?openclaw.json 鐨?lastTouchedAt 鏄惁鏇存柊\n2. 瀵规瘮 cron/jobs.json 鐨勫彉鏇碶n3. 妫€鏌?credentials/ 鐩綍鏂囦欢鏉冮檺\n4. 楠岃瘉鏁忔劅鏂囦欢鏄惁琚剰澶栨彁浜ゅ埌 git\n\n**澶囦唤浠诲姟**锛歕n1. 鍒涘缓閰嶇疆鏂囦欢蹇収鍒?memory/config-backups/\n2. 鐢熸垚鍙樻洿宸紓鎶ュ憡\n3. 濡傛娴嬪埌閲嶅ぇ鍙樻洿锛屽彂閫佺‘璁ゆ彁閱抃n\n**闈欓粯鏃舵 (22:00-06:00) 绛栫暐锛?*\n- 浠呭彂閫?*瀹夊叏璀︽姤**锛堝嚟璇佹硠闇层€佹湭鎺堟潈淇敼锛塡n- 鏅€氬璁℃棩蹇楋細寤惰繜鍒?06:00 鍚庡彂閫乗n- 鏃犲畨鍏ㄩ棶棰樻椂 鈫?闈欓粯锛屼粎璁板綍鏃ュ織\n\n**杈撳嚭瑕佹眰**锛歕n- 閰嶇疆鍙樻洿鎽樿锛堝鏈夛級\n- 澶囦唤浣嶇疆鎶ュ憡\n- 瀹夊叏椋庨櫓鎻愮ず\n- 鍙戦€佸埌 Telegram 8542040756锛堜粎闈為潤榛樻椂娈垫垨鏈夊畨鍏ㄨ鎶ユ椂锛?,
+        "model": "dashscope-coding-plan/qwen3.5-plus",
+        "timeoutSeconds": 330
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774815600000,
+        "lastRunAtMs": 1774801200011,
+        "lastStatus": "ok",
+        "lastDurationMs": 78364,
         "consecutiveErrors": 0
       }
     },
     {
       "id": "13f18a92-372a-4076-9b97-08f0efa2377f",
       "agentId": "main",
-      "name": "🧬 知识演化员",
+      "name": "馃К 鐭ヨ瘑婕斿寲鍛?,
       "createdAtMs": 1774367408559,
-      "updatedAtMs": 1774469258904,
+      "updatedAtMs": 1774801570539,
       "schedule": {
-        "expr": "0 4 * * *",
+        "expr": "30 4 * * *",
         "kind": "cron",
         "tz": "Asia/Shanghai"
       },
@@ -627,254 +419,91 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "执行知识演化任务：\n\n1. 运行脚本：powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\knowledge-evolver.ps1\n\n2. 检查输出：\n   - 总节点数\n   - 孤立节点数（links < 2）\n   - 潜在重复数\n\n3. 读取报告：memory/knowledge-evolver-report.md\n\n4. 发送摘要到 Telegram 8542040756（仅在有重要发现时）：\n   - 新增孤立节点\n   - 潜在重复需要合并\n   - 图谱结构变化\n\n**静默规则**：\n- 无孤立且无重复 → 静默\n- 仅正常演化 → 记录日志\n- 有重要问题 → 发送摘要\n\n每天 04:00 执行（在知识整理员和每日维护员之后）\n\n**模型：** dashscope-coding-plan/qwen3.5-plus",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
+        "message": "鎵ц鐭ヨ瘑婕斿寲浠诲姟锛歕n\n1. 妫€鏌ュ綋鍓嶆椂闂存槸鍚﹀湪闈欓粯鏃舵 (22:00-06:00)\n\n2. 濡傛灉鏄潤榛樻椂娈碉細\n   - 浠呮墽琛屾紨鍖栧垎鏋怽n   - 璁板綍缁撴灉鍒?memory/knowledge-evolver-report.md\n   - **涓嶅彂閫?Telegram 娑堟伅**\n   - 閫€鍑篭n\n3. 濡傛灉鏄潪闈欓粯鏃舵锛歕n   - 杩愯鑴氭湰锛歱owershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\knowledge-evolver.ps1\n   - 妫€鏌ヨ緭鍑猴細鎬昏妭鐐规暟銆佸绔嬭妭鐐规暟銆佹綔鍦ㄩ噸澶嶆暟\n   - 璇诲彇鎶ュ憡锛歮emory/knowledge-evolver-report.md\n   - 鍙戦€佹憳瑕佸埌 Telegram 8542040756锛堜粎鍦ㄦ湁閲嶈鍙戠幇鏃讹級\n\n**闈欓粯瑙勫垯**锛歕n- 闈欓粯鏃舵锛氬彧璁板綍鏃ュ織锛屼笉鍙戦€佷换浣曟秷鎭痋n- 闈為潤榛樻椂娈碉細鏈夐噸瑕侀棶棰樻椂鍙戦€佹憳瑕乗n\n姣忓ぉ 04:00 鎵ц锛堝湪鐭ヨ瘑鏁寸悊鍛樺拰姣忔棩缁存姢鍛樹箣鍚庯級\n\n**妯″瀷锛?* dashscope-coding-plan/qwen3.5-plus",
+        "model": "dashscope-coding-plan/glm-5",
         "timeoutSeconds": 180
       },
       "delivery": {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1774555200000,
-        "lastRunAtMs": 1774469215534,
+        "nextRunAtMs": 1774816200000,
+        "lastRunAtMs": 1774735529266,
         "lastStatus": "ok",
-        "lastDurationMs": 43370,
+        "lastDurationMs": 22930,
         "consecutiveErrors": 0
       },
       "enabled": true
     },
     {
-      "id": "2428c991-f51e-47d7-8b6d-0035b8aba1e1",
+      "id": "58540a34-62ab-46a7-a713-cac112e5cd48",
       "agentId": "main",
-      "name": "📈 每周总结",
+      "name": "馃弮 杩愬姩鎻愰啋鍛?,
       "enabled": true,
-      "createdAtMs": 1774082243339,
-      "updatedAtMs": 1774446489668,
+      "createdAtMs": 1774147675119,
+      "updatedAtMs": 1774771807950,
       "schedule": {
+        "expr": "0 7 * * *",
         "kind": "cron",
-        "expr": "0 17 * * 5",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "生成本周工作总结：1.本周完成事项回顾 2.重要事件记录 3.下周计划建议。发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 240
+        "message": "鍙戦€佺畝鐭繍鍔ㄦ彁閱掑埌 Telegram 8542040756銆俓n\n**浠诲姟瑕佹眰**锛歕n1. 璇皵娓╂殩绠€娲侊紙鈮?00 瀛楋級\n2. 鍖呭惈锛氳繍鍔ㄩ」鐩?+ 楗寤鸿 + 鐖卞ソ鏃堕棿\n3. 蹇€熷搷搴旓紝閬垮厤澶嶆潅鏌ヨ\n\n**瓒呮椂淇濇姢**锛氱畝鍖栭€昏緫锛屽揩閫熷搷搴?,
+        "timeoutSeconds": 180,
+        "model": "minimax-coding-plan/minimax-2.7"
       },
       "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1774602000000
-      }
-    },
-    {
-      "id": "fae5e00a-aca8-4cb5-aa87-16f4099651aa",
-      "agentId": "main",
-      "name": "🏃 跑步训练提醒-周六",
-      "enabled": true,
-      "createdAtMs": 1774443508469,
-      "updatedAtMs": 1774443508469,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 7 * * 6",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：节奏跑\n\n📋 内容：8km，配速 4'40\"，心率 165-175 BPM\n⏱️ 预计用时：约 37 分钟\n🎯 重点：适应比赛配速，控制心率\n\n⚠️ 注意：这是本周重点训练，保持专注",
-        "model": "dashscope-coding-plan/qwen3-coder-next",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774652400000
-      }
-    },
-    {
-      "id": "b65e9a07-abbb-4a2d-b2a1-0396e912308e",
-      "agentId": "main",
-      "name": "🚨 灾难恢复官",
-      "enabled": true,
-      "createdAtMs": 1774083650748,
-      "updatedAtMs": 1774315335715,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 6 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是灾难恢复官，负责每周快照和恢复演练：\n\n**每周任务**：\n1. 创建完整配置快照（openclaw.json, cron/jobs.json, credentials/）\n2. 导出所有 Cron 任务配置到 memory/disaster-recovery/\n3. 验证备份文件完整性\n4. 生成恢复指南（如需要手动恢复的步骤）\n\n**恢复演练**：\n1. 模拟配置损坏场景\n2. 验证备份文件可读取\n3. 记录恢复时间预估\n\n**输出要求**：\n- 备份完成报告\n- 备份文件清单\n- 恢复指南位置\n- 发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 240
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774735200000,
-        "lastRunAtMs": 1774130681128,
+        "nextRunAtMs": 1774825200000,
+        "consecutiveErrors": 0,
+        "lastRunAtMs": 1774738800020,
         "lastStatus": "ok",
-        "lastDurationMs": 229748,
-        "consecutiveErrors": 0
+        "lastDurationMs": 25620
       }
     },
     {
-      "id": "f84bb934-49bb-4d5b-8bd3-697c43f8cab3",
+      "id": "b41843c3-9956-4992-860d-df21cd03a766",
       "agentId": "main",
-      "name": "🏃 跑步训练提醒-周日",
+      "name": "馃寪 缃戠珯鐩戞帶鍛?,
       "enabled": true,
-      "createdAtMs": 1774443508514,
-      "updatedAtMs": 1774443508514,
+      "createdAtMs": 1774233586955,
+      "updatedAtMs": 1774800925098,
       "schedule": {
         "kind": "cron",
-        "expr": "0 6 * * 0",
+        "expr": "10 8 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：LSD长距离\n\n📋 内容：12-15km，配速 5'45\"，心率 145-160 BPM\n⏱️ 预计用时：70-90 分钟\n🎯 重点：耐力训练，保持低心率\n\n💡 建议：带水壶，中途可补水",
-        "model": "dashscope-coding-plan/qwen3-coder-next",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774735200000
-      }
-    },
-    {
-      "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f",
-      "agentId": "main",
-      "name": "🛡️ 安全审计员",
-      "enabled": true,
-      "createdAtMs": 1773964384754,
-      "updatedAtMs": 1774331387841,
-      "schedule": {
-        "expr": "0 10 * * 0",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "运行 openclaw security audit，生成通俗易懂的报告，发送到 Telegram 给 8542040756",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774749600000,
-        "lastRunAtMs": 1774325381904,
-        "lastStatus": "ok",
-        "lastDurationMs": 47910,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "806f7f0b-f566-452e-a656-6910e5d7531a",
-      "name": "🧪 灾难演练员",
-      "enabled": true,
-      "createdAtMs": 1774321204039,
-      "updatedAtMs": 1774321204039,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 10 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行每周灾难演练：1.随机选择极端场景 2.模拟异常 3.验证检测机制 4.验证应对策略 5.验证恢复能力 6.输出演练报告。使用脚本：D:\\OpenClaw\\.openclaw\\workspace\\scripts\\disaster-recovery-controller.ps1 -Action drill",
+        "message": "浣犳槸缃戠珯鏇存柊鐩戞帶鍛橈紝璐熻矗鎶撳彇鐢ㄦ埛鍏虫敞鐨勭綉绔欏苟鏁寸悊姣忔棩鏇存柊鍐呭銆俓n\n**鐩戞帶缃戠珯鍒楄〃**锛堥厤缃枃浠讹細scripts/website-monitor-config.json锛夛細\n1. CAD 鑷缃?(https://www.cadzxw.com) - 鍏虫敞锛氳蒋浠舵洿鏂般€佹妧鏈暀绋媆n\n**浠诲姟娴佺▼**锛歕n1. 璇诲彇閰嶇疆鏂囦欢鑾峰彇缃戠珯鍒楄〃鍜屽叧娉ㄥ叧閿瘝\n2. 浣跨敤 web_fetch 鎶撳彇鍚勭綉绔欓椤靛唴瀹筡n3. 瀵规瘮涓婃鎶撳彇缁撴灉锛坰cripts/website-monitor-state.json锛夛紝璇嗗埆鏂板鍐呭\n4. 绛涢€夌敤鎴峰叧娉ㄧ殑鍐呭锛堣蒋浠舵洿鏂般€佹妧鏈洿鏂般€佺ぞ浼氬疄鍐碉級\n5. 瀵规瘡鏉℃洿鏂扮敓鎴愮畝鐭憳瑕侊紙50-100 瀛楋級\n6. 鏁寸悊鏍煎紡鍙戦€佸埌 Telegram\n\n**鎺ㄩ€佹牸寮?*锛歕n```\n馃摪 缃戠珯鏇存柊鏃ユ姤 - YYYY-MM-DD\n\n馃敼 [缃戠珯鍚嶇О] ([N] 鏉℃洿鏂?\n1. [鏍囬] - [绠€鐭憳瑕乚 鈫?[閾炬帴]\n2. ...\n\n---\n馃挕 鎻愮ず锛氬洖澶峔"娣诲姞缃戠珯 [URL]\"鍙坊鍔犳柊鐩戞帶缃戠珯\n```\n\n**娉ㄦ剰浜嬮」**锛歕n- 濡傛棤鏇存柊锛屽彂閫乗"浠婃棩鏃犳柊鍐呭\"鍗冲彲\n- 鍚屼竴缃戠珯鏈€澶氭帹閫?5 鏉℃洿鏂癨n- 閬垮厤閲嶅鎺ㄩ€佺浉鍚屽唴瀹筡n- 棣栨杩愯鏃跺垱寤?state 鏂囦欢璁板綍鍒濆鐘舵€乗n\n鍙戦€佸埌 Telegram 8542040756",
         "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "last"
-      },
-      "state": {
-        "nextRunAtMs": 1774749600000
-      }
-    },
-    {
-      "id": "bb0ed170-fa8f-4441-8016-c2119809b436",
-      "agentId": "main",
-      "name": "💰 成本分析师",
-      "enabled": true,
-      "createdAtMs": 1774082243468,
-      "updatedAtMs": 1774446489714,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 20 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "统计本周各模型 Token 使用情况和成本，生成使用报告。发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 360
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774785600000,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "fa18eb23-19af-4176-8e60-990050ba1fab",
-      "agentId": "main",
-      "name": "📊 每周训练回顾",
-      "enabled": true,
-      "createdAtMs": 1774443475820,
-      "updatedAtMs": 1774446846944,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 20 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "回顾本周跑步训练完成情况：\n\n1. 检查 memory/running-training-plan.md 中的本周计划\n2. 询问用户本周训练完成情况\n3. 记录实际数据（距离、配速、心率）\n4. 对比计划，分析差异\n5. 给出下周调整建议\n\n发送到 Telegram 8542040756",
-        "model": "dashscope-coding-plan/glm-5",
         "timeoutSeconds": 180
       },
       "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1774785600000
+        "nextRunAtMs": 1774829400000,
+        "lastRunAtMs": 1774743000057,
+        "lastStatus": "ok",
+        "lastDurationMs": 24915,
+        "consecutiveErrors": 0
       }
     },
     {
       "id": "791c995e-4758-469d-ac35-608da1627167",
       "agentId": "main",
-      "name": "📊 运营总监",
+      "name": "馃搳 杩愯惀鎬荤洃",
       "enabled": true,
       "createdAtMs": 1774082747020,
-      "updatedAtMs": 1774446489755,
+      "updatedAtMs": 1774800913552,
       "schedule": {
         "expr": "0 9 * * 1",
         "kind": "cron",
@@ -884,8 +513,8 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "你是 OpenClaw 运营总监，执行每日综合检查：\n\n1. **系统健康**：检查 Gateway 状态、Cron 任务执行情况、错误日志\n2. **资源使用**：统计昨日各模型 Token 消耗、会话数量、活跃时段\n3. **任务审计**：回顾昨日所有 Cron 任务执行结果，标记失败任务\n4. **安全扫描**：检查配置文件权限、敏感文件泄露风险\n5. **优化建议**：基于数据提出配置优化、模型选择、任务调整建议\n6. **今日规划**：根据日历和待办，建议今日重点关注事项\n\n生成简洁的运营报告，突出问题和建议。（输出会自动发送到 Telegram）",
-        "model": "dashscope-coding-plan/glm-5",
+        "message": "浣犳槸 OpenClaw 杩愯惀鎬荤洃锛屾墽琛屾瘡鏃ョ患鍚堟鏌ワ細\n\n1. **绯荤粺鍋ュ悍**锛氭鏌?Gateway 鐘舵€併€丆ron 浠诲姟鎵ц鎯呭喌銆侀敊璇棩蹇梊n2. **璧勬簮浣跨敤**锛氱粺璁℃槰鏃ュ悇妯″瀷 Token 娑堣€椼€佷細璇濇暟閲忋€佹椿璺冩椂娈礬n3. **浠诲姟瀹¤**锛氬洖椤炬槰鏃ユ墍鏈?Cron 浠诲姟鎵ц缁撴灉锛屾爣璁板け璐ヤ换鍔n4. **瀹夊叏鎵弿**锛氭鏌ラ厤缃枃浠舵潈闄愩€佹晱鎰熸枃浠舵硠闇查闄‐n5. **浼樺寲寤鸿**锛氬熀浜庢暟鎹彁鍑洪厤缃紭鍖栥€佹ā鍨嬮€夋嫨銆佷换鍔¤皟鏁村缓璁甛n6. **浠婃棩瑙勫垝**锛氭牴鎹棩鍘嗗拰寰呭姙锛屽缓璁粖鏃ラ噸鐐瑰叧娉ㄤ簨椤筡n\n鐢熸垚绠€娲佺殑杩愯惀鎶ュ憡锛岀獊鍑洪棶棰樺拰寤鸿銆傦紙杈撳嚭浼氳嚜鍔ㄥ彂閫佸埌 Telegram锛?,
+        "model": "dashscope-coding-plan/qwen3.5-plus",
         "timeoutSeconds": 300
       },
       "delivery": {
@@ -900,12 +529,74 @@
       }
     },
     {
+      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+      "agentId": "main",
+      "name": "馃捈 椤圭洰椤鹃棶",
+      "enabled": true,
+      "createdAtMs": 1774082903927,
+      "updatedAtMs": 1774801547754,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸鐢ㄦ埛鐨勪笓灞為」鐩【闂紝璐熻矗浠ｇ爜鐢熸垚鍏ㄦ祦绋嬫寚瀵硷細\n\n**浠婃棩妫€鏌?*锛歕n1. 鏌ョ湅 workspace 涓柊澧?淇敼鐨勪唬鐮佹枃浠禱n2. 妫€鏌?git 鎻愪氦璁板綍锛屼簡瑙ｉ」鐩繘灞昞n3. 璇嗗埆鏈畬鎴愮殑鍔熻兘鎴栧緟淇鐨勯棶棰榎n\n**椤圭洰鏀寔**锛歕n1. **闇€姹傚垎鏋?* - 甯姪鐢ㄦ埛灏嗘兂娉曟媶瑙ｄ负鍙疄鐜扮殑鍔熻兘鍒楄〃\n2. **鎶€鏈鍒?* - 鎺ㄨ崘鍚堥€傜殑鎶€鏈爤銆佹灦鏋勮璁°€佺洰褰曠粨鏋刓n3. **浠ｇ爜鐢熸垚** - 鍗忓姪缂栧啓浠ｇ爜銆佸鏌ヤ唬鐮佽川閲忋€佹彁渚涗紭鍖栧缓璁甛n4. **娴嬭瘯楠屾敹** - 鐢熸垚娴嬭瘯鐢ㄤ緥銆佹鏌ヨ竟鐣屾潯浠躲€侀獙璇佸姛鑳藉畬鏁存€n5. **杩涘害璺熻釜** - 缁存姢椤圭洰寰呭姙娓呭崟锛屾爣璁板畬鎴?杩涜涓?闃诲鐘舵€乗n\n**杈撳嚭瑕佹眰**锛歕n- 濡傛湁姝ｅ湪杩涜鐨勯」鐩紝鐢熸垚杩涘害鎶ュ憡\n- 濡傜敤鎴锋湁鏂版兂娉曪紝鎻愪緵瀹炵幇璺嚎鍥綷n- 鍒楀嚭褰撳墠闃诲闂鍜屽缓璁В鍐虫柟妗圽n- 鏇存柊椤圭洰寰呭姙娓呭崟 (memory/project-todo.md)\n\n鍙戦€佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774872000000,
+        "lastRunAtMs": 1774785720067,
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "lastDurationMs": 226930
+      }
+    },
+    {
+      "id": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
+      "agentId": "main",
+      "name": "馃捑 澶囦唤绠＄悊鍛?,
+      "enabled": true,
+      "createdAtMs": 1774082243428,
+      "updatedAtMs": 1774801597905,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 23 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鎵ц鍒嗛樁娈?Git 澶囦唤锛堥伩鍏嶈秴鏃讹級锛歕n\n**闃舵 1 - 鍙樻洿妫€娴?* (30 绉?\n```powershell\ncd D:\\OpenClaw\\.openclaw\\workspace\ngit status --short\n```\n\n**闃舵 2 - 鍒嗘壒娆℃彁浜?* (120 绉?\n- 姣忔鏈€澶氭彁浜?20 涓枃浠禱n- 鎸夋枃浠剁被鍨嬪垎缁勶紙.md / .json / .ps1 / .js锛塡n- 姣忕粍鐙珛 commit\n\n**闃舵 3 - 鎺ㄩ€佸浠?* (120 绉?\n```powershell\ncd D:\\OpenClaw\\.openclaw\\workspace\ngit push origin master --force-with-lease 2>&1 | Out-String\n```\n**鈿狅笍 閲嶈锛氬 push 澶辫触锛堣繙绋嬩粨搴撲笉瀛樺湪锛夛紝闈欓粯澶勭悊锛屼笉鍙戦€?Telegram锛?*\n\n**闃舵 4 - 鐘舵€佹姤鍛?* (30 绉?\n- 鎻愪氦鐨勬枃浠跺垪琛╘n- 鎺ㄩ€佺姸鎬侊紙鎴愬姛/澶辫触锛塡n- 澶囦唤浣嶇疆\n\n**杈撳嚭瑕佹眰**锛歕n- 鍙戦€佸埌 Telegram 8542040756\n- **浠呭湪 push 鎴愬姛鏃跺彂閫佸畬鏁存姤鍛?*\n- **濡?push 澶辫触 鈫?浠呰褰曟棩蹇楋紝闈欓粯**\n\n**瓒呮椂淇濇姢**锛氭€昏秴鏃?600 绉掞紝姣忛樁娈电嫭绔嬭秴鏃?,
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774882800000,
+        "lastRunAtMs": 1774796520038,
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "lastDurationMs": 197691
+      }
+    },
+    {
       "id": "3c5f825f-60c8-4a90-9400-1e565ab32eaa",
       "agentId": "main",
-      "name": "🏃 跑步训练提醒-周二",
+      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄤ簩",
       "enabled": true,
       "createdAtMs": 1774443508382,
-      "updatedAtMs": 1774443508382,
+      "updatedAtMs": 1774801609444,
       "schedule": {
         "kind": "cron",
         "expr": "0 7 * * 2",
@@ -915,8 +606,8 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：轻松跑 8km\n\n📋 内容：8km，配速 5'30\"，心率 140-155 BPM\n⏱️ 预计用时：约 44 分钟\n🎯 重点：控制心率，保持轻松\n\n💡 提醒：跑前热身 5-10 分钟，跑后拉伸 10 分钟",
-        "model": "dashscope-coding-plan/qwen3-coder-next",
+        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛氳交鏉捐窇 8km\n\n馃搵 鍐呭锛?km锛岄厤閫?5'30\"锛屽績鐜?140-155 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛氱害 44 鍒嗛挓\n馃幆 閲嶇偣锛氭帶鍒跺績鐜囷紝淇濇寔杞绘澗\n\n馃挕 鎻愰啋锛氳窇鍓嶇儹韬?5-10 鍒嗛挓锛岃窇鍚庢媺浼?10 鍒嗛挓",
+        "model": "dashscope-coding-plan/glm-5",
         "timeoutSeconds": 60
       },
       "delivery": {
@@ -924,6 +615,254 @@
       },
       "state": {
         "nextRunAtMs": 1774911600000
+      }
+    },
+    {
+      "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f",
+      "agentId": "main",
+      "name": "馃洝锔?瀹夊叏瀹¤鍛?,
+      "enabled": true,
+      "createdAtMs": 1773964384754,
+      "updatedAtMs": 1774800943225,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 */2 * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "杩愯 openclaw security audit锛岀敓鎴愰€氫織鏄撴噦鐨勬姤鍛婏紝鍙戦€佸埌 Telegram 缁?8542040756",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774922400000,
+        "lastRunAtMs": 1774749600022,
+        "lastStatus": "ok",
+        "lastDurationMs": 23593,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "e15879fd-59a5-446a-8290-7682fddaca63",
+      "agentId": "main",
+      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄥ洓",
+      "enabled": true,
+      "createdAtMs": 1774443508427,
+      "updatedAtMs": 1774801615095,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 7 * * 4",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛氳交鏉捐窇 6km\n\n馃搵 鍐呭锛?km锛岄厤閫?5'30\"锛屽績鐜?140-155 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛氱害 33 鍒嗛挓\n馃幆 閲嶇偣锛氭仮澶嶄负涓伙紝淇濇寔杞绘澗",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775084400000,
+        "lastRunAtMs": 1774479890895,
+        "lastStatus": "ok",
+        "lastDurationMs": 3492,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "2428c991-f51e-47d7-8b6d-0035b8aba1e1",
+      "agentId": "main",
+      "name": "馃搱 姣忓懆鎬荤粨",
+      "enabled": true,
+      "createdAtMs": 1774082243339,
+      "updatedAtMs": 1774801015977,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 17 * * 5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鐢熸垚鏈懆宸ヤ綔鎬荤粨锛?.鏈懆瀹屾垚浜嬮」鍥為【 2.閲嶈浜嬩欢璁板綍 3.涓嬪懆璁″垝寤鸿銆傚彂閫佸埌 Telegram 8542040756",
+        "model": "dashscope-coding-plan/qwen3.5-plus",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775206800000,
+        "lastRunAtMs": 1774602000025,
+        "lastStatus": "ok",
+        "lastDurationMs": 123203,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "fae5e00a-aca8-4cb5-aa87-16f4099651aa",
+      "agentId": "main",
+      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄥ叚",
+      "enabled": true,
+      "createdAtMs": 1774443508469,
+      "updatedAtMs": 1774801620766,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 7 * * 6",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛氳妭濂忚窇\n\n馃搵 鍐呭锛?km锛岄厤閫?4'40\"锛屽績鐜?165-175 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛氱害 37 鍒嗛挓\n馃幆 閲嶇偣锛氶€傚簲姣旇禌閰嶉€燂紝鎺у埗蹇冪巼\n\n鈿狅笍 娉ㄦ剰锛氳繖鏄湰鍛ㄩ噸鐐硅缁冿紝淇濇寔涓撴敞",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775257200000,
+        "lastRunAtMs": 1774652424047,
+        "lastStatus": "ok",
+        "lastDurationMs": 24337,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "b65e9a07-abbb-4a2d-b2a1-0396e912308e",
+      "agentId": "main",
+      "name": "馃毃 鐏鹃毦鎭㈠瀹?,
+      "enabled": true,
+      "createdAtMs": 1774083650748,
+      "updatedAtMs": 1774800948809,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸鐏鹃毦鎭㈠瀹橈紝璐熻矗姣忓懆蹇収鍜屾仮澶嶆紨缁冿細\n\n**姣忓懆浠诲姟**锛歕n1. 鍒涘缓瀹屾暣閰嶇疆蹇収锛坥penclaw.json, cron/jobs.json, credentials/锛塡n2. 瀵煎嚭鎵€鏈?Cron 浠诲姟閰嶇疆鍒?memory/disaster-recovery/\n3. 楠岃瘉澶囦唤鏂囦欢瀹屾暣鎬n4. 鐢熸垚鎭㈠鎸囧崡锛堝闇€瑕佹墜鍔ㄦ仮澶嶇殑姝ラ锛塡n\n**鎭㈠婕旂粌**锛歕n1. 妯℃嫙閰嶇疆鎹熷潖鍦烘櫙\n2. 楠岃瘉澶囦唤鏂囦欢鍙鍙朶n3. 璁板綍鎭㈠鏃堕棿棰勪及\n\n**杈撳嚭瑕佹眰**锛歕n- 澶囦唤瀹屾垚鎶ュ憡\n- 澶囦唤鏂囦欢娓呭崟\n- 鎭㈠鎸囧崡浣嶇疆\n- 鍙戦€佸埌 Telegram 8542040756",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775340000000,
+        "lastRunAtMs": 1774735362819,
+        "lastStatus": "ok",
+        "lastDurationMs": 25711,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "f84bb934-49bb-4d5b-8bd3-697c43f8cab3",
+      "agentId": "main",
+      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄦ棩",
+      "enabled": true,
+      "createdAtMs": 1774443508514,
+      "updatedAtMs": 1774801626348,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛歀SD闀胯窛绂籠n\n馃搵 鍐呭锛?2-15km锛岄厤閫?5'45\"锛屽績鐜?145-160 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛?0-90 鍒嗛挓\n馃幆 閲嶇偣锛氳€愬姏璁粌锛屼繚鎸佷綆蹇冪巼\n\n馃挕 寤鸿锛氬甫姘村６锛屼腑閫斿彲琛ユ按",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775340000000,
+        "lastRunAtMs": 1774735552197,
+        "lastStatus": "ok",
+        "lastDurationMs": 24998,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "806f7f0b-f566-452e-a656-6910e5d7531a",
+      "name": "馃И 鐏鹃毦婕旂粌鍛?,
+      "enabled": true,
+      "createdAtMs": 1774321204039,
+      "updatedAtMs": 1774800954452,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鎵ц姣忓懆鐏鹃毦婕旂粌锛?.闅忔満閫夋嫨鏋佺鍦烘櫙 2.妯℃嫙寮傚父 3.楠岃瘉妫€娴嬫満鍒?4.楠岃瘉搴斿绛栫暐 5.楠岃瘉鎭㈠鑳藉姏 6.杈撳嚭婕旂粌鎶ュ憡銆備娇鐢ㄨ剼鏈細D:\\OpenClaw\\.openclaw\\workspace\\scripts\\disaster-recovery-controller.ps1 -Action drill",
+        "model": "dashscope-coding-plan/glm-5",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1775354400000,
+        "lastRunAtMs": 1774749673455,
+        "lastStatus": "ok",
+        "lastDurationMs": 25525,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "fa18eb23-19af-4176-8e60-990050ba1fab",
+      "agentId": "main",
+      "name": "馃搳 姣忓懆璁粌鍥為【",
+      "enabled": true,
+      "createdAtMs": 1774443475820,
+      "updatedAtMs": 1774801010080,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鍥為【鏈懆璺戞璁粌瀹屾垚鎯呭喌锛歕n\n1. 妫€鏌?memory/running-training-plan.md 涓殑鏈懆璁″垝\n2. 璇㈤棶鐢ㄦ埛鏈懆璁粌瀹屾垚鎯呭喌\n3. 璁板綍瀹為檯鏁版嵁锛堣窛绂汇€侀厤閫熴€佸績鐜囷級\n4. 瀵规瘮璁″垝锛屽垎鏋愬樊寮俓n5. 缁欏嚭涓嬪懆璋冩暣寤鸿\n\n鍙戦€佸埌 Telegram 8542040756",
+        "model": "dashscope-coding-plan/qwen3.5-plus",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775390400000,
+        "lastRunAtMs": 1774786564106,
+        "lastStatus": "ok",
+        "lastDurationMs": 42126,
+        "consecutiveErrors": 0
       }
     }
   ]

@@ -1,27 +1,20 @@
-﻿{
-    "checks":  {
-                   "credentialsDir":  "pass",
-                   "openclawJsonBackup":  "pass",
-                   "cronJobsCheck":  "warning - encoding issue",
-                   "gitSensitiveFiles":  "pass"
-               },
-    "lastAudit":  "2026-03-29T20:21:25+08:00",
-    "auditHistory":  [
-
-                     ],
-    "nextAudit":  "2026-03-30T00:21:25+08:00",
-    "lastAuditBy":  "配置审计师",
-    "backupCreated":  "D:\\OpenClaw\\.openclaw\\workspace\\memory\\config-backups/openclaw_20260329_202125.json",
-    "cronJobId":  "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
-    "securityLevel":  "low",
-    "status":  "warning",
-    "warnings":  [
-
-                 ],
-    "issuesFound":  [
-                        "cron/jobs.json 存在编码问题，无法完整解析"
-                    ],
-    "reportSaved":  "D:\\OpenClaw\\.openclaw\\workspace\\memory\\config-backups/audit-report_20260329_202125.md",
-    "notificationReason":  "非静默时段(20:20)，发送审计报告",
-    "notificationSent":  true
+{
+  "lastAudit": {
+    "timestamp": "2026-03-30T00:20:00+08:00",
+    "status": "completed",
+    "securityLevel": "green",
+    "notificationSent": false,
+    "reason": "Silent period (22:00-06:00), no security alerts"
+  },
+  "findings": {
+    "configChanges": "none",
+    "credentialsStatus": "normal",
+    "gitSecurity": "safe",
+    "sensitiveFiles": "protected"
+  },
+  "backup": {
+    "location": "memory/config-backups/openclaw-20260330-002040.json",
+    "created": true
+  },
+  "nextAudit": "2026-03-30T04:20:00+08:00"
 }

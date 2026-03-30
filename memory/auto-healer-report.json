@@ -1,15 +1,21 @@
-{
-    "timestamp":  "2026-03-29T16:22:04Z",
+﻿{
+    "timestamp":  "2026-03-30T00:04:59Z",
     "systemStatus":  {
                          "healthy":  true,
                          "issuesFixed":  0,
                          "issuesFound":  0,
-                         "alertsGenerated":  0
+                         "alertsGenerated":  1
                      },
     "fixActions":  [
 
                    ],
     "alerts":  [
+                   {
+                       "message":  "Gateway 重启失败，需要立即处理",
+                       "level":  "critical"
+                   }
+               ],
+    "retryQueue":  {
 
-               ]
+                   }
 }

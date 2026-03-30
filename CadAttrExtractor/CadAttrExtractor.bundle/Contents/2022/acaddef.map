@@ -1,0 +1,5 @@
+; AutoCAD 2022 Module Definition File
+; CadTableExtractor Plugin
+; Generated for AutoCAD 2022 x64
+
+MODULEPATH "CadTableExtractor.dll"
