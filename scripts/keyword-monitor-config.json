@@ -1,0 +1,23 @@
+{
+  "targets": [
+    {
+      "name": "GitHub CAD Search",
+      "url": "https://github.com/search?q=cad+plugin&type=repositories",
+      "keywords": ["AutoCAD", "Revit", "plugin", "dynamo"],
+      "min_relevance": 0.7,
+      "enabled": true,
+      "type": "github"
+    },
+    {
+      "name": "Stack Overflow CAD",
+      "url": "https://stackoverflow.com/questions/tagged/autocad",
+      "keywords": ["how to", "tutorial", "api", "plugin"],
+      "min_relevance": 0.5,
+      "enabled": false,
+      "type": "stackoverflow"
+    }
+  ],
+  "update_interval_hours": 6,
+  "max_items_per_target": 5,
+  "browser_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+}

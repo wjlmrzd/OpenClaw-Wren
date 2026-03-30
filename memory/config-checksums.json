@@ -1,0 +1,26 @@
+﻿{
+    "changes":  [
+
+                ],
+    "alerts":  [
+
+               ],
+    "files":  {
+                  ".env":  {
+                               "checksum":  "sha256:44a06e93738d7186d857b8cfee20186c6b2e9fa552203dcb341f6a977cdfd4bb",
+                               "size":  243,
+                               "lastModified":  "2026-03-21T13:09:46Z"
+                           },
+                  ".env.example":  {
+                                       "checksum":  "sha256:e32c3dc14f0b6aa96048c9ac5e5f917669040e98827a1c0530e1a50ac71eb770",
+                                       "size":  322,
+                                       "lastModified":  "2026-03-20T07:52:17Z"
+                                   },
+                  "jobs.json":  {
+                                    "checksum":  "sha256:5f7dd7601c8914208371843a086a68dde59ee57aaed78c78beae15916a66190f",
+                                    "size":  23560,
+                                    "lastModified":  "2026-03-30T22:38:22Z"
+                                }
+              },
+    "lastChecked":  "2026-03-30T22:40:58Z"
+}
