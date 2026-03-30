@@ -1,5 +1,6 @@
 {
   "current_mode": "normal",
+  "current_time_period": "evening",
   "notifications_queue": [],
   "silence_start": null,
   "silence_end": null,
@@ -15,5 +16,6 @@
     "emergency": 0,
     "crisis": 0
   },
+  "last_check": "2026-03-30T21:45:00+08:00",
   "last_updated": "2026-03-29T18:18:00+08:00"
 }

@@ -1,24 +1,42 @@
 {
-  "lastCheck": "2026-03-30T00:05:00+08:00",
-  "lastNotification": "2026-03-30T00:05:00+08:00",
-  "systemHealth": "critical",
-  "issuesFound": 1,
-  "issuesFixed": 0,
+  "lastCheck": "2026-03-30T22:01:04+08:00",
+  "lastNotification": "2026-03-30T22:01:04+08:00",
+  "systemHealth": "degraded",
+  "issuesFound": 2,
+  "issuesFixed": 2,
   "alertsGenerated": 1,
   "knownIssues": [
     {
-      "issue": "Gateway 重启失败",
-      "level": "critical",
-      "since": "2026-03-30T00:04:59+08:00",
-      "action": "需要人工干预：检查 Gateway 状态和日志"
+      "task": "🧹 日志清理员",
+      "issue": "临时执行失败",
+      "firstSeen": "2026-03-30T12:01:04+08:00",
+      "status": "fixed",
+      "lastRetry": "2026-03-30T22:01:04+08:00"
+    },
+    {
+      "task": "📊 运营总监",
+      "issue": "临时执行失败",
+      "firstSeen": "2026-03-30T12:01:04+08:00",
+      "status": "fixed",
+      "lastRetry": "2026-03-30T22:01:04+08:00"
+    },
+    {
+      "task": "Gateway",
+      "issue": "重启失败",
+      "firstSeen": "2026-03-30T22:01:04+08:00",
+      "status": "unresolved",
+      "lastRetry": "2026-03-30T22:01:04+08:00"
     }
   ],
-  "consecutiveFailures": {},
-  "notes": "Gateway 无法启动，重启失败。系统资源正常 (内存 72.5%, 磁盘 4.2%)。需要立即人工处理。",
+  "consecutiveFailures": {
+    "Gateway": 1
+  },
+  "notes": "2 个任务已自动重试成功。Gateway 重启失败，需要人工干预。已发送 Telegram 告警。",
   "scriptIssues": {
-    "encodingProblem": false,
+    "encodingProblem": true,
     "gatewayCheckHangs": false,
-    "cronListOk": true
+    "cronListOk": true,
+    "gatewayRestartFailed": true
   },
   "notificationHistory": [
     {
@@ -30,6 +48,26 @@
       "timestamp": "2026-03-30T00:05:00+08:00",
       "action": "alert",
       "reason": "Gateway 重启失败，需要立即处理"
+    },
+    {
+      "timestamp": "2026-03-30T02:06:37+08:00",
+      "action": "recovery",
+      "reason": "系统恢复：Gateway 运行正常，调度优化员已重试"
+    },
+    {
+      "timestamp": "2026-03-30T22:01:04+08:00",
+      "action": "alert",
+      "reason": "Gateway 重启失败，需要人工检查"
     }
-  ]
+  ],
+  "lastCheckResults": {
+    "timestamp": "2026-03-30T22:01:04+08:00",
+    "gatewayStatus": "restart_failed",
+    "rpcProbe": "无法连接",
+    "memoryUsage": "73.7%",
+    "diskUsage": "4.3%",
+    "retriedTasks": ["🧹 日志清理员", "📊 运营总监"],
+    "alerts": ["Gateway 重启失败，需要人工检查"],
+    "scriptError": "PowerShell 编码错误（已过滤）"
+  }
 }

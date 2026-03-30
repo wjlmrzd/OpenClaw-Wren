@@ -20,6 +20,30 @@
     "cs-skill-security-auditor": {
       "version": "1.0.0",
       "installedAt": 1774799600084
+    },
+    "code-review": {
+      "version": "1.0.0",
+      "installedAt": 1774842326475
+    },
+    "github-actions-generator": {
+      "version": "1.0.0",
+      "installedAt": 1774842623847
+    },
+    "github-cli": {
+      "version": "1.0.0",
+      "installedAt": 1774842628223
+    },
+    "docker-essentials": {
+      "version": "1.0.0",
+      "installedAt": 1774842641079
+    },
+    "openclaw-backup": {
+      "version": "1.0.0",
+      "installedAt": 1774842645672
+    },
+    "security-auditor": {
+      "version": "1.0.0",
+      "installedAt": 1774842649638
     }
   }
 }

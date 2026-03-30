@@ -1,0 +1,13 @@
+{
+  "lastRun": "2026-03-30T02:08:54+08:00",
+  "status": "success",
+  "stats": {
+    "inboxScanned": 0,
+    "notesMoved": 0,
+    "linksCreated": 0,
+    "duplicatesDetected": 0,
+    "orphansFound": 0,
+    "errors": 0
+  },
+  "summary": "知识库目录已初始化，Inbox 为空，无需处理"
+}

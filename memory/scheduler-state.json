@@ -1,50 +1,38 @@
 {
-  "lastAnalysisAt": "2026-03-30T00:08:00+08:00",
-  "analysisCycle": 5,
-  "totalTasks": 26,
-  "activeTasks": 26,
-  "enabledTasks": 26,
-  "collisionRiskPairs": [],
-  "riskLevel": "MEDIUM",
-  "heavyTasks": [],
-  "dependencyIssues": [],
-  "apiRateLimitCrisis": {
-    "severity": "HIGH",
-    "affectedTasks": [
-      { "name": "🧠 知识整理员", "jobId": "7677e68c-a6e7-4d92-8d31-09fb24bb5769", "consecutiveFailures": 3, "lastError": "API rate limit" },
-      { "name": "🧬 知识演化员", "jobId": "13f18a92-372a-4076-9b97-08f0efa2377f", "consecutiveFailures": 3, "lastError": "API rate limit" },
-      { "name": "🧹 日志清理员", "jobId": "af025901-6ebc-4541-9698-91c5db9907e6", "consecutiveFailures": 2, "lastError": "API rate limit" },
-      { "name": "🏃 运动提醒员", "jobId": "58540a34-62ab-46a7-a713-cac112e5cd48", "consecutiveFailures": 3, "lastError": "API rate limit" },
-      { "name": "🌐 网站监控员", "jobId": "b41843c3-9956-4992-860d-df21cd03a766", "consecutiveFailures": 2, "lastError": "API rate limit" },
-      { "name": "🛡️ 安全审计员", "jobId": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f", "consecutiveFailures": 1, "lastError": "API rate limit" },
-      { "name": "🧪 灾难演练员", "jobId": "806f7f0b-f566-452e-a656-6910e5d7531a", "consecutiveFailures": 1, "lastError": "API rate limit" }
-    ],
-    "analysis": "Rate limits are cascading through night batch (02:00-04:00). Knowledge整理员 (02:00), 日志清理员 (03:00), 知识演化员 (04:00) are all in rapid succession, depleting API quota. 运动提醒员 (07:00) and others also affected. Root cause: multiple API-intensive tasks within short time windows.",
-    "recommendedAction": "Stagger nightly batch tasks to spread API load. Already applied: 知识演化员 04:00→04:30, 日志清理员 03:00→03:45. Consider also moving 知识整理员 from 02:00 to 02:30 in next cycle."
-  },
-  "systemObservations": {
-    "hourlyCollision": {
-      "description": "8 tasks at :00 (健康监控员, 邮件监控员, 事件协调员, 回归测试员, 资源守护者, 故障自愈员, 通知协调员, 调度优化员)",
-      "risk": "LOW",
-      "reason": "All completing within 5-50s, status=ok. Recent email timeout (180s) is anomaly, otherwise healthy."
-    },
-    "nightlyMaintenanceOptimized": {
-      "description": "日志清理员→03:45, 每日维护员→03:30, 知识演化员→04:30, 知识整理员→02:00",
-      "risk": "LOW",
-      "reason": "Staggered from 02:00-04:00 cascade. Still potential overlap with hourly tasks but significantly improved."
-    },
-    "morning08": {
-      "description": "网站监控员 08:10 only. No 每日早报 task exists.",
-      "risk": "NONE",
-      "reason": "08:00 collision previously mentioned is resolved."
-    },
-    "knowledgeOrganizerScriptBug": {
-      "description": "scripts/knowledge-organizer.ps1 has wrong path (OpenClaw vs workspace/knowledge) and Windows 260-char path limit issues",
-      "risk": "MEDIUM",
-      "reason": "Script keeps hitting rate limits AND path errors. Needs fix before it can succeed."
-    }
-  },
+  "lastAnalysisAt": "2026-03-30T21:47:45+08:00",
+  "analysisCycle": 9,
+  "totalTasks": 18,
+  "highRiskSlots": 1,
+  "mediumRiskSlots": 12,
+  "plannedChanges": 1,
+  "appliedChanges": 1,
+  "failedChanges": 0,
   "optimizationHistory": [
+    {
+      "date": "2026-03-30T21:35:00+08:00",
+      "action": "Applied staggered scheduling optimization",
+      "details": "Adjusted 3 tasks to reduce collision in evening 20:00 time slot: 项目顾问 20:00→20:10, 运营总监 20:00→20:15, 灾难恢复员 20:00→20:20. Reduced peak collision from 5 tasks to 3 tasks at 20:00 time slot."
+    },
+    {
+      "date": "2026-03-30T12:35:00+08:00",
+      "action": "Applied staggered scheduling optimization",
+      "details": "Adjusted 4 tasks to reduce collision: openclaw-security-audit 0→15min, 资源守护者 0→5min, 项目顾问 0→10min, 运营总监 30→35min. Reduced peak collision from 6 tasks to 5 tasks at 20:00 time slot."
+    },
+    {
+      "date": "2026-03-30T09:12:00+08:00",
+      "action": "Critical collision analysis",
+      "details": "Detected high-severity collision risks with 36 collision pairs identified. Critical issues in 08:00, 12:00, 18:00, and especially 20:00 time slots with 6 concurrent tasks. Immediate staggered scheduling recommended."
+    },
+    {
+      "date": "2026-03-30T06:09:00+08:00",
+      "action": "Analysis of current task distribution",
+      "details": "Current task analysis completed. No immediate collision risks requiring adjustment. Project Advisor timeout remains near limit at 226s execution vs 300s timeout. 6 tasks scheduled around 03:00 time slot with minute offsets reducing collision risk. System operating stably after previous optimizations."
+    },
+    {
+      "date": "2026-03-30T03:05:00+08:00",
+      "action": "Analysis of current task distribution",
+      "details": "Identified 6 tasks scheduled around 03:00 time slot (with minute offsets). Project Advisor timeout near limit at 226s execution vs 300s timeout. Overall system stability good after previous optimizations."
+    },
     {
       "date": "2026-03-30T00:08:00+08:00",
       "action": "API rate limit crisis analysis",
@@ -69,7 +57,13 @@
       "date": "2026-03-27T12:03:00+08:00",
       "action": "Initial analysis completed",
       "details": "Total tasks: 18, Collision risk: 0 pairs, Heavy tasks: 1"
+    },
+    {
+      "date": "2026-03-30T21:47:45+08:00",
+      "action": "auto_staggered_scheduling",
+      "details": "Adjusted 1 tasks: 模型使用报告 20:00->20:05"
     }
   ],
-  "recommendation": "API rate limit crisis detected and partially addressed. Night batch staggered. Next cycle should: (1) consider moving 知识整理员 02:00→02:30, (2) investigate knowledge-organizer.ps1 path bug, (3) monitor if rate limits decrease after stagger. Gateway healthy."
+  "riskLevel": "HIGH",
+  "recommendation": "CRITICAL: 1 HIGH-risk slots"
 }

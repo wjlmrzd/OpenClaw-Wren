@@ -1,57 +1,68 @@
 {
-  "lastCheck": "2026-03-29T20:05:00+08:00",
+  "lastCheck": "2026-03-30T20:10:00+08:00",
   "metrics": {
     "memory": {
-      "totalGB": 16.0,
-      "availableGB": 3.7,
-      "usedPercent": 76.5,
-      "status": "healthy",
-      "gatewayProcess": {
-        "pid": 17404,
-        "memoryMB": 708,
-        "uptimeSince": "2026-03-29T15:49:20+08:00"
-      }
-    },
-    "cpu": {
-      "usedPercent": null,
-      "status": "healthy"
+      "current": 71,
+      "threshold_warning": 90,
+      "threshold_critical": 95,
+      "status": "normal"
     },
     "disk": {
       "C": {
-        "totalGB": 117.4,
-        "freeGB": 23.5,
-        "usedPercent": 79.9,
-        "status": "healthy",
-        "trend": "improved"
+        "current": 82,
+        "threshold_warning": 85,
+        "threshold_critical": 95,
+        "status": "normal",
+        "note": "接近阈值，持续监控"
       },
       "D": {
-        "totalGB": 690.9,
-        "freeGB": 661.6,
-        "usedPercent": 4.2,
-        "status": "healthy"
+        "current": 4,
+        "threshold_warning": 85,
+        "threshold_critical": 95,
+        "status": "normal"
       },
       "E": {
-        "totalGB": 240.6,
-        "freeGB": 224.9,
-        "usedPercent": 6.5,
-        "status": "healthy"
+        "current": 7,
+        "threshold_warning": 85,
+        "threshold_critical": 95,
+        "status": "normal"
       },
       "H": {
-        "totalGB": 16393.5,
-        "freeGB": 2439.8,
-        "usedPercent": 84.7,
-        "status": "healthy"
+        "current": 85,
+        "threshold_warning": 85,
+        "threshold_critical": 95,
+        "status": "warning",
+        "note": "已达警告阈值，但状态稳定无新变化"
       }
+    },
+    "cpu": {
+      "current": 3,
+      "status": "normal"
+    },
+    "api": {
+      "current": 12,
+      "threshold_warning": 80,
+      "threshold_critical": 90,
+      "status": "normal",
+      "note": "Coding Plan API 使用率正常"
     }
   },
-  "alerts": [],
-  "resolvedAlerts": [
-    {
-      "date": "2026-03-29",
-      "source": "disk:C",
-      "message": "C 盘使用率 86.5% 超过 85% 阈值 (原记录 3/25)",
-      "status": "resolved",
-      "currentValue": "79.9%"
-    }
-  ]
+  "cronTasks": {
+    "total": 25,
+    "enabled": 22,
+    "disabled": 3,
+    "timeout": 1,
+    "failed": 0,
+    "note": "🧹 日志清理员上次超时 (600s)，需关注"
+  },
+  "alertsSent": {
+    "telegram": false,
+    "reason": "所有指标在正常范围内或无新变化 - H 盘 85% 警告已记录且稳定，C 盘 82% 接近阈值但尚未超标"
+  },
+  "technicalErrorsFiltered": [
+    "PowerShell 编码错误（中文乱码）",
+    "WMIC 查询编码问题"
+  ],
+  "nextCheck": "2026-03-30T22:10:00+08:00",
+  "notes": "C 盘 82% 接近 85% 阈值需关注；H 盘 85% 已稳定多次检查无新变化故静默；下次检查 22:10 进入静默时段"
 }

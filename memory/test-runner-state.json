@@ -44,22 +44,22 @@
 
                                  ],
                       "details":  [
-                                      "OK: openclaw-security-audit -\u003e 0 */6 * * *",
-                                      "OK: gateway-health-monitor -\u003e 10 8 * * *",
-                                      "OK: 每日早报 -\u003e 25 8 * * *",
+                                      "OK: openclaw-security-audit -\u003e 15 */6 * * *",
+                                      "OK: gateway-health-monitor -\u003e 15 8 * * *",
+                                      "OK: 每日早报 -\u003e 35 8 * * *",
                                       "OK: 晚间提醒 -\u003e 0 18 * * 1-5",
                                       "OK: 每周总结 -\u003e 0 17 * * 5",
                                       "OK: 日历检查 -\u003e 0 7 * * *",
                                       "OK: 邮件监控 -\u003e */30 * * * *",
                                       "OK: Workspace 备份 -\u003e 0 23 * * *",
                                       "OK: 模型使用报告 -\u003e 0 20 * * 0",
-                                      "OK: OpenClaw 运营总监 -\u003e 30 9 * * *",
-                                      "OK: 项目顾问 -\u003e 0 20 * * *",
+                                      "OK: OpenClaw 运营总监 -\u003e 45 9 * * *",
+                                      "OK: 项目顾问 -\u003e 25 20 * * *",
                                       "OK: 灾难恢复员 -\u003e 0 21 * * *",
                                       "OK: 错误恢复员 -\u003e */30 * * * *",
                                       "OK: 日志清理员 -\u003e 0 3 * * *",
                                       "OK: 配置审计员 -\u003e 0 */4 * * *",
-                                      "OK: 资源守护者 -\u003e 0 */2 * * *",
+                                      "OK: 资源守护者 -\u003e 5 */2 * * *",
                                       "OK: 错误恢复员 -\u003e 0 6 * * 0"
                                   ],
                       "desc":  "Cron Expression Validation",
@@ -70,7 +70,7 @@
                       "name":  "T004",
                       "desc":  "Gateway Health Check",
                       "details":  [
-                                      "HTTP 200 in 331ms"
+                                      "HTTP 200 in 325ms"
                                   ]
                   },
                   {
@@ -85,7 +85,7 @@
                                      "log-rotate.ps1: 2 syntax issue(s)",
                                      "notification-coordinator.ps1: 10 syntax issue(s)",
                                      "notification-gateway-fixed.ps1: 4 syntax issue(s)",
-                                     "scheduler-optimizer.ps1: 6 syntax issue(s)",
+                                     "scheduler-optimizer.ps1: 3 syntax issue(s)",
                                      "silence-tools.ps1: 3 syntax issue(s)",
                                      "system-mode-tools.ps1: 17 syntax issue(s)",
                                      "telegram-commander.ps1: 42 syntax issue(s)",
@@ -126,6 +126,7 @@
                                       "OK: gateway-monitor.ps1",
                                       "OK: knowledge-evolver.ps1",
                                       "OK: list-cron-jobs.ps1",
+                                      "OK: list-cron-models.ps1",
                                       "OK: list-subdirs.ps1",
                                       "OK: log-cleanup-batch.ps1",
                                       "OK: log-event.ps1",
@@ -157,12 +158,13 @@
                                       "OK: system-mode-controller.ps1",
                                       "OK: test-detect-changes.ps1",
                                       "OK: test-net.ps1",
-                                      "OK: ui-install-plugins.ps1"
+                                      "OK: ui-install-plugins.ps1",
+                                      "OK: update-cron-models.ps1"
                                   ],
                       "desc":  "PowerShell Syntax Check",
                       "status":  "WARN"
                   }
               ],
     "failed":  0,
-    "timestamp":  "2026-03-30 00:09:40"
+    "timestamp":  "2026-03-30 22:20:12"
 }
