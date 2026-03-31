@@ -262,18 +262,37 @@ foreach ($task in $errorTasks) {
 Write-Host "`n[4/6] 检查 Gateway 状态..." -ForegroundColor Yellow
 
 $gatewayHealthy = $true
-try {
-    $response = Invoke-WebRequest -Uri "http://127.0.0.1:18789/status" -TimeoutSec 5 -UseBasicParsing 2>$null
-    if ($response.StatusCode -eq 200) {
-        Write-Host "  ✅ Gateway 运行正常" -ForegroundColor Green
-    } else {
-        Write-Host "  ❌ Gateway 响应异常" -ForegroundColor Red
-        $gatewayHealthy = $false
-    }
-} catch {
-    Write-Host "  ❌ Gateway 无法访问" -ForegroundColor Red
+$gatewayDetails = @{port="UNKNOWN"; process="UNKNOWN"; memory="UNKNOWN"}
+
+# 检查 1: 端口监听 (netstat)
+$netstatOutput = netstat -ano 2>$null | Select-String ":18789.*LISTENING"
+if ($netstatOutput) {
+    $gatewayDetails.port = "OK"
+    Write-Host "  ✅ 端口 18789 正在监听" -ForegroundColor Green
+} else {
+    Write-Host "  ❌ 端口 18789 未监听" -ForegroundColor Red
     $gatewayHealthy = $false
 }
+
+# 检查 2: 进程存在
+if ($gatewayDetails.port -eq "OK") {
+    $processId = ($netstatOutput -split '\s+')[-1] -as [int]
+    if ($processId) {
+        try {
+            $process = Get-Process -Id $processId -ErrorAction Stop
+            $gatewayDetails.process = "OK"
+            $gatewayDetails.memory = [math]::Round($process.WorkingSet64 / 1MB, 2)
+            Write-Host "  ✅ Gateway 进程运行中 (PID: $processId, 内存：$($gatewayDetails.memory)MB)" -ForegroundColor Green
+        } catch {
+            $gatewayDetails.process = "MISSING"
+            Write-Host "  ❌ Gateway 进程不存在" -ForegroundColor Red
+            $gatewayHealthy = $false
+        }
+    }
+}
+
+# 注意：不再使用 HTTP 请求检查，因为 /status 端点可能返回 404
+# 端口监听 + 进程存在 = Gateway 健康
 
 if (-not $gatewayHealthy) {
     Write-Host "  🔄 尝试重启 Gateway..." -ForegroundColor Yellow
@@ -283,21 +302,30 @@ if (-not $gatewayHealthy) {
             & openclaw gateway restart 2>&1 | Out-Null
             Start-Sleep -Seconds 10
             
-            # 验证重启成功
+            # 验证重启成功 (使用 netstat + 进程检查)
             $retryCount = 0
             while ($retryCount -lt 3) {
-                try {
-                    $response = Invoke-WebRequest -Uri "http://127.0.0.1:18789/status" -TimeoutSec 5 -UseBasicParsing 2>$null
-                    if ($response.StatusCode -eq 200) {
-                        Write-Host "  ✅ Gateway 重启成功" -ForegroundColor Green
-                        $fixActions += @{action="restart_gateway"; result="success"}
-                        $systemStatus.issuesFixed++
-                        Record-RepairAction  # 记录修复次数（风暴防护）
-                        break
+                $restartSuccess = $false
+                $netstatOutput = netstat -ano 2>$null | Select-String ":18789.*LISTENING"
+                if ($netstatOutput) {
+                    $processId = ($netstatOutput -split '\s+')[-1] -as [int]
+                    if ($processId) {
+                        try {
+                            $process = Get-Process -Id $processId -ErrorAction Stop
+                            Write-Host "  ✅ Gateway 重启成功 (PID: $processId)" -ForegroundColor Green
+                            $fixActions += @{action="restart_gateway"; result="success"; pid=$processId}
+                            $systemStatus.issuesFixed++
+                            Record-RepairAction  # 记录修复次数（风暴防护）
+                            $restartSuccess = $true
+                            break
+                        } catch {}
                     }
-                } catch {}
-                $retryCount++
-                Start-Sleep -Seconds 5
+                }
+                
+                if (-not $restartSuccess) {
+                    $retryCount++
+                    Start-Sleep -Seconds 5
+                }
             }
             
             if ($retryCount -eq 3) {

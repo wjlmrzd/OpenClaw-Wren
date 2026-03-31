@@ -1,29 +1,20 @@
 {
-  "lastCheck": "2026-03-31T14:00:00+08:00",
+  "lastCheck": "2026-03-31T22:00:59+08:00",
   "lastNotification": "2026-03-30T22:01:04+08:00",
   "systemHealth": "healthy",
   "issuesFound": 0,
   "issuesFixed": 0,
   "alertsGenerated": 0,
-  "knownIssues": [
-    {
-      "task": "📊 运营总监",
-      "issue": "临时执行超时",
-      "firstSeen": "2026-03-30T09:00:00+08:00",
-      "status": "monitoring",
-      "consecutiveFailures": 1
-    }
-  ],
-  "consecutiveFailures": {
-    "运营总监": 1
-  },
-  "notes": "Gateway 运行正常（RPC 探测正常）。脚本执行失败（编码问题导致），已过滤。系统整体健康。",
+  "knownIssues": [],
+  "consecutiveFailures": {},
+  "notes": "Gateway 运行正常（端口 18789 监听中，PID 50400，内存 704.45MB）。所有 Cron 任务状态正常。系统整体健康。内存使用率 80.5%，磁盘 4.3%。",
   "scriptIssues": {
-    "encodingProblem": true,
+    "encodingProblem": false,
     "gatewayCheckHangs": false,
     "cronListOk": true,
     "gatewayRestartFailed": false,
-    "falseAlarm": true
+    "falseAlarm": false,
+    "http404Fixed": true
   },
   "notificationHistory": [
     {
@@ -53,16 +44,24 @@
     }
   ],
   "lastCheckResults": {
-    "timestamp": "2026-03-31T14:00:00+08:00",
+    "timestamp": "2026-03-31T20:02:28+08:00",
     "gatewayStatus": "healthy",
-    "rpcProbe": "正常",
-    "memoryUsage": "unknown",
-    "diskUsage": "unknown",
+    "gatewayDetails": {
+      "port": "OK",
+      "process": "OK",
+      "pid": 50400,
+      "memory": "664.68MB"
+    },
+    "cronJobsStatus": "all_ok",
     "retriedTasks": [],
     "alerts": [],
-    "scriptError": "PowerShell 编码错误（已过滤，误报）",
+    "scriptError": null,
     "recoveredIssues": [],
     "notificationSent": false,
-    "notificationReason": "静默：系统健康 + 脚本误报（编码问题）"
+    "notificationReason": "静默：系统健康，无新问题",
+    "systemResources": {
+      "memory": "77.1%",
+      "disk": "4.3%"
+    }
   }
 }

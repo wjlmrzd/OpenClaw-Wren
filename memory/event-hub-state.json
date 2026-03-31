@@ -1,13 +1,13 @@
 {
-  "lastCheck": "2026-03-31T15:15:00+08:00",
+  "lastCheck": "2026-03-31T22:15:00+08:00",
   "resources": {
     "memory": {
-      "availableMB": 2831,
-      "usagePercent": 15.2,
+      "freeMB": 3341,
+      "usagePercent": 81.4,
       "status": "healthy"
     },
     "disk": {
-      "freeGB": 661.3,
+      "freeGB": 661.2,
       "totalGB": 690.9,
       "usagePercent": 4.3,
       "status": "healthy"
@@ -15,30 +15,20 @@
     "gateway": {
       "status": "running",
       "healthy": true,
-      "rpcProbe": "normal"
+      "port": 18789
     }
   },
   "taskFailures": {
     "critical": [],
-    "warning": [
-      {
-        "id": "791c995e-4758-469d-ac35-608da1627167",
-        "name": "📊 运营总监",
-        "consecutiveErrors": 1,
-        "lastError": "timeout (300s)",
-        "trend": "偶发",
-        "recommendation": "观察后续执行，如持续超时需优化脚本",
-        "action": "持续观察"
-      }
-    ]
+    "warning": []
   },
   "analysis": {
     "systemHealth": "良好",
-    "resourceStatus": "健康 (内存 15.2%, 磁盘 4.3% 使用)",
+    "resourceStatus": "健康 (内存 81.4%, 磁盘 4.3% 使用)",
     "gatewayStatus": "正常运行",
     "criticalIssues": 0,
-    "warningIssues": 1,
+    "warningIssues": 0,
     "actionRequired": false,
-    "nextCheck": "2026-03-31T16:15:00+08:00"
+    "nextCheck": "2026-04-01T00:15:00+08:00"
   }
 }
