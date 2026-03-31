@@ -1,4 +1,5 @@
-# OpenClaw Gateway Smart Monitor (Plan 3)
+# OpenClaw Gateway Health Monitor v5
+# Uses netstat + process + config checks (no external TCP probes needed)
 # L1 Auto-Fix -> L2 Auto-Restart -> L3 Human Alert
 
 param(
@@ -11,10 +12,9 @@ $ErrorActionPreference = "SilentlyContinue"
 $LogFile = "$env:USERPROFILE\.openclaw\logs\monitor.log"
 $StateFile = "$env:USERPROFILE\.openclaw\monitor-state.json"
 
-# Ensure log directory
 $LogDir = Split-Path $LogFile -Parent
-if (!(Test-Path $LogDir)) { 
-    New-Item -ItemType Directory -Path $LogDir -Force | Out-Null 
+if (!(Test-Path $LogDir)) {
+    New-Item -ItemType Directory -Path $LogDir -Force | Out-Null
 }
 
 function Write-Log($Message, $Level = "INFO") {
@@ -27,79 +27,94 @@ function Write-Log($Message, $Level = "INFO") {
 function Send-Telegram($Text) {
     $BotToken = "8329757047:AAEas5LRhvSSGBY6t0zsHzyV8nv_8CZyczA"
     $ChatId = "8542040756"
-    
     try {
         $Url = "https://api.telegram.org/bot$BotToken/sendMessage"
         $EncodedText = [System.Uri]::EscapeDataString($Text)
-        $FullUrl = "$Url?chat_id=$ChatId&text=$EncodedText"
-        Invoke-RestMethod -Uri $FullUrl -Method Get -TimeoutSec 10 | Out-Null
+        Invoke-RestMethod -Uri "$Url?chat_id=$ChatId&text=$EncodedText" -Method Get -TimeoutSec 10 | Out-Null
     } catch {
         Write-Log "Telegram failed: $_" "ERROR"
     }
 }
 
-# Health check
+# ========== HEALTH CHECKS ==========
+
 function Test-GatewayHealth() {
     $Results = @{}
-    
-    # Check WebSocket via openclaw gateway config.get (正确的健康检查方式)
+
+    # 1. Port check: TCP port 18789 listening
+    # Uses netstat which is lightweight and never blocks
     try {
-        $ConfigResult = openclaw-cn gateway config.get 2>&1
-        if ($ConfigResult -match '"ok": true' -or $ConfigResult -match '"valid": true') {
-            $Results.Api = @{ Status = "OK" }
-        } else {
-            $Results.Api = @{ Status = "FAIL"; Error = "WebSocket check failed" }
-        }
-    } catch {
-        $Results.Api = @{ Status = "FAIL"; Error = $_.Exception.Message }
-    }
-    
-    # Also check port is listening (备用检查)
-    try {
-        $PortCheck = netstat -ano | findstr "18789" | findstr "LISTENING"
+        $PortCheck = netstat -ano | Select-String "LISTENING" | Select-String "18789"
         if ($PortCheck) {
-            $Results.Port = @{ Status = "OK" }
-        } else {
-            $Results.Port = @{ Status = "FAIL"; Error = "Port not listening" }
-        }
-    } catch {
-        $Results.Port = @{ Status = "WARN"; Error = "Port check failed" }
-    }
-    
-    # Check process
-    try {
-        $Process = Get-Process -Name "node" | Where-Object { $_.CommandLine -like "*openclaw*" } | Select-Object -First 1
-        if ($Process) {
-            $MemMB = [math]::Round($Process.WorkingSet64 / 1MB, 2)
-            $Results.Memory = @{ Status = "OK"; WorkingSetMB = $MemMB }
-            # Warn if memory > 500MB
-            if ($MemMB -gt 500) {
-                $Results.Memory.Status = "WARN"
+            # Extract PID from LISTENING line
+            if ($PortCheck -match "\s(\d+)$") {
+                $Results.Port = @{ Status = "OK"; PID = $matches[1] }
+            } else {
+                $Results.Port = @{ Status = "OK" }
             }
         } else {
-            $Results.Memory = @{ Status = "FAIL"; Error = "Process not found" }
+            $Results.Port = @{ Status = "FAIL"; Error = "Port 18789 not listening" }
         }
     } catch {
-        $Results.Memory = @{ Status = "FAIL"; Error = $_.Exception.Message }
+        $Results.Port = @{ Status = "WARN"; Error = "netstat failed" }
     }
-    
-    # Check config
+
+    # 2. Process check: node.exe with openclaw
+    try {
+        $Processes = Get-CimInstance Win32_Process -Filter "Name='node.exe'" 2>$null
+        $OpenClawProc = $Processes | Where-Object { $_.CommandLine -like "*openclaw*" } | Select-Object -First 1
+        if ($OpenClawProc) {
+            $MemMB = [math]::Round($OpenClawProc.WorkingSetSize / 1MB, 2)
+            $CPUChar = $OpenClawProc.ElapsedTime
+            $Results.Process = @{ Status = "OK"; MemoryMB = $MemMB; PID = $OpenClawProc.ProcessId }
+            if ($MemMB -gt 800) {
+                $Results.Process.Status = "WARN"
+                $Results.Process.Note = "High memory (${MemMB}MB)"
+            }
+            if ($MemMB -gt 1200) {
+                $Results.Process.Status = "WARN"
+                $Results.Process.Note = "Critical memory (${MemMB}MB)"
+            }
+        } else {
+            $Results.Process = @{ Status = "FAIL"; Error = "No openclaw process found" }
+        }
+    } catch {
+        $Results.Process = @{ Status = "WARN"; Error = "Process query failed" }
+    }
+
+    # 3. Config file: valid JSON
     try {
         $ConfigPath = "$env:USERPROFILE\.openclaw\openclaw.json"
-        Get-Content $ConfigPath -Raw | ConvertFrom-Json | Out-Null
-        $Results.Config = @{ Status = "OK" }
+        if (Test-Path $ConfigPath) {
+            Get-Content $ConfigPath -Raw | ConvertFrom-Json | Out-Null
+            $Results.Config = @{ Status = "OK" }
+        } else {
+            $Results.Config = @{ Status = "FAIL"; Error = "Config file missing" }
+        }
     } catch {
         $Results.Config = @{ Status = "FAIL"; Error = "Invalid JSON" }
     }
-    
+
+    # 4. Gateway log file: recent activity (optional)
+    try {
+        $LogPath = "$env:USERPROFILE\.openclaw\logs\clawdbot-$(Get-Date -Format 'yyyy-MM-dd').log"
+        if (Test-Path $LogPath) {
+            $LastLine = Get-Content $LogPath -Tail 1 -ErrorAction SilentlyContinue
+            if ($LastLine -match "\d{2}:\d{2}:\d{2}") {
+                # Extract timestamp to check freshness
+                $Results.Log = @{ Status = "OK"; LastLine = $LastLine.Substring(0, [Math]::Min(80, $LastLine.Length)) }
+            }
+        }
+    } catch { }
+
     return $Results
 }
 
-# L1 Auto-fix
+# ========== AUTO-FIX ==========
+
 function Invoke-L1Fix($Issue) {
     Write-Log "L1 fix attempt: $Issue" "WARN"
-    
-    if ($Issue -eq "config_syntax_error") {
+    if ($Issue -eq "config_error") {
         $BackupPath = "$env:USERPROFILE\.openclaw\openclaw.json.bak"
         $ConfigPath = "$env:USERPROFILE\.openclaw\openclaw.json"
         if (Test-Path $BackupPath) {
@@ -111,62 +126,47 @@ function Invoke-L1Fix($Issue) {
     return $false
 }
 
-# L2 Auto-restart
+# ========== AUTO-RESTART ==========
+
 function Invoke-L2Restart() {
     Write-Log "L2 restart attempt" "WARN"
-    
-    # Load state
     $RestartCount = 0
     $LastRestartTicks = 0
-    
+
     if (Test-Path $StateFile) {
         try {
             $State = Get-Content $StateFile | ConvertFrom-Json
             $RestartCount = [int]$State.RestartCount
             $LastRestartTicks = [long]$State.LastRestartTicks
-        } catch {
-            # Invalid state file, reset
-            $RestartCount = 0
-            $LastRestartTicks = 0
-        }
+        } catch { }
     }
-    
+
     $NowTicks = (Get-Date).Ticks
-    $OneHourAgo = $NowTicks - 36000000000  # 1 hour in ticks
-    
-    # Reset count if last restart was over an hour ago
-    if ($LastRestartTicks -lt $OneHourAgo) {
-        $RestartCount = 0
-    }
-    
-    # Check cooldown
-    $CooldownTicks = $CooldownMinutes * 600000000  # minutes to ticks
+    $OneHourAgo = $NowTicks - 36000000000
+    if ($LastRestartTicks -lt $OneHourAgo) { $RestartCount = 0 }
+
+    $CooldownTicks = $CooldownMinutes * 600000000
     if (($NowTicks - $LastRestartTicks) -lt $CooldownTicks -and $LastRestartTicks -gt 0) {
         Write-Log "In cooldown, skip restart" "INFO"
         return $false
     }
-    
-    # Check limit
     if ($RestartCount -ge $MaxRestartsPerHour) {
         Write-Log "Restart limit reached ($MaxRestartsPerHour/hr)" "ERROR"
         return $false
     }
-    
-    # Execute restart
+
+    # Use openclaw-cn gateway restart (non-blocking approach)
     try {
-        & openclaw-cn gateway restart
-        Start-Sleep -Seconds 10
-        
-        # Verify
+        $nodeExe = 'C:\Program Files\nodejs\node.exe'
+        $entryJs = 'C:\Users\Administrator\AppData\Roaming\npm\node_modules\openclaw-cn\dist\entry.js'
+        Start-Process -FilePath $nodeExe -ArgumentList "`"$entryJs`"","gateway","restart" -NoNewWindow -WindowStyle Hidden
+        Start-Sleep -Seconds 15
+
+        # Verify with port check (non-blocking)
         $Health = Test-GatewayHealth
-        if ($Health.Api.Status -eq "OK") {
-            # Save state
-            $NewState = @{
-                LastRestartTicks = $NowTicks
-                RestartCount = $RestartCount + 1
-            }
+        if ($Health.Port.Status -eq "OK") {
+            $NewState = @{ LastRestartTicks = $NowTicks; RestartCount = $RestartCount + 1 }
             $NewState | ConvertTo-Json | Set-Content $StateFile
-            
             Write-Log "Restart successful" "INFO"
             Send-Telegram "Gateway auto-restarted OK (count: $($RestartCount + 1)/$MaxRestartsPerHour hr)"
             return $true
@@ -174,16 +174,15 @@ function Invoke-L2Restart() {
     } catch {
         Write-Log "Restart failed: $_" "ERROR"
     }
-    
     return $false
 }
 
-# L3 Alert
+# ========== ALERT ==========
+
 function Invoke-L3Alert($Details) {
     Write-Log "L3 ALERT: $Details" "ERROR"
     $Time = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $Alert = "ALERT [$Time] Gateway needs help. Issues: $Details. Log: $LogFile"
-    Send-Telegram $Alert
+    Send-Telegram "ALERT [$Time] Gateway needs help. Issues: $Details"
 }
 
 # ========== MAIN ==========
@@ -192,29 +191,38 @@ Write-Log "Monitor started (Mode: $Mode)" "INFO"
 $Health = Test-GatewayHealth
 $Issues = @()
 
-# Collect issues
-if ($Health.Api.Status -ne "OK") { $Issues += "ws_unresponsive" }
-if ($Health.Port.Status -eq "FAIL") { $Issues += "port_not_listening" }
-if ($Health.Memory.Status -eq "FAIL") { $Issues += "process_dead" }
-if ($Health.Memory.Status -eq "WARN") { $Issues += "memory_high" }
+# Determine issues
+if ($Health.Port.Status -eq "FAIL") { $Issues += "port_down" }
+if ($Health.Process.Status -eq "FAIL") { $Issues += "process_dead" }
+if ($Health.Process.Status -eq "WARN") {
+    if ($Health.Process.Note -match "Critical") { $Issues += "memory_critical" }
+    else { $Issues += "memory_high" }
+}
 if ($Health.Config.Status -ne "OK") { $Issues += "config_error" }
 
 # All good
 if ($Issues.Count -eq 0) {
-    Write-Log "All checks passed (WS: OK, Port: OK, Memory: $($Health.Memory.WorkingSetMB) MB)" "INFO"
+    $StatusDetail = "Port: OK, Process: OK"
+    if ($Health.Process.MemoryMB) { $StatusDetail += ", Mem: $($Health.Process.MemoryMB)MB" }
+    if ($Health.Log.Status -eq "OK") { $StatusDetail += ", Log OK" }
+    $StatusDetail += ", Config: OK"
+    Write-Log "All checks passed ($StatusDetail)" "INFO"
     exit 0
 }
 
 Write-Log "Issues: $($Issues -join ', ')" "WARN"
 
+# Log detail for debugging
+foreach ($Key in $Health.Keys) {
+    $Err = $Health.$Key.Error
+    if ($Err) { Write-Log "  $Key error: $Err" "WARN" }
+}
+
 $Fixed = $false
 
 # L1: Try auto-fix
 foreach ($Issue in $Issues) {
-    if (Invoke-L1Fix $Issue) {
-        $Fixed = $true
-        break
-    }
+    if (Invoke-L1Fix $Issue) { $Fixed = $true; break }
 }
 
 # L2: Try restart (unless conservative mode)
