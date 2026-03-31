@@ -1,7 +1,4 @@
-# ============================================================
-# Scheduler Optimizer - 调度优化器 (自动执行版)
-# 分析 Cron 任务执行时间，检测冲突，自动优化调度
-# ============================================================
+﻿# Scheduler Optimizer - Auto-execute cron collision mitigation
 param(
     [switch]$AnalyzeOnly,
     [switch]$AutoExecute,
@@ -13,20 +10,16 @@ $workspaceRoot = "D:\OpenClaw\.openclaw\workspace"
 $cronJobsPath = "D:\OpenClaw\.openclaw\cron\jobs.json"
 $statePath = Join-Path $workspaceRoot "memory\scheduler-state.json"
 
-# ============================================================
-# 1. 读取任务配置
-# ============================================================
 Write-Host "=== Scheduler Optimizer ===" -ForegroundColor Cyan
-Write-Host "[1/6] 读取任务配置..." -ForegroundColor Yellow
+Write-Host "[1/6] Reading job config..." -ForegroundColor Yellow
 
-$jobsData = Get-Content $cronJobsPath -Raw | ConvertFrom-Json
+# Use .NET UTF-8 reader to avoid PowerShell 5.1 encoding issues with Chinese chars in JSON
+$jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+$jobsData = $jobsJson | ConvertFrom-Json
 $jobs = $jobsData.jobs
-Write-Host ("  总任务数: {0}" -f $jobs.Count) -ForegroundColor Gray
+Write-Host ("  Total jobs: {0}" -f $jobs.Count) -ForegroundColor Gray
 
-# ============================================================
-# 2. 解析 cron 表达式
-# ============================================================
-Write-Host "[2/6] 解析 cron 表达式..." -ForegroundColor Yellow
+Write-Host "[2/6] Parsing cron expressions..." -ForegroundColor Yellow
 
 function Parse-CronExpr($expr) {
     $parts = $expr -split '\s+'
@@ -86,21 +79,18 @@ foreach ($job in $jobs) {
     foreach ($t in $times) {
         if (-not $timeSlots.ContainsKey($t)) { $timeSlots[$t] = @() }
         $timeSlots[$t] += @{
-            id     = $job.id
-            name   = $job.name
-            expr   = $expr
+            id      = $job.id
+            name    = $job.name
+            expr    = $expr
             timeout = $timeout
             isHeavy = $isHeavy
         }
     }
 }
 
-Write-Host ("  解析了 {0} 个时间点" -f $timeSlots.Count) -ForegroundColor Gray
+Write-Host ("  Parsed {0} time slots" -f $timeSlots.Count) -ForegroundColor Gray
 
-# ============================================================
-# 3. 检测碰撞风险
-# ============================================================
-Write-Host "[3/6] 检测碰撞风险..." -ForegroundColor Yellow
+Write-Host "[3/6] Detecting collision risk..." -ForegroundColor Yellow
 
 $highRiskSlots = @()
 $mediumRiskSlots = @()
@@ -125,13 +115,10 @@ $mediumCount = $mediumRiskSlots.Count
 $highColor = if ($highCount -gt 0) { "Red" } else { "Green" }
 $medColor  = if ($mediumCount -gt 0) { "Yellow" } else { "Green" }
 
-Write-Host ("  HIGH 风险: {0} 个时间点" -f $highCount) -ForegroundColor $highColor
-Write-Host ("  MEDIUM 风险: {0} 个时间点" -f $mediumCount) -ForegroundColor $medColor
+Write-Host ("  HIGH risk: {0} slots" -f $highCount) -ForegroundColor $highColor
+Write-Host ("  MEDIUM risk: {0} slots" -f $mediumCount) -ForegroundColor $medColor
 
-# ============================================================
-# 4. 生成优化方案
-# ============================================================
-Write-Host "[4/6] 生成优化方案..." -ForegroundColor Yellow
+Write-Host "[4/6] Generating optimization plan..." -ForegroundColor Yellow
 
 $plannedChanges = @()
 
@@ -167,13 +154,13 @@ foreach ($slot in ($highRiskSlots + $mediumRiskSlots)) {
             $newExpr = $parts -join ' '
 
             $plannedChanges += @{
-                taskId  = $task.id
+                taskId   = $task.id
                 taskName = $task.name
-                oldExpr = $task.expr
-                newExpr = $newExpr
-                oldSlot = $slot
-                newSlot = $newSlot
-                reason  = "reduce_collision"
+                oldExpr  = $task.expr
+                newExpr  = $newExpr
+                oldSlot  = $slot
+                newSlot  = $newSlot
+                reason   = "reduce_collision"
             }
             $msg = "  -> {0}: {1} -> {2}" -f $task.name, $slot, $newSlot
             Write-Host $msg -ForegroundColor Yellow
@@ -181,12 +168,9 @@ foreach ($slot in ($highRiskSlots + $mediumRiskSlots)) {
     }
 }
 
-Write-Host ("  计划调整: {0} 个任务" -f $plannedChanges.Count) -ForegroundColor Gray
+Write-Host ("  Planned changes: {0} tasks" -f $plannedChanges.Count) -ForegroundColor Gray
 
-# ============================================================
-# 5. 自动执行优化
-# ============================================================
-Write-Host "[5/6] 应用优化..." -ForegroundColor Yellow
+Write-Host "[5/6] Applying changes..." -ForegroundColor Yellow
 
 $appliedChanges = @()
 $failedChanges = @()
@@ -194,7 +178,7 @@ $cliPath = "openclaw"
 
 foreach ($change in $plannedChanges) {
     if ($AnalyzeOnly) {
-        Write-Host ("  [ANALYZE-ONLY] 跳过: {0}" -f $change.taskName) -ForegroundColor Cyan
+        Write-Host ("  [ANALYZE-ONLY] Skip: {0}" -f $change.taskName) -ForegroundColor Cyan
         continue
     }
 
@@ -222,15 +206,12 @@ foreach ($change in $plannedChanges) {
     }
 }
 
-# ============================================================
-# 6. 更新状态文件
-# ============================================================
-Write-Host "[6/6] 更新状态文件..." -ForegroundColor Yellow
+Write-Host "[6/6] Updating state file..." -ForegroundColor Yellow
 
 $existingState = @{}
 if (Test-Path $statePath) {
     try {
-        $raw = Get-Content $statePath -Raw
+        $raw = [System.IO.File]::ReadAllText($statePath, [System.Text.Encoding]::UTF8)
         $existingState = $raw | ConvertFrom-Json
     } catch { $existingState = @{} }
 }
@@ -250,35 +231,31 @@ if ($appliedChanges.Count -gt 0) {
 }
 
 $newState = @{
-    lastAnalysisAt    = (Get-Date -Format "yyyy-MM-ddTHH:mm:ss+08:00")
-    analysisCycle     = if ($existingState.analysisCycle) { $existingState.analysisCycle + 1 } else { 1 }
-    totalTasks        = $jobs.Count
-    highRiskSlots     = $highCount
-    mediumRiskSlots   = $mediumCount
-    plannedChanges    = $plannedChanges.Count
-    appliedChanges    = $appliedChanges.Count
-    failedChanges     = $failedChanges.Count
-    optimizationHistory = $history
-    riskLevel         = if ($highCount -gt 0) { "HIGH" } elseif ($mediumCount -gt 0) { "MEDIUM" } else { "LOW" }
-    recommendation    = if ($highCount -gt 0) { ("CRITICAL: {0} HIGH-risk slots" -f $highCount) } elseif ($mediumCount -gt 0) { ("WARN: {0} MEDIUM-risk slots" -f $mediumCount) } else { "OK: No collision risks" }
+    lastAnalysisAt       = (Get-Date -Format "yyyy-MM-ddTHH:mm:ss+08:00")
+    analysisCycle        = if ($existingState.analysisCycle) { $existingState.analysisCycle + 1 } else { 1 }
+    totalTasks           = $jobs.Count
+    highRiskSlots        = $highCount
+    mediumRiskSlots      = $mediumCount
+    plannedChanges       = $plannedChanges.Count
+    appliedChanges       = $appliedChanges.Count
+    failedChanges        = $failedChanges.Count
+    optimizationHistory  = $history
+    riskLevel            = if ($highCount -gt 0) { "HIGH" } elseif ($mediumCount -gt 0) { "MEDIUM" } else { "LOW" }
+    recommendation       = if ($highCount -gt 0) { ("CRITICAL: {0} HIGH-risk slots" -f $highCount) } elseif ($mediumCount -gt 0) { ("WARN: {0} MEDIUM-risk slots" -f $mediumCount) } else { "OK: No collision risks" }
 }
 
 $newState | ConvertTo-Json -Depth 10 | Set-Content -Path $statePath -Encoding UTF8
 
-# ============================================================
-# 输出摘要
-# ============================================================
 Write-Host ""
-Write-Host "=== 优化完成 ===" -ForegroundColor Cyan
-Write-Host ("  HIGH 风险: {0}" -f $highCount) -ForegroundColor $highColor
-Write-Host ("  MEDIUM 风险: {0}" -f $mediumCount) -ForegroundColor $medColor
-Write-Host ("  计划调整: {0}" -f $plannedChanges.Count) -ForegroundColor Gray
+Write-Host "=== Optimization Complete ===" -ForegroundColor Cyan
+Write-Host ("  HIGH risk: {0}" -f $highCount) -ForegroundColor $highColor
+Write-Host ("  MEDIUM risk: {0}" -f $mediumCount) -ForegroundColor $medColor
+Write-Host ("  Planned: {0}" -f $plannedChanges.Count) -ForegroundColor Gray
 $appColor = if ($appliedChanges.Count -gt 0) { "Green" } else { "Gray" }
-Write-Host ("  实际应用: {0}" -f $appliedChanges.Count) -ForegroundColor $appColor
+Write-Host ("  Applied: {0}" -f $appliedChanges.Count) -ForegroundColor $appColor
 $failColor = if ($failedChanges.Count -gt 0) { "Red" } else { "Gray" }
-Write-Host ("  失败: {0}" -f $failedChanges.Count) -ForegroundColor $failColor
+Write-Host ("  Failed: {0}" -f $failedChanges.Count) -ForegroundColor $failColor
 
-# 输出 JSON 供 agent 读取
 $result = @{
     highRiskSlots   = $highRiskSlots
     mediumRiskSlots = $mediumRiskSlots
