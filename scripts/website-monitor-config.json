@@ -1,28 +1,58 @@
-{
-  "websites": [
-    {
-      "name": "CAD 自学网",
-      "url": "https://www.cadzxw.com",
-      "enabled": true,
-      "categories": ["软件更新", "技术教程"],
-      "priority": "high"
-    },
-    {
-      "name": "绿软小站",
-      "url": "https://www.gndown.com",
-      "enabled": true,
-      "categories": ["绿色软件", "软件下载", "Adobe", "办公"],
-      "priority": "high"
-    },
-    {
-      "name": "APSGO 软件商城",
-      "url": "https://apsgo.com",
-      "enabled": true,
-      "categories": ["正版软件", "软件授权", "工具软件"],
-      "priority": "normal"
-    }
-  ],
-  "focus_keywords": ["软件", "更新", "技术", "教程", "版本", "发布", "新品", "AI", "人工智能", "社会", "Adobe", "Office", "CAD", "IDM", "XMind", "Fences", "ESET"],
-  "max_items_per_site": 5,
-  "push_time": "08:00"
+﻿{
+    "websites":  [
+                     {
+                         "name":  "CAD 自学网",
+                         "url":  "https://www.cadzxw.com",
+                         "enabled":  true,
+                         "categories":  [
+                                            "软件更新",
+                                            "技术教程"
+                                        ],
+                         "priority":  "high"
+                     },
+                     {
+                         "name":  "绿软小站",
+                         "url":  "https://www.gndown.com",
+                         "enabled":  true,
+                         "categories":  [
+                                            "绿色软件",
+                                            "软件下载",
+                                            "Adobe",
+                                            "办公"
+                                        ],
+                         "priority":  "high"
+                     },
+                     {
+                         "name":  "APSGO 软件商城",
+                         "url":  "https://apsgo.com",
+                         "enabled":  true,
+                         "categories":  [
+                                            "正版软件",
+                                            "软件授权",
+                                            "工具软件"
+                                        ],
+                         "priority":  "normal"
+                     }
+                 ],
+    "focus_keywords":  [
+                           "软件",
+                           "更新",
+                           "技术",
+                           "教程",
+                           "版本",
+                           "发布",
+                           "新品",
+                           "AI",
+                           "人工智能",
+                           "社会",
+                           "Adobe",
+                           "Office",
+                           "CAD",
+                           "IDM",
+                           "XMind",
+                           "Fences",
+                           "ESET"
+                       ],
+    "max_items_per_site":  5,
+    "push_time":  "08:00"
 }

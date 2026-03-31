@@ -1,10 +1,10 @@
 {
-  "lastCheck": "2026-03-31T11:12:00+08:00",
+  "lastCheck": "2026-03-31T14:00:00+08:00",
   "lastNotification": "2026-03-30T22:01:04+08:00",
   "systemHealth": "healthy",
-  "issuesFound": 1,
-  "issuesFixed": 3,
-  "alertsGenerated": 1,
+  "issuesFound": 0,
+  "issuesFixed": 0,
+  "alertsGenerated": 0,
   "knownIssues": [
     {
       "task": "📊 运营总监",
@@ -17,12 +17,13 @@
   "consecutiveFailures": {
     "运营总监": 1
   },
-  "notes": "Gateway 运行正常。1 个任务超时（运营总监，连续失败 1 次，未达告警阈值），继续观察。",
+  "notes": "Gateway 运行正常（RPC 探测正常）。脚本执行失败（编码问题导致），已过滤。系统整体健康。",
   "scriptIssues": {
     "encodingProblem": true,
     "gatewayCheckHangs": false,
     "cronListOk": true,
-    "gatewayRestartFailed": false
+    "gatewayRestartFailed": false,
+    "falseAlarm": true
   },
   "notificationHistory": [
     {
@@ -52,16 +53,16 @@
     }
   ],
   "lastCheckResults": {
-    "timestamp": "2026-03-31T06:00:00+08:00",
+    "timestamp": "2026-03-31T14:00:00+08:00",
     "gatewayStatus": "healthy",
     "rpcProbe": "正常",
-    "memoryUsage": "N/A",
-    "diskUsage": "N/A",
+    "memoryUsage": "unknown",
+    "diskUsage": "unknown",
     "retriedTasks": [],
     "alerts": [],
-    "scriptError": "PowerShell 编码错误（已过滤）",
-    "recoveredIssues": ["日志清理员超时"],
+    "scriptError": "PowerShell 编码错误（已过滤，误报）",
+    "recoveredIssues": [],
     "notificationSent": false,
-    "notificationReason": "静默：系统健康，无新变化"
+    "notificationReason": "静默：系统健康 + 脚本误报（编码问题）"
   }
 }

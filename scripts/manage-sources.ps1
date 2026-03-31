@@ -1,478 +1,291 @@
 #Requires -Version 5.1
-<#
-.SYNOPSIS
-    信息源配置管理脚本
-.DESCRIPTION
-    管理 RSS 订阅源和关键词监控配置
-.PARAMETER ListRSS
-    列出所有 RSS 源
-.PARAMETER AddRSS
-    添加 RSS 源
-.PARAMETER RemoveRSS
-    删除 RSS 源
-.PARAMETER EnableRSS
-    启用 RSS 源
-.PARAMETER DisableRSS
-    禁用 RSS 源
-.PARAMETER ListKeywords
-    列出关键词配置
-.PARAMETER AddKeyword
-    添加关键词到目标
-.PARAMETER RemoveKeyword
-    从目标移除关键词
-.PARAMETER AddTarget
-    添加监控目标
-.PARAMETER RemoveTarget
-    移除监控目标
-.PARAMETER EnableTarget
-    启用监控目标
-.PARAMETER DisableTarget
-    禁用监控目标
-.EXAMPLE
-    .\manage-sources.ps1 -ListRSS
-.EXAMPLE
-    .\manage-sources.ps1 -AddRSS -Name "CAD教程" -Url "https://example.com/feed" -Keywords "AutoCAD,Revit"
-.EXAMPLE
-    .\manage-sources.ps1 -RemoveRSS -Name "CAD教程"
-.EXAMPLE
-    .\manage-sources.ps1 -ListKeywords
-.EXAMPLE
-    .\manage-sources.ps1 -AddKeyword -Target "GitHub CAD Search" -Keyword "Dynamo"
-#>
 
 param(
-    [Parameter(ParameterSetName="RSS")]
     [switch]$ListRSS,
-
-    [Parameter(ParameterSetName="AddRSS")]
     [string]$Name,
-
-    [Parameter(ParameterSetName="AddRSS")]
     [string]$Url,
-
-    [Parameter(ParameterSetName="AddRSS")]
     [string]$Keywords = "",
-
-    [Parameter(ParameterSetName="AddRSS")]
     [switch]$Enabled = $true,
-
-    [Parameter(ParameterSetName="RemoveRSS")]
     [string]$RemoveRSS,
-
-    [Parameter(ParameterSetName="ToggleRSS")]
     [string]$EnableRSS,
-
-    [Parameter(ParameterSetName="ToggleRSS")]
     [string]$DisableRSS,
-
-    [Parameter(ParameterSetName="Keywords")]
     [switch]$ListKeywords,
-
-    [Parameter(ParameterSetName="AddKeyword")]
     [string]$Target,
-
-    [Parameter(ParameterSetName="AddKeyword")]
     [string]$Keyword,
-
-    [Parameter(ParameterSetName="RemoveKeyword")]
     [string]$RemoveKeywordTarget,
-
-    [Parameter(ParameterSetName="RemoveKeyword")]
     [string]$RemoveKeyword,
-
-    [Parameter(ParameterSetName="AddTarget")]
     [string]$AddTargetName,
-
-    [Parameter(ParameterSetName="AddTarget")]
     [string]$AddTargetUrl,
-
-    [Parameter(ParameterSetName="AddTarget")]
     [string]$AddTargetKeywords = "",
-
-    [Parameter(ParameterSetName="AddTarget")]
     [switch]$AddTargetEnabled = $true,
-
-    [Parameter(ParameterSetName="RemoveTarget")]
     [string]$RemoveTarget,
-
-    [Parameter(ParameterSetName="ToggleTarget")]
     [string]$EnableTarget,
-
-    [Parameter(ParameterSetName="ToggleTarget")]
     [string]$DisableTarget,
-
-    [Parameter(ParameterSetName="RunMonitors")]
+    [switch]$ListWebsites,
+    [string]$WebsiteName,
+    [string]$WebsiteUrl,
+    [string]$Categories = "",
+    [string]$WebsitePriority = "normal",
+    [switch]$WebsiteEnabled = $true,
+    [string]$RemoveWebsite,
+    [string]$EnableWebsite,
+    [string]$DisableWebsite,
     [switch]$RunRSS,
-
-    [Parameter(ParameterSetName="RunMonitors")]
     [switch]$RunKeywords,
-
-    [Parameter(ParameterSetName="RunMonitors")]
     [switch]$RunWebsite,
-
-    [Parameter(ParameterSetName="RunMonitors")]
-    [switch]$RunAll
+    [switch]$RunAll,
+    [switch]$Interactive
 )
 
-$ErrorActionPreference = 'Continue'
 $SCRIPT_DIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 $RSS_CONFIG = Join-Path $SCRIPT_DIR "rss-sources.json"
 $KW_CONFIG = Join-Path $SCRIPT_DIR "keyword-monitor-config.json"
+$WEBSITE_CONFIG = Join-Path $SCRIPT_DIR "website-monitor-config.json"
 
-# ==================== 辅助函数 ====================
 function Get-JsonConfig([string]$Path) {
-    if (-not (Test-Path $Path)) {
-        Write-Error "配置文件不存在: $Path"
-        return $null
-    }
+    if (-not (Test-Path $Path)) { Write-Error "Config not found"; return $null }
     return Get-Content $Path -Raw -Encoding UTF8 | ConvertFrom-Json
 }
 
 function Save-JsonConfig([string]$Path, [object]$Config) {
     $Config | ConvertTo-Json -Depth 10 | Out-File -FilePath $Path -Encoding UTF8 -NoNewline
-    Write-Host "✅ 配置已保存: $Path" -ForegroundColor Green
-}
-
-function Write-MenuItem([string]$Label, [string]$Value, [string]$Color = "White") {
-    Write-Host "  $Label" -ForegroundColor $Color -NoNewline
-    Write-Host " : $Value"
+    Write-Host "[OK] Saved" -ForegroundColor Green
 }
 
 function Parse-Keywords([string]$KeywordStr) {
     if ([string]::IsNullOrWhiteSpace($KeywordStr)) { return @() }
-    return $KeywordStr -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+    return ($KeywordStr -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 }
 
-# ==================== RSS 操作 ====================
 function Show-RSSList {
-    $config = Get-JsonConfig $RSS_CONFIG
-    if (-not $config) { return }
-
-    Write-Host "`n📡 RSS 订阅源列表" -ForegroundColor Cyan
-    Write-Host ("-" * 60)
+    $config = Get-JsonConfig $RSS_CONFIG; if (-not $config) { return }
+    Write-Host ""
+    Write-Host "[RSS] RSS Sources" -ForegroundColor Cyan
     $sources = @($config.sources)
-    if ($sources.Count -eq 0) {
-        Write-Host "  (无配置)" -ForegroundColor DarkGray
-        return
-    }
+    if ($sources.Count -eq 0) { Write-Host "  (empty)"; return }
     foreach ($s in $sources) {
-        $status = if ($s.enabled) { "✅" } else { "❌" }
-        $kws = if ($s.keywords) { $s.keywords -join ', ' } else { "(无)" }
-        Write-Host "`n  [$status] $($s.name)" -ForegroundColor Yellow
-        Write-MenuItem "  URL" $s.url "DarkGray"
-        Write-MenuItem "  关键词" $kws "DarkGray"
-        Write-MenuItem "  最大条目" $s.max_items "DarkGray"
+        $status = if ($s.enabled) { "[ON]" } else { "[OFF]" }
+        $kws = if ($s.keywords) { $s.keywords -join ", " } else { "(none)" }
+        Write-Host "  $status $($s.name)" -ForegroundColor Yellow
+        Write-Host "    URL: $($s.url)" -ForegroundColor Gray
+        Write-Host "    Keywords: $kws"
     }
-    Write-Host "`n共 $($sources.Count) 个源, $($sources.Where({$_.enabled}).Count) 个启用"
+    Write-Host ""
+    Write-Host "Total: $($sources.Count) sources"
 }
 
 function Add-RSSSource {
-    if ([string]::IsNullOrWhiteSpace($Name) -or [string]::IsNullOrWhiteSpace($Url)) {
-        Write-Error "必须提供 -Name 和 -Url 参数"
-        return
-    }
-
-    $config = Get-JsonConfig $RSS_CONFIG
-    if (-not $config) { return }
-
-    $keywords = Parse-Keywords $Keywords
-
-    # 检查是否已存在
-    $existing = $config.sources | Where-Object { $_.name -eq $Name }
-    if ($existing) {
-        Write-Error "RSS 源 '$Name' 已存在。使用 -RemoveRSS 删除后再添加，或修改现有配置。"
-        return
-    }
-
-    $newSource = @{
-        name = $Name
-        url  = $Url
-        keywords = $keywords
-        enabled = [bool]$Enabled
-        max_items = 10
-    }
-
-    $config.sources += $newSource
+    if ([string]::IsNullOrWhiteSpace($Name) -or [string]::IsNullOrWhiteSpace($Url)) { Write-Error "Need -Name and -Url"; return }
+    $config = Get-JsonConfig $RSS_CONFIG; if (-not $config) { return }
+    if ($config.sources | Where-Object { $_.name -eq $Name }) { Write-Error "Source exists"; return }
+    $config.sources += @{ name = $Name; url = $Url; keywords = Parse-Keywords $Keywords; enabled = [bool]$Enabled; max_items = 10 }
     Save-JsonConfig $RSS_CONFIG $config
-    Write-Host "✅ 添加 RSS 源: $Name" -ForegroundColor Green
+    Write-Host "[OK] Added RSS: $Name" -ForegroundColor Green
 }
 
 function Remove-RSSSource {
-    if ([string]::IsNullOrWhiteSpace($RemoveRSS)) {
-        Write-Error "必须提供 -RemoveRSS 参数"
-        return
-    }
-
-    $config = Get-JsonConfig $RSS_CONFIG
-    if (-not $config) { return }
-
+    if ([string]::IsNullOrWhiteSpace($RemoveRSS)) { return }
+    $config = Get-JsonConfig $RSS_CONFIG; if (-not $config) { return }
     $initial = $config.sources.Count
     $config.sources = @($config.sources | Where-Object { $_.name -ne $RemoveRSS })
-
-    if ($config.sources.Count -eq $initial) {
-        Write-Error "未找到 RSS 源: $RemoveRSS"
-        return
-    }
-
+    if ($config.sources.Count -eq $initial) { Write-Error "Not found"; return }
     Save-JsonConfig $RSS_CONFIG $config
-    Write-Host "✅ 删除 RSS 源: $RemoveRSS" -ForegroundColor Green
+    Write-Host "[OK] Removed: $RemoveRSS" -ForegroundColor Green
 }
 
 function Toggle-RSSEnabled {
     param([string]$TargetName, [bool]$Enabled)
-
-    $config = Get-JsonConfig $RSS_CONFIG
-    if (-not $config) { return }
-
+    $config = Get-JsonConfig $RSS_CONFIG; if (-not $config) { return }
     $source = $config.sources | Where-Object { $_.name -eq $TargetName } | Select-Object -First 1
-    if (-not $source) {
-        Write-Error "未找到 RSS 源: $TargetName"
-        return
-    }
-
+    if (-not $source) { return }
     $source.enabled = $Enabled
     Save-JsonConfig $RSS_CONFIG $config
-    $status = if ($Enabled) { "启用" } else { "禁用" }
-    Write-Host "✅ RSS 源 '$TargetName' 已$status" -ForegroundColor Green
+    Write-Host "[OK] RSS $TargetName toggled" -ForegroundColor Green
 }
 
-# ==================== 关键词操作 ====================
 function Show-KeywordList {
-    $config = Get-JsonConfig $KW_CONFIG
-    if (-not $config) { return }
-
-    Write-Host "`n🔍 关键词监控配置" -ForegroundColor Cyan
-    Write-Host ("-" * 60)
+    $config = Get-JsonConfig $KW_CONFIG; if (-not $config) { return }
+    Write-Host ""
+    Write-Host "[KEYWORD] Keywords" -ForegroundColor Cyan
     $targets = @($config.targets)
-    if ($targets.Count -eq 0) {
-        Write-Host "  (无配置)" -ForegroundColor DarkGray
-        return
-    }
+    if ($targets.Count -eq 0) { Write-Host "  (empty)"; return }
     foreach ($t in $targets) {
-        $status = if ($t.enabled) { "✅" } else { "❌" }
-        $kws = if ($t.keywords) { $t.keywords -join ', ' } else { "(无)" }
-        Write-Host "`n  [$status] $($t.name)" -ForegroundColor Yellow
-        Write-MenuItem "  URL" $t.url "DarkGray"
-        Write-MenuItem "  关键词" $kws "DarkGray"
-        Write-MenuItem "  最低匹配度" $t.min_relevance "DarkGray"
-        Write-MenuItem "  类型" $t.type "DarkGray"
+        $status = if ($t.enabled) { "[ON]" } else { "[OFF]" }
+        Write-Host "  $status $($t.name)" -ForegroundColor Yellow
+        Write-Host "    URL: $($t.url)" -ForegroundColor Gray
     }
-    Write-Host "`n更新间隔: $($config.update_interval_hours) 小时"
-    Write-Host "共 $($targets.Count) 个目标, $($targets.Where({$_.enabled}).Count) 个启用"
 }
 
 function Add-Keyword {
-    if ([string]::IsNullOrWhiteSpace($Target) -or [string]::IsNullOrWhiteSpace($Keyword)) {
-        Write-Error "必须提供 -Target 和 -Keyword 参数"
-        return
-    }
-
-    $config = Get-JsonConfig $KW_CONFIG
-    if (-not $config) { return }
-
+    if ([string]::IsNullOrWhiteSpace($Target) -or [string]::IsNullOrWhiteSpace($Keyword)) { return }
+    $config = Get-JsonConfig $KW_CONFIG; if (-not $config) { return }
     $target = $config.targets | Where-Object { $_.name -eq $Target } | Select-Object -First 1
-    if (-not $target) {
-        Write-Error "未找到监控目标: $Target`n使用 -AddTarget 添加新目标"
-        return
-    }
-
-    if ($Keyword -notin $target.keywords) {
-        $target.keywords += $Keyword
-        Save-JsonConfig $KW_CONFIG $config
-        Write-Host "✅ 添加关键词 '$Keyword' 到 '$Target'" -ForegroundColor Green
-    } else {
-        Write-Host "关键词 '$Keyword' 已存在于 '$Target'" -ForegroundColor Yellow
-    }
+    if (-not $target) { Write-Error "Target not found"; return }
+    if ($Keyword -notin $target.keywords) { $target.keywords += $Keyword; Save-JsonConfig $KW_CONFIG $config }
+    Write-Host "[OK] Added keyword to $Target" -ForegroundColor Green
 }
 
-function Remove-Keyword {
-    if ([string]::IsNullOrWhiteSpace($RemoveKeywordTarget) -or [string]::IsNullOrWhiteSpace($RemoveKeyword)) {
-        Write-Error "必须提供 -RemoveKeywordTarget 和 -RemoveKeyword 参数"
-        return
+function Show-WebsiteList {
+    if (-not (Test-Path $WEBSITE_CONFIG)) { Write-Host "[WEBSITE] No config"; return }
+    $config = Get-Content $WEBSITE_CONFIG -Raw -Encoding UTF8 | ConvertFrom-Json
+    $websites = @($config.websites)
+    Write-Host ""
+    Write-Host "[WEBSITE] Websites" -ForegroundColor Cyan
+    if ($websites.Count -eq 0) { Write-Host "  (empty)"; return }
+    foreach ($w in $websites) {
+        $status = if ($w.enabled) { "[ON]" } else { "[OFF]" }
+        $priority = if ($w.priority) { $w.priority } else { "normal" }
+        $cats = if ($w.categories) { $w.categories -join ", " } else { "(none)" }
+        Write-Host "  $status $($w.name)" -ForegroundColor Yellow
+        Write-Host "    URL: $($w.url)" -ForegroundColor Gray
+        Write-Host "    Categories: $cats | Priority: $priority"
     }
-
-    $config = Get-JsonConfig $KW_CONFIG
-    if (-not $config) { return }
-
-    $target = $config.targets | Where-Object { $_.name -eq $RemoveKeywordTarget } | Select-Object -First 1
-    if (-not $target) {
-        Write-Error "未找到监控目标: $RemoveKeywordTarget"
-        return
-    }
-
-    $initial = $target.keywords.Count
-    $target.keywords = @($target.keywords | Where-Object { $_ -ne $RemoveKeyword })
-
-    if ($target.keywords.Count -eq $initial) {
-        Write-Error "关键词 '$RemoveKeyword' 不存在于 '$RemoveKeywordTarget'"
-        return
-    }
-
-    Save-JsonConfig $KW_CONFIG $config
-    Write-Host "✅ 从 '$RemoveKeywordTarget' 移除关键词 '$RemoveKeyword'" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "Total: $($websites.Count) websites"
 }
 
-function Add-MonitorTarget {
-    if ([string]::IsNullOrWhiteSpace($AddTargetName) -or [string]::IsNullOrWhiteSpace($AddTargetUrl)) {
-        Write-Error "必须提供 -AddTargetName 和 -AddTargetUrl 参数"
-        return
+function Add-MonitorWebsite {
+    if ([string]::IsNullOrWhiteSpace($WebsiteName) -or [string]::IsNullOrWhiteSpace($WebsiteUrl)) { Write-Error "Need -WebsiteName and -WebsiteUrl"; return }
+    if (-not (Test-Path $WEBSITE_CONFIG)) {
+        @{ websites = @(); focus_keywords = @(); max_items_per_site = 5; push_time = "08:00" } | ConvertTo-Json -Depth 10 | Out-File $WEBSITE_CONFIG -Encoding UTF8 -NoNewline
     }
-
-    $config = Get-JsonConfig $KW_CONFIG
-    if (-not $config) { return }
-
-    $existing = $config.targets | Where-Object { $_.name -eq $AddTargetName }
-    if ($existing) {
-        Write-Error "目标 '$AddTargetName' 已存在"
-        return
-    }
-
-    $newTarget = @{
-        name = $AddTargetName
-        url = $AddTargetUrl
-        keywords = Parse-Keywords $AddTargetKeywords
-        min_relevance = 0.5
-        enabled = [bool]$AddTargetEnabled
-        type = "generic"
-    }
-
-    $config.targets += $newTarget
-    Save-JsonConfig $KW_CONFIG $config
-    Write-Host "✅ 添加监控目标: $AddTargetName" -ForegroundColor Green
+    $config = Get-Content $WEBSITE_CONFIG -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($config.websites | Where-Object { $_.name -eq $WebsiteName }) { Write-Error "Website exists"; return }
+    $cats = @()
+    if (-not [string]::IsNullOrWhiteSpace($Categories)) { $cats = ($Categories -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ }) }
+    $validPriorities = @("low", "normal", "high")
+    if ($WebsitePriority -notin $validPriorities) { $WebsitePriority = "normal" }
+    $config.websites += @{ name = $WebsiteName; url = $WebsiteUrl; enabled = [bool]$WebsiteEnabled; categories = $cats; priority = $WebsitePriority }
+    $config | ConvertTo-Json -Depth 10 | Out-File $WEBSITE_CONFIG -Encoding UTF8 -NoNewline
+    Write-Host "[OK] Added website: $WebsiteName" -ForegroundColor Green
 }
 
-function Remove-MonitorTarget {
-    if ([string]::IsNullOrWhiteSpace($RemoveTarget)) {
-        Write-Error "必须提供 -RemoveTarget 参数"
-        return
-    }
-
-    $config = Get-JsonConfig $KW_CONFIG
-    if (-not $config) { return }
-
-    $initial = $config.targets.Count
-    $config.targets = @($config.targets | Where-Object { $_.name -ne $RemoveTarget })
-
-    if ($config.targets.Count -eq $initial) {
-        Write-Error "未找到监控目标: $RemoveTarget"
-        return
-    }
-
-    Save-JsonConfig $KW_CONFIG $config
-    Write-Host "✅ 删除监控目标: $RemoveTarget" -ForegroundColor Green
+function Remove-MonitorWebsite {
+    if ([string]::IsNullOrWhiteSpace($RemoveWebsite)) { return }
+    if (-not (Test-Path $WEBSITE_CONFIG)) { return }
+    $config = Get-Content $WEBSITE_CONFIG -Raw -Encoding UTF8 | ConvertFrom-Json
+    $initial = $config.websites.Count
+    $config.websites = @($config.websites | Where-Object { $_.name -ne $RemoveWebsite })
+    if ($config.websites.Count -eq $initial) { Write-Error "Not found"; return }
+    $config | ConvertTo-Json -Depth 10 | Out-File $WEBSITE_CONFIG -Encoding UTF8 -NoNewline
+    Write-Host "[OK] Removed: $RemoveWebsite" -ForegroundColor Green
 }
 
-function Toggle-TargetEnabled {
+function Toggle-WebsiteEnabled {
     param([string]$TargetName, [bool]$Enabled)
+    if (-not (Test-Path $WEBSITE_CONFIG)) { return }
+    $config = Get-Content $WEBSITE_CONFIG -Raw -Encoding UTF8 | ConvertFrom-Json
+    $website = $config.websites | Where-Object { $_.name -eq $TargetName } | Select-Object -First 1
+    if (-not $website) { return }
+    $website.enabled = $Enabled
+    $config | ConvertTo-Json -Depth 10 | Out-File $WEBSITE_CONFIG -Encoding UTF8 -NoNewline
+    Write-Host "[OK] Website $TargetName toggled" -ForegroundColor Green
+}
 
-    $config = Get-JsonConfig $KW_CONFIG
-    if (-not $config) { return }
-
-    $target = $config.targets | Where-Object { $_.name -eq $TargetName } | Select-Object -First 1
-    if (-not $target) {
-        Write-Error "未找到监控目标: $TargetName"
-        return
+function Show-InteractiveMenu {
+    while ($true) {
+        Clear-Host
+        Write-Host "========================================" -ForegroundColor Cyan
+        Write-Host "  Info Source Manager - Interactive" -ForegroundColor Cyan
+        Write-Host "========================================" -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "  [1] RSS Sources"
+        Write-Host "  [2] Keyword Monitor"
+        Write-Host "  [3] Website Monitor"
+        Write-Host "  [4] Run All Monitors"
+        Write-Host "  [5] Exit"
+        Write-Host ""
+        $choice = Read-Host "Select (1-5)"
+        switch ($choice) {
+            "1" {
+                Show-RSSList
+                Write-Host ""
+                Write-Host "[A]Add [R]Remove [E]Enable [D]Disable [Q]Back" -ForegroundColor Yellow
+                $op = Read-Host "Choice"
+                switch ($op.ToUpper()) {
+                    "A" { $n = Read-Host "Name"; $u = Read-Host "URL"; if ($n -and $u) { & $MyInvocation.MyCommand.Path -AddRSS -Name $n -Url $u } }
+                    "R" { $n = Read-Host "Name to remove"; if ($n) { & $MyInvocation.MyCommand.Path -RemoveRSS -RemoveRSS $n } }
+                    "E" { $n = Read-Host "Name to enable"; if ($n) { & $MyInvocation.MyCommand.Path -EnableRSS -EnableRSS $n } }
+                    "D" { $n = Read-Host "Name to disable"; if ($n) { & $MyInvocation.MyCommand.Path -DisableRSS -DisableRSS $n } }
+                }
+            }
+            "2" {
+                Show-KeywordList
+            }
+            "3" {
+                Show-WebsiteList
+                Write-Host ""
+                Write-Host "[A]Add [R]Remove [E]Enable [D]Disable [Q]Back" -ForegroundColor Yellow
+                $op = Read-Host "Choice"
+                switch ($op.ToUpper()) {
+                    "A" {
+                        $n = Read-Host "Website name"
+                        $u = Read-Host "URL"
+                        $c = Read-Host "Categories (comma sep, optional)"
+                        $p = Read-Host "Priority (low/normal/high, default normal)"
+                        $priority = if ($p) { $p } else { "normal" }
+                        if ($n -and $u) { & $MyInvocation.MyCommand.Path -AddWebsite -WebsiteName $n -WebsiteUrl $u -Categories $c -WebsitePriority $priority }
+                    }
+                    "R" { $n = Read-Host "Name to remove"; if ($n) { & $MyInvocation.MyCommand.Path -RemoveWebsite -RemoveWebsite $n } }
+                    "E" { $n = Read-Host "Name to enable"; if ($n) { & $MyInvocation.MyCommand.Path -EnableWebsite -EnableWebsite $n } }
+                    "D" { $n = Read-Host "Name to disable"; if ($n) { & $MyInvocation.MyCommand.Path -DisableWebsite -DisableWebsite $n } }
+                }
+            }
+            "4" { & $MyInvocation.MyCommand.Path -RunAll }
+            "5" { Write-Host "Bye!" -ForegroundColor Green; return }
+            default { Write-Host "Invalid" -ForegroundColor Red }
+        }
+        if ($choice -ne "5") { Write-Host ""; Read-Host "Press Enter to continue" }
     }
-
-    $target.enabled = $Enabled
-    Save-JsonConfig $KW_CONFIG $config
-    $status = if ($Enabled) { "启用" } else { "禁用" }
-    Write-Host "✅ 监控目标 '$TargetName' 已$status" -ForegroundColor Green
 }
 
-# ==================== 运行监控 ====================
-function Invoke-Monitor {
-    param([string]$ScriptName, [string]$Title)
-
-    $scriptPath = Join-Path $SCRIPT_DIR $ScriptName
-    if (-not (Test-Path $scriptPath)) {
-        Write-Error "脚本不存在: $scriptPath"
-        return
-    }
-
-    Write-Host "`n🚀 运行 $Title ..." -ForegroundColor Cyan
-    python $scriptPath
-}
-
-# ==================== 主程序 ====================
-Write-Host ""
-
-if ($ListRSS) {
-    Show-RSSList
-}
-elseif (-not [string]::IsNullOrWhiteSpace($AddRSS)) {
-    Add-RSSSource
-}
-elseif (-not [string]::IsNullOrWhiteSpace($RemoveRSS)) {
-    Remove-RSSSource
-}
-elseif (-not [string]::IsNullOrWhiteSpace($EnableRSS)) {
-    Toggle-RSSEnabled -TargetName $EnableRSS -Enabled $true
-}
-elseif (-not [string]::IsNullOrWhiteSpace($DisableRSS)) {
-    Toggle-RSSEnabled -TargetName $DisableRSS -Enabled $false
-}
-elseif ($ListKeywords) {
-    Show-KeywordList
-}
-elseif (-not [string]::IsNullOrWhiteSpace($Target) -and -not [string]::IsNullOrWhiteSpace($Keyword)) {
-    Add-Keyword
-}
-elseif (-not [string]::IsNullOrWhiteSpace($RemoveKeywordTarget) -and -not [string]::IsNullOrWhiteSpace($RemoveKeyword)) {
-    Remove-Keyword
-}
-elseif (-not [string]::IsNullOrWhiteSpace($AddTargetName)) {
-    Add-MonitorTarget
-}
-elseif (-not [string]::IsNullOrWhiteSpace($RemoveTarget)) {
-    Remove-MonitorTarget
-}
-elseif (-not [string]::IsNullOrWhiteSpace($EnableTarget)) {
-    Toggle-TargetEnabled -TargetName $EnableTarget -Enabled $true
-}
-elseif (-not [string]::IsNullOrWhiteSpace($DisableTarget)) {
-    Toggle-TargetEnabled -TargetName $DisableTarget -Enabled $false
-}
-elseif ($RunRSS) {
-    Invoke-Monitor "rss-monitor.py" "RSS 监控"
-}
-elseif ($RunKeywords) {
-    Invoke-Monitor "keyword-monitor.py" "关键词监控"
-}
-elseif ($RunWebsite) {
-    Invoke-Monitor "website-monitor.py" "网站监控"
-}
+if ($ListRSS) { Show-RSSList }
+elseif ($Name -and $Url) { Add-RSSSource }
+elseif ($RemoveRSS) { Remove-RSSSource }
+elseif ($EnableRSS) { Toggle-RSSEnabled -TargetName $EnableRSS -Enabled $true }
+elseif ($DisableRSS) { Toggle-RSSEnabled -TargetName $DisableRSS -Enabled $false }
+elseif ($ListKeywords) { Show-KeywordList }
+elseif ($Target -and $Keyword) { Add-Keyword }
+elseif ($ListWebsites) { Show-WebsiteList }
+elseif ($WebsiteName -and $WebsiteUrl) { Add-MonitorWebsite }
+elseif ($RemoveWebsite) { Remove-MonitorWebsite }
+elseif ($EnableWebsite) { Toggle-WebsiteEnabled -TargetName $EnableWebsite -Enabled $true }
+elseif ($DisableWebsite) { Toggle-WebsiteEnabled -TargetName $DisableWebsite -Enabled $false }
 elseif ($RunAll) {
-    Invoke-Monitor "website-monitor.py" "网站监控"
-    Invoke-Monitor "rss-monitor.py" "RSS 监控"
-    Invoke-Monitor "keyword-monitor.py" "关键词监控"
+    Write-Host "[RUN] Running all monitors..." -ForegroundColor Cyan
+    python (Join-Path $SCRIPT_DIR "website-monitor.py")
+    python (Join-Path $SCRIPT_DIR "rss-monitor.py")
+    python (Join-Path $SCRIPT_DIR "keyword-monitor.py")
 }
+elseif ($Interactive) { Show-InteractiveMenu }
 else {
-    Write-Host @"
-📋 信息源管理脚本
-
-用法:
-  RSS 管理:
-    .\manage-sources.ps1 -ListRSS
-    .\manage-sources.ps1 -AddRSS -Name "xxx" -Url "..." -Keywords "kw1,kw2"
-    .\manage-sources.ps1 -RemoveRSS -Name "xxx"
-    .\manage-sources.ps1 -EnableRSS -Name "xxx"
-    .\manage-sources.ps1 -DisableRSS -Name "xxx"
-
-  关键词监控管理:
-    .\manage-sources.ps1 -ListKeywords
-    .\manage-sources.ps1 -AddKeyword -Target "xxx" -Keyword "yyy"
-    .\manage-sources.ps1 -RemoveKeyword -RemoveKeywordTarget "xxx" -RemoveKeyword "yyy"
-    .\manage-sources.ps1 -AddTarget -AddTargetName "xxx" -AddTargetUrl "..."
-    .\manage-sources.ps1 -RemoveTarget -RemoveTarget "xxx"
-    .\manage-sources.ps1 -EnableTarget -EnableTarget "xxx"
-    .\manage-sources.ps1 -DisableTarget -DisableTarget "xxx"
-
-  运行监控:
-    .\manage-sources.ps1 -RunRSS
-    .\manage-sources.ps1 -RunKeywords
-    .\manage-sources.ps1 -RunWebsite
-    .\manage-sources.ps1 -RunAll
-
-"@ -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "========================================" -ForegroundColor Cyan
+    Write-Host "  Info Source Manager" -ForegroundColor Cyan
+    Write-Host "========================================" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "RSS:"
+    Write-Host "  -ListRSS"
+    Write-Host "  -AddRSS -Name xxx -Url url"
+    Write-Host "  -RemoveRSS -RemoveRSS xxx"
+    Write-Host "  -EnableRSS -EnableRSS xxx"
+    Write-Host "  -DisableRSS -DisableRSS xxx"
+    Write-Host ""
+    Write-Host "Keywords:"
+    Write-Host "  -ListKeywords"
+    Write-Host "  -AddKeyword -Target xxx -Keyword yyy"
+    Write-Host ""
+    Write-Host "Website:"
+    Write-Host "  -ListWebsites"
+    Write-Host "  -AddWebsite -WebsiteName xxx -WebsiteUrl url"
+    Write-Host "  -AddWebsite -WebsiteName xxx -WebsiteUrl url -Categories cat1,cat2 -WebsitePriority high"
+    Write-Host "  -RemoveWebsite -RemoveWebsite xxx"
+    Write-Host "  -EnableWebsite -EnableWebsite xxx"
+    Write-Host "  -DisableWebsite -DisableWebsite xxx"
+    Write-Host ""
+    Write-Host "Run:"
+    Write-Host "  -RunAll"
+    Write-Host ""
+    Write-Host "Interactive Menu:"
+    Write-Host "  -Interactive"
 }

@@ -1,20 +1,11 @@
-$token = [System.Environment]::GetEnvironmentVariable('TELEGRAM_BOT_TOKEN', 'Process')
 $body = @{
-    chat_id = -1003866951105
-    name = "动人心弦"
-} | ConvertTo-Json
+    chat_id = "-1003866951105"
+    name = "总脑"
+} | ConvertTo-Json -Compress
 
-$params = @{
-    Uri = "https://api.telegram.org/bot$token/createForumTopic"
-    Method = "Post"
-    ContentType = "application/json"
-    Body = $body
-}
+$proxy = "http://127.0.0.1:7897"
+$webSession = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+$webSession.Proxy = New-Object System.Net.WebProxy($proxy)
 
-try {
-    $result = Invoke-RestMethod @params
-    $result | ConvertTo-Json -Depth 10
-} catch {
-    Write-Host "Error: $_"
-    $_.Exception.Response
-}
+$response = Invoke-RestMethod -Uri "https://api.telegram.org/bot8329757047:AAEas5LRhvSSGBY6t0zsHzyV8nv_8CZyczA/createForumTopic" -Method Post -ContentType "application/json" -Body $body -WebSession $webSession
+$response | ConvertTo-Json -Depth 10

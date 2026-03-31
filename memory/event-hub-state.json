@@ -1,9 +1,9 @@
 {
-  "lastCheck": "2026-03-31T06:15:00+08:00",
+  "lastCheck": "2026-03-31T15:15:00+08:00",
   "resources": {
     "memory": {
-      "availableMB": 5677,
-      "usagePercent": 65.0,
+      "availableMB": 2831,
+      "usagePercent": 15.2,
       "status": "healthy"
     },
     "disk": {
@@ -34,11 +34,11 @@
   },
   "analysis": {
     "systemHealth": "良好",
-    "resourceStatus": "健康 (内存 65%, 磁盘 95.7% 可用)",
+    "resourceStatus": "健康 (内存 15.2%, 磁盘 4.3% 使用)",
     "gatewayStatus": "正常运行",
     "criticalIssues": 0,
     "warningIssues": 1,
     "actionRequired": false,
-    "nextCheck": "2026-03-31T08:15:00+08:00"
+    "nextCheck": "2026-03-31T16:15:00+08:00"
   }
 }
