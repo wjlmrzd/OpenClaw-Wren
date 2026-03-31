@@ -1,0 +1,25 @@
+{
+  "watchFolders": [
+    "E:\\EngineeringDocs"
+  ],
+  "outputFolder": "E:\\software\\Obsidian\\vault\\knowledge\\工程知识\\00-Inbox",
+  "ocrEnabled": true,
+  "ocrEngine": "paddleocr",
+  "autoParse": false,
+  "supportedTypes": [
+    ".pdf",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".tiff",
+    ".tif",
+    ".bmp",
+    ".docx",
+    ".xlsx"
+  ],
+  "scanInterval": "daily",
+  "notification": {
+    "onNewFiles": true,
+    "onOcrComplete": true
+  }
+}
