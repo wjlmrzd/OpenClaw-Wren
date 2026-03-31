@@ -1,42 +1,28 @@
 {
-  "lastCheck": "2026-03-30T22:01:04+08:00",
+  "lastCheck": "2026-03-31T11:12:00+08:00",
   "lastNotification": "2026-03-30T22:01:04+08:00",
-  "systemHealth": "degraded",
-  "issuesFound": 2,
-  "issuesFixed": 2,
+  "systemHealth": "healthy",
+  "issuesFound": 1,
+  "issuesFixed": 3,
   "alertsGenerated": 1,
   "knownIssues": [
     {
-      "task": "🧹 日志清理员",
-      "issue": "临时执行失败",
-      "firstSeen": "2026-03-30T12:01:04+08:00",
-      "status": "fixed",
-      "lastRetry": "2026-03-30T22:01:04+08:00"
-    },
-    {
       "task": "📊 运营总监",
-      "issue": "临时执行失败",
-      "firstSeen": "2026-03-30T12:01:04+08:00",
-      "status": "fixed",
-      "lastRetry": "2026-03-30T22:01:04+08:00"
-    },
-    {
-      "task": "Gateway",
-      "issue": "重启失败",
-      "firstSeen": "2026-03-30T22:01:04+08:00",
-      "status": "unresolved",
-      "lastRetry": "2026-03-30T22:01:04+08:00"
+      "issue": "临时执行超时",
+      "firstSeen": "2026-03-30T09:00:00+08:00",
+      "status": "monitoring",
+      "consecutiveFailures": 1
     }
   ],
   "consecutiveFailures": {
-    "Gateway": 1
+    "运营总监": 1
   },
-  "notes": "2 个任务已自动重试成功。Gateway 重启失败，需要人工干预。已发送 Telegram 告警。",
+  "notes": "Gateway 运行正常。1 个任务超时（运营总监，连续失败 1 次，未达告警阈值），继续观察。",
   "scriptIssues": {
     "encodingProblem": true,
     "gatewayCheckHangs": false,
     "cronListOk": true,
-    "gatewayRestartFailed": true
+    "gatewayRestartFailed": false
   },
   "notificationHistory": [
     {
@@ -58,16 +44,24 @@
       "timestamp": "2026-03-30T22:01:04+08:00",
       "action": "alert",
       "reason": "Gateway 重启失败，需要人工检查"
+    },
+    {
+      "timestamp": "2026-03-31T00:00:00+08:00",
+      "action": "recovery",
+      "reason": "Gateway 已自动恢复，系统健康状态好转"
     }
   ],
   "lastCheckResults": {
-    "timestamp": "2026-03-30T22:01:04+08:00",
-    "gatewayStatus": "restart_failed",
-    "rpcProbe": "无法连接",
-    "memoryUsage": "73.7%",
-    "diskUsage": "4.3%",
-    "retriedTasks": ["🧹 日志清理员", "📊 运营总监"],
-    "alerts": ["Gateway 重启失败，需要人工检查"],
-    "scriptError": "PowerShell 编码错误（已过滤）"
+    "timestamp": "2026-03-31T06:00:00+08:00",
+    "gatewayStatus": "healthy",
+    "rpcProbe": "正常",
+    "memoryUsage": "N/A",
+    "diskUsage": "N/A",
+    "retriedTasks": [],
+    "alerts": [],
+    "scriptError": "PowerShell 编码错误（已过滤）",
+    "recoveredIssues": ["日志清理员超时"],
+    "notificationSent": false,
+    "notificationReason": "静默：系统健康，无新变化"
   }
 }

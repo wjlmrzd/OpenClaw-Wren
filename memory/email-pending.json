@@ -1,8 +1,21 @@
 {
-  "lastCheck": "2026-03-30T21:25:00+08:00",
+  "lastCheck": "2026-03-31T12:29:00+08:00",
   "pendingEmails": [],
   "totalPending": 0,
-  "lastSent": "2026-03-30T21:25:00+08:00",
-  "sentCount": 14,
-  "newEmailsThisCheck": 7
+  "lastSent": "2026-03-31T06:25:00+08:00",
+  "sentCount": 15,
+  "newEmailsThisCheck": 0,
+  "nextScheduledSend": "2026-03-31T13:00:00+08:00",
+  "lastUnreadSnapshot": [
+    "小龙虾 (Openclaw) 助手上线啦",
+    "京东已收到您的订单【3449218007******】",
+    "京东已收到您的订单【3451218011******】",
+    "京东已收到您的订单【3451218007******】",
+    "京东已收到您的订单【3451218008******】",
+    "京东已收到您的订单【3452218008******】",
+    "Rhino 培训新闻 - 2026 年 3 月",
+    "[GitHub] A third-party OAuth application has been added to your account",
+    "京东已收到您的订单【3453218012******】"
+  ],
+  "note": "所有未读邮件均为历史邮件，无新增邮件，本次静默处理"
 }

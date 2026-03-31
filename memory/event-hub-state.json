@@ -1,9 +1,9 @@
 {
-  "lastCheck": "2026-03-30T22:15:00+08:00",
+  "lastCheck": "2026-03-31T06:15:00+08:00",
   "resources": {
     "memory": {
-      "availableMB": 5121,
-      "usagePercent": 68.5,
+      "availableMB": 5677,
+      "usagePercent": 65.0,
       "status": "healthy"
     },
     "disk": {
@@ -22,24 +22,6 @@
     "critical": [],
     "warning": [
       {
-        "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
-        "name": "🏥 健康监控员",
-        "consecutiveErrors": 1,
-        "lastError": "timeout (180s)",
-        "trend": "偶发",
-        "recommendation": "最近一次执行超时，之前连续 3 次成功修复 Gateway 问题，观察后续执行",
-        "action": "持续观察"
-      },
-      {
-        "id": "af025901-6ebc-4541-9698-91c5db9907e6",
-        "name": "🧹 日志清理员",
-        "consecutiveErrors": 1,
-        "lastError": "timeout (600s)",
-        "trend": "偶发",
-        "recommendation": "观察后续执行，如持续超时需优化脚本",
-        "action": "持续观察"
-      },
-      {
         "id": "791c995e-4758-469d-ac35-608da1627167",
         "name": "📊 运营总监",
         "consecutiveErrors": 1,
@@ -50,114 +32,13 @@
       }
     ]
   },
-  "events": [
-    {
-      "timestamp": "2026-03-30T10:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 71.4%, 磁盘 95.8% 可用), Gateway 正常运行",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤"
-    },
-    {
-      "timestamp": "2026-03-30T11:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 75.6%, 磁盘 95.8% 可用), Gateway 正常运行",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T12:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 75.6%, 磁盘 95.8% 可用), Gateway 正常运行",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T13:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 73.6%, 磁盘 95.7% 可用), Gateway 正常运行",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T15:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 73.6%, 磁盘 95.7% 可用), Gateway 正常运行。3 个任务偶发超时 (健康监控员、日志清理员、运营总监)，连续错误均<3 次，按规则过滤不通知",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T16:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 73.6%, 磁盘 95.7% 可用), Gateway 正常运行 (RPC: normal)。3 个任务偶发超时 (健康监控员、日志清理员、运营总监)，连续错误均<3 次，按规则过滤不通知",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T17:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 72.8%, 磁盘 95.7% 可用), Gateway 正常运行 (RPC: normal)。3 个任务偶发超时 (健康监控员、日志清理员、运营总监)，连续错误均<3 次，按规则过滤不通知",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T18:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 73.5%, 磁盘 95.7% 可用), Gateway 正常运行 (RPC: normal)。3 个任务偶发超时 (健康监控员、日志清理员、运营总监)，连续错误均<3 次，按规则过滤不通知",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T19:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 73.5%, 磁盘 95.7% 可用), Gateway 正常运行 (RPC: normal)。3 个任务偶发超时 (健康监控员、日志清理员、运营总监)，连续错误均<3 次，按规则过滤不通知",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T20:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 73.8%, 磁盘 95.7% 可用), Gateway 正常运行 (RPC: normal)。3 个任务偶发超时 (健康监控员、日志清理员、运营总监)，连续错误均<3 次，按规则过滤不通知",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    },
-    {
-      "timestamp": "2026-03-30T22:15:00+08:00",
-      "severity": "🟢",
-      "source": "📡 事件协调员",
-      "description": "例行检查 - 系统资源健康 (内存 68.5%, 磁盘 95.7% 可用), Gateway 正常运行。3 个任务偶发超时 (健康监控员、日志清理员、运营总监)，连续错误均<3 次，按规则过滤不通知",
-      "action": "无联动触发",
-      "notify": false,
-      "notifyReason": "系统健康，任务偶发超时按规则过滤 (连续错误<3)"
-    }
-  ],
   "analysis": {
     "systemHealth": "良好",
-    "resourceStatus": "健康 (内存 68.5%, 磁盘 95.7% 可用)",
+    "resourceStatus": "健康 (内存 65%, 磁盘 95.7% 可用)",
     "gatewayStatus": "正常运行",
     "criticalIssues": 0,
-    "warningIssues": 3,
+    "warningIssues": 1,
     "actionRequired": false,
-    "nextCheck": "2026-03-31T00:15:00+08:00"
+    "nextCheck": "2026-03-31T08:15:00+08:00"
   }
 }

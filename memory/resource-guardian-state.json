@@ -1,68 +1,11 @@
 {
-  "lastCheck": "2026-03-30T20:10:00+08:00",
-  "metrics": {
-    "memory": {
-      "current": 71,
-      "threshold_warning": 90,
-      "threshold_critical": 95,
-      "status": "normal"
-    },
-    "disk": {
-      "C": {
-        "current": 82,
-        "threshold_warning": 85,
-        "threshold_critical": 95,
-        "status": "normal",
-        "note": "接近阈值，持续监控"
-      },
-      "D": {
-        "current": 4,
-        "threshold_warning": 85,
-        "threshold_critical": 95,
-        "status": "normal"
-      },
-      "E": {
-        "current": 7,
-        "threshold_warning": 85,
-        "threshold_critical": 95,
-        "status": "normal"
-      },
-      "H": {
-        "current": 85,
-        "threshold_warning": 85,
-        "threshold_critical": 95,
-        "status": "warning",
-        "note": "已达警告阈值，但状态稳定无新变化"
-      }
-    },
-    "cpu": {
-      "current": 3,
-      "status": "normal"
-    },
-    "api": {
-      "current": 12,
-      "threshold_warning": 80,
-      "threshold_critical": 90,
-      "status": "normal",
-      "note": "Coding Plan API 使用率正常"
-    }
-  },
-  "cronTasks": {
-    "total": 25,
-    "enabled": 22,
-    "disabled": 3,
-    "timeout": 1,
-    "failed": 0,
-    "note": "🧹 日志清理员上次超时 (600s)，需关注"
-  },
-  "alertsSent": {
-    "telegram": false,
-    "reason": "所有指标在正常范围内或无新变化 - H 盘 85% 警告已记录且稳定，C 盘 82% 接近阈值但尚未超标"
-  },
-  "technicalErrorsFiltered": [
-    "PowerShell 编码错误（中文乱码）",
-    "WMIC 查询编码问题"
-  ],
-  "nextCheck": "2026-03-30T22:10:00+08:00",
-  "notes": "C 盘 82% 接近 85% 阈值需关注；H 盘 85% 已稳定多次检查无新变化故静默；下次检查 22:10 进入静默时段"
+    "disk_C": 88.0,
+    "disk_D": 4.3,
+    "disk_E": 6.8,
+    "disk_H": 85.2,
+    "mem_pct": 61.8,
+    "api_status": "rate_limit_errors",
+    "lastCheck": "2026-03-31 09:02:00",
+    "lastAlert": "2026-03-31 09:02:00 - Disk H warning",
+    "alertsSent": 1
 }

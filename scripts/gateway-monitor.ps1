@@ -42,12 +42,28 @@ function Send-Telegram($Text) {
 function Test-GatewayHealth() {
     $Results = @{}
     
-    # Check API
+    # Check WebSocket via openclaw gateway config.get (正确的健康检查方式)
     try {
-        $Response = Invoke-RestMethod -Uri "http://127.0.0.1:18789/status" -TimeoutSec 5
-        $Results.Api = @{ Status = "OK" }
+        $ConfigResult = openclaw-cn gateway config.get 2>&1
+        if ($ConfigResult -match '"ok": true' -or $ConfigResult -match '"valid": true') {
+            $Results.Api = @{ Status = "OK" }
+        } else {
+            $Results.Api = @{ Status = "FAIL"; Error = "WebSocket check failed" }
+        }
     } catch {
         $Results.Api = @{ Status = "FAIL"; Error = $_.Exception.Message }
+    }
+    
+    # Also check port is listening (备用检查)
+    try {
+        $PortCheck = netstat -ano | findstr "18789" | findstr "LISTENING"
+        if ($PortCheck) {
+            $Results.Port = @{ Status = "OK" }
+        } else {
+            $Results.Port = @{ Status = "FAIL"; Error = "Port not listening" }
+        }
+    } catch {
+        $Results.Port = @{ Status = "WARN"; Error = "Port check failed" }
     }
     
     # Check process
@@ -177,14 +193,15 @@ $Health = Test-GatewayHealth
 $Issues = @()
 
 # Collect issues
-if ($Health.Api.Status -ne "OK") { $Issues += "api_unresponsive" }
+if ($Health.Api.Status -ne "OK") { $Issues += "ws_unresponsive" }
+if ($Health.Port.Status -eq "FAIL") { $Issues += "port_not_listening" }
 if ($Health.Memory.Status -eq "FAIL") { $Issues += "process_dead" }
 if ($Health.Memory.Status -eq "WARN") { $Issues += "memory_high" }
 if ($Health.Config.Status -ne "OK") { $Issues += "config_error" }
 
 # All good
 if ($Issues.Count -eq 0) {
-    Write-Log "All checks passed (Memory: $($Health.Memory.WorkingSetMB) MB)" "INFO"
+    Write-Log "All checks passed (WS: OK, Port: OK, Memory: $($Health.Memory.WorkingSetMB) MB)" "INFO"
     exit 0
 }
 

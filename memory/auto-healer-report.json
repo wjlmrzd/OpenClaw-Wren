@@ -1,24 +1,13 @@
 ﻿{
-    "timestamp":  "2026-03-30T22:01:04Z",
+    "timestamp":  "2026-03-31T12:20:06Z",
     "systemStatus":  {
                          "healthy":  true,
-                         "issuesFixed":  2,
-                         "issuesFound":  2,
+                         "issuesFixed":  0,
+                         "issuesFound":  0,
                          "alertsGenerated":  1
                      },
     "fixActions":  [
-                       {
-                           "taskName":  "馃Ч 鏃ュ織娓呯悊鍛?                cron 45 3 * * * @ Asia/Shanghai  in 6h      18h ago",
-                           "result":  "executed",
-                           "taskId":  "af025901-6ebc-4541-9698-91c5db9907e6",
-                           "action":  "retry_task"
-                       },
-                       {
-                           "taskName":  "馃搳 杩愯惀鎬荤洃                  cron 0 9 * * 1 @ Asia/Shanghai   in 6d      13h ago",
-                           "result":  "executed",
-                           "taskId":  "791c995e-4758-469d-ac35-608da1627167",
-                           "action":  "retry_task"
-                       }
+
                    ],
     "alerts":  [
                    {

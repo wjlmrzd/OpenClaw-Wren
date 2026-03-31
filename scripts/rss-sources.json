@@ -4,15 +4,16 @@
       "name": "GitHub Trending 25",
       "url": "https://github.com/growing-git/GitHubTrending25/releases.atom",
       "keywords": ["CAD", "AI", "plugin"],
-      "enabled": true,
+      "enabled": false,
+      "note": "releases.atom 返回 404，项目无正式 Release，等待发布后重新启用",
       "max_items": 10
     },
     {
       "name": "CAD 技术博客",
       "url": "https://www.cadzxw.com/feed",
       "keywords": ["AutoCAD", "Revit", "插件", "教程"],
-      "enabled": false,
-      "max_items": 5
+      "enabled": true,
+      "max_items": 10
     }
   ],
   "telegram": {

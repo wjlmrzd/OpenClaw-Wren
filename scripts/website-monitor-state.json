@@ -2,7 +2,7 @@
   "initialized": "2026-03-23",
   "websites": {
     "CAD 自学网": {
-      "lastCheck": "2026-03-24T08:55:00+08:00",
+      "lastCheck": "2026-03-31T11:52:00+08:00",
       "status": "monitoring",
       "method": "search_engine",
       "knownPages": [
@@ -15,13 +15,21 @@
         "https://www.cadzxw.com/56069.html",
         "https://www.cadzxw.com/53151.html",
         "https://www.cadzxw.com/29218.html",
-        "https://www.cadzxw.com/course"
+        "https://www.cadzxw.com/course",
+        "https://www.cadzxw.com/ruanjianxiazai",
+        "https://www.cadzxw.com/1587.html",
+        "https://www.cadzxw.com/gstarcad",
+        "https://www.cadzxw.com/about.html",
+        "https://www.cadzxw.com/tag/solidworks",
+        "https://www.cadzxw.com/solidworks",
+        "https://www.cadzxw.com/61937.html",
+        "https://www.cadzxw.com/60581.html"
       ],
       "note": "使用搜索引擎监控（site:cadzxw.com），每日对比新增页面"
     },
     "绿软小站": {
-      "lastCheck": "2026-03-24T08:58:00+08:00",
-      "status": "initialized",
+      "lastCheck": "2026-03-31T11:52:00+08:00",
+      "status": "monitoring",
       "method": "search_engine",
       "knownPages": [
         "https://www.gndown.com/",
@@ -33,13 +41,31 @@
         "https://www.gndown.com/6556.html",
         "https://www.gndown.com/4587.html",
         "https://www.gndown.com/3683.html",
-        "https://www.gndown.com/9837.html"
+        "https://www.gndown.com/9837.html",
+        "https://www.gndown.com/13085.html",
+        "https://www.gndown.com/7382.html",
+        "https://www.gndown.com/6191.html",
+        "https://www.gndown.com/14763.html",
+        "https://www.gndown.com/6604.html",
+        "https://www.gndown.com/9665.html",
+        "https://www.gndown.com/9340.html",
+        "https://www.gndown.com/today.html",
+        "https://www.gndown.com/16135.html",
+        "https://www.gndown.com/15535.html",
+        "https://www.gndown.com/6263.html",
+        "https://www.gndown.com/3129.html",
+        "https://www.gndown.com/2198.html",
+        "https://www.gndown.com/6354.html",
+        "https://www.gndown.com/12534.html",
+        "https://www.gndown.com/3977.html",
+        "https://www.gndown.com/248.html",
+        "https://www.gndown.com/87.html"
       ],
       "note": "绿色软件下载站，使用搜索引擎监控（site:gndown.com）"
     },
     "APSGO 软件商城": {
-      "lastCheck": "2026-03-24T09:00:00+08:00",
-      "status": "initialized",
+      "lastCheck": "2026-03-31T11:52:00+08:00",
+      "status": "monitoring",
       "method": "search_engine",
       "knownPages": [
         "https://apsgo.com/",
@@ -52,11 +78,35 @@
         "https://vidhub.apsgo.com/",
         "https://windowmizer.apsgo.com/",
         "https://internet-download-manager.apsgo.com/",
-        "https://xmind-pro.apsgo.com/"
+        "https://xmind-pro.apsgo.com/",
+        "https://office-365.apsgo.com/",
+        "https://passcovery-suite.apsgo.com/",
+        "https://amberlight.apsgo.com/en",
+        "https://4-organizer.apsgo.com/en",
+        "https://apsgo.com/en/about-us",
+        "https://recovergo-windows.apsgo.com/",
+        "https://filelocator.apsgo.com"
       ],
       "note": "正版软件销售平台，使用搜索引擎监控（site:apsgo.com）"
     }
   },
-  "lastRun": "2026-03-24T09:00:00+08:00",
-  "todayNewPages": []
+  "lastRun": "2026-03-31T12:17:00+08:00",
+  "todayNewPages": [
+    "https://www.gndown.com/16135.html (相聚书屋 - 海量电子书下载)",
+    "https://www.gndown.com/15535.html (爱派 AiPy - 超级 AI 助手)",
+    "https://www.gndown.com/6263.html (Ashampoo Photo Optimizer v26.0.1)",
+    "https://www.gndown.com/3129.html (Qstart 快速启动工具 v20260330)",
+    "https://www.gndown.com/2198.html (MAME v0.287)",
+    "https://www.gndown.com/6354.html (Artweaver Plus v8.1.4)",
+    "https://www.gndown.com/12534.html (ASCOMP Screencapt Pro v3.004)",
+    "https://www.gndown.com/3977.html (中望 CAD 2026 1.2)",
+    "https://www.gndown.com/248.html (Windows 系统调校 2026.03.31)",
+    "https://www.gndown.com/87.html (完美解码 2026.03.30)"
+  ],
+  "lastPush": {
+    "date": "2026-03-31",
+    "time": "12:17:00",
+    "itemsCount": 5,
+    "messageId": "4237"
+  }
 }
