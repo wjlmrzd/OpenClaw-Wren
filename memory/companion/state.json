@@ -1,0 +1,19 @@
+{
+  "name": "Wren",
+  "preferences": {
+    "activeHours": [8, 9, 10, 11, 14, 15, 16, 17, 20, 21, 22],
+    "hasExerciseHabit": true,
+    "currentProjects": [],
+    "health关注": ["跑步", "睡眠"]
+  },
+  "lastActive": 1775184576000,
+  "lastCheckIn": 1775184576000,
+  "lastCompanionMessage": 0,
+  "energyLevel": 80,
+  "sentReminders": [],
+  "trends": {
+    "avgDailyInteractions": 0,
+    "totalInteractions": 0,
+    "lastUpdated": 1775184576000
+  }
+}
