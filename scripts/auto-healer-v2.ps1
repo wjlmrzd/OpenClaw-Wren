@@ -106,39 +106,32 @@ $failedTasks = @()
 $errorTasks = @()
 
 try {
-    $cronOutput = & openclaw cron list 2>&1 | Out-String
-    $lines = $cronOutput -split "`n" | Where-Object { $_.Trim() -ne "" }
-    
-    foreach ($line in $lines) {
-        if ($line -match '([a-f0-9-]{36})\s+(.+?)\s+(error|disabled)') {
-            $jobId = $matches[1]
-            $jobName = $matches[2].Trim()
-            $status = $matches[3]
-            
+    # 直接读取 jobs.json 避免 gateway cron list 工具超时（60s 问题）
+    $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+    $jobsData = $jobsJson | ConvertFrom-Json
+    $jobs = $jobsData.jobs
+
+    foreach ($job in $jobs) {
+        $status = $job.status  # enabled/disabled/error
+        if ($status -eq 'error' -or $status -eq 'disabled') {
             $task = @{
-                id = $jobId
-                name = $jobName
+                id   = $job.id
+                name = $job.name
                 status = $status
                 consecutiveErrors = 0
             }
-            
-            # 尝试提取错误次数
-            if ($line -match 'consecutiveErrors:\s*(\d+)') {
-                $task.consecutiveErrors = [int]$matches[1]
-            }
-            
+            # 从 schedule 提取下次运行时间（如果存在）
             $failedTasks += $task
-            
-            if ($task.consecutiveErrors -ge 3) {
+            if ($status -eq 'error') {
                 $errorTasks += $task
             }
         }
     }
-    
+
     if ($failedTasks.Count -gt 0) {
-        Write-Host "  发现 $($failedTasks.Count) 个失败任务" -ForegroundColor Red
+        Write-Host "  发现 $($failedTasks.Count) 个失败/禁用任务" -ForegroundColor Red
         foreach ($task in $failedTasks) {
-            Write-Host "    - $($task.name) (错误：$($task.consecutiveErrors) 次)" -ForegroundColor Gray
+            Write-Host "    - $($task.name) [$($task.status)]" -ForegroundColor Gray
         }
         $systemStatus.issuesFound += $failedTasks.Count
     } else {

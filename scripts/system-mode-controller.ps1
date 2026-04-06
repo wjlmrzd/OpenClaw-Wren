@@ -75,18 +75,13 @@ function Get-SystemMetrics {
         $metrics.gatewayHealthy = $false
     }
     
-    # 检查连续失败任务
+    # 检查连续失败任务（直接读 jobs.json 避免 cron list 超时）
     try {
-        $cronOutput = & openclaw cron list 2>&1 | Out-String
-        $lines = $cronOutput -split "`n"
-        foreach ($line in $lines) {
-            if ($line -match '([a-f0-9-]{36})\s+.+?\s+error' -and $line -match 'consecutiveErrors:\s*(\d+)') {
-                $errors = [int]$matches[1]
-                if ($errors -ge 3) {
-                    $metrics.consecutiveFailures++
-                }
-            }
-        }
+        $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+        $jobsData = $jobsJson | ConvertFrom-Json
+        $jobs = $jobsData.jobs
+        $errorJobs = $jobs | Where-Object { $_.status -eq 'error' }
+        $metrics.consecutiveFailures = $errorJobs.Count
     } catch {}
     
     return $metrics

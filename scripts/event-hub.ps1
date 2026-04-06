@@ -8,9 +8,11 @@ param(
 )
 
 $workspaceRoot = "D:\OpenClaw\.openclaw\workspace"
+$openclawRoot = "D:\OpenClaw\.openclaw"
 $eventsLogPath = Join-Path $workspaceRoot "memory\events.log"
 $eventsStatePath = Join-Path $workspaceRoot "memory\events-state.json"
 $eventHubStatePath = Join-Path $workspaceRoot "memory\event-hub-state.json"
+$cronJobsPath = Join-Path $openclawRoot "cron\jobs.json"
 
 # 系统阈值配置
 $thresholds = @{
@@ -141,10 +143,12 @@ try {
     Write-Host "  Gateway: [error]" -ForegroundColor Red
 }
 
-# Cron 错误计数
+# Cron 错误计数（直接读 jobs.json 避免 cron list 超时）
 try {
-    $cronList = & openclaw cron list 2>&1 | Out-String
-    $errorCount = ($cronList -split "`n" | Where-Object { $_ -match '\serror\s' }).Count
+    $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+    $jobsData = $jobsJson | ConvertFrom-Json
+    $jobs = $jobsData.jobs
+    $errorCount = ($jobs | Where-Object { $_.status -eq 'error' }).Count
     $systemState.cron.errorCount = $errorCount
     $systemState.cron.status = if ($errorCount -gt 3) { "critical" }
                                elseif ($errorCount -gt 0) { "warning" }

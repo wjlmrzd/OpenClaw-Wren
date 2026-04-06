@@ -3,6 +3,8 @@ $ErrorActionPreference = "Continue"
 $results = @{}
 $results.timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $results.issues = @()
+$openclawRoot = "D:\OpenClaw\.openclaw"
+$cronJobsPath = Join-Path $openclawRoot "cron\jobs.json"
 
 # Gateway
 try {
@@ -18,17 +20,18 @@ try {
     $results.issues += "Gateway failed"
 }
 
-# Cron
+# Cron（直接读 jobs.json 避免 cron list 超时）
 try {
-    $jobsRaw = & openclaw cron list 2>$null | Out-String
-    $jobs = $jobsRaw | ConvertFrom-Json
+    $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+    $jobsData = $jobsJson | ConvertFrom-Json
+    $allJobs = $jobsData.jobs
     $failed = @()
-    foreach ($j in $jobs) {
-        if ($j.PSObject.Properties.Name -contains "lastError" -and $j.lastError) {
+    foreach ($j in $allJobs) {
+        if ($j.status -eq 'error') {
             $failed += $j
         }
     }
-    $results.cronTotal = $jobs.Count
+    $results.cronTotal = $allJobs.Count
     $results.cronFailed = $failed.Count
     $results.cronFailedJobs = $failed
     if ($failed.Count -gt 0) { $results.issues += "$($failed.Count) cron errors" }

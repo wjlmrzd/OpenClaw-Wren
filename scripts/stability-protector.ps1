@@ -7,6 +7,7 @@ param(
 
 $workspaceRoot = "D:\OpenClaw\.openclaw\workspace"
 $openclawRoot = "D:\OpenClaw\.openclaw"
+$cronJobsPath = Join-Path $openclawRoot "cron\jobs.json"
 $statePath = Join-Path $workspaceRoot "memory\stability-state.json"
 $tokenHistoryPath = Join-Path $workspaceRoot "memory\token-usage-history.json"
 
@@ -50,8 +51,12 @@ function Test-HighLoadTaskRunning {
     $state = Get-StabilityState
     if ($state.activeHighLoadTask) {
         try {
-            $cronOutput = & openclaw cron list 2>&1 | Out-String
-            if ($cronOutput -match $state.activeHighLoadTask) {
+            # 直接读 jobs.json 避免 cron list 超时
+            $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+            $jobsData = $jobsJson | ConvertFrom-Json
+            $jobs = $jobsData.jobs
+            $found = $jobs | Where-Object { $_.name -like "*$($state.activeHighLoadTask)*" }
+            if ($found) {
                 return $true
             }
         } catch {}

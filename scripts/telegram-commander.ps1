@@ -1,4 +1,4 @@
-# Telegram Commander - Telegram 控制与运维交互层
+﻿# Telegram Commander - Telegram 控制与运维交互层
 # 解析 Telegram 指令，调用对应 Agent 或系统操作，返回执行结果
 
 param(
@@ -13,6 +13,7 @@ $openclawRoot = "D:\OpenClaw\.openclaw"
 $opsLogPath = Join-Path $workspaceRoot "memory\telegram-ops-log.md"
 $whitelistPath = Join-Path $workspaceRoot "scripts\telegram-whitelist.json"
 $pendingConfirmPath = Join-Path $workspaceRoot "memory\telegram-pending-confirm.json"
+$cronJobsPath = Join-Path $openclawRoot "cron\jobs.json"
 
 # 白名单用户（可从配置文件读取）
 $allowedUsers = @("8542040756")
@@ -111,21 +112,19 @@ function Get-SystemStatus {
         $status.gateway = "error"
     }
     
-    # Cron 任务状态
+    # Cron 任务状态（直接读 jobs.json 避免 cron list 超时）
     try {
-        $cronOutput = & openclaw cron list 2>&1 | Out-String
-        $lines = $cronOutput -split "`n" | Where-Object { $_.Trim() -ne "" }
-        
-        foreach ($line in $lines) {
-            if ($line -match '(🛡️|🏥|📰|📈|📧|💾|💰|📊|💼|🧹|📝|⚖️|🚨|🏃|🌐|🚑|📡|🧠|🧪|🔔|🌅|🔕)\s+(.+?)\s+(ok|idle|error|disabled)') {
-                $task = @{
-                    name = $matches[2].Trim()
-                    status = $matches[3]
-                }
-                $status.tasks += $task
-                if ($task.status -eq "error") {
-                    $status.failedTasks += $task.name
-                }
+        $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+        $jobsData = $jobsJson | ConvertFrom-Json
+        $jobs = $jobsData.jobs
+        foreach ($job in $jobs) {
+            $task = @{
+                name = $job.name
+                status = $job.status
+            }
+            $status.tasks += $task
+            if ($job.status -eq "error") {
+                $status.failedTasks += $job.name
             }
         }
     } catch {}
@@ -141,7 +140,7 @@ function Get-SystemStatus {
         }
         
         $cpu = Get-WmiObject Win32_Processor
-        $status.resources.cpu = [math]::Round($cpu.LoadPercentage | Measure-Object -Average | Select-Object -ExpandProperty Average, 1)
+        $avgCpu = ($cpu.LoadPercentage | Measure-Object -Average).Average; $status.resources.cpu = [math]::Round($avgCpu, 1)
     } catch {}
     
     return $status
@@ -154,33 +153,21 @@ function Invoke-JobAction {
     $result = @{success = $false; message = ""}
     
     try {
-        # 获取任务列表
-        $cronList = & openclaw cron list --includeDisabled 2>&1 | Out-String
+        # 直接从 jobs.json 获取任务列表（避免 cron list 超时）
+        $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+        $jobsData = $jobsJson | ConvertFrom-Json
+        $jobs = $jobsData.jobs
         
         # 模糊匹配任务名
         $matchedJob = $null
         $jobId = $null
         
-        $lines = $cronList -split "`n"
-        foreach ($line in $lines) {
-            if ($line -match '([a-f0-9-]{36})\s+.*?(' + [regex]::Escape($JobName) + ')') {
-                $jobId = $matches[1]
-                $matchedJob = $matches[2]
+        foreach ($job in $jobs) {
+            $name = $job.name
+            if ($name -like "*$JobName*") {
+                $jobId = $job.id
+                $matchedJob = $name
                 break
-            }
-        }
-        
-        if (!$jobId) {
-            # 尝试精确匹配
-            foreach ($line in $lines) {
-                if ($line -match '([a-f0-9-]{36})\s+(.+?)\s') {
-                    $name = $matches[2].Trim()
-                    if ($name -like "*$JobName*") {
-                        $jobId = $matches[1]
-                        $matchedJob = $name
-                        break
-                    }
-                }
             }
         }
         
@@ -281,24 +268,22 @@ $(if($status.failedTasks.Count -gt 0){"⚠️ 失败任务：$($status.failedTas
         }
         
         "/jobs" {
-            $cronList = & openclaw cron list --includeDisabled 2>&1 | Out-String
-            $lines = $cronList -split "`n" | Where-Object { $_.Trim() -ne "" }
+            # 直接从 jobs.json 获取任务列表（避免 cron list 超时）
+            $jobsJson = [System.IO.File]::ReadAllText($cronJobsPath, [System.Text.Encoding]::UTF8)
+            $jobsData = $jobsJson | ConvertFrom-Json
+            $jobs = $jobsData.jobs
             
             $jobList = @()
-            foreach ($line in $lines) {
-                if ($line -match '([a-f0-9-]{36})\s+(.+?)\s+(ok|idle|error|disabled)') {
-                    $jobId = $matches[1]
-                    $name = $matches[2].Trim()
-                    $status = $matches[3]
-                    $icon = switch ($status) {
-                        "ok" { "✅" }
-                        "idle" { "⏳" }
-                        "error" { "❌" }
-                        "disabled" { "⏸️" }
-                        default { "•" }
-                    }
-                    $jobList += "$icon **$name**`n   ID: $jobId"
+            foreach ($job in $jobs) {
+                $status = $job.status
+                $icon = switch ($status) {
+                    "ok" { "✅" }
+                    "idle" { "⏳" }
+                    "error" { "❌" }
+                    "disabled" { "⏸️" }
+                    default { "•" }
                 }
+                $jobList += "$icon **$($job.name)**`n   ID: $($job.id)"
             }
             
             $response.text = "📋 **所有任务**`n`n" + ($jobList -join "`n`n")
