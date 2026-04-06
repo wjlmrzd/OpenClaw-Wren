@@ -164,18 +164,18 @@ namespace CadAttrExtractor
             {
                 _paletteSet = new PaletteSet(
                     PluginGuid,
-                    "图纸目录提取�?,
+                    "图纸目录提取器",
                     new Guid(PluginGuid));
 
-                var mainView = new Views.MainView();
-                _paletteSet.AddVisual("Main", mainView);
+                var mainWindow = new Views.MainWindow();
+                _paletteSet.AddVisual("Main", mainWindow);
 
                 _paletteSet.Size = new System.Drawing.Size(480, 620);
                 _paletteSet.MinimumSize = new System.Drawing.Size(400, 500);
                 _paletteSet.KeepFocus = false;
                 _paletteSet.DockEnabled = DockSides.Left | DockSides.Right | DockSides.Bottom | DockSides.Top;
 
-                WriteLine("[Palette] PaletteSet created successfully");
+                WriteLine("[Palette] PaletteSet created successfully with MainWindow");
             }
             catch (System.Exception ex)
             {

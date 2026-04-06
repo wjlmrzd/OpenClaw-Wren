@@ -1,0 +1,292 @@
+<UserControl x:Class="CadAttrExtractor.Views.PreviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:conv="clr-namespace:CadAttrExtractor.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="440"
+             Background="{DynamicResource PanelBackground}">
+
+    <UserControl.Resources>
+        <conv:SortModeConverter x:Key="SortModeConverter"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <conv:InverseBoolConverter x:Key="InverseBoolConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,8">
+            <TextBlock Text="预览 &amp; 排序"
+                       FontSize="{DynamicResource LargeFontSize}"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryText}"/>
+            <TextBlock Text="查看提取结果，拖拽调整顺序或切换排序模式"
+                       FontSize="{DynamicResource SmallFontSize}"
+                       Foreground="{DynamicResource SecondaryText}"
+                       Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <!-- Sort Controls -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource CardBackground}"
+                CornerRadius="4"
+                Padding="12,8"
+                Margin="0,0,0,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="排序方式:"
+                           Foreground="{DynamicResource PrimaryText}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0"/>
+
+                <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding SortModes}"
+                          SelectedItem="{Binding SelectedSortMode}"
+                          Margin="0"
+                          ToolTip="选择排序模式">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding Converter={StaticResource SortModeConverter}}"
+                                           FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button Grid.Column="2"
+                        Content="应用"
+                        Style="{DynamicResource SecondaryButtonStyle}"
+                        Command="{Binding SortCommand}"
+                        Margin="8,0,0,0"
+                        Padding="12,6"
+                        ToolTip="应用当前排序"/>
+            </Grid>
+        </Border>
+
+        <!-- Items List (with drag-drop support) -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource PanelBackground}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="1"
+                CornerRadius="4">
+            <Grid>
+                <!-- Empty state -->
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding HasItems, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Invert}">
+                    <TextBlock Text="暂无数据"
+                               FontSize="{DynamicResource LargeFontSize}"
+                               Foreground="{DynamicResource SecondaryText}"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="请先在「提取」页提取图块属性"
+                               FontSize="{DynamicResource SmallFontSize}"
+                               Foreground="{DynamicResource DisabledText}"
+                               HorizontalAlignment="Center"
+                               Margin="0,8,0,0"/>
+                </StackPanel>
+
+                <!-- Data Grid -->
+                <DataGrid x:Name="ItemsDataGrid"
+                          ItemsSource="{Binding Items}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          IsReadOnly="True"
+                          SelectionMode="Extended"
+                          SelectionUnit="FullRow"
+                          CanUserReorderColumns="False"
+                          CanUserResizeRows="False"
+                          CanUserSortColumns="True"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
+                          Background="{DynamicResource PanelBackground}"
+                          BorderThickness="0"
+                          RowBackground="{DynamicResource PanelBackground}"
+                          AlternatingRowBackground="{DynamicResource CardBackground}"
+                          Visibility="{Binding HasItems, Converter={StaticResource BoolToVisibilityConverter}}"
+                          MouseMove="ItemsDataGrid_MouseMove"
+                          PreviewMouseLeftButtonDown="ItemsDataGrid_PreviewMouseLeftButtonDown"
+                          PreviewMouseLeftButtonUp="ItemsDataGrid_PreviewMouseLeftButtonUp">
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Margin" Value="0,1"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource HoverBorder}"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource HoverBorder}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+                    <DataGrid.Columns>
+                        <!-- Drag Handle -->
+                        <DataGridTemplateColumn Width="28" CanUserSort="False">
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Padding" Value="4"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="&#x2630;"
+                                               Foreground="{DynamicResource SecondaryText}"
+                                               FontSize="10"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               ToolTip="拖拽排序"
+                                               Cursor="SizeAll"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!-- Index -->
+                        <DataGridTextColumn Header="序号"
+                                            Binding="{Binding DisplayIndex}"
+                                            Width="45"
+                                            ElementStyle="{StaticResource {x:Type TextBlock}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource SecondaryText}"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Padding" Value="4,0"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Block Name -->
+                        <DataGridTextColumn Header="图块名称"
+                                            Binding="{Binding BlockName}"
+                                            Width="110">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryText}"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Padding" Value="4,0"/>
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Drawing Title -->
+                        <DataGridTextColumn Header="图纸名称"
+                                            Binding="{Binding DrawingTitle}"
+                                            Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryText}"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Padding" Value="4,0"/>
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Index Number -->
+                        <DataGridTextColumn Header="图号"
+                                            Binding="{Binding DrawingIndex}"
+                                            Width="55">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Padding" Value="4,0"/>
+                                    <Setter Property="TextAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Position -->
+                        <DataGridTextColumn Header="坐标"
+                                            Binding="{Binding PositionText}"
+                                            Width="105">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource SecondaryText}"/>
+                                    <Setter Property="FontSize" Value="10"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Padding" Value="4,0"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Delete Action -->
+                        <DataGridTemplateColumn Width="36" CanUserSort="False">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="×"
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            Foreground="{DynamicResource ErrorBrush}"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            Padding="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}"
+                                            ToolTip="删除此项"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- Bottom Actions -->
+        <Grid Grid.Row="3" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="{Binding StatusMessage}"
+                       Foreground="{DynamicResource SecondaryText}"
+                       VerticalAlignment="Center"
+                       FontSize="{DynamicResource SmallFontSize}"/>
+
+            <Button Grid.Column="1"
+                    Content="上移"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Command="{Binding MoveUpCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=ItemsDataGrid}"
+                    Padding="12,6"
+                    Margin="0,0,4,0"
+                    ToolTip="将选中项上移"/>
+
+            <Button Grid.Column="2"
+                    Content="下移"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Command="{Binding MoveDownCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=ItemsDataGrid}"
+                    Padding="12,6"
+                    ToolTip="将选中项下移"/>
+        </Grid>
+    </Grid>
+</UserControl>

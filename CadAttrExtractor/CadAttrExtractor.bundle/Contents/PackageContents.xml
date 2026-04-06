@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ApplicationPackage>
+<ApplicationPackage SchemaVersion="1.0" Version="1.0.0">
+  <CompanyDetails Name="WrenTools" Url=""/>
+  <Products>
+    <Product Name="CadAttrExtractor" Description="Extract block attributes, sort by coordinate, generate tables, export to Excel/Word">
+      <RequiredProduct>
+        <Name>AutoCAD</Name>
+        <MinimumVersion>2022</MinimumVersion>
+      </RequiredProduct>
+    </Product>
+  </Products>
   <Components>
     <RuntimeComponentRequirements>
       <OS>Windows</OS>
       <Platform>x64</Platform>
     </RuntimeComponentRequirements>
-    <ComponentEntry Module="CadAttrExtractor.dll" Categories="Command,MenuItem">
+    <ComponentEntry Module="CadAttrExtractor.dll" AppDescription="CadAttrExtractor" Version="1.0.0">
       <Commands>
         <Command Global="_cte" LocalizedNameID="101"/>
         <Command Global="_cteExtract" LocalizedNameID="102"/>
@@ -16,18 +25,8 @@
         <Command Global="_cteExportWord" LocalizedNameID="107"/>
         <Command Global="_cteAbout" LocalizedNameID="108"/>
         <Command Global="_cteSortByCoordinate" LocalizedNameID="109"/>
+        <Command Global="_ctePickPoint" LocalizedNameID="110"/>
       </Commands>
-      <RibbonPanelSource>
-        <RibbonPanel Title="图纸工具">
-          <RibbonButton Text="目录提取" Command="_cteExtract" />
-          <RibbonButton Text="设置" Command="_cteSettings" />
-        </RibbonPanel>
-      </RibbonPanelSource>
     </ComponentEntry>
   </Components>
-  <CompanyDetails Name="WrenTools" URL=""/>
-  <RequiredProduct>
-    <Name>AutoCAD</Name>
-    <MinimumVersion>2022</MinimumVersion>
-  </RequiredProduct>
 </ApplicationPackage>

@@ -1,0 +1,321 @@
+<UserControl x:Class="CadAttrExtractor.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:conv="clr-namespace:CadAttrExtractor.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="460"
+             Background="{DynamicResource PanelBackground}">
+
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+            <TextBlock Text="设置"
+                       FontSize="{DynamicResource LargeFontSize}"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryText}"/>
+            <TextBlock Text="配置提取、表格、导出和界面选项"
+                       FontSize="{DynamicResource SmallFontSize}"
+                       Foreground="{DynamicResource SecondaryText}"
+                       Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <!-- Settings Content -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+
+                <!-- Theme Section -->
+                <GroupBox Header="界面设置" Margin="0,0,0,8">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <Label Content="主题"/>
+                                <TextBlock Text="选择浅色或深色界面主题"
+                                           Foreground="{DynamicResource SecondaryText}"
+                                           FontSize="{DynamicResource SmallFontSize}"/>
+                            </StackPanel>
+                            <ComboBox Grid.Column="1"
+                                      x:Name="ThemeComboBox"
+                                      SelectedIndex="0"
+                                      Width="120"
+                                      VerticalAlignment="Center"
+                                      SelectionChanged="ThemeComboBox_SelectionChanged">
+                                <ComboBoxItem Content="浅色"/>
+                                <ComboBoxItem Content="深色"/>
+                            </ComboBox>
+                        </Grid>
+
+                        <CheckBox Content="启动时自动显示面板"
+                                  IsChecked="{Binding AutoShowPalette}"
+                                  Foreground="{DynamicResource PrimaryText}"
+                                  Margin="0,8,0,0"/>
+
+                        <CheckBox Content="记住上次排序模式"
+                                  IsChecked="{Binding RememberLastSortMode}"
+                                  Foreground="{DynamicResource PrimaryText}"
+                                  Margin="0,4,0,0"/>
+
+                        <CheckBox Content="提取前显示确认"
+                                  IsChecked="{Binding ConfirmBeforeExtract}"
+                                  Foreground="{DynamicResource PrimaryText}"
+                                  Margin="0,4,0,0"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Extraction Settings -->
+                <GroupBox Header="提取设置" Margin="0,0,0,8">
+                    <StackPanel>
+                        <Label Content="坐标排序容差"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Slider Grid.Column="0"
+                                    Value="{Binding ExtractionTolerance}"
+                                    Minimum="0.1"
+                                    Maximum="10"
+                                    TickFrequency="0.5"
+                                    IsSnapToTickEnabled="False"
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding ExtractionTolerance, StringFormat={}{0:F1}}"
+                                       Foreground="{DynamicResource SecondaryText}"
+                                       VerticalAlignment="Center"
+                                       Width="40"
+                                       TextAlignment="Right"/>
+                        </Grid>
+
+                        <CheckBox Content="包含匿名块"
+                                  IsChecked="{Binding IncludeAnonymousBlocks}"
+                                  Foreground="{DynamicResource PrimaryText}"
+                                  Margin="0,8,0,0"/>
+
+                        <Label Content="标题提取正则表达式 (每行一个)"/>
+                        <TextBox Text="{Binding TitleRegexPatterns}"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 Height="80"
+                                 VerticalScrollBarVisibility="Auto"
+                                 FontFamily="Consolas"
+                                 FontSize="10"
+                                 ToolTip="用于从属性值中提取标题、图号、总数的正则表达式"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Table Settings -->
+                <GroupBox Header="表格设置" Margin="0,0,0,8">
+                    <StackPanel>
+                        <Label Content="行高 (单位：绘图单位)"/>
+                        <TextBox Text="{Binding TableRowHeight}"/>
+
+                        <Label Content="图号列宽"/>
+                        <TextBox Text="{Binding ColumnWidthA}"/>
+
+                        <Label Content="图名列宽"/>
+                        <TextBox Text="{Binding ColumnWidthB}"/>
+
+                        <Label Content="版本列宽"/>
+                        <TextBox Text="{Binding ColumnWidthC}"/>
+
+                        <Label Content="日期列宽"/>
+                        <TextBox Text="{Binding ColumnWidthD}"/>
+
+                        <Label Content="文字高度"/>
+                        <TextBox Text="{Binding TextHeight}"/>
+
+                        <Label Content="表头文本"/>
+                        <TextBox Text="{Binding HeaderText}"/>
+
+                        <CheckBox Content="启用自动分页"
+                                  IsChecked="{Binding AutoPagination}"
+                                  Foreground="{DynamicResource PrimaryText}"
+                                  Margin="0,8,0,0"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0"
+                                    IsEnabled="{Binding AutoPagination}">
+                            <Label Content="每页行数:" VerticalAlignment="Center"/>
+                            <TextBox Text="{Binding RowsPerPage}"
+                                     Width="80"
+                                     IsEnabled="{Binding AutoPagination}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Export Settings -->
+                <GroupBox Header="导出设置" Margin="0,0,0,8">
+                    <StackPanel>
+                        <Label Content="图名属性标签"/>
+                        <TextBox Text="{Binding DrawingTitleTag}"/>
+
+                        <Label Content="图号属性标签"/>
+                        <TextBox Text="{Binding DrawingIndexTag}"/>
+
+                        <Label Content="版本属性标签"/>
+                        <TextBox Text="{Binding DrawingVersionTag}"/>
+
+                        <Label Content="日期属性标签"/>
+                        <TextBox Text="{Binding DrawingDateTag}"/>
+
+                        <Separator Margin="0,8"/>
+
+                        <Label Content="Excel 模板路径"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                     Text="{Binding ExcelTemplatePath}"
+                                     IsReadOnly="True"/>
+                            <Button Grid.Column="1"
+                                    Content="浏览"
+                                    Style="{DynamicResource SecondaryButtonStyle}"
+                                    Padding="8,4"
+                                    Margin="4,4,0,0"
+                                    Click="BrowseExcelPath_Click"/>
+                        </Grid>
+
+                        <Label Content="Word 模板路径" Margin="0,4,0,0"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                     Text="{Binding WordTemplatePath}"
+                                     IsReadOnly="True"/>
+                            <Button Grid.Column="1"
+                                    Content="浏览"
+                                    Style="{DynamicResource SecondaryButtonStyle}"
+                                    Padding="8,4"
+                                    Margin="4,4,0,0"
+                                    Click="BrowseWordPath_Click"/>
+                        </Grid>
+
+                        <Separator Margin="0,8"/>
+
+                        <!-- Reset Template Buttons -->
+                        <Button Content="清除 Excel 模板"
+                                Style="{DynamicResource SecondaryButtonStyle}"
+                                Command="{Binding ClearExcelTemplateCommand}"
+                                HorizontalAlignment="Left"
+                                Padding="12,4"/>
+                        <Button Content="清除 Word 模板"
+                                Style="{DynamicResource SecondaryButtonStyle}"
+                                Command="{Binding ClearWordTemplateCommand}"
+                                HorizontalAlignment="Left"
+                                Margin="0,4,0,0"
+                                Padding="12,4"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- About Section -->
+                <GroupBox Header="关于" Margin="0,0,0,8">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="图纸目录提取器"
+                                           Foreground="{DynamicResource PrimaryText}"
+                                           FontWeight="Bold"
+                                           FontSize="{DynamicResource LargeFontSize}"/>
+                                <TextBlock Text="版本 1.0.0"
+                                           Foreground="{DynamicResource SecondaryText}"
+                                           FontSize="{DynamicResource SmallFontSize}"
+                                           Margin="0,2,0,0"/>
+                                <TextBlock Text="© 2024 WrenTools"
+                                           Foreground="{DynamicResource SecondaryText}"
+                                           FontSize="{DynamicResource SmallFontSize}"/>
+                            </StackPanel>
+                            <Button Grid.Column="1"
+                                    Content="打开配置目录"
+                                    Style="{DynamicResource SecondaryButtonStyle}"
+                                    Command="{Binding OpenConfigFolderCommand}"
+                                    Padding="8,6"
+                                    VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Separator Margin="0,8"/>
+
+                        <TextBlock Text="设置版本:"
+                                   Foreground="{DynamicResource SecondaryText}"
+                                   FontSize="{DynamicResource SmallFontSize}"/>
+                        <TextBlock Text="{Binding SettingsVersion}"
+                                   Foreground="{DynamicResource PrimaryText}"
+                                   FontSize="{DynamicResource SmallFontSize}"/>
+
+                        <TextBlock Text="最后修改:"
+                                   Foreground="{DynamicResource SecondaryText}"
+                                   FontSize="{DynamicResource SmallFontSize}"
+                                   Margin="0,4,0,0"/>
+                        <TextBlock Text="{Binding LastModified, StringFormat={}{0:yyyy-MM-dd HH:mm}}"
+                                   Foreground="{DynamicResource PrimaryText}"
+                                   FontSize="{DynamicResource SmallFontSize}"/>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Bottom Actions -->
+        <Grid Grid.Row="2" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Unsaved indicator -->
+            <TextBlock Grid.Column="0"
+                       Text="有未保存的更改"
+                       Foreground="{DynamicResource WarningBrush}"
+                       FontSize="{DynamicResource SmallFontSize}"
+                       VerticalAlignment="Center"
+                       Visibility="{Binding HasChanges, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <Button Grid.Column="1"
+                    Content="重置"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Command="{Binding ResetCommand}"
+                    Padding="16,8"
+                    Margin="0,0,4,0"/>
+
+            <Button Grid.Column="2"
+                    Content="取消"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    IsCancel="True"
+                    Padding="16,8"
+                    Margin="0,0,4,0"
+                    Click="CancelButton_Click"/>
+
+            <Button Grid.Column="3"
+                    Content="保存"
+                    Style="{DynamicResource PrimaryButtonStyle}"
+                    Command="{Binding SaveCommand}"
+                    IsDefault="True"
+                    Padding="16,8"/>
+        </Grid>
+    </Grid>
+</UserControl>

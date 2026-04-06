@@ -71,12 +71,17 @@ namespace CadAttrExtractor
         public bool IncludeAnonymousBlocks { get; set; } = true;
 
         /// <summary>
+        /// Whether to show progress during extraction.
+        /// </summary>
+        public bool ShowProgress { get; set; } = true;
+
+        /// <summary>
         /// Regex patterns for extracting title/index/total from text.
         /// </summary>
         public List<string> TitleRegexPatterns { get; set; } = new()
         {
             @"(?<Title>.*)[\(（](?<Index>\d+)[\)）]$",
-            @"(?<Title>.*)第\s*(?<Index>\d+)\s*�?*共\s*(?<Total>\d+)\s*�?,
+            @"(?<Title>.*)第\s*(?<Index>\d+)\s*�?*共\s*(?<Total>\d+)\s*�?,
             @"(?<Title>.*?)[\-_](?<Index>\d+)$",
             @"(?<Title>.+)"
         };
@@ -90,6 +95,7 @@ namespace CadAttrExtractor
             {
                 Tolerance = Tolerance,
                 IncludeAnonymousBlocks = IncludeAnonymousBlocks,
+                ShowProgress = ShowProgress,
                 TitleRegexPatterns = new List<string>(TitleRegexPatterns)
             };
         }
@@ -124,5 +130,26 @@ namespace CadAttrExtractor
         /// The last used sort mode.
         /// </summary>
         public SortMode LastSortMode { get; set; } = SortMode.TopToBottomLeftToRight;
+
+        /// <summary>
+        /// The current theme name ("LightTheme" or "DarkTheme").
+        /// </summary>
+        public string Theme { get; set; } = "LightTheme";
+
+        /// <summary>
+        /// Creates a copy of this settings object.
+        /// </summary>
+        public UIsettings Clone()
+        {
+            return new UIsettings
+            {
+                AutoShowPalette = AutoShowPalette,
+                ShowPreviewInPalette = ShowPreviewInPalette,
+                ConfirmBeforeExtract = ConfirmBeforeExtract,
+                RememberLastSortMode = RememberLastSortMode,
+                LastSortMode = LastSortMode,
+                Theme = Theme
+            };
+        }
     }
 }

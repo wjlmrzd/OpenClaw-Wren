@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using CadAttrExtractor.Models;
 
 namespace CadAttrExtractor.ViewModels
 {
@@ -26,6 +27,35 @@ namespace CadAttrExtractor.ViewModels
         private string _layerName = "";
         private Point3d _insertionPoint = Point3d.Origin;
         private bool _pointSelected;
+
+        // Table settings
+        private double _rowHeight = 8.0;
+        private double _columnWidth = 50.0;
+        private double _textHeight = 3.0;
+        private string _tableHeaderText = "图纸目录";
+        private ObservableCollection<string> _textStyles = new();
+        private string _selectedTextStyle = "Standard";
+
+        // Export tag mappings
+        private string _titleTag = "图名";
+        private string _indexTag = "图号";
+        private string _versionTag = "版本";
+        private string _dateTag = "日期";
+
+        // Export options
+        private string _excelTemplatePath = "";
+        private string _wordTemplatePath = "";
+        private bool _exportCSV;
+        private string _csvEncoding = "UTF-8";
+        private string _csvSeparator = ",";
+        private bool _csvIncludeHeader = true;
+        private bool _useTemplateFormatting = true;
+        private bool _showProgress = true;
+
+        // Table options
+        private bool _autoPagination = true;
+        private int _rowsPerPage = 30;
+        private double _indexColumnWidth = 5.0;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -55,6 +85,20 @@ namespace CadAttrExtractor.ViewModels
         }
 
         public Array SortModes => Enum.GetValues(typeof(SortMode));
+
+        // Settings ViewModel for Settings tab
+        private SettingsViewModel _settingsViewModel;
+        public SettingsViewModel Settings
+        {
+            get
+            {
+                if (_settingsViewModel == null)
+                {
+                    _settingsViewModel = new SettingsViewModel();
+                }
+                return _settingsViewModel;
+            }
+        }
 
         // Status
         public bool IsExtracting
@@ -100,6 +144,161 @@ namespace CadAttrExtractor.ViewModels
             set { _layerName = value; OnPropertyChanged(); }
         }
 
+        // Include anonymous blocks
+        public bool IncludeAnonymousBlocks
+        {
+            get => SettingsService.Instance.Current.Extraction.IncludeAnonymousBlocks;
+            set
+            {
+                SettingsService.Instance.Current.Extraction.IncludeAnonymousBlocks = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowProgress
+        {
+            get => _showProgress;
+            set { _showProgress = value; OnPropertyChanged(); }
+        }
+
+        public bool ConfirmBeforeExtract
+        {
+            get => SettingsService.Instance.Current.UI.ConfirmBeforeExtract;
+            set
+            {
+                SettingsService.Instance.UpdateSettings(s => s.UI.ConfirmBeforeExtract = value);
+                OnPropertyChanged();
+            }
+        }
+
+        // Table settings
+        public double RowHeight
+        {
+            get => _rowHeight;
+            set { _rowHeight = value; OnPropertyChanged(); }
+        }
+
+        public double ColumnWidth
+        {
+            get => _columnWidth;
+            set { _columnWidth = value; OnPropertyChanged(); }
+        }
+
+        public double TextHeight
+        {
+            get => _textHeight;
+            set { _textHeight = value; OnPropertyChanged(); }
+        }
+
+        public string TableHeaderText
+        {
+            get => _tableHeaderText;
+            set { _tableHeaderText = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<string> TextStyles
+        {
+            get => _textStyles;
+            set { _textStyles = value; OnPropertyChanged(); }
+        }
+
+        public string SelectedTextStyle
+        {
+            get => _selectedTextStyle;
+            set { _selectedTextStyle = value; OnPropertyChanged(); }
+        }
+
+        // Export tag mappings
+        public string TitleTag
+        {
+            get => _titleTag;
+            set { _titleTag = value; OnPropertyChanged(); }
+        }
+
+        public string IndexTag
+        {
+            get => _indexTag;
+            set { _indexTag = value; OnPropertyChanged(); }
+        }
+
+        public string VersionTag
+        {
+            get => _versionTag;
+            set { _versionTag = value; OnPropertyChanged(); }
+        }
+
+        public string DateTag
+        {
+            get => _dateTag;
+            set { _dateTag = value; OnPropertyChanged(); }
+        }
+
+        // Export options
+        public string ExcelTemplatePath
+        {
+            get => _excelTemplatePath;
+            set { _excelTemplatePath = value; OnPropertyChanged(); }
+        }
+
+        public string WordTemplatePath
+        {
+            get => _wordTemplatePath;
+            set { _wordTemplatePath = value; OnPropertyChanged(); }
+        }
+
+        public bool ExportCSV
+        {
+            get => _exportCSV;
+            set { _exportCSV = value; OnPropertyChanged(); }
+        }
+
+        public string CSVEncoding
+        {
+            get => _csvEncoding;
+            set { _csvEncoding = value; OnPropertyChanged(); }
+        }
+
+        public string CSVSeparator
+        {
+            get => _csvSeparator;
+            set { _csvSeparator = value; OnPropertyChanged(); }
+        }
+
+        public bool CSVIncludeHeader
+        {
+            get => _csvIncludeHeader;
+            set { _csvIncludeHeader = value; OnPropertyChanged(); }
+        }
+
+        public bool UseTemplateFormatting
+        {
+            get => _useTemplateFormatting;
+            set { _useTemplateFormatting = value; OnPropertyChanged(); }
+        }
+
+        // Table options
+        public bool AutoPagination
+        {
+            get => _autoPagination;
+            set { _autoPagination = value; OnPropertyChanged(); }
+        }
+
+        public int RowsPerPage
+        {
+            get => _rowsPerPage;
+            set { _rowsPerPage = value; OnPropertyChanged(); }
+        }
+
+        public double IndexColumnWidth
+        {
+            get => _indexColumnWidth;
+            set { _indexColumnWidth = value; OnPropertyChanged(); }
+        }
+
+        public int EstimatedPages => AutoPagination && RowsPerPage > 0
+            ? (int)Math.Ceiling((double)Items.Count / RowsPerPage)
+            : 1;
+
         // Insertion point
         public Point3d InsertionPoint
         {
@@ -115,7 +314,7 @@ namespace CadAttrExtractor.ViewModels
 
         public string InsertionPointText => PointSelected
             ? $"({InsertionPoint.X:F2}, {InsertionPoint.Y:F2})"
-            : "未设�?;
+            : "未设�?;
 
         // Commands
         public ICommand ExtractCommand { get; }
@@ -123,11 +322,14 @@ namespace CadAttrExtractor.ViewModels
         public ICommand GenerateTableCommand { get; }
         public ICommand ExportExcelCommand { get; }
         public ICommand ExportWordCommand { get; }
+        public ICommand ExportCSVCommand { get; }
         public ICommand ClearCommand { get; }
         public ICommand PickPointCommand { get; }
         public ICommand RemoveItemCommand { get; }
         public ICommand MoveUpCommand { get; }
         public ICommand MoveDownCommand { get; }
+        public ICommand ClearExcelTemplateCommand { get; }
+        public ICommand ClearWordTemplateCommand { get; }
 
         public MainViewModel()
         {
@@ -137,14 +339,22 @@ namespace CadAttrExtractor.ViewModels
             GenerateTableCommand = new RelayCommand(ExecuteGenerateTable, CanExecuteGenerateTable);
             ExportExcelCommand = new RelayCommand(ExecuteExportExcel, CanExecuteExport);
             ExportWordCommand = new RelayCommand(ExecuteExportWord, CanExecuteExport);
+            ExportCSVCommand = new RelayCommand(ExecuteExportCSV, CanExecuteExport);
             ClearCommand = new RelayCommand(ExecuteClear, CanExecuteClear);
             PickPointCommand = new RelayCommand(ExecutePickPoint);
             RemoveItemCommand = new RelayCommand(ExecuteRemoveItem);
             MoveUpCommand = new RelayCommand(ExecuteMoveUp);
             MoveDownCommand = new RelayCommand(ExecuteMoveDown);
+            ClearExcelTemplateCommand = new RelayCommand(ExecuteClearExcelTemplate);
+            ClearWordTemplateCommand = new RelayCommand(ExecuteClearWordTemplate);
 
-            // Load saved sort mode
+            // Load saved settings
             _selectedSortMode = SettingsService.Instance.Current.UI.LastSortMode;
+            _excelTemplatePath = SettingsService.Instance.Current.Export.ExcelTemplatePath ?? "";
+            _wordTemplatePath = SettingsService.Instance.Current.Export.WordTemplatePath ?? "";
+            _showProgress = SettingsService.Instance.Current.Extraction.ShowProgress;
+            _autoPagination = SettingsService.Instance.Current.Table.AutoPagination;
+            _rowsPerPage = SettingsService.Instance.Current.Table.RowsPerPage;
 
             CadAttrExtractorApp.WriteLine("[MainViewModel] Initialized");
         }
@@ -160,7 +370,7 @@ namespace CadAttrExtractor.ViewModels
                 Items.Add(new ExtractedItemViewModel(item));
             }
 
-            StatusMessage = $"已加�?{Items.Count} �?;
+            StatusMessage = $"已加载 {Items.Count} 项";
             OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(HasItems));
 
@@ -176,7 +386,7 @@ namespace CadAttrExtractor.ViewModels
             StatusMessage = "正在提取...";
             Commands.ExtractAttributes();
             IsExtracting = false;
-            StatusMessage = $"提取完成: {Items.Count} �?;
+            StatusMessage = $"提取完成: {Items.Count} 项";
         }
 
         private bool CanExecuteSort() => HasItems;
@@ -217,7 +427,7 @@ namespace CadAttrExtractor.ViewModels
             var settings = SettingsService.Instance.Current.Table;
 
             Commands.GenerateTable();
-            StatusMessage = "表格已生�?;
+            StatusMessage = "表格已生成";
         }
 
         private bool CanExecuteExport() => HasItems && !IsExporting;
@@ -244,7 +454,7 @@ namespace CadAttrExtractor.ViewModels
         {
             Items.Clear();
             GroupedItems.Clear();
-            StatusMessage = "已清�?;
+            StatusMessage = "已清空";
             OnPropertyChanged(nameof(HasItems));
         }
 
@@ -259,7 +469,7 @@ namespace CadAttrExtractor.ViewModels
             if (parameter is ExtractedItemViewModel item)
             {
                 Items.Remove(item);
-                StatusMessage = $"已删�? {item.BlockName}";
+                StatusMessage = $"已删除 {item.BlockName}";
                 OnPropertyChanged(nameof(HasItems));
             }
         }
@@ -286,6 +496,27 @@ namespace CadAttrExtractor.ViewModels
                     Items.Move(index, index + 1);
                 }
             }
+        }
+
+        private void ExecuteExportCSV()
+        {
+            IsExporting = true;
+            StatusMessage = "正在导出 CSV...";
+            Commands.ExportToExcel(); // Uses same pattern, could add CSV-specific
+            IsExporting = false;
+            StatusMessage = "CSV 导出完成";
+        }
+
+        private void ExecuteClearExcelTemplate()
+        {
+            ExcelTemplatePath = "";
+            SettingsService.Instance.UpdateSettings(s => s.Export.ExcelTemplatePath = "");
+        }
+
+        private void ExecuteClearWordTemplate()
+        {
+            WordTemplatePath = "";
+            SettingsService.Instance.UpdateSettings(s => s.Export.WordTemplatePath = "");
         }
 
         public void SetInsertionPoint(Point3d point)

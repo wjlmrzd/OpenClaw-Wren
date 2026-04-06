@@ -156,6 +156,14 @@ namespace CadAttrExtractor
         }
 
         /// <summary>
+        /// Resets all settings to defaults (alias for Reset).
+        /// </summary>
+        public void ResetToDefault()
+        {
+            Reset();
+        }
+
+        /// <summary>
         /// Gets the settings file path.
         /// </summary>
         public string GetSettingsPath() => _settingsPath;

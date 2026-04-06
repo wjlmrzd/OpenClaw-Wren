@@ -255,6 +255,17 @@ namespace CadAttrExtractor.ViewModels
             }
         }
 
+        public string Theme
+        {
+            get => _settings.UI.Theme;
+            set
+            {
+                _settings.UI.Theme = value;
+                HasChanges = true;
+                OnPropertyChanged();
+            }
+        }
+
         // State
         public bool HasChanges
         {
@@ -273,6 +284,8 @@ namespace CadAttrExtractor.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand ResetCommand { get; }
         public ICommand OpenConfigFolderCommand { get; }
+        public ICommand ClearExcelTemplateCommand { get; }
+        public ICommand ClearWordTemplateCommand { get; }
 
         public SettingsViewModel()
         {
@@ -282,6 +295,8 @@ namespace CadAttrExtractor.ViewModels
             SaveCommand = new RelayCommand(ExecuteSave);
             ResetCommand = new RelayCommand(ExecuteReset);
             OpenConfigFolderCommand = new RelayCommand(ExecuteOpenConfigFolder);
+            ClearExcelTemplateCommand = new RelayCommand(ExecuteClearExcelTemplate);
+            ClearWordTemplateCommand = new RelayCommand(ExecuteClearWordTemplate);
         }
 
         private void ExecuteSave()
@@ -309,6 +324,20 @@ namespace CadAttrExtractor.ViewModels
             SettingsService.Instance.OpenSettingsFolder();
         }
 
+        private void ExecuteClearExcelTemplate()
+        {
+            ExcelTemplatePath = "";
+            _settings.Export.ExcelTemplatePath = "";
+            HasChanges = true;
+        }
+
+        private void ExecuteClearWordTemplate()
+        {
+            WordTemplatePath = "";
+            _settings.Export.WordTemplatePath = "";
+            HasChanges = true;
+        }
+
         private void RefreshAllProperties()
         {
             OnPropertyChanged(nameof(ExtractionTolerance));
@@ -332,6 +361,7 @@ namespace CadAttrExtractor.ViewModels
             OnPropertyChanged(nameof(AutoShowPalette));
             OnPropertyChanged(nameof(ConfirmBeforeExtract));
             OnPropertyChanged(nameof(RememberLastSortMode));
+            OnPropertyChanged(nameof(Theme));
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
