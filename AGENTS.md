@@ -13,6 +13,7 @@ Before doing anything else:
 2. Read `USER.md` — this is who you're helping
 3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+5. **Proactive recall**: Use `gm_search` to search for relevant past experiences, decisions, or lessons related to the current task. Don't wait to be asked "do you remember?" — surface relevant context proactively.
 
 Don't ask permission. Just do it.
 

@@ -238,6 +238,21 @@
 ## ⚡ 关键教训 (must follow)
 
 1. **配置修改前** → 查阅文档 → 说明变更 → 等确认 → 再重启
+2. **MEMORY.md** 超过 20000 chars 会导致系统异常 → **必须保持精简！**
+3. **不要等用户问"你还记得吗"** → 每次会话开始主动用 `gm_search` 搜相关上下文
+4. **ClawHub 记忆类 skill（2026-04-07）**：elite-longterm-memory / neural-memory 都不值得装，依赖新插件/包
+5. **Cron 超时** → 设为执行时间 × 1.5 以上
+6. **PowerShell 编码** → 脚本保存为 UTF-8 with BOM，避免内联中文
+7. **Git 备份** → 必须处理远程仓库不存在的情况（静默失败）
+8. **Clash Verge TUN 模式** → 拦截 DNS 导致 SSRF 防护误判 → 已在 openclaw-cn 代码中 fix
+9. **npm 全局包更新后** → 必须重启 Gateway
+10. **网络问题排查顺序**：PowerShell curl → Node.js curl → OpenClaw logs → Gateway restart
+11. **sessions.json 膨胀** → skillsSnapshot 含乱码中文 → 定期 trim (`trim-sessions.ps1`)
+12. **Cron 消息中含中文** → 通过 exec 传给 PowerShell 时乱码 → 改用脚本文件引用
+13. **Obsidian 核心目录** → **绝对不可删除**
+14. **C 盘自动清理** → 资源守护者检测到 C 盘 >90% → **自动触发清理**
+
+1. **配置修改前** → 查阅文档 → 说明变更 → 等确认 → 再重启
 2. **MEMORY.md** 超过 20000 chars 会导致系统异常（如 API 超时）→ **必须保持精简！**
 3. **Cron 超时** → 设为执行时间 × 1.5 以上
 4. **PowerShell 编码** → 脚本保存为 UTF-8 with BOM，避免内联中文
