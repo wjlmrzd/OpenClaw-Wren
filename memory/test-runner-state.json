@@ -71,7 +71,7 @@
                       "name":  "T004",
                       "desc":  "Gateway Health Check",
                       "details":  [
-                                      "HTTP 200 in 302ms"
+                                      "HTTP 200 in 535ms"
                                   ]
                   },
                   {
@@ -276,6 +276,7 @@
                                       "OK: trim-sessions.ps1",
                                       "OK: ui-install-plugins.ps1",
                                       "OK: update-cron-models.ps1",
+                                      "OK: update-healer-timestamp.ps1",
                                       "OK: update-model-limits.ps1",
                                       "OK: update-notif-state.ps1",
                                       "OK: update-openclaw.ps1",
@@ -293,5 +294,5 @@
                   }
               ],
     "failed":  0,
-    "timestamp":  "2026-04-07 20:35:06"
+    "timestamp":  "2026-04-07 22:35:08"
 }

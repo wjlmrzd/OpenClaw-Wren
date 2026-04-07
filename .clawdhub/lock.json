@@ -60,6 +60,14 @@
     "claw-pet": {
       "version": "1.2.0",
       "installedAt": 1775545553290
+    },
+    "elite-longterm-memory": {
+      "version": "1.2.3",
+      "installedAt": 1775572936931
+    },
+    "neural-memory": {
+      "version": "4.35.1",
+      "installedAt": 1775572963972
     }
   }
 }
