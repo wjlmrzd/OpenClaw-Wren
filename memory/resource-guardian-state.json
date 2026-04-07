@@ -1,11 +1,11 @@
 {
-    "disk_C": 88.0,
-    "disk_D": 4.3,
-    "disk_E": 6.8,
-    "disk_H": 85.2,
-    "mem_pct": 61.8,
-    "api_status": "rate_limit_errors",
-    "lastCheck": "2026-03-31 09:02:00",
-    "lastAlert": "2026-03-31 09:02:00 - Disk H warning",
-    "alertsSent": 1
+  "disk_C": 88.0,
+  "disk_D": 4.3,
+  "disk_E": 6.8,
+  "disk_H": 85.2,
+  "mem_pct": 61.8,
+  "api_status": "rate_limit_errors",
+  "lastCheck": "2026-03-31 09:02:00",
+  "lastAlert": "2026-03-31 09:02:00 - Disk H warning",
+  "alertsSent": 1
 }

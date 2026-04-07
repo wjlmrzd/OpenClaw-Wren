@@ -1,0 +1,8 @@
+$env:TEMP = "D:\OpenClaw\.npm-temp"
+$env:TMP = "D:\OpenClaw\.npm-temp"
+$env:npm_config_cache = "D:\OpenClaw\.npm-cache"
+Set-Location "D:\OpenClaw\.openclaw\workspace\plugins-graph-memory"
+$ErrorActionPreference = "Continue"
+npm install --omit=dev --no-audit --no-fund --ignore-scripts --registry https://registry.npmjs.org *> "D:\OpenClaw\.npm-cache\_logs\gm-install-$(Get-Date -Format 'yyyyMMdd-HHmmss').log"
+Write-Host "EXIT_CODE:$LASTEXITCODE"
+Write-Host "TEMP_IS:$env:TEMP"

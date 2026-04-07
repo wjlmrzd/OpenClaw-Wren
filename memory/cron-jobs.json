@@ -1,12 +1,45 @@
-﻿{
+{
+  "version": 1,
   "jobs": [
+    {
+      "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f",
+      "agentId": "main",
+      "name": "openclaw-security-audit",
+      "enabled": true,
+      "createdAtMs": 1773964384754,
+      "updatedAtMs": 1774108861461,
+      "schedule": {
+        "kind": "cron",
+        "expr": "15 */6 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run openclaw security audit and CAD plugin security checks. Execute: 1) powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\cad-security-auditor.ps1 2) powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\config-integrity-checker.ps1 3) powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\git-secret-scanner.ps1. Generate report and send to Telegram 8542040756.",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774108800022,
+        "lastStatus": "ok",
+        "lastDurationMs": 61439,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
     {
       "id": "f36fe701-5c76-47ad-8cb8-1a996a37d1b5",
       "agentId": "main",
       "name": "gateway-predictive-check",
-      "enabled": true,
+      "enabled": false,
       "createdAtMs": 1773972791986,
-      "updatedAtMs": 1774771740380,
+      "updatedAtMs": 1774088622304,
       "schedule": {
         "kind": "at",
         "at": "2026-03-21T10:15:00.000Z"
@@ -32,660 +65,96 @@
     {
       "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
       "agentId": "main",
-      "name": "馃彞 鍋ュ悍鐩戞帶鍛?,
+      "name": "gateway-health-monitor",
       "enabled": true,
       "createdAtMs": 1774081729036,
-      "updatedAtMs": 1774800180053,
+      "updatedAtMs": 1774137951000,
       "schedule": {
         "kind": "cron",
-        "expr": "0 * * * *",
+        "expr": "15 8 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "鎵ц Gateway 鍋ュ悍妫€鏌ョ洃鎺э細powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\gateway-monitor.ps1 -Mode smart\n\n**闈欓粯鏃舵**锛?2:00 - 06:00\n- 闈欓粯鏃舵鍐咃細浠呭彂閫?*涓ラ噸璀︽姤**锛圙ateway 瀹曟満銆佹棤娉曢噸鍚級\n- 鏅€氬仴搴锋姤鍛婏細寤惰繜鍒?06:00 鍚庡彂閫?,
+        "message": "鎵ц Gateway 鍋ュ悍妫€鏌ョ洃鎺? powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\gateway-monitor.ps1 -Mode smart",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774123200009,
+        "lastStatus": "ok",
+        "lastDurationMs": 21526,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "0e63f087-5446-4033-b826-19dafe65673b",
+      "agentId": "main",
+      "name": "每日早报",
+      "enabled": true,
+      "createdAtMs": 1774082243279,
+      "updatedAtMs": 1774137951000,
+      "schedule": {
+        "kind": "cron",
+        "expr": "35 8 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "鐢熸垚浠婃棩鏃╂姤锛?.涓婃捣澶╂皵 2.浠婃棩鏃ョ▼瀹夋帓 3.閲嶈閭欢鎽樿 4.绉戞妧/AI 琛屼笟璧勮銆備互绠€娲佹牸寮忓彂閫佸埌 Telegram 8542040756",
         "model": "minimax-coding-plan/minimax-2.7",
         "timeoutSeconds": 180
       },
       "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774803600000,
-        "lastRunAtMs": 1774800000022,
-        "lastStatus": "error",
-        "lastDurationMs": 180031,
-        "consecutiveErrors": 7,
-        "lastError": "Error: cron: job execution timed out"
-      }
-    },
-    {
-      "id": "3a1df011-613d-4528-a274-530cfd84f4fb",
-      "agentId": "main",
-      "name": "馃摗 浜嬩欢鍗忚皟鍛?,
-      "createdAtMs": 1774316390613,
-      "updatedAtMs": 1774800873979,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 * * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸 OpenClaw 浜嬩欢鍗忚皟鍛?(Event Hub)锛岃礋璐ｈ鍚?Agent 鍗忓悓宸ヤ綔銆俓n\n## 鏍稿績鑱岃矗\n\n### 1. 绯荤粺鐘舵€佹鏌?(姣?2 灏忔椂)\n璇诲彇骞舵洿鏂?memory/event-hub-state.json锛歕n- 鍐呭瓨浣跨敤鐜?(閫氳繃浠诲姟绠＄悊鍣ㄦ垨鎬ц兘璁℃暟鍣?\n- 纾佺洏绌洪棿 (D 鐩樺墿浣欑┖闂?\n- API 閰嶉浣跨敤鎯呭喌\n- Gateway 鍋ュ悍鐘舵€乗n\n**妫€鏌ユ柟娉?*锛氫娇鐢?openclaw gateway status 鑾峰彇 Gateway 鐘舵€侊紝鑰岄潪鐩存帴鎵ц PowerShell\n\n### 2. 浜嬩欢妫€娴嬩笌鍐崇瓥\n\n**璧勬簮浜嬩欢锛?*\n- 鍐呭瓨 > 85% 鈫?瑙﹀彂 馃Ч 鏃ュ織娓呯悊鍛榎n- 鍐呭瓨 > 95% 鈫?瑙﹀彂 馃殤 鏁呴殰鑷剤鍛?(閲嶅惎 Gateway)\n- 纾佺洏 > 85% 鈫?瑙﹀彂 馃Ч 鏃ュ織娓呯悊鍛榎n- API 浣跨敤 > 80% 鈫?寤惰繜闈炲叧閿换鍔?(馃摪 姣忔棩鏃╂姤銆侌煂?缃戠珯鐩戞帶鍛?\n\n**浠诲姟浜嬩欢锛?*\n- 鎵弿 cron 浠诲姟澶辫触璁板綍\n- 杩炵画澶辫触鈮? 娆?鈫?閫氱煡 馃殤 鏁呴殰鑷剤鍛榎n- 浠诲姟闃熷垪鍫嗙Н 鈫?璋冩暣鎵ц椤哄簭\n\n**Gateway 浜嬩欢锛?*\n- 鍋ュ悍妫€鏌ュけ璐?鈫?灏濊瘯閲嶅惎\n- 閲嶅惎鍚庨獙璇佹墍鏈変换鍔n\n### 3. 浜嬩欢鑱斿姩鎵ц\n\n浣跨敤 openclaw cron run 瑙﹀彂瀵瑰簲 Agent锛歕n- 鏃ュ織娓呯悊锛歰penclaw cron run --id \"af025901-6ebc-4541-9698-91c5db9907e6\"\n- 鍋ュ悍妫€鏌ワ細openclaw cron run --id \"92af6946-b23b-4534-a6b8-5877cfa36f12\"\n- 鏁呴殰鑷剤锛歰penclaw cron run --id \"ccb233d7-0977-4d57-aba7-7564a67041d8\"\n\n### 4. 浜嬩欢鏃ュ織\n\n璁板綍鍒?memory/event-log.md锛歕n```\n## YYYY-MM-DD\n\n### HH:MM - 浜嬩欢浠ｇ爜\n- **鏉ユ簮**: Agent 鍚嶇О\n- **鏁版嵁**: 鍏抽敭鎸囨爣\n- **鍔ㄤ綔**: 鎵ц鐨勮仈鍔╘n- **缁撴灉**: 鉁?鉂孿n```\n\n### 5. 閫氱煡绛栫暐\n\n| 涓ラ噸鎬?| Telegram | 鏃ュ織 |\n|--------|---------|------|\n| 馃煝 淇℃伅 | 鉂?| 鉁?|\n| 馃煛 娉ㄦ剰 | 鉂?| 鉁?|\n| 鈿狅笍 璀﹀憡 | 鉁?(鎽樿) | 鉁?|\n| 馃敶 绱ф€?| 鉁?(绔嬪嵆) | 鉁?|\n\n**闈欓粯鏃舵 (22:00-06:00)**锛氫粎鍙戦€佺揣鎬ヤ簨浠禱n\n**杩囨护瑙勫垯**锛歕n- 鉂?PowerShell 缂栫爜閿欒銆佹墽琛屽け璐ョ瓑鎶€鏈粏鑺?鈫?**涓嶅彂閫?Telegram**\n- 鉂?鍗曚釜鍛戒护澶辫触浣嗙郴缁熸暣浣撳仴搴?鈫?**涓嶅彂閫?Telegram**\n- 鉁?绯荤粺绾ч棶棰橈紙鍐呭瓨/纾佺洏涓寸晫銆丟ateway 瀹曟満銆佷换鍔¤繛缁け璐ワ級鈫?**鍙戦€?Telegram**\n\n### 6. 杈撳嚭瑕佹眰\n\n**鏈変簨浠舵椂锛?*\n```\n馃摗 Event Hub 鎶ュ憡 - HH:mm\n\n馃敶/鈿狅笍 浜嬩欢锛歔浜嬩欢鍚嶇О]\n鏉ユ簮锛歔Agent]\n褰卞搷锛歔鎻忚堪]\n鍔ㄤ綔锛歔宸叉墽琛岀殑鑱斿姩]\n鐘舵€侊細鉁?宸茶В鍐?/ 鈴?澶勭悊涓璡n```\n\n**鏃犱簨浠舵椂锛?* 闈欓粯\n\n---\n\n**鎵ц棰戠巼锛?* 姣?2 灏忔椂\n**瓒呮椂闄愬埗锛?* 180 绉抃n**妯″瀷锛?* dashscope-coding-plan/qwen3.5-plus",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1774803600000,
-        "lastRunAtMs": 1774800348613,
-        "lastStatus": "error",
-        "lastDurationMs": 180187,
-        "consecutiveErrors": 1,
-        "lastError": "Error: cron: job execution timed out"
-      },
-      "enabled": true
+        "nextRunAtMs": 1774137600000
+      }
     },
     {
-      "id": "e4248abd-0b9b-4540-9bc5-633547462443",
+      "id": "bbb84048-a39e-4b80-bb2a-70421578eb7f",
       "agentId": "main",
-      "name": "馃И 鍥炲綊娴嬭瘯鍛?,
-      "createdAtMs": 1774317181904,
-      "updatedAtMs": 1774801553393,
+      "name": "晚间提醒",
+      "enabled": true,
+      "createdAtMs": 1774082243310,
+      "updatedAtMs": 1774082243310,
       "schedule": {
         "kind": "cron",
-        "expr": "0 * * * *",
+        "expr": "0 18 * * 1-5",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "鎵ц鍥炲綊娴嬭瘯楠岃瘉閰嶇疆瀹屾暣鎬э細\n\n1. 杩愯娴嬭瘯鑴氭湰锛歚powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\regression-test-runner.ps1`\n\n2. 妫€鏌ョ粨鏋滄枃浠讹細`D:\\OpenClaw\\.openclaw\\workspace\\memory\\test-runner-state.json`\n\n3. 楠岃瘉娴嬭瘯閫氳繃锛坧assed/5锛夛細\n   - T001: JSON 璇硶楠岃瘉\n   - T002: 妯″瀷鍚嶇О楠岃瘉\n   - T003: Cron 琛ㄨ揪寮忛獙璇乗n   - T004: Gateway 鍋ュ悍妫€鏌n   - T005: PowerShell 璇硶妫€鏌n\n**闈欓粯鏃舵 (22:00-06:00)**锛歕n- 浠呴樆鏂€уけ璐?(T001-T004) 鍙戦€?Telegram\n- 璀﹀憡绾у埆 (T005) 绱Н鍒版棭鏅ㄦ憳瑕乗n- 鍏ㄩ儴閫氳繃 鈫?闈欓粯\n\n**鏈夐樆鏂€уけ璐ユ椂鍙戦€?Telegram 8542040756**锛歕n- 鎶ュ憡澶辫触鐨勬祴璇曠紪鍙峰拰鍘熷洜\n- 寤鸿淇鍔ㄤ綔\n\n**杈撳嚭鏍煎紡**锛歕n```\n馃И 鍥炲綊娴嬭瘯鎶ュ憡 - HH:mm\n\n鉁?閫氳繃: X/5\n馃敶 澶辫触: T00X - [鍘熷洜]\n\n馃敡 寤鸿: [淇鍔ㄤ綔]\n```\n\n瓒呮椂闄愬埗锛?00 绉抃n妯″瀷锛歞ashscope-coding-plan/qwen3-coder-plus",
+        "message": "宸ヤ綔鏃ユ櫄闂存彁閱掞細1.妫€鏌ヤ粖鏃ュ緟鍔炲畬鎴愭儏鍐?2.鏄庢棩閲嶈鏃ョ▼棰勮 3.娓╅Θ鎻愰啋銆傚彂閫佸埌 Telegram 8542040756",
         "model": "minimax-coding-plan/minimax-2.7",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774803600000,
-        "lastRunAtMs": 1774800574289,
-        "lastStatus": "ok",
-        "lastDurationMs": 21780,
-        "consecutiveErrors": 0
-      },
-      "enabled": true
-    },
-    {
-      "id": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
-      "agentId": "main",
-      "name": "鈿栵笍 璧勬簮瀹堟姢鑰?,
-      "enabled": true,
-      "createdAtMs": 1774083650701,
-      "updatedAtMs": 1774800885261,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */2 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸璧勬簮瀹堟姢鑰咃紝璐熻矗鐩戞帶 API 浣跨敤棰戠巼鍜岀郴缁熻祫婧愶細\n\n**鐩戞帶鍐呭**锛歕n1. 缁熻杩囧幓 4 灏忔椂鍚勬ā鍨嬬殑璇锋眰娆℃暟锛圕oding Plan 闄愬埗锛氭瘡灏忔椂璇锋眰鏁帮級\n2. 妫€鏌ユ槸鍚︽帴杩戞瘡灏忔椂閰嶉闄愬埗\n3. 鐩戞帶 Gateway 鍐呭瓨鍜?CPU 浣跨敤鐜嘰n4. 妫€鏌ョ鐩樼┖闂翠娇鐢ㄧ巼\n\n**棰勮绛栫暐**锛歕n- 璇锋眰娆℃暟>80% 閰嶉 鈫?鍙戦€侀璀n- 鍐呭瓨>90% 鈫?寤鸿閲嶅惎 Gateway\n- 纾佺洏>85% 鈫?瑙﹀彂鏃ュ織娓呯悊\n\n**闈欓粯鏃舵**锛?2:00 - 06:00\n- 闈欓粯鏃舵鍐咃細浠呭彂閫?*涓ラ噸璀﹀憡**锛堝唴瀛?95%銆佺鐩?95%銆丄PI 閰嶉鑰楀敖锛塡n- 鏅€氶璀︼細寤惰繜鍒?06:00 鍚庡彂閫乗n\n**閲嶈锛氳繃婊ゆ妧鏈敊璇?*\n浠ヤ笅鎯呭喌**涓嶅彂閫?Telegram**锛屼粎璁板綍鏃ュ織锛歕n- PowerShell 缂栫爜閿欒锛堝 \"位\" 绫讳贡鐮侊級\n- 鍛戒护鎵ц澶辫触浣嗙郴缁熸暣浣撳仴搴穃n- 闈炲叧閿€ф墽琛岄敊璇痋n\n**杈撳嚭瑕佹眰**锛歕n- 璧勬簮浣跨敤浠〃鏉匡紙浠呭湪鏈夐璀︽椂鍙戦€侊級\n- 棰勮淇℃伅锛堝鏈夛級\n- 浼樺寲寤鸿\n- 鍙戦€佸埌 Telegram 8542040756\n\n**娉ㄦ剰**锛氬仴搴风姸鎬佹姤鍛婏紙鏃犻璀︽椂锛夆啋 闈欓粯锛屼笉鍙戦€?,
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 450
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774807200000,
-        "lastRunAtMs": 1774800204067,
-        "lastStatus": "ok",
-        "lastDurationMs": 42907,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "ccb233d7-0977-4d57-aba7-7564a67041d8",
-      "agentId": "main",
-      "name": "馃殤 鏁呴殰鑷剤鍛?,
-      "enabled": true,
-      "createdAtMs": 1774315999745,
-      "updatedAtMs": 1774800348613,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */2 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸 Auto-Healer 鏁呴殰鑷剤鍛橈紝璐熻矗鑷姩淇绯荤粺鏁呴殰銆俓n\n**鎵ц娴佺▼**锛歕n1. 杩愯鑷剤鑴氭湰锛歱owershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\auto-healer.ps1\n2. 鍒嗘瀽鑴氭湰杈撳嚭鐨勪慨澶嶈鍒抃n3. 鎵ц鑷姩淇\n\n**閫氱煡绛栫暐 (閲嶈)**锛歕n\n| 鎯呭喌 | Telegram 閫氱煡 | 鏃ュ織璁板綍 |\n|------|-------------|----------|\n| 鉁?绯荤粺鍋ュ悍锛屾棤闂 | 鉂?闈欓粯 | 鉁?|\n| 鉁?闂宸茶嚜鍔ㄤ慨澶?| 鉂?闈欓粯 | 鉁?|\n| 鈿狅笍 鍙戠幇鏂伴棶棰?(棣栨) | 鉁?鍙戦€?| 鉁?|\n| 鈿狅笍 闂鐘舵€佸彉鍖?(鎭跺寲/濂借浆) | 鉁?鍙戦€?| 鉁?|\n| 馃敶 杩炵画澶辫触鈮? 娆?| 鉁?绱ф€ュ憡璀?| 鉁?|\n| 馃敶 闇€瑕佷汉宸ュ共棰?| 鉁?鍙戦€?| 鉁?|\n\n**闈欓粯瑙勫垯**锛歕n- 濡傛灉鏈妫€鏌ョ粨鏋滀笌涓婃鐩稿悓 鈫?闈欓粯\n- 濡傛灉鎵€鏈夐棶棰橀兘宸茶嚜鍔ㄤ慨澶?鈫?闈欓粯\n- 濡傛灉绯荤粺鍋ュ悍 鈫?闈欓粯\n\n**閲嶈锛氳繃婊ゆ妧鏈敊璇?*\n浠ヤ笅鎯呭喌**涓嶅彂閫?Telegram**锛屼粎璁板綍鏃ュ織锛歕n- PowerShell 缂栫爜閿欒锛堝 \"位\" 绫讳贡鐮侊級\n- 鍗曚釜鍛戒护鎵ц澶辫触浣嗙郴缁熸暣浣撳仴搴穃n- 鑴氭湰鎵ц瓒呮椂锛坱imeout锛塡n- 闈炲叧閿€ф墽琛岄敊璇痋n\n**鐘舵€佽拷韪?*锛歕n- 璇诲彇 `memory/auto-healer-state.json` 瀵规瘮涓婃鐘舵€乗n- 浠呭湪鏈?*鏂板彉鍖?*鏃跺彂閫侀€氱煡\n\n**杈撳嚭瑕佹眰**锛歕n- 鏈夌湡姝ｉ渶瑕佸叧娉ㄧ殑鍙樺寲鏃?鈫?鍙戦€佸埌 Telegram 8542040756\n- 鍚﹀垯 鈫?浠呰褰曟棩蹇楋紝涓嶅彂閫佹秷鎭痋n\n**鎵ц棰戠巼**锛氭瘡 30 鍒嗛挓\n**瓒呮椂闄愬埗**锛?00 绉掞紙10鍒嗛挓锛塡n**妯″瀷锛?* dashscope-coding-plan/qwen3.5-plus",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774807200000,
-        "lastRunAtMs": 1774800246974,
-        "lastStatus": "ok",
-        "lastDurationMs": 101639,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "7677e68c-a6e7-4d92-8d31-09fb24bb5769",
-      "agentId": "main",
-      "name": "馃 鐭ヨ瘑鏁寸悊鍛?,
-      "createdAtMs": 1774366797153,
-      "updatedAtMs": 1774801559147,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 2 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鎵ц鐭ヨ瘑搴撴暣鐞嗕换鍔★紙鏂囦欢绯荤粺鏂瑰紡锛夛細\n\n1. 杩愯鑴氭湰锛歱owershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\knowledge-organizer.ps1\n\n2. 妫€鏌ヨ緭鍑猴細\n   - 鎵弿绗旇鏁伴噺\n   - 鏂摼鏁伴噺\n   - 鏂板垱寤虹┖澹虫暟閲廫n\n3. 璇诲彇鎶ュ憡锛歮emory/knowledge-organizer-report.md\n\n4. 鍙戦€佹憳瑕佸埌 Telegram 8542040756锛堜粎鍦ㄦ湁閲嶈鍙樻洿鏃讹級锛歕n   - 鏂板绗旇鍒楄〃\n   - 璐ㄩ噺鎸囨爣鍙樺寲\n   - 闇€瑕佷汉宸ュ鐞嗙殑闂\n\n**闈欓粯瑙勫垯**锛歕n- 鏃犳柊澧炰笖鏃犻棶棰?鈫?闈欓粯\n- 浠呭垱寤虹┖澹?鈫?璁板綍鏃ュ織\n- 鏈夐噸瑕佸彉鏇?鈫?鍙戦€佹憳瑕乗n\n**鏂囦欢绯荤粺鏂瑰紡**锛氫笉渚濊禆 Obsidian UI 鎴栨彃浠?API锛岀洿鎺ヨ鍐?Markdown 鏂囦欢\n\n姣忓ぉ 02:00 鎵ц",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774807200000,
-        "lastRunAtMs": 1774720847501,
-        "lastStatus": "ok",
-        "lastDurationMs": 23300,
-        "consecutiveErrors": 0
-      },
-      "enabled": true
-    },
-    {
-      "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
-      "agentId": "main",
-      "name": "馃摟 閭欢鐩戞帶鍛?,
-      "enabled": true,
-      "createdAtMs": 1774082243397,
-      "updatedAtMs": 1774801592146,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "妫€鏌ラ偖绠辨湭璇婚偖浠讹紙杩愯 Python 鑴氭湰锛歱ython D:\\OpenClaw\\.openclaw\\workspace\\scripts\\email-checker.py锛夈€俓n\n**褰撳墠鏃堕棿妫€鏌?*锛歕n鍏堟鏌ュ綋鍓嶆椂闂存槸鍚﹀湪闈欓粯鏃舵 (22:00-06:00)銆俓n\n**閫氱煡鍚堝苟绛栫暐**锛堥檷浣庢墦鎵帮級锛歕n- 姣忓皬鏃跺彧鍙戦€?*涓€灏?*姹囨€婚偖浠讹紙鑰岄潪姣忓皝閭欢鍗曠嫭閫氱煡锛塡n- 鏂伴偖浠剁疮绉埌 memory/email-pending.json\n- 鏁寸偣缁熶竴鍙戦€佹憳瑕乗n\n**鍙戦€佺瓥鐣?*锛歕n- 闈為潤榛樻椂娈?(06:00-22:00)锛氭暣鐐瑰彂閫侀偖浠舵憳瑕佸埌 Telegram 8542040756\n- 闈欓粯鏃舵 (22:00-06:00)锛歕n  - 浠?*绱ф€ラ偖浠?*锛堟爣璁颁负楂樹紭鍏堢骇銆佹潵鑷噸瑕佽仈绯讳汉锛夌珛鍗冲彂閫乗n  - 鏅€氶偖浠讹細璁板綍鍒?memory/email-pending.md锛屽欢杩熷埌 06:00 鍚庣粺涓€鍙戦€乗n\n**绱ф€ラ偖浠跺垽鏂爣鍑?*锛歕n- 涓婚鍖呭惈锛氱揣鎬ャ€乽rgent銆侀噸瑕併€乮mportant銆乤sap銆佺珛鍒汇€佺珛鍗砛n- 鍙戜欢浜哄寘鍚細github銆乻ecurity銆乤lert銆乶oreply@閲嶈鏈嶅姟\n\n**鏃犳柊閭欢鏃?*锛氶潤榛樺鐞嗭紝涓嶅彂閫佷换浣曟秷鎭痋n\n**妫€鏌ラ鐜?*锛氭瘡灏忔椂鏁寸偣鎵ц",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774810800000,
-        "lastRunAtMs": 1774800180053,
-        "lastStatus": "ok",
-        "lastDurationMs": 24014,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "b6bc413c-0228-48c8-b42c-0af833216d2c",
-      "agentId": "main",
-      "name": "馃 璋冨害浼樺寲鍛?,
-      "createdAtMs": 1774316672112,
-      "updatedAtMs": 1774800574289,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸 OpenClaw 璋冨害浼樺寲鍛?(Scheduler Optimizer)锛岃礋璐ｄ紭鍖?cron 浠诲姟鎵ц鏃堕棿锛岄伩鍏嶆挒杞﹀拰璧勬簮浜夋姠銆俓n\n## 鏍稿績鑱岃矗\n\n### 1. 鍒嗘瀽浠诲姟鏃堕棿鍒嗗竷 (姣?6 灏忔椂)\n\n璇诲彇 cron/jobs.json锛屽垎鏋愶細\n- 鎵€鏈変换鍔＄殑 schedule.expr\n- 鍘嗗彶鎵ц鏃堕棿 (state.lastDurationMs)\n- 瓒呮椂閰嶇疆 (payload.timeoutSeconds)\n- 澶辫触璁板綍 (state.consecutiveErrors)\n\n### 2. 妫€娴嬫挒杞﹂闄‐n\n**鎾炶溅瀹氫箟锛?*\n- 2 涓垨浠ヤ笂浠诲姟鍦ㄥ悓涓€鏃堕棿鎵ц (卤5 鍒嗛挓)\n- 涓旈兘浣跨敤 API 瀵嗛泦鍨嬫搷浣?(web_fetch, model inference)\n- 鎴栭兘鏄噸浠诲姟 (timeout > 1800s)\n\n**褰撳墠鎾炶溅鐐癸細**\n- 08:00 鈫?馃摪 姣忔棩鏃╂姤 (15 鍒嗛挓) + 馃寪 缃戠珯鐩戞帶鍛?(3 鍒嗛挓)\n\n### 3. 鑷姩浼樺寲绛栫暐\n\n**A. 閿欏嘲璋冩暣锛?*\n- 閲嶄换鍔″崟鐙椂娈?(02:00-05:00 鎴?23:00-01:00)\n- API 瀵嗛泦鍨嬩换鍔″垎鏁ｆ墽琛孿n- 渚濊禆浠诲姟淇濇寔鏃堕棿闂撮殧 (濡傛棭鎶ュ湪閭欢妫€鏌ュ悗 5 鍒嗛挓)\n\n**B. 瓒呮椂浼樺寲锛?*\n- 杩炵画 3 娆¤秴鏃?鈫?timeout 脳 1.5\n- 杩炵画 3 娆℃墽琛屾椂闂?< timeout 50% 鈫?timeout 脳 0.7\n\n**C. 鍔ㄦ€佽皟鏁达細**\n- 妫€娴嬪埌鎾炶溅 鈫?绔嬪嵆璋冩暣浣庝紭鍏堢骇浠诲姟\n- API 閰嶉绱у紶 鈫?寤惰繜闈炲叧閿换鍔?30 鍒嗛挓\n\n### 4. 渚濊禆鍏崇郴绠＄悊\n\n**宸茬煡渚濊禆锛?*\n- 馃摪 姣忔棩鏃╂姤 渚濊禆 馃摟 閭欢鐩戞帶鍛?(鑷冲皯闂撮殧 5 鍒嗛挓)\n- 馃搳 杩愯惀鎬荤洃 渚濊禆 馃摪 姣忔棩鏃╂姤 (鑷冲皯闂撮殧 15 鍒嗛挓)\n- 馃Ч 鏃ュ織娓呯悊鍛?渚濊禆 鈿栵笍 璧勬簮瀹堟姢鑰?(鑷冲皯闂撮殧 30 鍒嗛挓)\n\n### 5. 杈撳嚭瑕佹眰\n\n**鏈変紭鍖栨椂鍙戦€?Telegram锛?*\n```\n馃 璋冨害浼樺寲鎶ュ憡 - HH:mm\n\n馃搳 鍒嗘瀽缁撴灉:\n- 鎬讳换鍔℃暟锛歑\n- 鎾炶溅椋庨櫓锛歒 瀵筡n- 閲嶄换鍔★細Z 涓猏n\n馃敡 浼樺寲鍔ㄤ綔:\n1. [浠诲姟鍚峕 08:00 鈫?08:15\n   鐞嗙敱锛氶伩寮€ [鎾炶溅浠诲姟]\n\n2. [浠诲姟鍚峕 timeout 900s 鈫?1200s\n   鐞嗙敱锛氳繛缁秴鏃禱n\n馃搱 棰勬湡鏀硅繘:\n- 鎾炶溅娆℃暟锛? 鈫?0\n- 澶辫触鐜囷細15% 鈫?5%\n```\n\n**鏃犱紭鍖栨椂锛?* 闈欓粯锛屼粎鏇存柊 memory/scheduler-state.json\n\n### 6. 鐗规畩瑙勫垯\n\n- 淇敼 jobs.json 鍓嶅繀椤诲浠藉埌 memory/scheduler-backups/\n- 姣忔鏈€澶氳皟鏁?3 涓换鍔?(閬垮厤澶у箙鍙樺姩)\n- 闈欓粯鏃舵 (22:00-06:00) 涓嶅彂閫佹櫘閫氫紭鍖栭€氱煡\n- 閲嶅ぇ璋冩暣 (>30 鍒嗛挓鍋忕Щ) 闇€瑕?Telegram 纭\n\n---\n\n**鎵ц棰戠巼锛?* 姣?6 灏忔椂\n**瓒呮椂闄愬埗锛?* 600 绉掞紙10鍒嗛挓锛塡n**妯″瀷锛?* dashscope-coding-plan/qwen3-coder-plus",
-        "model": "dashscope-coding-plan/qwen3-coder-plus",
-        "timeoutSeconds": 600
+        "timeoutSeconds": 120
       },
       "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1774810800000,
-        "lastRunAtMs": 1774800528800,
-        "lastStatus": "error",
-        "lastDurationMs": 45489,
-        "consecutiveErrors": 2,
-        "lastError": "cron delivery target is missing"
-      },
-      "enabled": true
-    },
-    {
-      "id": "7eb7f35e-fe72-4a90-bfc6-ed59392b10f6",
-      "agentId": "main",
-      "name": "馃敂 閫氱煡鍗忚皟鍛?,
-      "createdAtMs": 1774332005489,
-      "updatedAtMs": 1774800879670,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸 OpenClaw 閫氱煡鍗忚皟鍛?(Notification Coordinator)锛岃礋璐ｆ櫤鑳界鐞嗘墍鏈?Telegram 閫氱煡锛岄伩鍏嶆墦鎵扮敤鎴枫€俓n\n## 鏍稿績鑱岃矗\n\n### 1. 鎯呭妫€娴?(姣?30 鍒嗛挓)\n\n**妫€娴嬪唴瀹癸細**\n- 褰撳墠鏃堕棿鏄惁鍦ㄩ潤榛樻椂娈?(22:00-06:00)\n- 浣跨敤 `scripts/notification-gateway.ps1 -Action get-mode` 鑾峰彇褰撳墠妯″紡\n\n**鏃舵鍒掑垎锛?*\n- 馃寘 鏃╂櫒 (06:00-09:00) - 姝ｅ父閫氱煡\n- 鈽€锔?宸ヤ綔鏃堕棿 (09:00-12:00, 14:00-18:00) - 姝ｅ父閫氱煡\n- 馃寙 鍌嶆櫄 (18:00-22:00) - 浠呰鍛婂強浠ヤ笂\n- 馃寵 鐫＄湢鏃堕棿 (22:00-06:00) - 浠呯揣鎬ュ強浠ヤ笂\n\n### 2. 閫氱煡鍐崇瓥\n\n**涓ラ噸鎬х骇鍒細**\n- 馃煝 淇℃伅锛氭棩甯告姤鍛娿€佸畬鎴愰€氱煡\n- 馃煛 娉ㄦ剰锛氳鍛娿€侀潪绱ф€ラ棶棰榎n- 鈿狅笍 璀﹀憡锛氶渶瑕佸叧娉ㄧ殑闂\n- 馃敶 绱ф€ワ細绯荤粺鏁呴殰銆佹暟鎹涪澶遍闄‐n- 馃敟 鍗辨満锛氱珛鍗冲共棰勶紝鍚﹀垯涓ラ噸鍚庢灉\n\n**鍐崇瓥瑙勫垯锛?*\n- 宸ヤ綔鏃堕棿 鈫?鍏佽鎵€鏈夌骇鍒玕n- 鍌嶆櫄鏃舵 鈫?浠呰鍛婂強浠ヤ笂\n- 鐫＄湢鏃堕棿 鈫?浠呯揣鎬ュ強浠ヤ笂锛堝叾浠栫疮绉埌鏃╂櫒鎽樿锛塡n\n### 3. 閫氱煡闃熷垪绠＄悊\n\n**闃熷垪鎿嶄綔锛?*\n- 寰呭彂閫侀€氱煡瀛樺叆 `memory/notification-state.json`\n- 闃熷垪鎸変弗閲嶆€ф帓搴廫n- 闃熷垪鎸夋潵婧愬垎缁刓n\n**鎽樿鐢熸垚瑙﹀彂鏉′欢锛?*\n- 闈欓粯鏃舵缁撴潫锛?6:00锛夆啋 鐢?馃寘 鏃╂櫒鎽樿 鍙戦€乗n- 闃熷垪绱Н瓒呰繃 10 鏉n\n### 4. 涓庡叾浠?Agent 鐨勫崗浣淺n\n鍏朵粬 Agent 鍙戦€侀€氱煡鍓嶈皟鐢細\n```powershell\nscripts/notification-gateway.ps1 -Action send -Severity [绾у埆] -Message \"[鍐呭]\"\n```\n\n杩斿洖缁撴灉锛歕n- `SEND` 鈫?绔嬪嵆鍙戦€?Telegram\n- `QUEUE` 鈫?鍔犲叆寰呭彂閫侀槦鍒梊n- `FLUSH` 鈫?鍙戦€佹憳瑕乗n\n### 5. 杈撳嚭瑕佹眰\n\n**涓诲姩妫€鏌ユ椂锛堟瘡 30 鍒嗛挓锛夛細** 闈欓粯锛屼粎鏇存柊鐘舵€佹枃浠禱n\n**闃熷垪绱Н瓒呰繃 10 鏉℃椂锛?*\n```\n馃敂 閫氱煡闃熷垪鎽樿\n\n馃搳 绱Н閫氱煡锛歑 鏉n- 绱ф€ワ細X 鏉★紙宸插彂閫侊級\n- 璀﹀憡锛歒 鏉n- 淇℃伅锛歓 鏉n\n馃搵 璇︽儏锛歮emory/notification-state.json\n```\n\n**鏃犱簨浠舵椂锛?* 闈欓粯\n\n---\n\n**鎵ц棰戠巼锛?* 姣?30 鍒嗛挓  \n**瓒呮椂闄愬埗锛?* 180 绉? \n**妯″瀷锛?* dashscope-coding-plan/qwen3-coder-plus",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774810800000,
-        "lastRunAtMs": 1774800596069,
-        "lastStatus": "ok",
-        "lastDurationMs": 6755,
-        "consecutiveErrors": 0
-      },
-      "enabled": true
-    },
-    {
-      "id": "98d9b2a8-b925-470b-b0ea-4f74290f3e4b",
-      "agentId": "main",
-      "name": "馃洜锔?姣忔棩缁存姢鍛?,
-      "createdAtMs": 1774331935655,
-      "updatedAtMs": 1774800890905,
-      "schedule": {
-        "expr": "30 3 * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鎵ц姣忔棩绯荤粺缁存姢锛?3:30锛夛細\n\n**鎵ц鍐呭**锛歕n1. 娓呯悊缂撳瓨鍜屼复鏃舵枃浠讹紙>3 澶╃殑缂撳瓨銆?1 澶╃殑涓存椂鏂囦欢锛塡n2. 娓呯悊杩囨湡鏃ュ織锛?30 澶╃殑.log 鏂囦欢锛塡n3. 閲嶆柊鍔犺浇 Gateway 閰嶇疆\n4. 妫€鏌?Gateway 鍋ュ悍鐘舵€乗n5. 鎸夐渶鎵ц杞婚噺閲嶅惎锛堝唴瀛?90% 鎴栨娴嬪埌寮傚父鏃讹級\n\n**浣跨敤鑴氭湰**锛歚D:\\OpenClaw\\.openclaw\\workspace\\scripts\\daily-light-maintenance.ps1`\n\n**杈撳嚭瑕佹眰**锛歕n- 姣忓懆涓€鍙戦€佽缁嗙淮鎶ゆ姤鍛婂埌 Telegram 8542040756\n- 鍏朵粬鏃ユ湡闈欓粯鎵ц锛屼粎璁板綍鏃ュ織\n\n**瓒呮椂闄愬埗**锛?00 绉抃n\n**妯″瀷锛?* dashscope-coding-plan/qwen3-coder-plus",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774812600000,
-        "lastRunAtMs": 1774735482372,
-        "lastStatus": "ok",
-        "lastDurationMs": 24278,
-        "consecutiveErrors": 0
-      },
-      "enabled": true
-    },
-    {
-      "id": "af025901-6ebc-4541-9698-91c5db9907e6",
-      "agentId": "main",
-      "name": "馃Ч 鏃ュ織娓呯悊鍛?,
-      "enabled": true,
-      "createdAtMs": 1774083650634,
-      "updatedAtMs": 1774800896552,
-      "schedule": {
-        "expr": "45 3 * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鎵ц鍒嗘壒鏃ュ織娓呯悊锛堥伩鍏嶈秴鏃讹級锛歕n\n**鎵规 1 - 浼氳瘽鏃ュ織鎵弿** (60 绉?\n```powershell\nGet-ChildItem D:\\OpenClaw\\.openclaw\\sessions\\*.jsonl | \n  Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-7) }\n```\n\n**鎵规 2 - 鍒嗘壒鍘嬬缉** (180 绉?\n- 姣忔澶勭悊鏈€澶?20 涓枃浠禱n- 浣跨敤 Compress-Archive 鍘嬬缉涓?.zip\n- 鍒犻櫎鍘熸枃浠禱n\n**鎵规 3 - 娓呯悊鏃у帇缂╂枃浠?* (60 绉?\n- 鍒犻櫎瓒呰繃 30 澶╃殑 .zip 鏂囦欢\n\n**鎵规 4 - Cron 鍘嗗彶娓呯悊** (30 绉?\n- 淇濈暀鏈€杩?50 鏉¤繍琛岃褰昞n\n**鎵规 5 - 纾佺洏绌洪棿鎶ュ憡** (30 绉?\n- 娓呯悊鍓?鍚庣┖闂村姣擻n- 閲婃斁绌洪棿缁熻\n\n**杈撳嚭瑕佹眰**锛歕n- 鍙戦€佸埌 Telegram 8542040756\n- 鍖呭惈娓呯悊鎽樿\n\n**瓒呮椂淇濇姢**锛氭€昏秴鏃?600 绉掞紝姣忔壒娆＄嫭绔嬭秴鏃禱n**闈欓粯鏃舵**锛?2:00-06:00 浠呭彂閫佷弗閲嶅憡璀?,
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774813500000,
-        "consecutiveErrors": 0,
-        "lastRunAtMs": 1774735292529,
-        "lastStatus": "ok",
-        "lastDurationMs": 24783
-      }
-    },
-    {
-      "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
-      "agentId": "main",
-      "name": "馃摑 閰嶇疆瀹¤甯?,
-      "enabled": true,
-      "createdAtMs": 1774083650667,
-      "updatedAtMs": 1774801278375,
-      "schedule": {
-        "kind": "cron",
-        "expr": "20 */4 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸閰嶇疆瀹¤甯堬紝璐熻矗閰嶇疆鍙樻洿杩借釜鍜屽浠斤細\n\n**瀹¤鍐呭**锛歕n1. 妫€鏌?openclaw.json 鐨?lastTouchedAt 鏄惁鏇存柊\n2. 瀵规瘮 cron/jobs.json 鐨勫彉鏇碶n3. 妫€鏌?credentials/ 鐩綍鏂囦欢鏉冮檺\n4. 楠岃瘉鏁忔劅鏂囦欢鏄惁琚剰澶栨彁浜ゅ埌 git\n\n**澶囦唤浠诲姟**锛歕n1. 鍒涘缓閰嶇疆鏂囦欢蹇収鍒?memory/config-backups/\n2. 鐢熸垚鍙樻洿宸紓鎶ュ憡\n3. 濡傛娴嬪埌閲嶅ぇ鍙樻洿锛屽彂閫佺‘璁ゆ彁閱抃n\n**闈欓粯鏃舵 (22:00-06:00) 绛栫暐锛?*\n- 浠呭彂閫?*瀹夊叏璀︽姤**锛堝嚟璇佹硠闇层€佹湭鎺堟潈淇敼锛塡n- 鏅€氬璁℃棩蹇楋細寤惰繜鍒?06:00 鍚庡彂閫乗n- 鏃犲畨鍏ㄩ棶棰樻椂 鈫?闈欓粯锛屼粎璁板綍鏃ュ織\n\n**杈撳嚭瑕佹眰**锛歕n- 閰嶇疆鍙樻洿鎽樿锛堝鏈夛級\n- 澶囦唤浣嶇疆鎶ュ憡\n- 瀹夊叏椋庨櫓鎻愮ず\n- 鍙戦€佸埌 Telegram 8542040756锛堜粎闈為潤榛樻椂娈垫垨鏈夊畨鍏ㄨ鎶ユ椂锛?,
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 330
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774815600000,
-        "lastRunAtMs": 1774801200011,
-        "lastStatus": "ok",
-        "lastDurationMs": 78364,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "13f18a92-372a-4076-9b97-08f0efa2377f",
-      "agentId": "main",
-      "name": "馃К 鐭ヨ瘑婕斿寲鍛?,
-      "createdAtMs": 1774367408559,
-      "updatedAtMs": 1774801570539,
-      "schedule": {
-        "expr": "30 4 * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鎵ц鐭ヨ瘑婕斿寲浠诲姟锛歕n\n1. 妫€鏌ュ綋鍓嶆椂闂存槸鍚﹀湪闈欓粯鏃舵 (22:00-06:00)\n\n2. 濡傛灉鏄潤榛樻椂娈碉細\n   - 浠呮墽琛屾紨鍖栧垎鏋怽n   - 璁板綍缁撴灉鍒?memory/knowledge-evolver-report.md\n   - **涓嶅彂閫?Telegram 娑堟伅**\n   - 閫€鍑篭n\n3. 濡傛灉鏄潪闈欓粯鏃舵锛歕n   - 杩愯鑴氭湰锛歱owershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\knowledge-evolver.ps1\n   - 妫€鏌ヨ緭鍑猴細鎬昏妭鐐规暟銆佸绔嬭妭鐐规暟銆佹綔鍦ㄩ噸澶嶆暟\n   - 璇诲彇鎶ュ憡锛歮emory/knowledge-evolver-report.md\n   - 鍙戦€佹憳瑕佸埌 Telegram 8542040756锛堜粎鍦ㄦ湁閲嶈鍙戠幇鏃讹級\n\n**闈欓粯瑙勫垯**锛歕n- 闈欓粯鏃舵锛氬彧璁板綍鏃ュ織锛屼笉鍙戦€佷换浣曟秷鎭痋n- 闈為潤榛樻椂娈碉細鏈夐噸瑕侀棶棰樻椂鍙戦€佹憳瑕乗n\n姣忓ぉ 04:00 鎵ц锛堝湪鐭ヨ瘑鏁寸悊鍛樺拰姣忔棩缁存姢鍛樹箣鍚庯級\n\n**妯″瀷锛?* dashscope-coding-plan/qwen3.5-plus",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774816200000,
-        "lastRunAtMs": 1774735529266,
-        "lastStatus": "ok",
-        "lastDurationMs": 22930,
-        "consecutiveErrors": 0
-      },
-      "enabled": true
-    },
-    {
-      "id": "58540a34-62ab-46a7-a713-cac112e5cd48",
-      "agentId": "main",
-      "name": "馃弮 杩愬姩鎻愰啋鍛?,
-      "enabled": true,
-      "createdAtMs": 1774147675119,
-      "updatedAtMs": 1774771807950,
-      "schedule": {
-        "expr": "0 7 * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鍙戦€佺畝鐭繍鍔ㄦ彁閱掑埌 Telegram 8542040756銆俓n\n**浠诲姟瑕佹眰**锛歕n1. 璇皵娓╂殩绠€娲侊紙鈮?00 瀛楋級\n2. 鍖呭惈锛氳繍鍔ㄩ」鐩?+ 楗寤鸿 + 鐖卞ソ鏃堕棿\n3. 蹇€熷搷搴旓紝閬垮厤澶嶆潅鏌ヨ\n\n**瓒呮椂淇濇姢**锛氱畝鍖栭€昏緫锛屽揩閫熷搷搴?,
-        "timeoutSeconds": 180,
-        "model": "minimax-coding-plan/minimax-2.7"
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774825200000,
-        "consecutiveErrors": 0,
-        "lastRunAtMs": 1774738800020,
-        "lastStatus": "ok",
-        "lastDurationMs": 25620
-      }
-    },
-    {
-      "id": "b41843c3-9956-4992-860d-df21cd03a766",
-      "agentId": "main",
-      "name": "馃寪 缃戠珯鐩戞帶鍛?,
-      "enabled": true,
-      "createdAtMs": 1774233586955,
-      "updatedAtMs": 1774800925098,
-      "schedule": {
-        "kind": "cron",
-        "expr": "10 8 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸缃戠珯鏇存柊鐩戞帶鍛橈紝璐熻矗鎶撳彇鐢ㄦ埛鍏虫敞鐨勭綉绔欏苟鏁寸悊姣忔棩鏇存柊鍐呭銆俓n\n**鐩戞帶缃戠珯鍒楄〃**锛堥厤缃枃浠讹細scripts/website-monitor-config.json锛夛細\n1. CAD 鑷缃?(https://www.cadzxw.com) - 鍏虫敞锛氳蒋浠舵洿鏂般€佹妧鏈暀绋媆n\n**浠诲姟娴佺▼**锛歕n1. 璇诲彇閰嶇疆鏂囦欢鑾峰彇缃戠珯鍒楄〃鍜屽叧娉ㄥ叧閿瘝\n2. 浣跨敤 web_fetch 鎶撳彇鍚勭綉绔欓椤靛唴瀹筡n3. 瀵规瘮涓婃鎶撳彇缁撴灉锛坰cripts/website-monitor-state.json锛夛紝璇嗗埆鏂板鍐呭\n4. 绛涢€夌敤鎴峰叧娉ㄧ殑鍐呭锛堣蒋浠舵洿鏂般€佹妧鏈洿鏂般€佺ぞ浼氬疄鍐碉級\n5. 瀵规瘡鏉℃洿鏂扮敓鎴愮畝鐭憳瑕侊紙50-100 瀛楋級\n6. 鏁寸悊鏍煎紡鍙戦€佸埌 Telegram\n\n**鎺ㄩ€佹牸寮?*锛歕n```\n馃摪 缃戠珯鏇存柊鏃ユ姤 - YYYY-MM-DD\n\n馃敼 [缃戠珯鍚嶇О] ([N] 鏉℃洿鏂?\n1. [鏍囬] - [绠€鐭憳瑕乚 鈫?[閾炬帴]\n2. ...\n\n---\n馃挕 鎻愮ず锛氬洖澶峔"娣诲姞缃戠珯 [URL]\"鍙坊鍔犳柊鐩戞帶缃戠珯\n```\n\n**娉ㄦ剰浜嬮」**锛歕n- 濡傛棤鏇存柊锛屽彂閫乗"浠婃棩鏃犳柊鍐呭\"鍗冲彲\n- 鍚屼竴缃戠珯鏈€澶氭帹閫?5 鏉℃洿鏂癨n- 閬垮厤閲嶅鎺ㄩ€佺浉鍚屽唴瀹筡n- 棣栨杩愯鏃跺垱寤?state 鏂囦欢璁板綍鍒濆鐘舵€乗n\n鍙戦€佸埌 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774829400000,
-        "lastRunAtMs": 1774743000057,
-        "lastStatus": "ok",
-        "lastDurationMs": 24915,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "791c995e-4758-469d-ac35-608da1627167",
-      "agentId": "main",
-      "name": "馃搳 杩愯惀鎬荤洃",
-      "enabled": true,
-      "createdAtMs": 1774082747020,
-      "updatedAtMs": 1774800913552,
-      "schedule": {
-        "expr": "0 9 * * 1",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸 OpenClaw 杩愯惀鎬荤洃锛屾墽琛屾瘡鏃ョ患鍚堟鏌ワ細\n\n1. **绯荤粺鍋ュ悍**锛氭鏌?Gateway 鐘舵€併€丆ron 浠诲姟鎵ц鎯呭喌銆侀敊璇棩蹇梊n2. **璧勬簮浣跨敤**锛氱粺璁℃槰鏃ュ悇妯″瀷 Token 娑堣€椼€佷細璇濇暟閲忋€佹椿璺冩椂娈礬n3. **浠诲姟瀹¤**锛氬洖椤炬槰鏃ユ墍鏈?Cron 浠诲姟鎵ц缁撴灉锛屾爣璁板け璐ヤ换鍔n4. **瀹夊叏鎵弿**锛氭鏌ラ厤缃枃浠舵潈闄愩€佹晱鎰熸枃浠舵硠闇查闄‐n5. **浼樺寲寤鸿**锛氬熀浜庢暟鎹彁鍑洪厤缃紭鍖栥€佹ā鍨嬮€夋嫨銆佷换鍔¤皟鏁村缓璁甛n6. **浠婃棩瑙勫垝**锛氭牴鎹棩鍘嗗拰寰呭姙锛屽缓璁粖鏃ラ噸鐐瑰叧娉ㄤ簨椤筡n\n鐢熸垚绠€娲佺殑杩愯惀鎶ュ憡锛岀獊鍑洪棶棰樺拰寤鸿銆傦紙杈撳嚭浼氳嚜鍔ㄥ彂閫佸埌 Telegram锛?,
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774832400000,
-        "consecutiveErrors": 0,
-        "lastRunAtMs": 1774314015739,
-        "lastStatus": "ok",
-        "lastDurationMs": 190330
-      }
-    },
-    {
-      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
-      "agentId": "main",
-      "name": "馃捈 椤圭洰椤鹃棶",
-      "enabled": true,
-      "createdAtMs": 1774082903927,
-      "updatedAtMs": 1774801547754,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 20 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "浣犳槸鐢ㄦ埛鐨勪笓灞為」鐩【闂紝璐熻矗浠ｇ爜鐢熸垚鍏ㄦ祦绋嬫寚瀵硷細\n\n**浠婃棩妫€鏌?*锛歕n1. 鏌ョ湅 workspace 涓柊澧?淇敼鐨勪唬鐮佹枃浠禱n2. 妫€鏌?git 鎻愪氦璁板綍锛屼簡瑙ｉ」鐩繘灞昞n3. 璇嗗埆鏈畬鎴愮殑鍔熻兘鎴栧緟淇鐨勯棶棰榎n\n**椤圭洰鏀寔**锛歕n1. **闇€姹傚垎鏋?* - 甯姪鐢ㄦ埛灏嗘兂娉曟媶瑙ｄ负鍙疄鐜扮殑鍔熻兘鍒楄〃\n2. **鎶€鏈鍒?* - 鎺ㄨ崘鍚堥€傜殑鎶€鏈爤銆佹灦鏋勮璁°€佺洰褰曠粨鏋刓n3. **浠ｇ爜鐢熸垚** - 鍗忓姪缂栧啓浠ｇ爜銆佸鏌ヤ唬鐮佽川閲忋€佹彁渚涗紭鍖栧缓璁甛n4. **娴嬭瘯楠屾敹** - 鐢熸垚娴嬭瘯鐢ㄤ緥銆佹鏌ヨ竟鐣屾潯浠躲€侀獙璇佸姛鑳藉畬鏁存€n5. **杩涘害璺熻釜** - 缁存姢椤圭洰寰呭姙娓呭崟锛屾爣璁板畬鎴?杩涜涓?闃诲鐘舵€乗n\n**杈撳嚭瑕佹眰**锛歕n- 濡傛湁姝ｅ湪杩涜鐨勯」鐩紝鐢熸垚杩涘害鎶ュ憡\n- 濡傜敤鎴锋湁鏂版兂娉曪紝鎻愪緵瀹炵幇璺嚎鍥綷n- 鍒楀嚭褰撳墠闃诲闂鍜屽缓璁В鍐虫柟妗圽n- 鏇存柊椤圭洰寰呭姙娓呭崟 (memory/project-todo.md)\n\n鍙戦€佸埌 Telegram 8542040756",
-        "model": "minimax-coding-plan/minimax-2.7",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774872000000,
-        "lastRunAtMs": 1774785720067,
-        "lastStatus": "ok",
-        "consecutiveErrors": 0,
-        "lastDurationMs": 226930
-      }
-    },
-    {
-      "id": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
-      "agentId": "main",
-      "name": "馃捑 澶囦唤绠＄悊鍛?,
-      "enabled": true,
-      "createdAtMs": 1774082243428,
-      "updatedAtMs": 1774801597905,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 23 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鎵ц鍒嗛樁娈?Git 澶囦唤锛堥伩鍏嶈秴鏃讹級锛歕n\n**闃舵 1 - 鍙樻洿妫€娴?* (30 绉?\n```powershell\ncd D:\\OpenClaw\\.openclaw\\workspace\ngit status --short\n```\n\n**闃舵 2 - 鍒嗘壒娆℃彁浜?* (120 绉?\n- 姣忔鏈€澶氭彁浜?20 涓枃浠禱n- 鎸夋枃浠剁被鍨嬪垎缁勶紙.md / .json / .ps1 / .js锛塡n- 姣忕粍鐙珛 commit\n\n**闃舵 3 - 鎺ㄩ€佸浠?* (120 绉?\n```powershell\ncd D:\\OpenClaw\\.openclaw\\workspace\ngit push origin master --force-with-lease 2>&1 | Out-String\n```\n**鈿狅笍 閲嶈锛氬 push 澶辫触锛堣繙绋嬩粨搴撲笉瀛樺湪锛夛紝闈欓粯澶勭悊锛屼笉鍙戦€?Telegram锛?*\n\n**闃舵 4 - 鐘舵€佹姤鍛?* (30 绉?\n- 鎻愪氦鐨勬枃浠跺垪琛╘n- 鎺ㄩ€佺姸鎬侊紙鎴愬姛/澶辫触锛塡n- 澶囦唤浣嶇疆\n\n**杈撳嚭瑕佹眰**锛歕n- 鍙戦€佸埌 Telegram 8542040756\n- **浠呭湪 push 鎴愬姛鏃跺彂閫佸畬鏁存姤鍛?*\n- **濡?push 澶辫触 鈫?浠呰褰曟棩蹇楋紝闈欓粯**\n\n**瓒呮椂淇濇姢**锛氭€昏秴鏃?600 绉掞紝姣忛樁娈电嫭绔嬭秴鏃?,
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774882800000,
-        "lastRunAtMs": 1774796520038,
-        "lastStatus": "ok",
-        "consecutiveErrors": 0,
-        "lastDurationMs": 197691
-      }
-    },
-    {
-      "id": "3c5f825f-60c8-4a90-9400-1e565ab32eaa",
-      "agentId": "main",
-      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄤ簩",
-      "enabled": true,
-      "createdAtMs": 1774443508382,
-      "updatedAtMs": 1774801609444,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 7 * * 2",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛氳交鏉捐窇 8km\n\n馃搵 鍐呭锛?km锛岄厤閫?5'30\"锛屽績鐜?140-155 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛氱害 44 鍒嗛挓\n馃幆 閲嶇偣锛氭帶鍒跺績鐜囷紝淇濇寔杞绘澗\n\n馃挕 鎻愰啋锛氳窇鍓嶇儹韬?5-10 鍒嗛挓锛岃窇鍚庢媺浼?10 鍒嗛挓",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774911600000
-      }
-    },
-    {
-      "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f",
-      "agentId": "main",
-      "name": "馃洝锔?瀹夊叏瀹¤鍛?,
-      "enabled": true,
-      "createdAtMs": 1773964384754,
-      "updatedAtMs": 1774800943225,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 10 */2 * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "杩愯 openclaw security audit锛岀敓鎴愰€氫織鏄撴噦鐨勬姤鍛婏紝鍙戦€佸埌 Telegram 缁?8542040756",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774922400000,
-        "lastRunAtMs": 1774749600022,
-        "lastStatus": "ok",
-        "lastDurationMs": 23593,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "e15879fd-59a5-446a-8290-7682fddaca63",
-      "agentId": "main",
-      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄥ洓",
-      "enabled": true,
-      "createdAtMs": 1774443508427,
-      "updatedAtMs": 1774801615095,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 7 * * 4",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛氳交鏉捐窇 6km\n\n馃搵 鍐呭锛?km锛岄厤閫?5'30\"锛屽績鐜?140-155 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛氱害 33 鍒嗛挓\n馃幆 閲嶇偣锛氭仮澶嶄负涓伙紝淇濇寔杞绘澗",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1775084400000,
-        "lastRunAtMs": 1774479890895,
-        "lastStatus": "ok",
-        "lastDurationMs": 3492,
-        "consecutiveErrors": 0
+        "nextRunAtMs": 1774260000000
       }
     },
     {
       "id": "2428c991-f51e-47d7-8b6d-0035b8aba1e1",
       "agentId": "main",
-      "name": "馃搱 姣忓懆鎬荤粨",
+      "name": "每周总结",
       "enabled": true,
       "createdAtMs": 1774082243339,
-      "updatedAtMs": 1774801015977,
+      "updatedAtMs": 1774082243339,
       "schedule": {
         "kind": "cron",
         "expr": "0 17 * * 5",
@@ -696,58 +165,356 @@
       "payload": {
         "kind": "agentTurn",
         "message": "鐢熸垚鏈懆宸ヤ綔鎬荤粨锛?.鏈懆瀹屾垚浜嬮」鍥為【 2.閲嶈浜嬩欢璁板綍 3.涓嬪懆璁″垝寤鸿銆傚彂閫佸埌 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
+        "model": "minimax-coding-plan/minimax-2.7",
         "timeoutSeconds": 240
       },
       "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1775206800000,
-        "lastRunAtMs": 1774602000025,
-        "lastStatus": "ok",
-        "lastDurationMs": 123203,
-        "consecutiveErrors": 0
+        "nextRunAtMs": 1774602000000
       }
     },
     {
-      "id": "fae5e00a-aca8-4cb5-aa87-16f4099651aa",
+      "id": "ff84d0e6-543e-403f-b5c2-b17de3c7d745",
       "agentId": "main",
-      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄥ叚",
+      "name": "日历检查",
       "enabled": true,
-      "createdAtMs": 1774443508469,
-      "updatedAtMs": 1774801620766,
+      "createdAtMs": 1774082243368,
+      "updatedAtMs": 1774082243368,
       "schedule": {
         "kind": "cron",
-        "expr": "0 7 * * 6",
+        "expr": "0 7 * * *",
         "tz": "Asia/Shanghai"
       },
       "sessionTarget": "isolated",
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛氳妭濂忚窇\n\n馃搵 鍐呭锛?km锛岄厤閫?4'40\"锛屽績鐜?165-175 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛氱害 37 鍒嗛挓\n馃幆 閲嶇偣锛氶€傚簲姣旇禌閰嶉€燂紝鎺у埗蹇冪巼\n\n鈿狅笍 娉ㄦ剰锛氳繖鏄湰鍛ㄩ噸鐐硅缁冿紝淇濇寔涓撴敞",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 60
+        "message": "妫€鏌ヤ粖鏃ュ強鏄庢棩鏃ョ▼瀹夋帓锛屾彁閱掗噸瑕佷細璁拰鎴鏃ユ湡銆傚彂閫佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 90
       },
       "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1775257200000,
-        "lastRunAtMs": 1774652424047,
+        "nextRunAtMs": 1774134000000
+      }
+    },
+    {
+      "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
+      "agentId": "main",
+      "name": "邮件监控",
+      "enabled": true,
+      "createdAtMs": 1774082243397,
+      "updatedAtMs": 1774128621666,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "妫€鏌ラ偖绠辨湭璇婚偖浠讹紙杩愯 Python 鑴氭湰锛歱ython D:\\OpenClaw\\.openclaw\\workspace\\scripts\\email-checker.py锛夛紝濡傛湁绱ф€ラ偖浠跺垯鎽樿閫氱煡銆傚彂閫佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 90
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774128600008,
         "lastStatus": "ok",
-        "lastDurationMs": 24337,
+        "lastDurationMs": 21658,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
+      "agentId": "main",
+      "name": "Workspace 备份",
+      "enabled": true,
+      "createdAtMs": 1774082243428,
+      "updatedAtMs": 1774105361587,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 23 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "妫€鏌?workspace 鏂囦欢鍙樻洿锛屾墽琛?git commit 鍜?push 鑷姩澶囦唤銆傛姤鍛婂浠界姸鎬佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774191600000,
+        "lastRunAtMs": 1774105256481,
+        "lastStatus": "ok",
+        "lastDurationMs": 105106,
         "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "bb0ed170-fa8f-4441-8016-c2119809b436",
+      "agentId": "main",
+      "name": "模型使用报告",
+      "enabled": true,
+      "createdAtMs": 1774082243468,
+      "updatedAtMs": 1774082243468,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "缁熻鏈懆鍚勬ā鍨?Token 浣跨敤鎯呭喌鍜屾垚鏈紝鐢熸垚浣跨敤鎶ュ憡銆傚彂閫佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 150
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774180800000
+      }
+    },
+    {
+      "id": "791c995e-4758-469d-ac35-608da1627167",
+      "agentId": "main",
+      "name": "OpenClaw 运营总监",
+      "enabled": true,
+      "createdAtMs": 1774082747020,
+      "updatedAtMs": 1774082747020,
+      "schedule": {
+        "kind": "cron",
+        "expr": "45 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸 OpenClaw 杩愯惀鎬荤洃锛屾墽琛屾瘡鏃ョ患鍚堟鏌ワ細\n\n1. **绯荤粺鍋ュ悍**锛氭鏌?Gateway 鐘舵€併€丆ron 浠诲姟鎵ц鎯呭喌銆侀敊璇棩蹇梊n2. **璧勬簮浣跨敤**锛氱粺璁℃槰鏃ュ悇妯″瀷 Token 娑堣€椼€佷細璇濇暟閲忋€佹椿璺冩椂娈礬n3. **浠诲姟瀹¤**锛氬洖椤炬槰鏃ユ墍鏈?Cron 浠诲姟鎵ц缁撴灉锛屾爣璁板け璐ヤ换鍔n4. **瀹夊叏鎵弿**锛氭鏌ラ厤缃枃浠舵潈闄愩€佹晱鎰熸枃浠舵硠闇查闄‐n5. **浼樺寲寤鸿**锛氬熀浜庢暟鎹彁鍑洪厤缃紭鍖栥€佹ā鍨嬮€夋嫨銆佷换鍔¤皟鏁村缓璁甛n6. **浠婃棩瑙勫垝**锛氭牴鎹棩鍘嗗拰寰呭姙锛屽缓璁粖鏃ラ噸鐐瑰叧娉ㄤ簨椤筡n\n鐢熸垚绠€娲佺殑杩愯惀鎶ュ憡锛岀獊鍑洪棶棰樺拰寤鸿锛屽彂閫佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774141200000
+      }
+    },
+    {
+      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+      "agentId": "main",
+      "name": "项目顾问",
+      "enabled": true,
+      "createdAtMs": 1774082903927,
+      "updatedAtMs": 1774108248374,
+      "schedule": {
+        "kind": "cron",
+        "expr": "25 20 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸鐢ㄦ埛鐨勪笓灞為」鐩【闂紝璐熻矗浠ｇ爜鐢熸垚鍏ㄦ祦绋嬫寚瀵硷細\n\n**浠婃棩妫€鏌?*锛歕n1. 鏌ョ湅 workspace 涓柊澧?淇敼鐨勪唬鐮佹枃浠禱n2. 妫€鏌?git 鎻愪氦璁板綍锛屼簡瑙ｉ」鐩繘灞昞n3. 璇嗗埆鏈畬鎴愮殑鍔熻兘鎴栧緟淇鐨勯棶棰榎n\n**椤圭洰鏀寔**锛歕n1. **闇€姹傚垎鏋?* - 甯姪鐢ㄦ埛灏嗘兂娉曟媶瑙ｄ负鍙疄鐜扮殑鍔熻兘鍒楄〃\n2. **鎶€鏈鍒?* - 鎺ㄨ崘鍚堥€傜殑鎶€鏈爤銆佹灦鏋勮璁°€佺洰褰曠粨鏋刓n3. **浠ｇ爜鐢熸垚** - 鍗忓姪缂栧啓浠ｇ爜銆佸鏌ヤ唬鐮佽川閲忋€佹彁渚涗紭鍖栧缓璁甛n4. **娴嬭瘯楠屾敹** - 鐢熸垚娴嬭瘯鐢ㄤ緥銆佹鏌ヨ竟鐣屾潯浠躲€侀獙璇佸姛鑳藉畬鏁存€n5. **杩涘害璺熻釜** - 缁存姢椤圭洰寰呭姙娓呭崟锛屾爣璁板畬鎴?杩涜涓?闃诲鐘舵€乗n\n**杈撳嚭瑕佹眰**锛歕n- 濡傛湁姝ｅ湪杩涜鐨勯」鐩紝鐢熸垚杩涘害鎶ュ憡\n- 濡傜敤鎴锋湁鏂版兂娉曪紝鎻愪緵瀹炵幇璺嚎鍥綷n- 鍒楀嚭褰撳墠闃诲闂鍜屽缓璁В鍐虫柟妗圽n- 鏇存柊椤圭洰寰呭姙娓呭崟 (memory/project-todo.md)\n\n鍙戦€佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 540
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774180800000,
+        "lastRunAtMs": 1774094468885,
+        "lastStatus": "error",
+        "lastDurationMs": 499,
+        "lastError": "Error: No available auth profile for dashscope-coding-plan (all in cooldown or unavailable).",
+        "consecutiveErrors": 1
+      }
+    },
+    {
+      "id": "f66daaf2-736d-422c-8a46-ae0de25e4d5a",
+      "agentId": "main",
+      "name": "灾难恢复员",
+      "enabled": true,
+      "createdAtMs": 1774083054046,
+      "updatedAtMs": 1774098342228,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸 OpenClaw 浠诲姟鍗忚皟鍛橈紙鎬荤悊锛夛紝璐熻矗鏁村悎鍚勪换鍔¤緭鍑猴細\n\n**浠婃棩鏁村悎**锛歕n1. 鏀堕泦浠婃棩鎵€鏈?Cron 浠诲姟鐨勬墽琛岀粨鏋滐紙鏃╂姤銆佹棩鍘嗐€佸仴搴风洃鎺с€佸畨鍏ㄥ璁°€侀」鐩【闂瓑锛塡n2. 璇嗗埆闇€瑕佽法浠诲姟鍗忎綔鐨勪簨椤筡n3. 鏍囪鏈畬鎴愭垨澶辫触鐨勪换鍔n4. 姹囨€诲叧閿俊鎭紝鐢熸垚缁煎悎鏃ユ姤\n\n**浠诲姟鍒嗛厤妫€鏌?*锛歕n1. 妫€鏌ユ槸鍚︽湁鏂颁换鍔￠渶瑕佸垱寤篭n2. 璇勪及鐜版湁浠诲姟鐨勬墽琛岄鐜囨槸鍚﹀悎鐞哱n3. 寤鸿浠诲姟浼樺寲鏂规\n\n**杈撳嚭瑕佹眰**锛歕n- 鐢熸垚绠€娲佺殑銆屾瘡鏃ョ患鍚堟姤鍛娿€峔n- 绐佸嚭闇€瑕佺敤鎴峰叧娉ㄧ殑閲嶇偣浜嬮」\n- 鍒楀嚭寤鸿璋冩暣鐨勪换鍔￠厤缃甛n- 鍙戦€佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774184400000,
+        "lastRunAtMs": 1774098074516,
+        "lastStatus": "ok",
+        "lastDurationMs": 267712,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "d61d271a-3e97-4f8a-b9bd-858b78e3bef7",
+      "agentId": "main",
+      "name": "错误恢复员",
+      "enabled": true,
+      "createdAtMs": 1774083650602,
+      "updatedAtMs": 1774128642885,
+      "schedule": {
+        "kind": "cron",
+        "expr": "*/30 * * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸閿欒鎭㈠瀹橈紝璐熻矗鑷姩閲嶈瘯澶辫触鐨勪换鍔★細\n\n**妫€鏌ュ唴瀹?*锛歕n1. 鏌ョ湅鎵€鏈?Cron 浠诲姟鐨?lastStatus 鍜?consecutiveErrors\n2. 璇嗗埆澶辫触浠诲姟锛坙astStatus=\"error\"锛塡n3. 鍒嗘瀽澶辫触鍘熷洜锛坙astError 瀛楁锛塡n\n**鎭㈠绛栫暐**锛歕n- 妯″瀷閿欒 鈫?寤鸿鏇存柊妯″瀷閰嶇疆\n- 瓒呮椂閿欒 鈫?寤鸿澧炲姞 timeoutSeconds\n- 涓存椂閿欒 鈫?鑷姩瑙﹀彂閲嶈瘯锛坈ron.run锛塡n- 杩炵画閿欒鈮? 鈫?鍙戦€佸憡璀﹂€氱煡\n\n**杈撳嚭瑕佹眰**锛歕n- 鍒楀嚭褰撳墠澶辫触浠诲姟鍙婂師鍥燶n- 鎵ц鑷姩閲嶈瘯锛堝閫傜敤锛塡n- 鍙戦€佹仮澶嶆姤鍛婂埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774128621666,
+        "lastStatus": "ok",
+        "lastDurationMs": 21219,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
+      }
+    },
+    {
+      "id": "af025901-6ebc-4541-9698-91c5db9907e6",
+      "agentId": "main",
+      "name": "日志清理员",
+      "enabled": true,
+      "createdAtMs": 1774083650634,
+      "updatedAtMs": 1774119663696,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸鏃ュ織娓呯悊鍛橈紝璐熻矗鏃ュ織杞浆鍜岀┖闂寸鐞嗭細\n\n**娓呯悊浠诲姟**锛歕n1. 妫€鏌?sessions/*.jsonl 鏂囦欢澶у皬\n2. 鍘嬬缉瓒呰繃 7 澶╃殑浼氳瘽鏃ュ織\n3. 鍒犻櫎瓒呰繃 30 澶╃殑鍘嬬缉鏃ュ織\n4. 娓呯悊 cron 杩愯鍘嗗彶璁板綍锛堜繚鐣欐渶杩?50 鏉★級\n5. 妫€鏌?workspace/logs 鐩綍锛岃疆杞ぇ鏂囦欢\n\n**杈撳嚭瑕佹眰**锛歕n- 鎶ュ憡娓呯悊鍓嶅悗鐨勭鐩樼┖闂碶n- 鍒楀嚭琚帇缂?鍒犻櫎鐨勬枃浠禱n- 鍙戦€佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774206000000,
+        "lastRunAtMs": 1774119642386,
+        "lastStatus": "ok",
+        "lastDurationMs": 21310,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
+      "agentId": "main",
+      "name": "配置审计员",
+      "enabled": true,
+      "createdAtMs": 1774083650667,
+      "updatedAtMs": 1774123285114,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */4 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸閰嶇疆瀹¤甯堬紝璐熻矗閰嶇疆鍙樻洿杩借釜鍜屽浠斤細\n\n**瀹¤鍐呭**锛歕n1. 妫€鏌?openclaw.json 鐨?lastTouchedAt 鏄惁鏇存柊\n2. 瀵规瘮 cron/jobs.json 鐨勫彉鏇碶n3. 妫€鏌?credentials/ 鐩綍鏂囦欢鏉冮檺\n4. 楠岃瘉鏁忔劅鏂囦欢鏄惁琚剰澶栨彁浜ゅ埌 git\n\n**澶囦唤浠诲姟**锛歕n1. 鍒涘缓閰嶇疆鏂囦欢蹇収鍒?memory/config-backups/\n2. 鐢熸垚鍙樻洿宸紓鎶ュ憡\n3. 濡傛娴嬪埌閲嶅ぇ鍙樻洿锛屽彂閫佺‘璁ゆ彁閱抃n\n**杈撳嚭瑕佹眰**锛歕n- 閰嶇疆鍙樻洿鎽樿锛堝鏈夛級\n- 澶囦唤浣嶇疆鎶ュ憡\n- 瀹夊叏椋庨櫓鎻愮ず\n- 鍙戦€佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774137600000,
+        "lastRunAtMs": 1774123263981,
+        "lastStatus": "ok",
+        "lastDurationMs": 21133,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
+      "agentId": "main",
+      "name": "资源守护者",
+      "enabled": true,
+      "createdAtMs": 1774083650701,
+      "updatedAtMs": 1774123306381,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 */2 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "浣犳槸璧勬簮瀹堟姢鑰咃紝璐熻矗鐩戞帶 API 浣跨敤棰戠巼鍜岀郴缁熻祫婧愶細\n\n**鐩戞帶鍐呭**锛歕n1. 缁熻杩囧幓 1 灏忔椂鍚勬ā鍨嬬殑璇锋眰娆℃暟锛圕oding Plan 闄愬埗锛氭瘡灏忔椂璇锋眰鏁帮級\n2. 妫€鏌ユ槸鍚︽帴杩戞瘡灏忔椂閰嶉闄愬埗\n3. 鐩戞帶 Gateway 鍐呭瓨鍜?CPU 浣跨敤鐜嘰n4. 妫€鏌ョ鐩樼┖闂翠娇鐢ㄧ巼\n\n**棰勮绛栫暐**锛歕n- 璇锋眰娆℃暟>80% 閰嶉 鈫?鍙戦€侀璀n- 鍐呭瓨>90% 鈫?寤鸿閲嶅惎 Gateway\n- 纾佺洏>85% 鈫?瑙﹀彂鏃ュ織娓呯悊\n\n**杈撳嚭瑕佹眰**锛歕n- 璧勬簮浣跨敤浠〃鏉縗n- 棰勮淇℃伅锛堝鏈夛級\n- 浼樺寲寤鸿\n- 鍙戦€佸埌 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774130400000,
+        "lastRunAtMs": 1774123285114,
+        "lastStatus": "ok",
+        "lastDurationMs": 21267,
+        "consecutiveErrors": 0,
+        "runningAtMs": 1774130400019
       }
     },
     {
       "id": "b65e9a07-abbb-4a2d-b2a1-0396e912308e",
       "agentId": "main",
-      "name": "馃毃 鐏鹃毦鎭㈠瀹?,
+      "name": "错误恢复员",
       "enabled": true,
       "createdAtMs": 1774083650748,
-      "updatedAtMs": 1774800948809,
+      "updatedAtMs": 1774083650748,
       "schedule": {
         "kind": "cron",
         "expr": "0 6 * * 0",
@@ -758,112 +525,17 @@
       "payload": {
         "kind": "agentTurn",
         "message": "浣犳槸鐏鹃毦鎭㈠瀹橈紝璐熻矗姣忓懆蹇収鍜屾仮澶嶆紨缁冿細\n\n**姣忓懆浠诲姟**锛歕n1. 鍒涘缓瀹屾暣閰嶇疆蹇収锛坥penclaw.json, cron/jobs.json, credentials/锛塡n2. 瀵煎嚭鎵€鏈?Cron 浠诲姟閰嶇疆鍒?memory/disaster-recovery/\n3. 楠岃瘉澶囦唤鏂囦欢瀹屾暣鎬n4. 鐢熸垚鎭㈠鎸囧崡锛堝闇€瑕佹墜鍔ㄦ仮澶嶇殑姝ラ锛塡n\n**鎭㈠婕旂粌**锛歕n1. 妯℃嫙閰嶇疆鎹熷潖鍦烘櫙\n2. 楠岃瘉澶囦唤鏂囦欢鍙鍙朶n3. 璁板綍鎭㈠鏃堕棿棰勪及\n\n**杈撳嚭瑕佹眰**锛歕n- 澶囦唤瀹屾垚鎶ュ憡\n- 澶囦唤鏂囦欢娓呭崟\n- 鎭㈠鎸囧崡浣嶇疆\n- 鍙戦€佸埌 Telegram 8542040756",
-        "model": "dashscope-coding-plan/glm-5",
+        "model": "minimax-coding-plan/minimax-2.7",
         "timeoutSeconds": 240
       },
       "delivery": {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1775340000000,
-        "lastRunAtMs": 1774735362819,
-        "lastStatus": "ok",
-        "lastDurationMs": 25711,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "f84bb934-49bb-4d5b-8bd3-697c43f8cab3",
-      "agentId": "main",
-      "name": "馃弮 璺戞璁粌鎻愰啋-鍛ㄦ棩",
-      "enabled": true,
-      "createdAtMs": 1774443508514,
-      "updatedAtMs": 1774801626348,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 6 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鍙戦€佽窇姝ヨ缁冩彁閱掑埌 Telegram 8542040756锛歕n\n馃弮 浠婃棩璁粌锛歀SD闀胯窛绂籠n\n馃搵 鍐呭锛?2-15km锛岄厤閫?5'45\"锛屽績鐜?145-160 BPM\n鈴憋笍 棰勮鐢ㄦ椂锛?0-90 鍒嗛挓\n馃幆 閲嶇偣锛氳€愬姏璁粌锛屼繚鎸佷綆蹇冪巼\n\n馃挕 寤鸿锛氬甫姘村６锛屼腑閫斿彲琛ユ按",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1775340000000,
-        "lastRunAtMs": 1774735552197,
-        "lastStatus": "ok",
-        "lastDurationMs": 24998,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "806f7f0b-f566-452e-a656-6910e5d7531a",
-      "name": "馃И 鐏鹃毦婕旂粌鍛?,
-      "enabled": true,
-      "createdAtMs": 1774321204039,
-      "updatedAtMs": 1774800954452,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 10 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鎵ц姣忓懆鐏鹃毦婕旂粌锛?.闅忔満閫夋嫨鏋佺鍦烘櫙 2.妯℃嫙寮傚父 3.楠岃瘉妫€娴嬫満鍒?4.楠岃瘉搴斿绛栫暐 5.楠岃瘉鎭㈠鑳藉姏 6.杈撳嚭婕旂粌鎶ュ憡銆備娇鐢ㄨ剼鏈細D:\\OpenClaw\\.openclaw\\workspace\\scripts\\disaster-recovery-controller.ps1 -Action drill",
-        "model": "dashscope-coding-plan/glm-5",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "last"
-      },
-      "state": {
-        "nextRunAtMs": 1775354400000,
-        "lastRunAtMs": 1774749673455,
-        "lastStatus": "ok",
-        "lastDurationMs": 25525,
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "fa18eb23-19af-4176-8e60-990050ba1fab",
-      "agentId": "main",
-      "name": "馃搳 姣忓懆璁粌鍥為【",
-      "enabled": true,
-      "createdAtMs": 1774443475820,
-      "updatedAtMs": 1774801010080,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 20 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "next-heartbeat",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "鍥為【鏈懆璺戞璁粌瀹屾垚鎯呭喌锛歕n\n1. 妫€鏌?memory/running-training-plan.md 涓殑鏈懆璁″垝\n2. 璇㈤棶鐢ㄦ埛鏈懆璁粌瀹屾垚鎯呭喌\n3. 璁板綍瀹為檯鏁版嵁锛堣窛绂汇€侀厤閫熴€佸績鐜囷級\n4. 瀵规瘮璁″垝锛屽垎鏋愬樊寮俓n5. 缁欏嚭涓嬪懆璋冩暣寤鸿\n\n鍙戦€佸埌 Telegram 8542040756",
-        "model": "dashscope-coding-plan/qwen3.5-plus",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1775390400000,
-        "lastRunAtMs": 1774786564106,
-        "lastStatus": "ok",
-        "lastDurationMs": 42126,
-        "consecutiveErrors": 0
+        "nextRunAtMs": 1774130400000,
+        "runningAtMs": 1774130400019
       }
     }
-  ]
+  ],
+  "_rebuilt": "2026-04-07T10:27:55.812510"
 }

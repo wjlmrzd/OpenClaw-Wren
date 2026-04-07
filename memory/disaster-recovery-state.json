@@ -1,0 +1,19 @@
+{
+  "activeScenario": null,
+  "networkCheckFailures": 0,
+  "lastApiCheck": null,
+  "lastStateChange": null,
+  "currentState": "NORMAL",
+  "apiFailureCount": 0,
+  "apiSuccessCount": 3,
+  "recoveryPhase": null,
+  "stateHistory": [],
+  "lastDrill": "2026-04-05T10:05:09Z",
+  "drillCount": 1,
+  "lastNetworkCheck": null,
+  "healerPausedUntil": null,
+  "cascadeFailureWindow": {
+    "startTime": null,
+    "failureCount": 0
+  }
+}

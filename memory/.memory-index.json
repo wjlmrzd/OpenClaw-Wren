@@ -4,22 +4,32 @@
   "categories": {
     "system": {
       "description": "系统配置和架构决策",
-      "files": ["MEMORY.md"],
+      "files": [
+        "MEMORY.md"
+      ],
       "pattern": "## YYYY-MM-DD: 标题"
     },
     "daily": {
       "description": "每日事件和对话记录",
-      "files": ["memory/YYYY-MM-DD.md"],
+      "files": [
+        "memory/YYYY-MM-DD.md"
+      ],
       "pattern": "## HH:MM - 标题"
     },
     "tasks": {
       "description": "任务执行状态和追踪",
-      "files": ["memory/*-state.json", "memory/*-log.md"],
+      "files": [
+        "memory/*-state.json",
+        "memory/*-log.md"
+      ],
       "pattern": "task-<name>-state.json"
     },
     "incidents": {
       "description": "故障和事件记录",
-      "files": ["memory/incident-log.md", "memory/event-log.md"],
+      "files": [
+        "memory/incident-log.md",
+        "memory/event-log.md"
+      ],
       "pattern": "事件记录"
     }
   },
@@ -31,7 +41,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 3,
-      "tags": ["feishu", "cron", "notification"],
+      "tags": [
+        "feishu",
+        "cron",
+        "notification"
+      ],
       "importance": "high"
     },
     {
@@ -41,7 +55,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 45,
-      "tags": ["security", "env", "config"],
+      "tags": [
+        "security",
+        "env",
+        "config"
+      ],
       "importance": "high"
     },
     {
@@ -51,7 +69,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 87,
-      "tags": ["telegram", "bugfix", "ssrf"],
+      "tags": [
+        "telegram",
+        "bugfix",
+        "ssrf"
+      ],
       "importance": "high"
     },
     {
@@ -61,7 +83,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 117,
-      "tags": ["obsidian", "model", "strategy"],
+      "tags": [
+        "obsidian",
+        "model",
+        "strategy"
+      ],
       "importance": "medium"
     },
     {
@@ -71,7 +97,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 173,
-      "tags": ["cron", "timeout", "optimization"],
+      "tags": [
+        "cron",
+        "timeout",
+        "optimization"
+      ],
       "importance": "medium"
     },
     {
@@ -81,7 +111,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 205,
-      "tags": ["lesson", "config", "gateway"],
+      "tags": [
+        "lesson",
+        "config",
+        "gateway"
+      ],
       "importance": "high"
     },
     {
@@ -91,7 +125,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 227,
-      "tags": ["model", "config", "fix"],
+      "tags": [
+        "model",
+        "config",
+        "fix"
+      ],
       "importance": "high"
     },
     {
@@ -101,7 +139,11 @@
       "category": "system",
       "file": "MEMORY.md",
       "line": 251,
-      "tags": ["autonomous", "system", "upgrade"],
+      "tags": [
+        "autonomous",
+        "system",
+        "upgrade"
+      ],
       "importance": "high"
     }
   ]

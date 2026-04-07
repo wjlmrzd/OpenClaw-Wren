@@ -13,10 +13,38 @@
     "status": "ok"
   },
   "disk": [
-    { "drive": "C:", "totalGB": 117.4, "usedGB": 117.4, "freeGB": 0, "percent": 100.0, "status": "critical" },
-    { "drive": "D:", "totalGB": 690.9, "usedGB": 28.8, "freeGB": 662.1, "percent": 4.2, "status": "ok" },
-    { "drive": "E:", "totalGB": 240.6, "usedGB": 15.7, "freeGB": 224.9, "percent": 6.5, "status": "ok" },
-    { "drive": "H:", "totalGB": 16392.0, "usedGB": 13952.6, "freeGB": 2439.4, "percent": 85.1, "status": "warning" }
+    {
+      "drive": "C:",
+      "totalGB": 117.4,
+      "usedGB": 117.4,
+      "freeGB": 0,
+      "percent": 100.0,
+      "status": "critical"
+    },
+    {
+      "drive": "D:",
+      "totalGB": 690.9,
+      "usedGB": 28.8,
+      "freeGB": 662.1,
+      "percent": 4.2,
+      "status": "ok"
+    },
+    {
+      "drive": "E:",
+      "totalGB": 240.6,
+      "usedGB": 15.7,
+      "freeGB": 224.9,
+      "percent": 6.5,
+      "status": "ok"
+    },
+    {
+      "drive": "H:",
+      "totalGB": 16392.0,
+      "usedGB": 13952.6,
+      "freeGB": 2439.4,
+      "percent": 85.1,
+      "status": "warning"
+    }
   ],
   "gateway": {
     "pid": 17404,
@@ -25,8 +53,16 @@
     "status": "ok"
   },
   "alerts": [
-    { "level": "critical", "item": "C: disk 100%", "message": "系统盘已满" },
-    { "level": "warning", "item": "H: disk 85.1%", "message": "超过85%清理阈值" }
+    {
+      "level": "critical",
+      "item": "C: disk 100%",
+      "message": "系统盘已满"
+    },
+    {
+      "level": "warning",
+      "item": "H: disk 85.1%",
+      "message": "超过85%清理阈值"
+    }
   ],
   "silentPeriod": false,
   "notificationSent": true

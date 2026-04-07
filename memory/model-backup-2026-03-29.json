@@ -3,39 +3,171 @@
   "restoreDate": "2026-03-30 18:00 GMT+8 (planned)",
   "description": "临时切换到 minimax2.7，明晚恢复原配置",
   "jobs": [
-    { "id": "f36fe701-5c76-47ad-8cb8-1a996a37d1b5", "name": "gateway-predictive-check", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "0e63f087-5446-4033-b826-19dafe65673b", "name": "📰 每日早报", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "bb0ed170-fa8f-4441-8016-c2119809b436", "name": "💰 成本分析师", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "afd8aec9-1a66-4bf7-a46a-bedf4490356e", "name": "🌅 早晨摘要", "model": "dashscope-coding-plan/glm-5" },
-    { "id": "22b950df-29d8-40a7-8d08-427cb032eabb", "name": "🔍 系统自检员", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "93a63a28-8825-4a68-9c85-5706d9e011ec", "name": "💬 飞书下班提醒", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb", "name": "📝 配置审计师", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5", "name": "📧 邮件监控员", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "ccb233d7-0977-4d57-aba7-7564a67041d8", "name": "🚑 故障自愈员", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "3a1df011-613d-4528-a274-530cfd84f4fb", "name": "📡 事件协调员", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "b6bc413c-0228-48c8-b42c-0af833216d2c", "name": "🧠 调度优化员", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "e4248abd-0b9b-4540-9bc5-633547462443", "name": "🧪 回归测试员", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "7eb7f35e-fe72-4a90-bfc6-ed59392b10f6", "name": "🔔 通知协调员", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "92af6946-b23b-4534-a6b8-5877cfa36f12", "name": "🏥 健康监控员", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4", "name": "💼 项目顾问", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1", "name": "⚖️ 资源守护者", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "fa18eb23-19af-4176-8e60-990050ba1fab", "name": "📊 每周训练回顾", "model": "dashscope-coding-plan/glm-5" },
-    { "id": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe", "name": "💾 备份管理员", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "7677e68c-a6e7-4d92-8d31-09fb24bb5769", "name": "🧠 知识整理员", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "af025901-6ebc-4541-9698-91c5db9907e6", "name": "🧹 日志清理员", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "98d9b2a8-b925-470b-b0ea-4f74290f3e4b", "name": "🛠️ 每日维护员", "model": "dashscope-coding-plan/qwen3-coder-plus" },
-    { "id": "13f18a92-372a-4076-9b97-08f0efa2377f", "name": "🧬 知识演化员", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "58540a34-62ab-46a7-a713-cac112e5cd48", "name": "🏃 运动提醒员", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "b41843c3-9956-4992-860d-df21cd03a766", "name": "🌐 网站监控员", "model": "dashscope-coding-plan/qwen3.5-plus" },
-    { "id": "791c995e-4758-469d-ac35-608da1627167", "name": "📊 运营总监", "model": "dashscope-coding-plan/glm-5" },
-    { "id": "3c5f825f-60c8-4a90-9400-1e565ab32eaa", "name": "🏃 跑步训练提醒-周二", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "e15879fd-59a5-446a-8290-7682fddaca63", "name": "🏃 跑步训练提醒-周四", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "2428c991-f51e-47d7-8b6d-0035b8aba1e1", "name": "📈 每周总结", "model": "dashscope-coding-plan/glm-5" },
-    { "id": "fae5e00a-aca8-4cb5-aa87-16f4099651aa", "name": "🏃 跑步训练提醒-周六", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "b65e9a07-abbb-4a2d-b2a1-0396e912308e", "name": "🚨 灾难恢复官", "model": "dashscope-coding-plan/glm-5" },
-    { "id": "f84bb934-49bb-4d5b-8bd3-697c43f8cab3", "name": "🏃 跑步训练提醒-周日", "model": "dashscope-coding-plan/qwen3-coder-next" },
-    { "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f", "name": "🛡️ 安全审计员", "model": "dashscope-coding-plan/glm-5" },
-    { "id": "806f7f0b-f566-452e-a656-6910e5d7531a", "name": "🧪 灾难演练员", "model": "dashscope-coding-plan/qwen3.5-plus" }
+    {
+      "id": "f36fe701-5c76-47ad-8cb8-1a996a37d1b5",
+      "name": "gateway-predictive-check",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "0e63f087-5446-4033-b826-19dafe65673b",
+      "name": "📰 每日早报",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "bb0ed170-fa8f-4441-8016-c2119809b436",
+      "name": "💰 成本分析师",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "afd8aec9-1a66-4bf7-a46a-bedf4490356e",
+      "name": "🌅 早晨摘要",
+      "model": "dashscope-coding-plan/glm-5"
+    },
+    {
+      "id": "22b950df-29d8-40a7-8d08-427cb032eabb",
+      "name": "🔍 系统自检员",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "93a63a28-8825-4a68-9c85-5706d9e011ec",
+      "name": "💬 飞书下班提醒",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
+      "name": "📝 配置审计师",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
+      "name": "📧 邮件监控员",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "ccb233d7-0977-4d57-aba7-7564a67041d8",
+      "name": "🚑 故障自愈员",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "3a1df011-613d-4528-a274-530cfd84f4fb",
+      "name": "📡 事件协调员",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "b6bc413c-0228-48c8-b42c-0af833216d2c",
+      "name": "🧠 调度优化员",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "e4248abd-0b9b-4540-9bc5-633547462443",
+      "name": "🧪 回归测试员",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "7eb7f35e-fe72-4a90-bfc6-ed59392b10f6",
+      "name": "🔔 通知协调员",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
+      "name": "🏥 健康监控员",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+      "name": "💼 项目顾问",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
+      "name": "⚖️ 资源守护者",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "fa18eb23-19af-4176-8e60-990050ba1fab",
+      "name": "📊 每周训练回顾",
+      "model": "dashscope-coding-plan/glm-5"
+    },
+    {
+      "id": "c73f1ecf-9f61-47c5-bea1-1c4f322e2ebe",
+      "name": "💾 备份管理员",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "7677e68c-a6e7-4d92-8d31-09fb24bb5769",
+      "name": "🧠 知识整理员",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "af025901-6ebc-4541-9698-91c5db9907e6",
+      "name": "🧹 日志清理员",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "98d9b2a8-b925-470b-b0ea-4f74290f3e4b",
+      "name": "🛠️ 每日维护员",
+      "model": "dashscope-coding-plan/qwen3-coder-plus"
+    },
+    {
+      "id": "13f18a92-372a-4076-9b97-08f0efa2377f",
+      "name": "🧬 知识演化员",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "58540a34-62ab-46a7-a713-cac112e5cd48",
+      "name": "🏃 运动提醒员",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "b41843c3-9956-4992-860d-df21cd03a766",
+      "name": "🌐 网站监控员",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    },
+    {
+      "id": "791c995e-4758-469d-ac35-608da1627167",
+      "name": "📊 运营总监",
+      "model": "dashscope-coding-plan/glm-5"
+    },
+    {
+      "id": "3c5f825f-60c8-4a90-9400-1e565ab32eaa",
+      "name": "🏃 跑步训练提醒-周二",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "e15879fd-59a5-446a-8290-7682fddaca63",
+      "name": "🏃 跑步训练提醒-周四",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "2428c991-f51e-47d7-8b6d-0035b8aba1e1",
+      "name": "📈 每周总结",
+      "model": "dashscope-coding-plan/glm-5"
+    },
+    {
+      "id": "fae5e00a-aca8-4cb5-aa87-16f4099651aa",
+      "name": "🏃 跑步训练提醒-周六",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "b65e9a07-abbb-4a2d-b2a1-0396e912308e",
+      "name": "🚨 灾难恢复官",
+      "model": "dashscope-coding-plan/glm-5"
+    },
+    {
+      "id": "f84bb934-49bb-4d5b-8bd3-697c43f8cab3",
+      "name": "🏃 跑步训练提醒-周日",
+      "model": "dashscope-coding-plan/qwen3-coder-next"
+    },
+    {
+      "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f",
+      "name": "🛡️ 安全审计员",
+      "model": "dashscope-coding-plan/glm-5"
+    },
+    {
+      "id": "806f7f0b-f566-452e-a656-6910e5d7531a",
+      "name": "🧪 灾难演练员",
+      "model": "dashscope-coding-plan/qwen3.5-plus"
+    }
   ],
   "totalJobs": 34
 }

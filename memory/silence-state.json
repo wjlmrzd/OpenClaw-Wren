@@ -25,8 +25,19 @@
       "end": "06:00",
       "tz": "Asia/Shanghai"
     },
-    "emergencyKeywords": ["紧急", "故障", "宕机", "危机", "critical", "emergency"],
-    "allowedAgentsInQuietHours": ["🚑 故障自愈员", "🏥 健康监控员", "📡 事件协调员"],
+    "emergencyKeywords": [
+      "紧急",
+      "故障",
+      "宕机",
+      "危机",
+      "critical",
+      "emergency"
+    ],
+    "allowedAgentsInQuietHours": [
+      "🚑 故障自愈员",
+      "🏥 健康监控员",
+      "📡 事件协调员"
+    ],
     "priorityLevels": {
       "info": "🟢",
       "notice": "🟡",
@@ -49,9 +60,23 @@
     "enabled": false,
     "checkInterval": 300,
     "keywords": {
-      "meeting": ["会议", "meeting", "call"],
-      "focus": ["专注", "勿扰", "focus", "do not disturb"],
-      "away": ["外出", "出差", "away", "travel"]
+      "meeting": [
+        "会议",
+        "meeting",
+        "call"
+      ],
+      "focus": [
+        "专注",
+        "勿扰",
+        "focus",
+        "do not disturb"
+      ],
+      "away": [
+        "外出",
+        "出差",
+        "away",
+        "travel"
+      ]
     }
   }
 }

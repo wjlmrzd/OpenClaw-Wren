@@ -1,0 +1,1221 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "53b6edc8-7cc6-4900-ab41-d1abd3e1e15f",
+      "agentId": "main",
+      "name": "🛡️ 安全审计员",
+      "enabled": true,
+      "createdAtMs": 1773964384754,
+      "updatedAtMs": 1775377041851,
+      "schedule": {
+        "kind": "cron",
+        "expr": "15 10 */2 * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🛡️ 安全审计员\n⏱️ 距上次执行: 约 2 天 (上次: 每 2 小时)\n🕐 会话: isolated | 安全审计\n---\n运行 openclaw security audit，生成通俗易懂的报告，发送到 Telegram 给 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 900
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775355300023,
+        "lastStatus": "error",
+        "lastDurationMs": 300036,
+        "consecutiveErrors": 1,
+        "nextRunAtMs": 1775528100000,
+        "lastError": "Error: cron: job execution timed out"
+      }
+    },
+    {
+      "id": "92af6946-b23b-4534-a6b8-5877cfa36f12",
+      "agentId": "main",
+      "name": "🏥 健康监控员",
+      "enabled": true,
+      "createdAtMs": 1774081729036,
+      "updatedAtMs": 1775378711040,
+      "schedule": {
+        "expr": "45 */4 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🏥 健康监控员\n⏱️ 距上次执行: 约 20 分钟 (上次: 15:20)\n🕐 会话: isolated | 健康监控\n---\n执行 Gateway 健康检查监控：powershell -ExecutionPolicy Bypass -File D:\\\\OpenClaw\\\\.openclaw\\\\workspace\\\\scripts\\\\gateway-monitor.ps1 -Mode smart\n\n**静默时段**：22:00 - 06:00\n- 静默时段内：仅发送**严重警报**（Gateway 宕机、无法重启）\n- 普通健康报告：延迟到 06:00 后发送\n\n**快速退出指令**：如果无法在规定时间内完成，输出当前状态后立即退出，不要等待",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1775393100000,
+        "lastRunAtMs": 1775378700019,
+        "lastStatus": "ok",
+        "lastDurationMs": 11021,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "0e63f087-5446-4033-b826-19dafe65673b",
+      "agentId": "main",
+      "name": "📰 每日早报",
+      "enabled": true,
+      "createdAtMs": 1774082243279,
+      "updatedAtMs": 1775347228003,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📰 每日早报\n⏱️ 距上次执行: 约 1 天 (上次: 08:00)\n🕐 会话: isolated | 每日早报\n---\n生成今日早报（简化版，避免超时）：\n\n发送到 Telegram 8542040756\n\n**模型：** minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "lastRunAtMs": 1775347200030,
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "lastDurationMs": 27973,
+        "nextRunAtMs": 1775433600000
+      }
+    },
+    {
+      "id": "2428c991-f51e-47d7-8b6d-0035b8aba1e1",
+      "agentId": "main",
+      "name": "📈 每周总结",
+      "enabled": true,
+      "createdAtMs": 1774082243339,
+      "updatedAtMs": 1775293761856,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 17 * * 5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📈 每周总结\n⏱️ 距上次执行: 约 4 天 (上次: Fri 17:00)\n🕐 会话: isolated | 每周总结\n---\n生成本周工作总结：\n1. 本周完成事项回顾\n2. 重要事件记录\n3. 下周计划建议\n\n发送到 Telegram 8542040756\n\n**模型：** minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775811600000,
+        "lastRunAtMs": 1775206800016,
+        "lastStatus": "ok",
+        "lastDurationMs": 87770,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "4f5e3918-ce1e-4548-b0c4-97ea5d8c28e5",
+      "agentId": "main",
+      "name": "📧 邮件监控员",
+      "enabled": true,
+      "createdAtMs": 1774082243397,
+      "updatedAtMs": 1775376371096,
+      "schedule": {
+        "expr": "5 */4 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📧 邮件监控员\n⏱️ 距上次执行: 约 3 小时 (上次: 12:25)\n🕐 会话: isolated | 邮件监控\n---\n检查邮箱未读邮件（运行 Python 脚本：python D:\\OpenClaw\\.openclaw\\workspace\\scripts\\email-checker.py）。\n\n**当前时间检查**：\n先检查当前时间是否在静默时段 (22:00-06:00)。\n\n**通知合并策略**（降低打扰）：\n- 每小时只发送**一封**汇总邮件（而非每封邮件单独通知）\n- 新邮件累积到 memory/email-pending.json\n- 整点统一发送摘要\n\n**发送策略**：\n- 非静默时段 (06:00-22:00)：整点发送邮件摘要到 Telegram 8542040756\n- 静默时段 (22:00-06:00)：\n  - 仅**紧急邮件**立即发送\n  - 普通邮件：记录到 memory/email-pending.md，延迟到 06:00 后统一发送\n\n**无新邮件时**：静默处理，不发送任何消息\n\n**检查频率**：每小时整点执行",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1775390700000,
+        "lastRunAtMs": 1775376300023,
+        "lastStatus": "ok",
+        "lastDurationMs": 71073,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "bb0ed170-fa8f-4441-8016-c2119809b436",
+      "agentId": "main",
+      "name": "💰 成本分析师",
+      "enabled": true,
+      "createdAtMs": 1774082243468,
+      "updatedAtMs": 1774943363780,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 20 * * 0"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 💰 成本分析师\n⏱️ 距上次执行: 约 4 天 (上次: 周日 20:00)\n🕐 会话: isolated | 成本分析\n---\n统计本周各模型 Token 使用情况和成本，生成使用报告。发送到 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 360
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775390700000
+      }
+    },
+    {
+      "id": "791c995e-4758-469d-ac35-608da1627167",
+      "agentId": "main",
+      "name": "📊 运营总监",
+      "enabled": false,
+      "createdAtMs": 1774082747020,
+      "updatedAtMs": 1775333742438,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 9 * * 1",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📊 运营总监\n⏱️ 距上次执行: 约 5 小时 (上次: 09:00)\n🕐 会话: isolated | 运营总监\n---\n你是 OpenClaw 运营总监，执行每日综合检查：\n\n1. **系统健康**：检查 Gateway 状态、Cron 任务执行情况、错误日志\n2. **资源使用**：统计昨日各模型 Token 消耗、会话数量、活跃时段\n3. **任务审计**：回顾昨日所有 Cron 任务执行结果，标记失败任务\n4. **安全扫描**：检查配置文件权限、敏感文件泄露风险\n5. **优化建议**：基于数据提出配置优化、模型选择、任务调整建议\n6. **今日规划**：根据日历和待办，建议今日重点关注事项\n\n生成简洁的运营报告，突出问题和建议。（输出会自动发送到 Telegram）",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 900
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "consecutiveErrors": 1,
+        "lastRunAtMs": 1774832651160,
+        "lastStatus": "error",
+        "lastDurationMs": 300013,
+        "lastError": "Error: cron: job execution timed out"
+      }
+    },
+    {
+      "id": "2bb2b058-da87-486a-a400-b871cd5cf8a4",
+      "agentId": "main",
+      "name": "💼 项目顾问",
+      "enabled": true,
+      "createdAtMs": 1774082903927,
+      "updatedAtMs": 1775304225802,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 💼 项目顾问\n⏱️ 距上次执行: 约 20 小时 (上次: 20:00 昨天)\n🕐 会话: isolated | 项目顾问\n---\n你是用户的专属项目顾问，负责代码生成全流程指导：\n\n**今日检查**：\n1. 查看 workspace 中新增/修改的代码文件\n2. 检查 git 提交记录，了解项目进展\n3. 识别未完成的功能或待修复的问题\n\n**项目支持**：\n1. 需求分析 - 帮助将想法拆解为可实现的功能列表\n2. 技术规划 - 推荐合适的技术栈、架构设计\n3. 代码生成 - 协助编写代码、审查代码质量\n4. 测试验收 - 生成测试用例、验证功能完整性\n5. 进度跟踪 - 维护项目待办清单\n\n**输出要求**：\n- 如有正在进行的项目，生成进度报告\n- 如用户有新想法，提供实现路线图\n- 列出当前阻塞问题和建议解决方案\n\n发送到 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775390400000,
+        "lastRunAtMs": 1775304000020,
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "lastDurationMs": 225782
+      }
+    },
+    {
+      "id": "af025901-6ebc-4541-9698-91c5db9907e6",
+      "agentId": "main",
+      "name": "🧹 日志清理员",
+      "enabled": true,
+      "createdAtMs": 1774083650634,
+      "updatedAtMs": 1775335335585,
+      "schedule": {
+        "kind": "cron",
+        "expr": "42 4 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run log-cleanup script. Execute: powershell -File \"D:\\OpenClaw\\.openclaw\\workspace\\scripts\\log-cleanup.ps1\" Report disk space freed.",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775421720000,
+        "consecutiveErrors": 0,
+        "lastRunAtMs": 1775335320023,
+        "lastStatus": "ok",
+        "lastDurationMs": 15562
+      }
+    },
+    {
+      "id": "2b564e59-8ed9-4cd8-8345-a9b41e4349bb",
+      "agentId": "main",
+      "name": "📝 配置审计师",
+      "enabled": true,
+      "createdAtMs": 1774083650667,
+      "updatedAtMs": 1775379083866,
+      "schedule": {
+        "expr": "50 */4 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📝 配置审计师\n⏱️ 距上次执行: 约 2 小时 (上次: 12:00)\n🕐 会话: isolated | 配置审计\n---\n你是配置审计师，负责配置变更追踪和备份：\n\n**审计内容**：\n1. 检查 openclaw.json 的 lastTouchedAt 是否更新\n2. 对比 cron/jobs.json 的变更\n3. 检查 credentials/ 目录文件权限\n4. 验证敏感文件是否被意外提交到 git\n\n**备份任务**：\n1. 创建配置文件快照到 memory/config-backups/\n2. 生成变更差异报告\n3. 如检测到重大变更，发送确认提醒\n\n**静默时段 (22:00-06:00) 策略：**\n- 仅发送**安全警报**（凭证泄露、未授权修改）\n- 普通审计日志：延迟到 06:00 后发送\n- 无安全问题时 → 静默，仅记录日志\n\n**输出要求**：\n- 配置变更摘要（如有）\n- 备份位置报告\n- 安全风险提示\n- 发送到 Telegram 8542040756（仅非静默时段或有安全警报时）",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 330
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775379000017,
+        "lastStatus": "ok",
+        "lastDurationMs": 83849,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775393400000
+      }
+    },
+    {
+      "id": "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
+      "agentId": "main",
+      "name": "⚖️ 资源守护者",
+      "enabled": true,
+      "createdAtMs": 1774083650701,
+      "updatedAtMs": 1775377994434,
+      "schedule": {
+        "expr": "33 */4 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: ⚖️ 资源守护者\n⏱️ 距上次执行: 约 2 小时 (上次: 每 2 小时)\n🕐 会话: isolated | 资源守护\n---\n你是资源守护者，负责监控系统资源并**自动清理**。\n\n**核心职责**：\n1. 运行资源检查脚本（带自动清理触发）：\n   `powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\check-system-resources.ps1 -AutoCleanup`\n\n2. 读取报告：memory/system-resources-report.json\n\n**阈值与自动动作**：\n| 资源 | 阈值 | 动作 |\n|------|------|------|\n| **C 盘 ≥ 90%** | 🔴 紧急 | **自动触发 clean-c-drive.ps1** |\n| C 盘 ≥ 85% | 🟡 警告 | 发送预警 |\n| D 盘 ≥ 90% | 🔴 紧急 | 触发日志清理 |\n| D 盘 ≥ 85% | 🟡 警告 | 发送预警 |\n| 内存 ≥ 90% | 🔴 紧急 | 建议重启 Gateway |\n| 内存 ≥ 85% | 🟡 警告 | 发送预警 |\n\n**用户设定（2026-04-03）**：\n✅ C 盘空间使用率超过 90% → **立即自动清理**（无需等待确认）\n\n**静默时段 (22:00-06:00)**：\n- 仅发送 **CRITICAL 级别** 警告\n- 自动清理仍然执行（C 盘 > 90%）\n- 普通警告延迟到 06:00 后\n\n**输出要求**：\n- 有自动清理执行时 → 发送 Telegram 报告（清理前后对比）\n- 无预警 → 静默\n\n发送到 Telegram 8542040756\n\n**模型**：minimax-coding-plan/minimax-2.7\n**超时**：450 秒",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 450
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775377980023,
+        "lastStatus": "ok",
+        "lastDurationMs": 14411,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775392380000
+      }
+    },
+    {
+      "id": "b65e9a07-abbb-4a2d-b2a1-0396e912308e",
+      "agentId": "main",
+      "name": "🚨 灾难恢复官",
+      "enabled": true,
+      "createdAtMs": 1774083650748,
+      "updatedAtMs": 1775340990409,
+      "schedule": {
+        "kind": "cron",
+        "expr": "15 6 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🚨 灾难恢复官\n⏱️ 距上次执行: 约 5 天 (上次: Sun 06:00)\n🕐 会话: isolated | 灾难恢复\n---\n你是灾难恢复官，负责每周快照和恢复演练：\n\n**每周任务**：\n1. 创建完整配置快照（openclaw.json, cron/jobs.json, credentials/）\n2. 导出所有 Cron 任务配置到 memory/disaster-recovery/\n3. 验证备份文件完整性\n4. 生成恢复指南\n\n**恢复演练**：\n1. 模拟配置损坏场景\n2. 验证备份文件可读取\n3. 记录恢复时间预估\n\n**输出要求**：\n- 备份完成报告\n- 备份文件清单\n- 恢复到 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 240
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775945700000,
+        "lastRunAtMs": 1775340900020,
+        "lastStatus": "ok",
+        "lastDurationMs": 90389,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "58540a34-62ab-46a7-a713-cac112e5cd48",
+      "agentId": "main",
+      "name": "🏃 运动提醒员",
+      "enabled": true,
+      "createdAtMs": 1774147675119,
+      "updatedAtMs": 1775343612725,
+      "schedule": {
+        "expr": "0 7 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🏃 运动提醒员\n⏱️ 距上次执行: 约 1 天 (上次: 07:00)\n🕐 会话: isolated | 运动提醒\n---\n发送简短运动提醒到 Telegram 8542040756。\n\n**模型：** minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 180,
+        "model": "minimax-coding-plan/minimax-2.7"
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775430000000,
+        "consecutiveErrors": 0,
+        "lastRunAtMs": 1775343600024,
+        "lastStatus": "ok",
+        "lastDurationMs": 12701
+      }
+    },
+    {
+      "id": "b41843c3-9956-4992-860d-df21cd03a766",
+      "agentId": "main",
+      "name": "🌐 网站监控员",
+      "enabled": true,
+      "createdAtMs": 1774233586955,
+      "updatedAtMs": 1775348118544,
+      "schedule": {
+        "kind": "cron",
+        "expr": "12 8 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "运行网站更新监控脚本，整理每日更新内容，发送到 Telegram 8542040756。\n\n模型：minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775434320000,
+        "lastRunAtMs": 1775347920028,
+        "lastStatus": "ok",
+        "lastDurationMs": 198516,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "ccb233d7-0977-4d57-aba7-7564a67041d8",
+      "agentId": "main",
+      "name": "🚑 故障自愈员",
+      "enabled": true,
+      "createdAtMs": 1774315999745,
+      "updatedAtMs": 1775384278021,
+      "schedule": {
+        "kind": "cron",
+        "expr": "17 */3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🚑 故障自愈员\n⏱️ 距上次执行: 约 20 分钟 (上次: 每 2 小时)\n---\n你是 Auto-Healer 故障自愈员，负责自动修复系统故障。",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775384220024,
+        "lastStatus": "ok",
+        "lastDurationMs": 57997,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775395020000
+      }
+    },
+    {
+      "id": "3a1df011-613d-4528-a274-530cfd84f4fb",
+      "agentId": "main",
+      "name": "📡 事件协调员",
+      "createdAtMs": 1774316390613,
+      "updatedAtMs": 1775384601124,
+      "schedule": {
+        "expr": "22 */6 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📡 事件协调员\n⏱️ 距上次执行: 约 5 分钟 (上次: 15:45)\n🕐 会话: isolated | 事件协调\n---\n你是 OpenClaw 事件协调员 (Event Hub)，负责让各 Agent 协同工作。\n\n## 核心职责\n\n### 1. 系统状态检查 (每 2 小时)\n读取并更新 memory/event-hub-state.json：\n- 内存使用率 (通过任务管理器或性能计数器)\n- 磁盘空间 (D 盘剩余空间)\n- API 配额使用情况\n- Gateway 健康状态\n\n**检查方法**：使用 openclaw gateway status 获取 Gateway 状态，而非直接执行 PowerShell\n\n### 2. 事件检测与决策\n\n**资源事件：**\n- 内存 > 85% → 触发 🧹 日志清理员\n- 内存 > 95% → 触发 🚑 故障自愈员 (重启 Gateway)\n- 磁盘 > 85% → 触发 🧹 日志清理员\n- API 使用 > 80% → 延迟非关键任务\n\n**任务事件：**\n- 扫描 cron 任务失败记录\n- 连续失败≥3 次 → 通知 🚑 故障自愈员\n\n**Gateway 事件：**\n- 健康检查失败 → 尝试重启\n\n### 3. 事件联动执行\n\n使用 openclaw cron run 触发对应 Agent。\n\n### 4. 通知策略\n\n| 严重性 | Telegram | 日志 |\n|--------|---------|------|\n| 🟢 信息 | ❌ | ✅ |\n| 🟡 注意 | ❌ | ✅ |\n| ⚠️ 警告 | ✅ (摘要) | ✅ |\n| 🔴 紧急 | ✅ (立即) | ✅ |\n\n**静默时段 (22:00-06:00)**：仅发送紧急事件\n\n**过滤规则**：\n- ❌ PowerShell 编码错误、执行失败等技术细节 → **不发送 Telegram**\n- ❌ 单个命令失败但系统整体健康 → **不发送 Telegram**\n- ✅ 系统级问题（内存/磁盘临界、Gateway 宕机、任务连续失败）→ **发送 Telegram**\n\n### 5. 输出要求\n\n**有事件时：**\n```\n📡 Event Hub 报告 - HH:mm\n\n🔴/⚠️ 事件：[事件名称]\n来源：[Agent]\n影响：[描述]\n动作：[已执行的联动]\n状态：✅ 已解决 / ⏳ 处理中\n```\n\n**无事件时：** 静默\n\n---\n\n**执行频率：** 每 2 小时\n**超时限制：** 180 秒\n**模型：** dashscope-coding-plan/qwen3.5-plus\n\n**快速退出指令**：如果无法在规定时间内完成，输出当前状态后立即退出，不要等待",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775406120000,
+        "lastRunAtMs": 1775384520028,
+        "lastStatus": "ok",
+        "lastDurationMs": 81096,
+        "consecutiveErrors": 0
+      },
+      "enabled": true
+    },
+    {
+      "id": "b6bc413c-0228-48c8-b42c-0af833216d2c",
+      "agentId": "main",
+      "name": "🧠 调度优化员",
+      "createdAtMs": 1774316672112,
+      "updatedAtMs": 1775377065854,
+      "schedule": {
+        "expr": "15 */4 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🧠 调度优化员\n⏱️ 距上次执行: 约 2.5 小时 (上次: 13:35)\n🕐 会话: isolated | 调度优化\n---\n你是 OpenClaw 调度优化员 (Scheduler Optimizer)，负责分析并自动执行 cron 任务调度优化。\n\n执行频率: 每 6 小时\n超时限制: 600 秒\n模型: minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775391300000,
+        "lastRunAtMs": 1775376900024,
+        "lastStatus": "ok",
+        "lastDurationMs": 165830,
+        "consecutiveErrors": 0
+      },
+      "enabled": true
+    },
+    {
+      "id": "e4248abd-0b9b-4540-9bc5-633547462443",
+      "agentId": "main",
+      "name": "🧪 回归测试员",
+      "createdAtMs": 1774317181904,
+      "updatedAtMs": 1775385318314,
+      "schedule": {
+        "expr": "35 */2 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🧪 回归测试员\n⏱️ 距上次执行: 约 1 小时 (上次: 15:20)\n🕐 会话: isolated | 回归测试\n---\n执行回归测试验证配置完整性：\n\n1. 运行测试脚本：`powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\regression-test-runner.ps1`\n\n2. 检查结果文件：`D:\\OpenClaw\\.openclaw\\workspace\\memory\\test-runner-state.json`\n\n3. 验证测试通过（passed/5）：\n   - T001: JSON 语法验证\n   - T002: 模型名称验证\n   - T003: Cron 表达式验证\n   - T004: Gateway 健康检查\n   - T005: PowerShell 语法检查\n\n**静默时段 (22:00-06:00)**：\n- 仅阻断性失败 (T001-T004) 发送 Telegram\n- 警告级别 (T005) 累积到早晨摘要\n- 全部通过 → 静默\n\n**有阻断性失败时发送 Telegram 8542040756**：\n- 报告失败的测试编号和原因\n- 建议修复动作\n\n**输出格式**：\n```\n🧪 回归测试报告 - HH:mm\n\n✅ 通过: X/5\n🔴 失败: T00X - [原因]\n\n🔧 建议: [修复动作]\n```\n\n超时限制：60 秒\n模型：dashscope-coding-plan/qwen3-coder-plus\n\n**快速退出指令**：如果无法在规定时间内完成，输出当前状态后立即退出，不要等待",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775385300026,
+        "lastStatus": "ok",
+        "lastDurationMs": 18288,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775392500000
+      },
+      "enabled": true
+    },
+    {
+      "id": "afd8aec9-1a66-4bf7-a46a-bedf4490356e",
+      "agentId": "main",
+      "name": "🌅 早晨摘要",
+      "createdAtMs": 1774317296383,
+      "updatedAtMs": 1775292790896,
+      "schedule": {
+        "expr": "0 6 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🌅 早晨摘要\n⏱️ 距上次执行: 约 10 小时 (上次: 06:00)\n🕐 会话: isolated | 早晨摘要\n---\n你是 OpenClaw 早晨摘要生成器，负责在每天 06:00 发送夜间事件摘要。\n\n## 核心职责\n\n### 1. 收集夜间事件 (06:00 执行)\n**时间范围：** 22:00 - 06:00（静默时段）\n\n**数据来源：**\n- `memory/notification-state.json` - 通知协调员的待发送队列\n- `memory/event-log.md` - Event Hub 事件日志\n- `memory/auto-healer-log.md` - Auto-Healer 修复记录\n\n### 2. 生成摘要报告\n\n发送到 Telegram 8542040756\n\n**模型：** minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {}
+    },
+    {
+      "id": "22b950df-29d8-40a7-8d08-427cb032eabb",
+      "agentId": "main",
+      "name": "🔍 系统自检员",
+      "createdAtMs": 1774317758013,
+      "updatedAtMs": 1775293685641,
+      "schedule": {
+        "expr": "0 4 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🔍 系统自检员\n⏱️ 距上次执行: 约 12 小时 (上次: 04:00)\n🕐 会话: isolated | 系统自检\n---\n你是 OpenClaw 系统自检员 (System Self-Check)，负责每天 04:00 进行系统健康检查。\n\n发送到 Telegram 8542040756\n\n**模型：** minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {}
+    },
+    {
+      "id": "806f7f0b-f566-452e-a656-6910e5d7531a",
+      "name": "🧪 灾难演练员",
+      "enabled": true,
+      "createdAtMs": 1774321204039,
+      "updatedAtMs": 1775354736571,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 10 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🧪 灾难演练员\n⏱️ 距上次执行: 约 5 天 (上次: Sun 10:00)\n🕐 会话: isolated | 灾难演练\n---\n执行每周灾难演练：\n1. 随机选择极端场景\n2. 模拟异常\n3. 验证检测机制\n4. 验证应对策略\n5. 验证恢复能力\n6. 输出演练报告\n\n使用脚本：D:\\OpenClaw\\.openclaw\\workspace\\scripts\\disaster-recovery-controller.ps1 -Action drill",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1775959500000,
+        "lastRunAtMs": 1775354700020,
+        "lastStatus": "ok",
+        "lastDurationMs": 36551,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "98d9b2a8-b925-470b-b0ea-4f74290f3e4b",
+      "agentId": "main",
+      "name": "🛠️ 每日维护员",
+      "createdAtMs": 1774331935655,
+      "updatedAtMs": 1775365092015,
+      "schedule": {
+        "kind": "cron",
+        "expr": "35 5 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🛠️ 每日维护员\n⏱️ 距上次执行: 约 1 天 (上次: 03:30)\n🕐 会话: isolated | 每日维护\n---\n执行每日系统维护（03:30）：\n\n**执行内容**：\n1. 清理缓存和临时文件\n2. 清理过期日志\n3. 重新加载 Gateway 配置\n4. 检查 Gateway 健康状态\n\n超时限制：300 秒\n模型：minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775424900000,
+        "lastRunAtMs": 1775334917355,
+        "lastStatus": "ok",
+        "lastDurationMs": 126808,
+        "consecutiveErrors": 0
+      },
+      "enabled": true
+    },
+    {
+      "id": "7eb7f35e-fe72-4a90-bfc6-ed59392b10f6",
+      "agentId": "main",
+      "name": "🔔 通知协调员",
+      "createdAtMs": 1774332005489,
+      "updatedAtMs": 1775385910504,
+      "schedule": {
+        "kind": "cron",
+        "expr": "45 */3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🔔 通知协调员\n⏱️ 距上次执行: 约 1 小时 (上次: 14:45)\n🕐 会话: isolated | 通知协调\n---\n你是 OpenClaw 通知协调员 (Notification Coordinator)，负责智能管理所有 Telegram 通知，避免打扰用户。\n\n## 核心职责\n\n### 1. 情境检测 (每 30 分钟)\n\n**检测内容：**\n- 当前时间是否在静默时段 (22:00-06:00)\n- 使用 `scripts/notification-gateway.ps1 -Action get-mode` 获取当前模式\n\n**时段划分：**\n- 🌅 早晨 (06:00-09:00) - 正常通知\n- ☀️ 工作时间 (09:00-12:00, 14:00-18:00) - 正常通知\n- 🌆 傍晚 (18:00-22:00) - 仅警告及以上\n- 🌙 睡眠时间 (22:00-06:00) - 仅紧急及以上\n\n### 2. 通知决策\n\n**严重性级别：**\n- 🟢 信息：日常报告、完成通知\n- 🟡 注意：警告、非紧急问题\n- ⚠️ 警告：需要关注的问题\n- 🔴 紧急：系统故障、数据丢失风险\n\n**决策规则：**\n- 工作时间 → 允许所有级别\n- 傍晚时段 → 仅警告及以上\n- 睡眠时间 → 仅紧急及以上\n\n### 3. 通知队列管理\n\n**队列操作：**\n- 待发送通知存入 `memory/notification-state.json`\n- 队列按严重性排序\n\n### 4. 输出要求\n\n**主动检查时（每 30 分钟）：** 静默，仅更新状态文件\n\n**无事件时：** 静默\n\n---\n\n**执行频率：** 每 30 分钟\n**超时限制：** 180 秒\n**模型：** dashscope-coding-plan/qwen3-coder-plus\n\n**快速退出指令**：如果无法在规定时间内完成，输出当前状态后立即退出，不要等待",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 90
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775385900019,
+        "lastStatus": "ok",
+        "lastDurationMs": 10485,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775396700000
+      },
+      "enabled": true
+    },
+    {
+      "id": "7677e68c-a6e7-4d92-8d31-09fb24bb5769",
+      "agentId": "main",
+      "name": "🧠 知识整理员 (timeout fix)",
+      "createdAtMs": 1774366797153,
+      "updatedAtMs": 1775325620655,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 2 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行知识库整理任务（文件系统方式）。静默运行。超时限制：300 秒，模型：minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775325600028,
+        "lastStatus": "ok",
+        "lastDurationMs": 20627,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775412000000
+      },
+      "enabled": true
+    },
+    {
+      "id": "13f18a92-372a-4076-9b97-08f0efa2377f",
+      "agentId": "main",
+      "name": "🧬 知识演化员 (已合并)",
+      "createdAtMs": 1774367408559,
+      "updatedAtMs": 1775365091967,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 5 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🧬 知识演化员 (已合并)\n⏱️ 距上次执行: 约 1 天 (上次: 04:00)\n🕐 会话: isolated | 知识演化\n---\n执行知识演化任务：\n\n1. 检查当前时间是否在静默时段 (22:00-06:00)\n\n2. 如果是静默时段：\n   - 仅执行演化分析\n   - 记录结果到 memory/knowledge-evolver-report.md\n   - **不发送 Telegram 消息**\n   - 退出\n\n3. 如果是非静默时段：\n   - 运行脚本：powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\knowledge-evolver.ps1\n   - 检查输出：总节点数、孤立节点数、潜在重复数\n   - 读取报告：memory/knowledge-evolver-report.md\n   - 发送摘要到 Telegram 8542040756（仅在有重要发现时）\n\n**静默规则**：\n- 静默时段：只记录日志，不发送任何消息\n- 非静默时段：有重要问题时发送摘要\n\n每天 04:00 执行（在知识整理员和每日维护员之后）\n\n**模型：** dashscope-coding-plan/qwen3.5-plus",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1775334600029,
+        "lastStatus": "ok",
+        "lastDurationMs": 17991,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775424600000
+      },
+      "enabled": true
+    },
+    {
+      "id": "93a63a28-8825-4a68-9c85-5706d9e011ec",
+      "agentId": "main",
+      "name": "💬 飞书下班提醒",
+      "createdAtMs": 1774427636468,
+      "updatedAtMs": 1774943364450,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 18 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 💬 飞书下班提醒\n⏱️ 距上次执行: 约 21 小时 (上次: 周一至五 18:00)\n🕐 会话: isolated | 飞书提醒\n---\n发送飞书下班提醒：运行脚本 powershell -NoProfile -ExecutionPolicy Bypass -File \"D:\\OpenClaw\\.openclaw\\workspace\\scripts\\send-feishu-offwork-reminder.ps1\"",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {}
+    },
+    {
+      "id": "fa18eb23-19af-4176-8e60-990050ba1fab",
+      "agentId": "main",
+      "name": "📊 每周训练回顾",
+      "enabled": true,
+      "createdAtMs": 1774443475820,
+      "updatedAtMs": 1774943503113,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📊 每周训练回顾\n⏱️ 距上次执行: 约 3 天 (上次: 周日 20:00)\n🕐 会话: isolated | 跑步训练\n---\n回顾本周跑步训练完成情况：\n\n1. 检查 memory/running-training-plan.md 中的本周计划\n2. 询问用户本周训练完成情况\n3. 记录实际数据（距离、配速、心率）\n4. 对比计划，分析差异\n5. 给出下周调整建议\n\n发送到 Telegram 8542040756",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775390400000,
+        "lastRunAtMs": 1774786564106,
+        "lastStatus": "ok",
+        "lastDurationMs": 42126,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "3c5f825f-60c8-4a90-9400-1e565ab32eaa",
+      "agentId": "main",
+      "name": "🏃 跑步训练提醒-周二",
+      "enabled": true,
+      "createdAtMs": 1774443508382,
+      "updatedAtMs": 1775188607671,
+      "schedule": {
+        "kind": "cron",
+        "expr": "3 7 * * 2",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🏃 跑步训练提醒-周二\n⏱️ 距上次执行: 约 1 天 (上次: 周二 07:00)\n🕐 会话: isolated | 跑步训练\n---\n发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：轻松跑 8km\n\n📋 内容：8km，配速 5'30\"，心率 140-155 BPM\n⏱️ 预计用时：约 44 分钟\n🎯 重点：控制心率，保持轻松\n\n💡 提醒：跑前热身 5-10 分钟，跑后拉伸 10 分钟",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775516580000,
+        "lastRunAtMs": 1774932990036,
+        "lastStatus": "ok",
+        "lastDurationMs": 17009,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "e15879fd-59a5-446a-8290-7682fddaca63",
+      "agentId": "main",
+      "name": "🏃 跑步训练提醒-周四",
+      "enabled": true,
+      "createdAtMs": 1774443508427,
+      "updatedAtMs": 1775188607711,
+      "schedule": {
+        "kind": "cron",
+        "expr": "8 7 * * 4",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🏃 跑步训练提醒-周四\n⏱️ 距上次执行: 约 5 天 (上次: 周四 07:00)\n🕐 会话: isolated | 跑步训练\n---\n发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：轻松跑 6km\n\n📋 内容：6km，配速 5'30\"，心率 140-155 BPM\n⏱️ 预计用时：约 33 分钟\n🎯 重点：恢复为主，保持轻松",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775689680000,
+        "lastRunAtMs": 1775112450695,
+        "lastStatus": "ok",
+        "lastDurationMs": 10528,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "fae5e00a-aca8-4cb5-aa87-16f4099651aa",
+      "agentId": "main",
+      "name": "🏃 跑步训练提醒-周六",
+      "enabled": true,
+      "createdAtMs": 1774443508469,
+      "updatedAtMs": 1775281386130,
+      "schedule": {
+        "kind": "cron",
+        "expr": "13 7 * * 6",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🏃 跑步训练提醒-周六\n⏱️ 距上次执行: 约 4 天 (上次: 周六 07:00)\n🕐 会话: isolated | 跑步训练\n---\n发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：节奏跑\n\n📋 内容：8km，配速 4'40\"，心率 165-175 BPM\n⏱️ 预计用时：约 37 分钟\n🎯 重点：适应比赛配速，控制心率\n\n⚠️ 注意：这是本周重点训练，保持专注",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775862780000,
+        "lastRunAtMs": 1775281373845,
+        "lastStatus": "ok",
+        "lastDurationMs": 12285,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "f84bb934-49bb-4d5b-8bd3-697c43f8cab3",
+      "agentId": "main",
+      "name": "🏃 跑步训练提醒-周日",
+      "enabled": true,
+      "createdAtMs": 1774443508514,
+      "updatedAtMs": 1775188607631,
+      "schedule": {
+        "kind": "cron",
+        "expr": "18 6 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🏃 跑步训练提醒-周日\n⏱️ 距上次执行: 约 1 天 (上次: 周日 06:00)\n🕐 会话: isolated | 跑步训练\n---\n发送跑步训练提醒到 Telegram 8542040756：\n\n🏃 今日训练：LSD长距离\n\n📋 内容：12-15km，配速 5'45\"，心率 145-160 BPM\n⏱️ 预计用时：70-90 分钟\n🎯 重点：耐力训练，保持低心率\n\n💡 建议：带水壶，中途可补水",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775945880000,
+        "lastRunAtMs": 1774735552197,
+        "lastStatus": "ok",
+        "lastDurationMs": 24998,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "ddd96cfb-f017-475e-8b2b-34c522b9ddae",
+      "agentId": "main",
+      "name": "🧠 知识管理三元组 (timeout fix)",
+      "createdAtMs": 1774869671092,
+      "updatedAtMs": 1775305165835,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */6 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行知识管理三步整理流程",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {}
+    },
+    {
+      "id": "a9fde676-177e-4c4e-9b1d-a54133e84a8e",
+      "name": "📡 RSS 订阅监控",
+      "enabled": true,
+      "createdAtMs": 1774881675146,
+      "updatedAtMs": 1775383521500,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 */6 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📡 RSS 订阅监控\n⏱️ 距上次执行: 约 2 小时 (上次: 14:00)\n🕐 会话: isolated | RSS监控\n---\n运行：python D:\\OpenClaw\\.openclaw\\workspace\\scripts\\rss-monitor.py",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "last"
+      },
+      "state": {
+        "lastRunAtMs": 1775383500023,
+        "lastStatus": "ok",
+        "lastDurationMs": 21477,
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1775405100000
+      }
+    },
+    {
+      "id": "b8665efb-6e32-4a0b-b9ed-39ed69c69185",
+      "name": "📰 每日信息汇总",
+      "enabled": true,
+      "createdAtMs": 1774881681408,
+      "updatedAtMs": 1775351965402,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📰 每日信息汇总\n⏱️ 距上次执行: 约 1 天 (上次: 09:00)\n🕐 会话: isolated | 每日信息汇总\n---\n运行：powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\daily-digest-generator.ps1",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1775437800000,
+        "lastRunAtMs": 1775351400021,
+        "lastStatus": "ok",
+        "lastDurationMs": 565381,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "16c5208a-e77c-4b6f-a8be-eb6e62807a07",
+      "agentId": "main",
+      "name": "⚙️ 配置优化员",
+      "enabled": true,
+      "createdAtMs": 1774882312245,
+      "updatedAtMs": 1775335099298,
+      "schedule": {
+        "kind": "cron",
+        "expr": "38 4 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: ⚙️ 配置优化员\n⏱️ 距上次执行: 约 1 天 (上次: 03:30)\n🕐 会话: isolated | 配置优化\n---\n执行配置优化任务：\n\n运行 `D:\\OpenClaw\\.openclaw\\workspace\\scripts\\config-optimizer.ps1`，然后根据报告内容判断是否需要重启 Gateway。\n\n如果 `$LAST_RESULT` 中的 `autoChangesCount` > 0 且 `needsRestart` = true，则执行 Gateway 重启。\n\n执行完成后，读取 `D:\\OpenClaw\\.openclaw\\workspace\\memory\\config-optimizer-state.json` 获取本次执行结果，然后发送 Telegram 报告给 8542040756。\n\n**报告必须包含以下内容**：\n- 执行时间\n- **🤖 使用模型：minimax-coding-plan/minimax-2.7**（必须在报告开头显眼标注）\n- 自动优化项数量\n- 检查结果摘要\n- 是否需要重启\n\n使用模型 minimax-coding-plan/minimax-2.7，超时 180 秒。",
+        "timeoutSeconds": 180,
+        "model": "minimax-coding-plan/minimax-2.7"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram"
+      },
+      "state": {
+        "nextRunAtMs": 1775421480000,
+        "lastRunAtMs": 1775335080030,
+        "lastStatus": "ok",
+        "lastDurationMs": 19268,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "697b1445-a753-4875-939c-0bb98746c3ac",
+      "agentId": "main",
+      "name": "📚 收藏夹同步",
+      "createdAtMs": 1774883271868,
+      "updatedAtMs": 1774943364907,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📚 收藏夹同步\n⏱️ 距上次执行: 约 1 天 (上次: 09:00)\n🕐 会话: isolated | 收藏夹同步\n---\nRun: powershell -ExecutionPolicy Bypass -File \"D:\\OpenClaw\\.openclaw\\workspace\\scripts\\edge-bookmark-sync.ps1\"",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {}
+    },
+    {
+      "id": "869b9a84-b06e-4a20-9295-23244d1e43f7",
+      "agentId": "main",
+      "name": "📄 工程文档解析员",
+      "createdAtMs": 1774958753921,
+      "updatedAtMs": 1774958753921,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 2 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 📄 工程文档解析员\n⏱️ 距上次执行: 约 22 小时 (上次: 02:30 昨天)\n🕐 会话: isolated | 文档解析\n---\n执行工程文档自动解析任务：\n\n**执行内容**：\n1. 运行文档监控脚本：`powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\doc-watcher.ps1`\n2. 检查 memory/doc-watcher-state.json 了解处理结果\n3. 如有新文件被添加到 Inbox，生成报告\n\n**监控文件夹**：E:\\EngineeringDocs\n**输出位置**：knowledge\\工程知识\\00-Inbox\n\n**触发 OCR**：\n如果发现图片文件，可以调用 OCR 处理器：\n`powershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\ocr-processor.ps1 -ImagePath \"<path>\" -OutputPath \"<output>\"`\n\n**输出要求**：\n- 如有新文档待处理，发送到 Telegram 8542040756：\n```\n📄 工程文档更新\n\n发现 X 个新文档待解析\n📂 已添加到 Inbox\n💡 提示：回复\"解析 [文件名]\"开始解析\n```\n- 如无新文档，静默\n\n超时限制：300 秒\n模型：dashscope-coding-plan/glm-5",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {}
+    },
+    {
+      "id": "aa4d7fba-05a9-429c-b980-35e52dfbf307",
+      "agentId": "main",
+      "name": "📦 记忆归档员",
+      "createdAtMs": 1775113523189,
+      "updatedAtMs": 1775113523189,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 4 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "[自动归档] 记忆归档员已触发。请执行以下任务：\n\n1. 运行脚本 `D:\\OpenClaw\\.openclaw\\workspace\\scripts\\memory-archiver.ps1`（RetentionDays=7）\n2. 检查归档结果：\n   - 确认 memory/archive/ 下有新增文件\n   - 确认 memory/ 根目录文件数减少\n   - 确认 cron-jobs.json 是否被 trim\n3. 如果有任何报错或异常，归档失败文件到 memory/emergency-archive/\n4. 读取 archiver-log.md 确认归档日志正常\n\n⚠️ 不要删除任何文件，只能归档和 trim。",
+        "model": "minimax-coding-plan/minimax-2.7"
+      },
+      "state": {}
+    },
+    {
+      "id": "fa020812-6e96-4882-80d8-90b997d74f49",
+      "agentId": "main",
+      "name": "Obsidian Config Snapshot",
+      "enabled": true,
+      "createdAtMs": 1775149601289,
+      "updatedAtMs": 1775333145949,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 4 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run the OpenClaw configuration backup script and confirm it succeeded.\n\nExecute: `python \"D:\\OpenClaw\\.openclaw\\workspace\\scripts\\obsidian_config_backup.py\"`\n\nIf there are errors, fix the script and re-run. The output should be:\n- Main snapshot: `E:\\software\\Obsidian\\vault\\04_Archives\\OpenClaw-Config-Snapshot.md`\n- Memory backups: `E:\\software\\Obsidian\\vault\\04_Archives\\Memory-Backups\\` (MEMORY.md + daily logs)\n\nReport: backup location, file size, skills count, plugins count, cron jobs count, memory files backed up.",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775419500000,
+        "lastRunAtMs": 1775333117822,
+        "lastStatus": "ok",
+        "lastDurationMs": 28127,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "9f4f1914-3bbf-46e9-8ad4-30547e66998b",
+      "agentId": "main",
+      "name": "🤖 伴侣检查员",
+      "enabled": true,
+      "createdAtMs": 1775184576930,
+      "updatedAtMs": 1775376492368,
+      "schedule": {
+        "expr": "8 */4 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "📋 任务: 🤖 伴侣检查员\n⏱️ 每 30 分钟评估是否应发送主动消息\n🕐 会话: isolated | 伴侣系统\n---\n运行伴侣检查脚本：\npowershell -ExecutionPolicy Bypass -File D:\\OpenClaw\\.openclaw\\workspace\\scripts\\companion-check.ps1\n\n评估规则：\n- 夜间静音：23:00-07:00 不发消息\n- 频率限制：至少间隔 4 小时\n- 随机采样：15% 检查轮次触发（降低打扰）\n- 活跃时段检测：只在活跃时段才发消息\n\n触发时发送消息到 Telegram topic 166（总脑）。\n\n超时限制：300 秒\n模型：minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775390880000,
+        "lastRunAtMs": 1775376480028,
+        "lastStatus": "ok",
+        "lastDurationMs": 12340,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "e430f8ec-d5e2-4e2f-a7fd-7b14f60930d6",
+      "agentId": "main",
+      "name": "💰 成本追踪员",
+      "enabled": true,
+      "createdAtMs": 1775185200835,
+      "updatedAtMs": 1775383231761,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */6 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "next-heartbeat",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "运行 cost tracker Python 扫描脚本。静默运行，不发送 Telegram 通知。\n\n模型：minimax-coding-plan/minimax-2.7",
+        "model": "minimax-coding-plan/minimax-2.7",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1775404800000,
+        "lastRunAtMs": 1775383200031,
+        "lastStatus": "ok",
+        "lastDurationMs": 31730,
+        "consecutiveErrors": 0
+      }
+    }
+  ]
+}

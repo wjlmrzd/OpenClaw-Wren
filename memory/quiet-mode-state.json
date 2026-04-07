@@ -29,7 +29,11 @@
   "preferences": {
     "preferredHours": [],
     "ignoredTypes": [],
-    "priorityTypes": ["task_failed", "system_error", "gateway_down"]
+    "priorityTypes": [
+      "task_failed",
+      "system_error",
+      "gateway_down"
+    ]
   },
   "rules": {
     "quietHours": {

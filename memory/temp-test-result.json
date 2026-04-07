@@ -1,9 +1,9 @@
 {
-    "timestamp": "2026-03-26T00:49:42.191Z",
-    "testId": "T004",
-    " testName": "Gateway Health Check",
-    "status": "failed",
-    "details": "Gateway service unavailable at http://127.0.0.1:18789/status",
-    "severity": "blocker",
-    "suggestion": "Check if OpenClaw Gateway is running and accessible"
+  "timestamp": "2026-03-26T00:49:42.191Z",
+  "testId": "T004",
+  " testName": "Gateway Health Check",
+  "status": "failed",
+  "details": "Gateway service unavailable at http://127.0.0.1:18789/status",
+  "severity": "blocker",
+  "suggestion": "Check if OpenClaw Gateway is running and accessible"
 }

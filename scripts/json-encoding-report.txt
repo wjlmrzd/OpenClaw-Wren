@@ -1,0 +1,8 @@
+=== JSON Encoding Report ===
+Total: 269 | BOM: 0 | Unparseable: 0
+
+--- BOM Files ---
+
+--- Unparseable ---
+
+--- Fixed ---

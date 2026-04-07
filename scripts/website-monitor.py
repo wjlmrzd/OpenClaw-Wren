@@ -62,7 +62,7 @@ def load_config() -> dict:
         with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
             json.dump(default_config, f, ensure_ascii=False, indent=2)
         return default_config
-    with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+    with open(CONFIG_FILE, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
 
 

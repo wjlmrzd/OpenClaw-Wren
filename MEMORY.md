@@ -13,6 +13,7 @@
 | Gateway | localhost:18789 |
 | Workspace | D:\OpenClaw\.openclaw\workspace |
 | 代理 | Clash Verge (127.0.0.1:7897) |
+| logging | **warn** (2026-04-07 info→warn，减少日志量) |
 
 **环境变量** (见 `.env`): TELEGRAM_BOT_TOKEN, FEISHU_APP_ID/SECRET, GATEWAY_AUTH_TOKEN, PADDLEOCR_*
 
@@ -126,7 +127,7 @@
 ### Agent 协作
 | 技能 | 用途 | 路径 |
 |------|------|------|
-| clawteam | 多 Agent swarm 协调（git worktree + tmux + 文件消息） | skills/clawteam/ |
+| ~~clawteam~~ | ❌ 已禁用（Windows 兼容性，改为 sessions_spawn） | skills/clawteam.disabled/ |
 | claw-kanban | AI Agent 看板编排（6 种 Agent，角色自动分配，实时监控） | skills/claw-kanban/ |
 | sessions | 主/子 Agent 会话管理（spawn/send/status） | 内置 |
 | task-dispatcher | 任务分发与协调 | skills/task-dispatcher/ |
@@ -170,7 +171,22 @@
 
 ## 🤖 模型配置
 
-| 模型 | contextWindow | maxTokens | Provider |
+### 💰 模型实际成本配置 (2026-04-07 更新)
+> OpenClaw 成本追踪用（单位: USD/1M tokens）
+
+| 模型 | Input | Output | 说明 |
+|------|-------|--------|------|
+| minimax-2.7 | $0.30 | $1.20 | MiniMax 官方定价 |
+| qwen3.5-plus | $0.10 | $0.50 | 阶梯计费，取基准值 |
+| qwen3-coder-plus | $0.65 | $3.25 | 编码模型，高输出 |
+| qwen3-coder-next | $1.00 | $5.00 | 下一代编码模型 |
+| glm-5 | $0.60 | $2.50 | 智谱 GLM-5（2026-02） |
+| glm-4.7 | $0.45 | $1.80 | 智谱 GLM-4.7 |
+| kimi-k2.5 | $0.60 | $2.50 | Moonshot K2.5 |
+
+> ⚠️ 定价来源：OpenRouter/pricepertoken.com 公开数据，百炼阶梯计费取中间值参考
+
+## 🏠 系统基础
 |------|--------------|-----------|----------|
 | minimax-2.7 | **204,800** | **131,072** | minimax-coding-plan |
 | qwen3.5-plus | **262,144** | **32,768** | dashscope-coding-plan |
@@ -236,7 +252,7 @@
 
 ---
 
-## 🔧 已知修复（避免重蹈覆辙）
+## 🗄️ Obsidian 配置快照 (2026-04-03 新建)
 
 ### Telegram SSRF 防护 (2026-03-25 初装，2026-04-01 重装)
 - **文件**: `node_modules/openclaw-cn/dist/telegram/bot/delivery.js`
@@ -247,11 +263,12 @@
 - Dashscope/MiniMax via 代理返回 404 → 检查 Clash Verge 域名规则
 - Telegram via 代理慢（6s+）→ 监控是否持续
 
-### ClawTeam Windows 兼容性 (2026-04-01)
+### ClawTeam Windows 兼容性 (2026-04-01, 已禁用 2026-04-07)
 - `clawteam spawn` 在 Windows 上失败：worktree 残留、config.json race condition
 - 症状：UnicodeDecodeError、FileExistsError、GitError
 - 每次 spawn 后需手动清理：`git worktree remove --force` + `git branch -D`
-- 临时方案：改用 `sessions_spawn` 做并行任务
+- **2026-04-07: 已禁用** → 改用 `sessions_spawn` 做并行任务
+- 技能目录已重命名为 `clawteam.disabled`
 
 ### 备份管理员已删除 (2026-04-01)
 - git remote 不存在，每次 push 失败，状态长期 error
@@ -291,19 +308,20 @@
 
 > 用途：OpenClaw 重置后通过此笔记恢复所有配置。包含完整 JSON 和恢复步骤。
 
-## 📅 当前活跃 Cron 任务 (37 个)
+## 📅 当前活跃 Cron 任务 (36 个)
 
-> ⚠️ 更新于 2026-04-04
+> ⚠️ 更新于 2026-04-07
 
 ### 🔴 需关注（error/stale）
 
 | ID | 名称 | 状态 | 说明 |
 |----|------|------|------|
-| 7677e68c | 🧠 知识整理员 | 🔴 timeout (180s) | 脚本超时，需优化或禁用 |
-| e430f8ec | 💰 成本追踪员 | 🔴 error | 120s → 已改为 300s，下次执行验证 |
-| b41843c3 | 🌐 网站监控员 | 🔴 error | 180s → 已改为 300s，下次执行验证 |
+| 791c995e | 📊 运营总监 | 🔴 已禁用 | 连续超时，已禁用 |
 | 2bb2b058 | 💼 项目顾问 | 🟡 stale (22h) | 最后执行 20:00，昨天正常 |
-| 791c995e | 📊 运营总监 | 🔴 error (5d) | 连续超时，建议禁用或大幅优化 |
+| 53b6edc8 | 🛡️ 安全审计员 | 🔴 error | 超时 300s → 已改为 600s（2026-04-07） |
+
+> ⚠️ `7677e68c` 已禁用（被 `ddd96cfb` 每6h 版本取代）
+> ⚠️ `e430f8ec` / `b41843c3` 上次执行已恢复正常（MEMORY 未及时更新）
 
 ### ✅ 正常任务（按时间排列）
 
@@ -311,7 +329,7 @@
 
 | ID | 名称 | 频率 | 说明 |
 |----|------|------|------|
-| ddd96cfb | 🧠 知识管理三元组 | `0 */6 * * *` | 凌晨/上午/下午/晚间 |
+| ddd96cfb | 🧠 知识管理三元组 | `0 */6 * * *` | 每6h，知识管理主任务 |
 | 869b9a84 | 📄 工程文档解析员 | `30 2 * * *` | 凌晨文档 OCR |
 | aa4d7fba | 📦 记忆归档员 | `0 4 * * *` | 凌晨归档 |
 | fa020812 | Obsidian Config Snapshot | `5 4 * * *` | 凌晨配置快照 |
@@ -332,11 +350,10 @@
 |----|------|------|------|
 | afd8aec9 | 🌅 早晨摘要 | `0 6 * * *` | 每天 06:00 |
 | 22b950df | 🔍 系统自检员 | `0 4 * * *` | 每天 04:00 |
-| 791c995e | 📊 运营总监 | `5 9 * * 1` | 周一 09:05 |
 | b41843c3 | 🌐 网站监控员 | `12 8 * * *` | 每天 08:12 |
 | b8665efb | 📰 每日信息汇总 | `10 9 * * *` | 每天 09:10 |
 | 806f7f0b | 🧪 灾难演练员 | `5 10 * * 0` | 周日 10:05 |
-| 53b6edc8 | 🛡️ 安全审计员 | `15 10 */2 * *` | 每2天10:15 |
+| 53b6edc8 | 🛡️ 安全审计员 | `15 10 */2 * *` | 每2天10:15 (timeout 600s) |
 | 2bb2b058 | 💼 项目顾问 | `0 20 * * *` | 每天 20:00 |
 
 **高频监控 (每 2-4 小时)**
@@ -351,7 +368,6 @@
 | 3a1df011 | 📡 事件协调员 | `22 */6 * * *` | 每6小时 |
 | a9fde676 | 📡 RSS 订阅监控 | `5 */6 * * *` | 每6小时 |
 | e430f8ec | 💰 成本追踪员 | `0 */6 * * *` | 每6小时 |
-| 7677e68c | 🧠 知识整理员 | `0 2 * * *` | 凌晨 02:00 (timeout) |
 | 7eb7f35e | 🔔 通知协调员 | `45 */3 * * *` | 每3小时 |
 | b6bc413c | 🧠 调度优化员 | `15 */4 * * *` | 每4小时 |
 | f920c2a2 | ⚖️ 资源守护者 | `33 */4 * * *` | 每4小时 |
@@ -362,6 +378,7 @@
 | fa18eb23 | 📊 每周训练回顾 | `0 20 * * 0` | 周日 20:00 |
 | bb0ed170 | 💰 成本分析师 | `5 20 * * 0` | 周日 20:05 |
 | 2428c991 | 📈 每周总结 | `0 17 * * 5` | 周五 17:00 |
+| 7edd8ef6 | 🔍 Brave Search 配额追踪 | `0 */4 * * *` | 每4小时，>80%或超限发 Telegram 提醒 |
 
 > 💡 完整实时列表：`openclaw cron list` | 调度优化员每 6 小时自动更新本表
 
@@ -369,8 +386,7 @@
 
 ## 📁 重要文件位置
 
-- `.env` — 敏感环境变量（勿提交）
-- `.env.example` — 环境变量模板
+- `scripts/brave-search-tracker.py` — Brave Search 月度用量追踪（阈值 950次，超过 80%/超限发 Telegram）
 - `memory/events.log` — 结构化事件日志
 - `memory/incident-log.md` — 事件升级记录
 - `memory/system-mode-state.json` — 运行模式状态

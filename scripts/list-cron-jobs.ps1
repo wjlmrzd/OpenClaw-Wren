@@ -1,4 +1,4 @@
-$jobs = Get-Content "D:\OpenClaw\.openclaw\workspace\cron\jobs.json" -Raw | ConvertFrom-Json
+$jobs = Get-Content "D:\OpenClaw\.openclaw\workspace\cron\jobs.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $i = 0
 foreach ($job in $jobs.jobs) {
     $i++

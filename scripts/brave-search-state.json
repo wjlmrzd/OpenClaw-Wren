@@ -1,0 +1,10 @@
+{
+  "counts": {
+    "2026-04": 214
+  },
+  "last_alert_month": null,
+  "last_scan_month": "2026-04",
+  "cached_count": 214,
+  "manual_calibration": 214,
+  "note": "2026-04-07: Manually calibrated to 214 (Wren's report)"
+}

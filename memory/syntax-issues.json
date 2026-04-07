@@ -1,0 +1,149 @@
+[
+  {
+    "File": "atomic-doc-processor.ps1",
+    "Count": 75,
+    "Line": 11,
+    "Col": 9,
+    "Message": "属性或类型文本末尾缺少 ]。"
+  },
+  {
+    "File": "atomic-linker.ps1",
+    "Count": 100,
+    "Line": 15,
+    "Col": 9,
+    "Message": "表达式或语句中包含意外的标记“鈫?5.2.2”。"
+  },
+  {
+    "File": "check-gateway2.ps1",
+    "Count": 4,
+    "Line": 1,
+    "Col": 5,
+    "Message": "语句块或类型定义中缺少右“}”。"
+  },
+  {
+    "File": "check-urls-health.ps1",
+    "Count": 4,
+    "Line": 5,
+    "Col": 1,
+    "Message": "表达式或语句中包含意外的标记“)”。"
+  },
+  {
+    "File": "check_bookmarks_ps.ps1",
+    "Count": 95,
+    "Line": 90,
+    "Col": 51,
+    "Message": "表达式或语句中包含意外的标记“ms”。"
+  },
+  {
+    "File": "daily-digest-generator.ps1",
+    "Count": 2,
+    "Line": 198,
+    "Col": 1,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "daily-report-generator.ps1",
+    "Count": 17,
+    "Line": 110,
+    "Col": 60,
+    "Message": "表达式或语句中包含意外的标记“0\"; Status = \"姝ｅ父\" }\n        @{ Date = $yesterday; Metric = \"鏂囦欢澶勭悊鏁?”。"
+  },
+  {
+    "File": "download-plugins.ps1",
+    "Count": 5,
+    "Line": 99,
+    "Col": 59,
+    "Message": "语句块或类型定义中缺少右“}”。"
+  },
+  {
+    "File": "event-hub-tools.ps1",
+    "Count": 2,
+    "Line": 27,
+    "Col": 5,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "event-hub.ps1",
+    "Count": 14,
+    "Line": 22,
+    "Col": 1,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "event-logger.ps1",
+    "Count": 2,
+    "Line": 56,
+    "Col": 1,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "log-rotate.ps1",
+    "Count": 2,
+    "Line": 98,
+    "Col": 1,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "notification-coordinator.ps1",
+    "Count": 10,
+    "Line": 31,
+    "Col": 1,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "notification-gateway-fixed.ps1",
+    "Count": 4,
+    "Line": 139,
+    "Col": 74,
+    "Message": "字符串缺少终止符: \"。"
+  },
+  {
+    "File": "pdf-ocr-full.ps1",
+    "Count": 2,
+    "Line": 31,
+    "Col": 1,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "silence-tools.ps1",
+    "Count": 3,
+    "Line": 48,
+    "Col": 36,
+    "Message": "表达式或语句中包含意外的标记“鏁呴殰\", \"瀹曟満\", \"鍗辨満\", \"critical\", \"emergency\", \"down\", \"crash\")\n    $warningKeywords = @(\"璀﹀憡\", \"澶辫触\", \"瓒呮椂\", \"warning\", \"failed\", \"timeout\")\n    $noticeKeywords = @(\"娉ㄦ剰\", \"鎻愰啋\", \"notice\", \"alert\")\n    \n    if ($emergencyKeywords | Where-Object { $Message -like \"*$_*\" }) {\n        return \"emergency\"\n    }\n    elseif ($warningKeywords | Where-Object { $Message -like \"*$_*\" }) {\n        return \"warning\"\n    }\n    elseif ($noticeKeywords | Where-Object { $Message -like \"*$_*\" }) {\n        return \"notice\"\n    }\n    else {\n        return \"info\"\n    }\n}\n\nfunction Should-Notify {\n    param(\n        [string]$Priority = \"info\",\n        [string]$StatePath = \"memory/silence-state.json\"\n    )\n    \n    # 璇诲彇鐘舵€佹枃浠?    $state = if (Test-Path $StatePath) {\n        Get-Content $StatePath -Raw | ConvertFrom-Json\n    } else {\n        return $true # 榛樿鍙戦€?    }\n    \n    # 绱ф€ョ骇鍒缁堝彂閫?    if ($priority -eq \"emergency\" -or $priority -eq \"critical\") {\n        return $true\n    }\n    \n    # 妫€鏌ラ潤榛樻椂娈?    $quietHours = $state.silenceConfig.quietHours\n    $isQuiet = Test-IsQuietHours -StartTime $quietHours.start -EndTime $quietHours.end\n    \n    if ($isQuiet) {\n        # 闈欓粯鏃舵锛氫粎鍏佽鐗瑰畾 Agent 鍜岀揣鎬ラ€氱煡\n        return $false\n    }\n    \n    # 妫€鏌ユ槸鍚﹀湪浼氳涓?    if ($state.currentScene.inMeeting) {\n        if ($priority -eq \"info\" -or $priority -eq \"notice\") {\n            return $false\n        }\n    }\n    \n    # 妫€鏌ユ槸鍚︽槸涓撴敞鏃堕棿\n    if ($state.currentScene.isFocusTime) {\n        return $false # 涓撴敞鏃堕棿瀹屽叏闈欓粯\n    }\n    \n    # 鍛ㄦ湯闄嶄綆棰戠巼\n    if (Test-IsWeekend) {\n        if ($priority -eq \"info\") {\n            # 鍛ㄦ湯淇℃伅绫婚€氱煡 50% 姒傜巼鍙戦€?            return (Get-Random -Minimum 0 -Maximum 2) -eq 1\n        }\n    }\n    \n    return $true\n}\n\nfunction Add-AccumulatedEvent {\n    param(\n        [string]$EventType,\n        [string]$Message,\n        [string]$StatePath = \"memory/silence-state.json\"\n    )\n    \n    $state = Get-Content $StatePath -Raw | ConvertFrom-Json\n    \n    $event = @{\n        timestamp = [int64]((Get-Date -UFormat %s) + \"000\")\n        type = $eventType\n        message = $message\n        priority = (Get-NotificationPriority -Message $message)\n    }\n    \n    $state.accumulatedEvents += $event\n    $state.statistics.silencedToday++\n    \n    $state | ConvertTo-Json -Depth 10 | Set-Content $StatePath -Encoding UTF8\n    \n    Write-Host \"浜嬩欢宸茬疮绉細$eventType”。"
+  },
+  {
+    "File": "system-mode-tools.ps1",
+    "Count": 17,
+    "Line": 43,
+    "Col": 5,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "telegram-commander.ps1",
+    "Count": 42,
+    "Line": 128,
+    "Col": 5,
+    "Message": "表达式或语句中包含意外的标记“}”。"
+  },
+  {
+    "File": "test-runner-tools.ps1",
+    "Count": 11,
+    "Line": 63,
+    "Col": 42,
+    "Message": "表达式或语句中包含意外的标记“鎵€鏈夋ā鍨嬪悕绉版湁鏁?”。"
+  },
+  {
+    "File": "unified-maintenance-console.ps1",
+    "Count": 2,
+    "Line": 89,
+    "Col": 24,
+    "Message": "字符串缺少终止符: \"。"
+  },
+  {
+    "File": "update-model-config.ps1",
+    "Count": 4,
+    "Line": 25,
+    "Col": 21,
+    "Message": "哈希文本中的键后面缺少“=”运算符。"
+  }
+]

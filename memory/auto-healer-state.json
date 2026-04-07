@@ -1,67 +1,85 @@
 {
-  "lastCheck": "2026-03-31T22:00:59+08:00",
-  "lastNotification": "2026-03-30T22:01:04+08:00",
+  "lastCheck": "2026-04-07T12:17:00+08:00",
+  "lastNotification": "2026-04-03T00:00:00+08:00",
   "systemHealth": "healthy",
   "issuesFound": 0,
-  "issuesFixed": 0,
+  "issuesFixed": 2,
   "alertsGenerated": 0,
   "knownIssues": [],
   "consecutiveFailures": {},
-  "notes": "Gateway 运行正常（端口 18789 监听中，PID 50400，内存 704.45MB）。所有 Cron 任务状态正常。系统整体健康。内存使用率 80.5%，磁盘 4.3%。",
+  "notes": "Gateway运行正常，RPC正常，端口18789监听中。安全审计员(53b6edc8)今天10:15已成功运行，状态ok。运营总监(791c995e)已不在cron列表中（可能已删除）。系统整体健康，无需干预。",
   "scriptIssues": {
     "encodingProblem": false,
     "gatewayCheckHangs": false,
     "cronListOk": true,
+    "cronListTimeout": false,
     "gatewayRestartFailed": false,
     "falseAlarm": false,
-    "http404Fixed": true
+    "http404Fixed": true,
+    "autoHealerStateStale": false,
+    "openClawStatusTimeout": false
   },
   "notificationHistory": [
     {
       "timestamp": "2026-03-29T22:07:00+08:00",
       "action": "alert",
-      "reason": "🧠 调度优化员连续失败≥3 次，触发紧急告警阈值。API 限流导致脚本反复重试后超时。需人工干预。"
+      "reason": "调度优化员连续失误超3次，触发阈值警报"
     },
     {
       "timestamp": "2026-03-30T00:05:00+08:00",
       "action": "alert",
-      "reason": "Gateway 重启失败，需要立即处理"
+      "reason": "Gateway重启失败，需要人工检查"
     },
     {
       "timestamp": "2026-03-30T02:06:37+08:00",
       "action": "recovery",
-      "reason": "系统恢复：Gateway 运行正常，调度优化员已重试"
+      "reason": "系统恢复：Gateway运行正常，调度优化员重置"
     },
     {
       "timestamp": "2026-03-30T22:01:04+08:00",
       "action": "alert",
-      "reason": "Gateway 重启失败，需要人工检查"
+      "reason": "Gateway重启失败，需要人工检查"
     },
     {
       "timestamp": "2026-03-31T00:00:00+08:00",
       "action": "recovery",
-      "reason": "Gateway 已自动恢复，系统健康状态好转"
+      "reason": "Gateway已自动恢复，系统健康状态良好"
+    },
+    {
+      "timestamp": "2026-04-03T00:00:00+08:00",
+      "action": "recovery",
+      "reason": "Gateway已自动恢复"
+    },
+    {
+      "timestamp": "2026-04-07T12:17:00+08:00",
+      "action": "recovery",
+      "reason": "安全审计员(53b6edc8)今日10:15成功运行ok；运营总监已从cron列表移除。系统清清爽爽。"
     }
   ],
   "lastCheckResults": {
-    "timestamp": "2026-03-31T20:02:28+08:00",
+    "timestamp": "2026-04-07T12:17:00+08:00",
     "gatewayStatus": "healthy",
     "gatewayDetails": {
-      "port": "OK",
-      "process": "OK",
-      "pid": 50400,
-      "memory": "664.68MB"
+      "rpc": "正常",
+      "listening": "127.0.0.1:18789",
+      "note": "Gateway RPC测试正常"
     },
-    "cronJobsStatus": "all_ok",
+    "cronJobsStatus": "healthy",
+    "cronSummary": "33 个任务全部正常 (ok)，0 disabled，0 error",
     "retriedTasks": [],
     "alerts": [],
     "scriptError": null,
-    "recoveredIssues": [],
+    "recoveredIssues": [
+      {
+        "task": "53b6edc8-安全审计员",
+        "reason": "今日10:15成功运行，状态ok"
+      },
+      {
+        "task": "791c995e-运营总监",
+        "reason": "已从cron列表消失，清理已知问题记录"
+      }
+    ],
     "notificationSent": false,
-    "notificationReason": "静默：系统健康，无新问题",
-    "systemResources": {
-      "memory": "77.1%",
-      "disk": "4.3%"
-    }
+    "notificationReason": "常规：系统健康，无需通知"
   }
 }

@@ -1,4 +1,4 @@
-$jobs = Get-Content "$env:OPENCLAW_HOME\.openclaw\cron\jobs.json" -Raw | ConvertFrom-Json
+$jobs = Get-Content "$env:OPENCLAW_HOME\.openclaw\cron\jobs.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $jobs | ForEach-Object {
     $item = $_
     $id = if ($item.id) { $item.id } else { 'N/A' }

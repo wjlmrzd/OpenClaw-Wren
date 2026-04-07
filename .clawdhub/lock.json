@@ -44,6 +44,22 @@
     "security-auditor": {
       "version": "1.0.0",
       "installedAt": 1774842649638
+    },
+    "clawpet": {
+      "version": "0.1.6",
+      "installedAt": 1775539319731
+    },
+    "ppt-generator": {
+      "version": "1.0.0",
+      "installedAt": 1775539593126
+    },
+    "dragon-ppt-maker": {
+      "version": "1.0.0",
+      "installedAt": 1775539668870
+    },
+    "claw-pet": {
+      "version": "1.2.0",
+      "installedAt": 1775545553290
     }
   }
 }

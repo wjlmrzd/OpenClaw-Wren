@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-04-04T00:46:00+08:00",
+  "agent": "配置审计师",
+  "results": {
+    "openclawJson": {
+      "lastTouchedAt": "2026-04-03T10:20:00.000Z",
+      "ageHours": 14.4,
+      "status": "正常更新"
+    },
+    "cronJobs": {
+      "totalJobs": 30,
+      "enabledJobs": 28,
+      "status": "无重大变更"
+    },
+    "credentialsDir": {
+      "files": [
+        "feishu-pairing.json",
+        "telegram-allowFrom.json",
+        "telegram-pairing.json"
+      ],
+      "permissions": "Archive",
+      "status": "权限正常"
+    },
+    "gitSecurity": {
+      "sensitiveFilesModified": false,
+      "gitignoreCoverage": [
+        "*.env",
+        "credentials/",
+        "*.pem"
+      ],
+      "status": "安全"
+    }
+  },
+  "backup": {
+    "location": "memory/config-backups/",
+    "files": [
+      "openclaw-20260404-0046.json",
+      "cron-jobs-20260404-0046.json"
+    ],
+    "status": "已创建"
+  },
+  "securityAlerts": [],
+  "silentPeriod": true,
+  "action": "仅记录日志，无 Telegram 发送"
+}

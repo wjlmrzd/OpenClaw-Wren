@@ -1,69 +1,69 @@
-﻿{
-    "analysisCycle":  13,
-    "lastAnalysisAt":  "2026-03-31T15:35:51+08:00",
-    "recommendation":  "CRITICAL: 3 HIGH-risk slots",
-    "optimizationHistory":  [
-                                {
-                                    "date":  "2026-03-30T21:35:00+08:00",
-                                    "action":  "Applied staggered scheduling optimization",
-                                    "details":  "Adjusted 3 tasks to reduce collision in evening 20:00 time slot: 椤圭洰椤鹃棶 20:00鈫?0:10, 杩愯惀鎬荤洃 20:00鈫?0:15, 鐏鹃毦鎭㈠鍛?20:00鈫?0:20. Reduced peak collision from 5 tasks to 3 tasks at 20:00 time slot."
-                                },
-                                {
-                                    "date":  "2026-03-30T12:35:00+08:00",
-                                    "action":  "Applied staggered scheduling optimization",
-                                    "details":  "Adjusted 4 tasks to reduce collision: openclaw-security-audit 0鈫?5min, 璧勬簮瀹堟姢鑰?0鈫?min, 椤圭洰椤鹃棶 0鈫?0min, 杩愯惀鎬荤洃 30鈫?5min. Reduced peak collision from 6 tasks to 5 tasks at 20:00 time slot."
-                                },
-                                {
-                                    "date":  "2026-03-30T09:12:00+08:00",
-                                    "action":  "Critical collision analysis",
-                                    "details":  "Detected high-severity collision risks with 36 collision pairs identified. Critical issues in 08:00, 12:00, 18:00, and especially 20:00 time slots with 6 concurrent tasks. Immediate staggered scheduling recommended."
-                                },
-                                {
-                                    "date":  "2026-03-30T06:09:00+08:00",
-                                    "action":  "Analysis of current task distribution",
-                                    "details":  "Current task analysis completed. No immediate collision risks requiring adjustment. Project Advisor timeout remains near limit at 226s execution vs 300s timeout. 6 tasks scheduled around 03:00 time slot with minute offsets reducing collision risk. System operating stably after previous optimizations."
-                                },
-                                {
-                                    "date":  "2026-03-30T03:05:00+08:00",
-                                    "action":  "Analysis of current task distribution",
-                                    "details":  "Identified 6 tasks scheduled around 03:00 time slot (with minute offsets). Project Advisor timeout near limit at 226s execution vs 300s timeout. Overall system stability good after previous optimizations."
-                                },
-                                {
-                                    "date":  "2026-03-30T00:08:00+08:00",
-                                    "action":  "API rate limit crisis analysis",
-                                    "details":  "Detected ongoing API rate limit issues affecting 7 tasks. Crisis severity HIGH. Applied partial fixes: 鐭ヨ瘑婕斿寲鍛?04:00鈫?4:30, 鏃ュ織娓呯悊鍛?03:00鈫?3:45. Recommend next: move 鐭ヨ瘑鏁寸悊鍛?02:00鈫?2:30 to further stagger night batch."
-                                },
-                                {
-                                    "date":  "2026-03-29T21:06:00+08:00",
-                                    "action":  "Night batch staggered to reduce API rate limit cascade",
-                                    "details":  "鐭ヨ瘑婕斿寲鍛?04:00鈫?4:30 (30min offset), 鏃ュ織娓呯悊鍛?03:00鈫?3:45 (45min offset). Both had consecutive API rate limit failures. New schedule: 02:00 鐭ヨ瘑鏁寸悊鍛?| 03:30 姣忔棩缁存姢鍛?| 03:45 鏃ュ織娓呯悊鍛?| 04:30 鐭ヨ瘑婕斿寲鍛?"
-                                },
-                                {
-                                    "date":  "2026-03-29T18:12:00+08:00",
-                                    "action":  "Scheduled optimization analysis",
-                                    "details":  "No collision risks detected, no optimizations needed at this cycle"
-                                },
-                                {
-                                    "date":  "2026-03-27T18:02:00+08:00",
-                                    "action":  "Scheduled optimization analysis",
-                                    "details":  "No collision risks detected, no optimizations needed at this cycle"
-                                },
-                                {
-                                    "date":  "2026-03-27T12:03:00+08:00",
-                                    "action":  "Initial analysis completed",
-                                    "details":  "Total tasks: 18, Collision risk: 0 pairs, Heavy tasks: 1"
-                                },
-                                {
-                                    "date":  "2026-03-30T21:47:45+08:00",
-                                    "action":  "auto_staggered_scheduling",
-                                    "details":  "Adjusted 1 tasks: 妯″瀷浣跨敤鎶ュ憡 20:00-\u003e20:05"
-                                }
-                            ],
-    "appliedChanges":  0,
-    "highRiskSlots":  3,
-    "totalTasks":  38,
-    "riskLevel":  "HIGH",
-    "plannedChanges":  3,
-    "failedChanges":  0,
-    "mediumRiskSlots":  0
+{
+  "analysisCycle": 13,
+  "lastAnalysisAt": "2026-03-31T15:35:51+08:00",
+  "recommendation": "CRITICAL: 3 HIGH-risk slots",
+  "optimizationHistory": [
+    {
+      "date": "2026-03-30T21:35:00+08:00",
+      "action": "Applied staggered scheduling optimization",
+      "details": "Adjusted 3 tasks to reduce collision in evening 20:00 time slot: 椤圭洰椤鹃棶 20:00鈫?0:10, 杩愯惀鎬荤洃 20:00鈫?0:15, 鐏鹃毦鎭㈠鍛?20:00鈫?0:20. Reduced peak collision from 5 tasks to 3 tasks at 20:00 time slot."
+    },
+    {
+      "date": "2026-03-30T12:35:00+08:00",
+      "action": "Applied staggered scheduling optimization",
+      "details": "Adjusted 4 tasks to reduce collision: openclaw-security-audit 0鈫?5min, 璧勬簮瀹堟姢鑰?0鈫?min, 椤圭洰椤鹃棶 0鈫?0min, 杩愯惀鎬荤洃 30鈫?5min. Reduced peak collision from 6 tasks to 5 tasks at 20:00 time slot."
+    },
+    {
+      "date": "2026-03-30T09:12:00+08:00",
+      "action": "Critical collision analysis",
+      "details": "Detected high-severity collision risks with 36 collision pairs identified. Critical issues in 08:00, 12:00, 18:00, and especially 20:00 time slots with 6 concurrent tasks. Immediate staggered scheduling recommended."
+    },
+    {
+      "date": "2026-03-30T06:09:00+08:00",
+      "action": "Analysis of current task distribution",
+      "details": "Current task analysis completed. No immediate collision risks requiring adjustment. Project Advisor timeout remains near limit at 226s execution vs 300s timeout. 6 tasks scheduled around 03:00 time slot with minute offsets reducing collision risk. System operating stably after previous optimizations."
+    },
+    {
+      "date": "2026-03-30T03:05:00+08:00",
+      "action": "Analysis of current task distribution",
+      "details": "Identified 6 tasks scheduled around 03:00 time slot (with minute offsets). Project Advisor timeout near limit at 226s execution vs 300s timeout. Overall system stability good after previous optimizations."
+    },
+    {
+      "date": "2026-03-30T00:08:00+08:00",
+      "action": "API rate limit crisis analysis",
+      "details": "Detected ongoing API rate limit issues affecting 7 tasks. Crisis severity HIGH. Applied partial fixes: 鐭ヨ瘑婕斿寲鍛?04:00鈫?4:30, 鏃ュ織娓呯悊鍛?03:00鈫?3:45. Recommend next: move 鐭ヨ瘑鏁寸悊鍛?02:00鈫?2:30 to further stagger night batch."
+    },
+    {
+      "date": "2026-03-29T21:06:00+08:00",
+      "action": "Night batch staggered to reduce API rate limit cascade",
+      "details": "鐭ヨ瘑婕斿寲鍛?04:00鈫?4:30 (30min offset), 鏃ュ織娓呯悊鍛?03:00鈫?3:45 (45min offset). Both had consecutive API rate limit failures. New schedule: 02:00 鐭ヨ瘑鏁寸悊鍛?| 03:30 姣忔棩缁存姢鍛?| 03:45 鏃ュ織娓呯悊鍛?| 04:30 鐭ヨ瘑婕斿寲鍛?"
+    },
+    {
+      "date": "2026-03-29T18:12:00+08:00",
+      "action": "Scheduled optimization analysis",
+      "details": "No collision risks detected, no optimizations needed at this cycle"
+    },
+    {
+      "date": "2026-03-27T18:02:00+08:00",
+      "action": "Scheduled optimization analysis",
+      "details": "No collision risks detected, no optimizations needed at this cycle"
+    },
+    {
+      "date": "2026-03-27T12:03:00+08:00",
+      "action": "Initial analysis completed",
+      "details": "Total tasks: 18, Collision risk: 0 pairs, Heavy tasks: 1"
+    },
+    {
+      "date": "2026-03-30T21:47:45+08:00",
+      "action": "auto_staggered_scheduling",
+      "details": "Adjusted 1 tasks: 妯″瀷浣跨敤鎶ュ憡 20:00->20:05"
+    }
+  ],
+  "appliedChanges": 0,
+  "highRiskSlots": 3,
+  "totalTasks": 38,
+  "riskLevel": "HIGH",
+  "plannedChanges": 3,
+  "failedChanges": 0,
+  "mediumRiskSlots": 0
 }

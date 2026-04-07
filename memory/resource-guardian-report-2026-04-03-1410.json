@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-04-03T14:10:00+08:00",
+  "status": "warning",
+  "metrics": {
+    "memory": {
+      "availableGB": 5.2,
+      "nodeProcessCPU": 0,
+      "threshold": 90,
+      "status": "ok"
+    },
+    "cpu": {
+      "status": "ok",
+      "note": "Node 进程 CPU 使用率正常"
+    },
+    "disk": {
+      "C": {
+        "usedPercent": 89.1,
+        "freePercent": 10.93,
+        "threshold": 85,
+        "criticalThreshold": 95,
+        "status": "warning"
+      }
+    },
+    "apiQuota": {
+      "period": "过去 4 小时 (10:10-14:10)",
+      "models": {
+        "minimax-2.7": {
+          "requests": 397,
+          "tokens": 22364007
+        },
+        "qwen3.5-plus": {
+          "requests": 117,
+          "tokens": 4029318
+        },
+        "qwen3-coder-plus": {
+          "requests": 88,
+          "tokens": 3574494
+        },
+        "glm-5": {
+          "requests": 26,
+          "tokens": 1511387
+        }
+      },
+      "totalRequests": 628,
+      "avgRequestsPerHour": 157,
+      "quotaStatus": "ok",
+      "note": "请求频率远低于配额限制"
+    },
+    "sessions": {
+      "count": 36,
+      "status": "ok"
+    }
+  },
+  "alerts": [
+    {
+      "level": "warning",
+      "type": "disk_usage",
+      "message": "⚠️ C 盘使用率 89.1% 已超过预警阈值 (85%)",
+      "freeSpace": "10.93% (~12.8 GB)",
+      "trend": "较 12:10 检查时上升 1.1% (原 88%)"
+    }
+  ],
+  "recommendations": [
+    "🧹 日志清理员 cron 任务已在 3:45 AM 执行，建议检查清理效果",
+    "📦 考虑归档旧会话文件 (sessions/*.jsonl)",
+    "🗑️ 清理临时文件和缓存",
+    "📊 监控磁盘增长趋势，如持续上升需扩容或迁移数据"
+  ],
+  "nextCheck": "2026-04-03T15:40:00+08:00"
+}

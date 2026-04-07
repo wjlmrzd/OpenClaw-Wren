@@ -1,0 +1,34 @@
+﻿{
+    "summary":  {
+                    "status":  "OK",
+                    "actionCount":  0,
+                    "alertCount":  0
+                },
+    "actions":  [
+
+                ],
+    "memory":  {
+                   "freeGB":  5.43,
+                   "totalGB":  15.86,
+                   "usedPercent":  65.7,
+                   "usedGB":  10.42
+               },
+    "timestamp":  "2026-04-07 16:33:06",
+    "drives":  {
+                   "D":  {
+                             "freeGB":  579.52,
+                             "totalGB":  690.87,
+                             "usedPercent":  16.1,
+                             "usedGB":  111.35
+                         },
+                   "C":  {
+                             "freeGB":  20.86,
+                             "totalGB":  117.42,
+                             "usedPercent":  82.2,
+                             "usedGB":  96.56
+                         }
+               },
+    "alerts":  [
+
+               ]
+}

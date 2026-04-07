@@ -1,7 +1,8 @@
 try {
-    $resp = Invoke-WebRequest -Uri 'http://localhost:18789/' -TimeoutSec 5
-    Write-Host "Status: $($resp.StatusCode)"
-    Write-Host "Content: $($resp.Content.Substring(0, [Math]::Min(500, $resp.Content.Length)))"
+    $headers = @{'Authorization' = 'Bearer ' + $env:GATEWAY_AUTH_TOKEN}
+    $response = Invoke-WebRequest -Uri 'http://localhost:18789/api/status' -TimeoutSec 5 -Headers $headers -UseBasicParsing
+    Write-Host "Status:" $response.StatusCode
 } catch {
-    Write-Host "Gateway unreachable: $($_.Exception.Message)"
+    $status = $_.Exception.Response.StatusCode
+    Write-Host "Status Code:" $status
 }

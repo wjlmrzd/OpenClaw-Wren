@@ -7,6 +7,11 @@ RSS/订阅源监控脚本
 - 输出 JSON 供外部处理或直接打印摘要
 """
 
+import sys
+import io
+if sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+
 import json
 import os
 import sys

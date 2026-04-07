@@ -1,241 +1,241 @@
-﻿{
-    "TotalIssuesFound":  39,
-    "TotalFilesScanned":  45,
-    "Findings":  [
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  432,
-                         "Issue":  "Path Traversal",
-                         "Match":  "var savePath = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  455,
-                         "Issue":  "Path Traversal",
-                         "Match":  "InitialDirectory = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  465,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sr = new StreamReader(ofd.FileName, System.Text.Encoding.UTF8))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  565,
-                         "Issue":  "Path Traversal",
-                         "Match":  "\"\\n鎻掍欢姝ｅ湪鍗歌浇...\\n\");"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
-                         "Line":  57,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sw = new StreamWriter(path, false, System.Text.Encoding.UTF8))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
-                         "Line":  64,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sr = new StreamReader(path, System.Text.Encoding.UTF8))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
-                         "Line":  12,
-                         "Issue":  "Path Traversal",
-                         "Match":  "private static readonly string ConfigPath = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
-                         "Line":  27,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sr = new StreamReader(ConfigPath))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
-                         "Line":  51,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sw = new StreamWriter(ConfigPath, false, System.Text.Encoding.UTF8))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
-                         "Line":  49,
-                         "Issue":  "Path Traversal",
-                         "Match":  "private readonly string _savePath = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
-                         "Line":  81,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sw = new StreamWriter(_savePath, false, System.Text.Encoding.UTF8))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
-                         "Line":  96,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sr = new StreamReader(_savePath, System.Text.Encoding.UTF8))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  444,
-                         "Issue":  "Path Traversal",
-                         "Match":  "var savePath = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  467,
-                         "Issue":  "Path Traversal",
-                         "Match":  "InitialDirectory = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  477,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var sr = new StreamReader(ofd.FileName, System.Text.Encoding.UTF8))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  658,
-                         "Issue":  "Path Traversal",
-                         "Match":  "\"\\n鎻掍欢姝ｅ湪鍗歌浇...\\n\");"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  464,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new System.Xml.Serialization.XmlSerializer(typeof(List\u003cBlockTemplate\u003e))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
-                         "Line":  56,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new XmlSerializer(typeof(ConversionConfig));"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
-                         "Line":  63,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new XmlSerializer(typeof(ConversionConfig));"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
-                         "Line":  26,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new XmlSerializer(typeof(FeatureConfig));"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
-                         "Line":  50,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new XmlSerializer(typeof(FeatureConfig));"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
-                         "Line":  80,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new XmlSerializer(typeof(List\u003cBlockTemplate\u003e));"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
-                         "Line":  95,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new XmlSerializer(typeof(List\u003cBlockTemplate\u003e));"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  476,
-                         "Issue":  "Deserialization",
-                         "Match":  "var xs = new System.Xml.Serialization.XmlSerializer(typeof(List\u003cBlockTemplate\u003e))"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  438,
-                         "Issue":  "Command Injection",
-                         "Match":  "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{savePath}\\\"\");"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  445,
-                         "Issue":  "Command Injection",
-                         "Match":  "System.Diagnostics.Process.Start(\"explorer.exe\", folder);"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
-                         "Line":  577,
-                         "Issue":  "Command Injection",
-                         "Match":  "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{dllPath}\\\"\");"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  450,
-                         "Issue":  "Command Injection",
-                         "Match":  "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{savePath}\\\"\");"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  457,
-                         "Issue":  "Command Injection",
-                         "Match":  "System.Diagnostics.Process.Start(\"explorer.exe\", folder);"
-                     },
-                     {
-                         "File":  "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
-                         "Line":  671,
-                         "Issue":  "Command Injection",
-                         "Match":  "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{dllPath}\\\"\");"
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\PluginEntry.cs",
-                         "Line":  89,
-                         "Issue":  "Path Traversal",
-                         "Match":  "var skinPath = Path.Combine(bundlePath, \"Skins\", \"MasterSkin2.xaml\");"
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\PluginEntry.cs",
-                         "Line":  215,
-                         "Issue":  "Path Traversal",
-                         "Match":  "var logPath = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\PluginEntry.cs",
-                         "Line":  220,
-                         "Issue":  "Path Traversal",
-                         "Match":  "var logFile = Path.Combine(logPath, $\"{DateTime.Now:yyyy-MM-dd}.log\");"
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\Services\\ExportService.cs",
-                         "Line":  139,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using var document = WordprocessingDocument.Open(outputPath, true);"
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\Services\\ExtractionService.cs",
-                         "Line":  316,
-                         "Issue":  "Path Traversal",
-                         "Match":  "using (var attrRef = attrId.Open(OpenMode.ForRead) as AttributeReference)"
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\Services\\SettingsService.cs",
-                         "Line":  35,
-                         "Issue":  "Path Traversal",
-                         "Match":  "_settingsPath = Path.Combine("
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\Commands.cs",
-                         "Line":  177,
-                         "Issue":  "Command Injection",
-                         "Match":  "progressMeter.Start(\"鎻愬彇灞炴€?);"
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\Services\\ExtractionService.cs",
-                         "Line":  70,
-                         "Issue":  "Command Injection",
-                         "Match":  "progressMeter.Start(\"鎻愬彇灞炴€?);"
-                     },
-                     {
-                         "File":  "\\CadAttrExtractor\\Services\\SettingsService.cs",
-                         "Line":  173,
-                         "Issue":  "Command Injection",
-                         "Match":  "System.Diagnostics.Process.Start(\"explorer.exe\", folder);"
-                     }
-                 ],
-    "ScanTime":  "2026-03-30T22:40:49Z"
+{
+  "TotalIssuesFound": 39,
+  "TotalFilesScanned": 45,
+  "Findings": [
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 432,
+      "Issue": "Path Traversal",
+      "Match": "var savePath = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 455,
+      "Issue": "Path Traversal",
+      "Match": "InitialDirectory = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 465,
+      "Issue": "Path Traversal",
+      "Match": "using (var sr = new StreamReader(ofd.FileName, System.Text.Encoding.UTF8))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 565,
+      "Issue": "Path Traversal",
+      "Match": "\"\\n鎻掍欢姝ｅ湪鍗歌浇...\\n\");"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
+      "Line": 57,
+      "Issue": "Path Traversal",
+      "Match": "using (var sw = new StreamWriter(path, false, System.Text.Encoding.UTF8))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
+      "Line": 64,
+      "Issue": "Path Traversal",
+      "Match": "using (var sr = new StreamReader(path, System.Text.Encoding.UTF8))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
+      "Line": 12,
+      "Issue": "Path Traversal",
+      "Match": "private static readonly string ConfigPath = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
+      "Line": 27,
+      "Issue": "Path Traversal",
+      "Match": "using (var sr = new StreamReader(ConfigPath))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
+      "Line": 51,
+      "Issue": "Path Traversal",
+      "Match": "using (var sw = new StreamWriter(ConfigPath, false, System.Text.Encoding.UTF8))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
+      "Line": 49,
+      "Issue": "Path Traversal",
+      "Match": "private readonly string _savePath = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
+      "Line": 81,
+      "Issue": "Path Traversal",
+      "Match": "using (var sw = new StreamWriter(_savePath, false, System.Text.Encoding.UTF8))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
+      "Line": 96,
+      "Issue": "Path Traversal",
+      "Match": "using (var sr = new StreamReader(_savePath, System.Text.Encoding.UTF8))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 444,
+      "Issue": "Path Traversal",
+      "Match": "var savePath = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 467,
+      "Issue": "Path Traversal",
+      "Match": "InitialDirectory = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 477,
+      "Issue": "Path Traversal",
+      "Match": "using (var sr = new StreamReader(ofd.FileName, System.Text.Encoding.UTF8))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 658,
+      "Issue": "Path Traversal",
+      "Match": "\"\\n鎻掍欢姝ｅ湪鍗歌浇...\\n\");"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 464,
+      "Issue": "Deserialization",
+      "Match": "var xs = new System.Xml.Serialization.XmlSerializer(typeof(List<BlockTemplate>))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
+      "Line": 56,
+      "Issue": "Deserialization",
+      "Match": "var xs = new XmlSerializer(typeof(ConversionConfig));"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ConversionConfig.cs",
+      "Line": 63,
+      "Issue": "Deserialization",
+      "Match": "var xs = new XmlSerializer(typeof(ConversionConfig));"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
+      "Line": 26,
+      "Issue": "Deserialization",
+      "Match": "var xs = new XmlSerializer(typeof(FeatureConfig));"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\ExtraFeaturesManager.cs",
+      "Line": 50,
+      "Issue": "Deserialization",
+      "Match": "var xs = new XmlSerializer(typeof(FeatureConfig));"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
+      "Line": 80,
+      "Issue": "Deserialization",
+      "Match": "var xs = new XmlSerializer(typeof(List<BlockTemplate>));"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\Core\\TemplateManager.cs",
+      "Line": 95,
+      "Issue": "Deserialization",
+      "Match": "var xs = new XmlSerializer(typeof(List<BlockTemplate>));"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 476,
+      "Issue": "Deserialization",
+      "Match": "var xs = new System.Xml.Serialization.XmlSerializer(typeof(List<BlockTemplate>))"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 438,
+      "Issue": "Command Injection",
+      "Match": "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{savePath}\\\"\");"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 445,
+      "Issue": "Command Injection",
+      "Match": "System.Diagnostics.Process.Start(\"explorer.exe\", folder);"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\ת���Կ�\\UI\\MainPalette.cs",
+      "Line": 577,
+      "Issue": "Command Injection",
+      "Match": "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{dllPath}\\\"\");"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 450,
+      "Issue": "Command Injection",
+      "Match": "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{savePath}\\\"\");"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 457,
+      "Issue": "Command Injection",
+      "Match": "System.Diagnostics.Process.Start(\"explorer.exe\", folder);"
+    },
+    {
+      "File": "\\CadAttrBlockConverter\\转属性快\\UI\\MainPalette.cs",
+      "Line": 671,
+      "Issue": "Command Injection",
+      "Match": "System.Diagnostics.Process.Start(\"explorer.exe\", $\"/select,\\\"{dllPath}\\\"\");"
+    },
+    {
+      "File": "\\CadAttrExtractor\\PluginEntry.cs",
+      "Line": 89,
+      "Issue": "Path Traversal",
+      "Match": "var skinPath = Path.Combine(bundlePath, \"Skins\", \"MasterSkin2.xaml\");"
+    },
+    {
+      "File": "\\CadAttrExtractor\\PluginEntry.cs",
+      "Line": 215,
+      "Issue": "Path Traversal",
+      "Match": "var logPath = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrExtractor\\PluginEntry.cs",
+      "Line": 220,
+      "Issue": "Path Traversal",
+      "Match": "var logFile = Path.Combine(logPath, $\"{DateTime.Now:yyyy-MM-dd}.log\");"
+    },
+    {
+      "File": "\\CadAttrExtractor\\Services\\ExportService.cs",
+      "Line": 139,
+      "Issue": "Path Traversal",
+      "Match": "using var document = WordprocessingDocument.Open(outputPath, true);"
+    },
+    {
+      "File": "\\CadAttrExtractor\\Services\\ExtractionService.cs",
+      "Line": 316,
+      "Issue": "Path Traversal",
+      "Match": "using (var attrRef = attrId.Open(OpenMode.ForRead) as AttributeReference)"
+    },
+    {
+      "File": "\\CadAttrExtractor\\Services\\SettingsService.cs",
+      "Line": 35,
+      "Issue": "Path Traversal",
+      "Match": "_settingsPath = Path.Combine("
+    },
+    {
+      "File": "\\CadAttrExtractor\\Commands.cs",
+      "Line": 177,
+      "Issue": "Command Injection",
+      "Match": "progressMeter.Start(\"鎻愬彇灞炴€?);"
+    },
+    {
+      "File": "\\CadAttrExtractor\\Services\\ExtractionService.cs",
+      "Line": 70,
+      "Issue": "Command Injection",
+      "Match": "progressMeter.Start(\"鎻愬彇灞炴€?);"
+    },
+    {
+      "File": "\\CadAttrExtractor\\Services\\SettingsService.cs",
+      "Line": 173,
+      "Issue": "Command Injection",
+      "Match": "System.Diagnostics.Process.Start(\"explorer.exe\", folder);"
+    }
+  ],
+  "ScanTime": "2026-03-30T22:40:49Z"
 }

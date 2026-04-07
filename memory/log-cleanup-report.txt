@@ -1,0 +1,36 @@
+﻿========================================
+Log Cleanup Report
+========================================
+Execution Time: 2026-04-07 04:42:07
+Initial Free Space: 582.18 GB
+
+--- Batch 1: Session Log Scan ---
+Found 0 log files older than 7 days
+Total size: 0 MB
+
+--- Batch 2: Compression ---
+No compression needed - no old log files
+Total: Compressed 0 files, Deleted 0 original files
+
+--- Batch 3: Clean Old Archives ---
+Deleted 0 archives older than 30 days
+
+--- Batch 4: Cron History Cleanup ---
+Total cron run files: 36
+No cleanup needed (<=50 files)
+
+--- Batch 5: Disk Space Report ---
+Free space after cleanup: 582.18 GB
+Space freed: 0 GB
+
+========================================
+Cleanup Summary
+========================================
+Duration: 1.96 seconds
+Scanned log files: 0
+Compressed: 0 files
+Deleted originals: 0
+Cleaned old archives: 0
+Cleaned cron runs: 0
+Space freed: 0 GB
+========================================

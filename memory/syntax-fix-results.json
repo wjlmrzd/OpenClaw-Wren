@@ -1,0 +1,107 @@
+[
+  {
+    "File": "atomic-doc-processor.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Code still has 62 errors after extraction"
+  },
+  {
+    "File": "atomic-linker.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Code still has 18 errors after extraction"
+  },
+  {
+    "File": "check-gateway2.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line 1: 语句块或类型定义中缺少右“}”。"
+  },
+  {
+    "File": "check-urls-health.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "check_bookmarks_ps.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "daily-digest-generator.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "daily-report-generator.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "download-plugins.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Code still has 5 errors after extraction"
+  },
+  {
+    "File": "event-hub-tools.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "event-hub.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "event-logger.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "log-rotate.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "notification-coordinator.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "notification-gateway-fixed.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "pdf-ocr-full.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "silence-tools.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "system-mode-tools.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "telegram-commander.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Code still has 7 errors after extraction"
+  },
+  {
+    "File": "test-runner-tools.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "unified-maintenance-console.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Real syntax error at line -1: "
+  },
+  {
+    "File": "update-model-config.ps1",
+    "Status": "NEEDS_MANUAL",
+    "Action": "Code still has 1 errors after extraction"
+  }
+]

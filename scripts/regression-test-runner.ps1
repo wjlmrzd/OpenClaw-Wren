@@ -14,7 +14,7 @@ try {
     $jsonFiles = @("D:\OpenClaw\.openclaw\workspace\openclaw.json", "D:\OpenClaw\.openclaw\workspace\cron\jobs.json")
     foreach ($f in $jsonFiles) {
         if (Test-Path $f) {
-            Get-Content $f -Raw | ConvertFrom-Json -ErrorAction Stop | Out-Null
+            Get-Content $f -Raw -Encoding UTF8 | ConvertFrom-Json -ErrorAction Stop | Out-Null
             $t001.details += "OK: $(Split-Path $f -Leaf)"
         }
     }
@@ -40,7 +40,7 @@ $validModels = @(
     "minimax-coding-plan/minimax-2.7"
 )
 try {
-    $cronData = Get-Content "D:\OpenClaw\.openclaw\workspace\cron\jobs.json" -Raw | ConvertFrom-Json
+    $cronData = Get-Content "D:\OpenClaw\.openclaw\workspace\cron\jobs.json" -Raw -Encoding UTF8 | ConvertFrom-Json
     foreach ($job in $cronData.jobs) {
         if ($job.payload.model) {
             $model = $job.payload.model
@@ -65,7 +65,7 @@ $results.tests += $t002
 Write-Host "[T003] Cron Expression Validation..."
 $t003 = @{ name="T003"; desc="Cron Expression Validation"; status="PASS"; details=@(); errors=@() }
 try {
-    $cronData = Get-Content "D:\OpenClaw\.openclaw\workspace\cron\jobs.json" -Raw | ConvertFrom-Json
+    $cronData = Get-Content "D:\OpenClaw\.openclaw\workspace\cron\jobs.json" -Raw -Encoding UTF8 | ConvertFrom-Json
     foreach ($job in $cronData.jobs) {
         if ($job.schedule.expr) {
             $parts = $job.schedule.expr -split "\s+"

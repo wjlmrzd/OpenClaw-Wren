@@ -17,10 +17,29 @@
     }
   ],
   "triggers": {
-    "memory": { "threshold_warning": 85, "threshold_critical": 95, "current": 63.6, "lastCheck": "2026-03-25T16:06:00+08:00" },
-    "disk": { "threshold_warning": 85, "threshold_critical": 95, "current": 87.71, "lastCheck": "2026-03-25T16:06:00+08:00" },
-    "api": { "threshold_warning": 80, "threshold_critical": 90, "current": 10, "lastCheck": "2026-03-25T16:06:00+08:00" },
-    "consecutiveFailures": { "threshold_warning": 3, "threshold_critical": 5, "current": 0 }
+    "memory": {
+      "threshold_warning": 85,
+      "threshold_critical": 95,
+      "current": 63.6,
+      "lastCheck": "2026-03-25T16:06:00+08:00"
+    },
+    "disk": {
+      "threshold_warning": 85,
+      "threshold_critical": 95,
+      "current": 87.71,
+      "lastCheck": "2026-03-25T16:06:00+08:00"
+    },
+    "api": {
+      "threshold_warning": 80,
+      "threshold_critical": 90,
+      "current": 10,
+      "lastCheck": "2026-03-25T16:06:00+08:00"
+    },
+    "consecutiveFailures": {
+      "threshold_warning": 3,
+      "threshold_critical": 5,
+      "current": 0
+    }
   },
   "pausedTasks": [],
   "activeTasks": [
@@ -55,7 +74,9 @@
     "checkIntervalMinutes": 5,
     "autoModeSwitch": true,
     "notifyOnModeChange": true,
-    "emergencyContacts": ["8542040756"]
+    "emergencyContacts": [
+      "8542040756"
+    ]
   },
   "statistics": {
     "totalModeChanges": 1,

@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "lastUpdated": "2026-03-26T00:00:00+08:00",
+  "categories": {
+    "system": {
+      "description": "系统配置和架构决策",
+      "files": ["MEMORY.md"],
+      "pattern": "## YYYY-MM-DD: 标题"
+    },
+    "daily": {
+      "description": "每日事件和对话记录",
+      "files": ["memory/YYYY-MM-DD.md"],
+      "pattern": "## HH:MM - 标题"
+    },
+    "tasks": {
+      "description": "任务执行状态和追踪",
+      "files": ["memory/*-state.json", "memory/*-log.md"],
+      "pattern": "task-<name>-state.json"
+    },
+    "incidents": {
+      "description": "故障和事件记录",
+      "files": ["memory/incident-log.md", "memory/event-log.md"],
+      "pattern": "事件记录"
+    }
+  },
+  "index": [
+    {
+      "id": "feishu-integration",
+      "title": "飞书集成完成 - 下班提醒上线",
+      "date": "2026-03-25",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 3,
+      "tags": ["feishu", "cron", "notification"],
+      "importance": "high"
+    },
+    {
+      "id": "env-migration",
+      "title": "配置敏感信息脱敏 - 环境变量迁移",
+      "date": "2026-03-25",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 45,
+      "tags": ["security", "env", "config"],
+      "importance": "high"
+    },
+    {
+      "id": "telegram-ssrf-fix",
+      "title": "Telegram 图片发送失败 - SSRF 防护修复",
+      "date": "2026-03-25",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 87,
+      "tags": ["telegram", "bugfix", "ssrf"],
+      "importance": "high"
+    },
+    {
+      "id": "obsidian-model-strategy",
+      "title": "Obsidian 笔记模型策略上线",
+      "date": "2026-03-25",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 117,
+      "tags": ["obsidian", "model", "strategy"],
+      "importance": "medium"
+    },
+    {
+      "id": "timeout-optimization",
+      "title": "超时任务优化 - 运动提醒员和每日早报",
+      "date": "2026-03-25",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 173,
+      "tags": ["cron", "timeout", "optimization"],
+      "importance": "medium"
+    },
+    {
+      "id": "config-restart-lesson",
+      "title": "配置修改与重启的重要教训",
+      "date": "2026-03-24",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 205,
+      "tags": ["lesson", "config", "gateway"],
+      "importance": "high"
+    },
+    {
+      "id": "model-mismatch-fix",
+      "title": "模型错配问题修复",
+      "date": "2026-03-24",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 227,
+      "tags": ["model", "config", "fix"],
+      "importance": "high"
+    },
+    {
+      "id": "7day-autonomous-upgrade",
+      "title": "7 天无人值守自治系统升级完成",
+      "date": "2026-03-24",
+      "category": "system",
+      "file": "MEMORY.md",
+      "line": 251,
+      "tags": ["autonomous", "system", "upgrade"],
+      "importance": "high"
+    }
+  ]
+}

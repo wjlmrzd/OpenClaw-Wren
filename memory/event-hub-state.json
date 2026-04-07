@@ -1,34 +1,49 @@
 {
-  "lastCheck": "2026-03-31T22:15:00+08:00",
-  "resources": {
+  "lastCheck": "2026-04-07T18:22:00+08:00",
+  "systemState": {
     "memory": {
-      "freeMB": 3341,
-      "usagePercent": 81.4,
-      "status": "healthy"
+      "value": 65.7,
+      "status": "ok",
+      "source": "system-resources-report.json (16:33)"
     },
     "disk": {
-      "freeGB": 661.2,
-      "totalGB": 690.9,
-      "usagePercent": 4.3,
-      "status": "healthy"
+      "C": { "value": 82.2, "status": "ok", "freeGB": 20.86 },
+      "D": { "value": 16.1, "status": "ok", "freeGB": 579.52 },
+      "status": "ok",
+      "source": "system-resources-report.json (16:33)",
+      "note": "Previous 88.2% warning was stale; confirmed D: is actually 16.1% used"
     },
     "gateway": {
-      "status": "running",
-      "healthy": true,
-      "port": 18789
+      "status": "ok"
+    },
+    "cron": {
+      "errorCount": 1,
+      "status": "mostly_ok",
+      "note": "📊 运营总监 disabled (1 timeout); no consecutive failures"
     }
   },
-  "taskFailures": {
-    "critical": [],
-    "warning": []
+  "eventAnalysis": {
+    "trending": [],
+    "total": 0,
+    "byType": {},
+    "recentErrors": [
+      {
+        "jobId": "791c995e",
+        "name": "📊 运营总监",
+        "error": "timeout",
+        "consecutiveErrors": 1,
+        "action": "已禁用"
+      }
+    ],
+    "byLevel": {}
   },
-  "analysis": {
-    "systemHealth": "良好",
-    "resourceStatus": "健康 (内存 81.4%, 磁盘 4.3% 使用)",
-    "gatewayStatus": "正常运行",
-    "criticalIssues": 0,
-    "warningIssues": 0,
-    "actionRequired": false,
-    "nextCheck": "2026-04-01T00:15:00+08:00"
+  "triggeredActions": [],
+  "thresholds": {
+    "memory_warning": 90,
+    "disk_warning": 85,
+    "api_usage_warning": 80,
+    "disk_critical": 95,
+    "memory_critical": 95,
+    "api_usage_critical": 95
   }
 }

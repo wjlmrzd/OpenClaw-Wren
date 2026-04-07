@@ -99,7 +99,7 @@ Get-ChildItem $calDir -Recurse -File | Where-Object { $_.Name -match '^(main|man
 Write-Host ""
 Write-Host "=== Enabled Plugins Config ==="
 $vault = 'E:\software\Obsidian\vault'
-$communityJson = Get-Content (Join-Path $vault '.obsidian\community-plugins.json') -Raw
-$enabledJson = Get-Content (Join-Path $vault '.obsidian\enabled-plugins.json') -Raw
+$communityJson = Get-Content (Join-Path $vault '.obsidian\community-plugins.json') -Raw -Encoding UTF8
+$enabledJson = Get-Content (Join-Path $vault '.obsidian\enabled-plugins.json') -Raw -Encoding UTF8
 Write-Host "community: $communityJson"
 Write-Host "enabled: $enabledJson"
