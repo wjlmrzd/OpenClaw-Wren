@@ -8,24 +8,24 @@
 
                 ],
     "memory":  {
-                   "freeGB":  5.43,
+                   "freeGB":  5.16,
                    "totalGB":  15.86,
-                   "usedPercent":  65.7,
-                   "usedGB":  10.42
+                   "usedPercent":  67.5,
+                   "usedGB":  10.7
                },
-    "timestamp":  "2026-04-07 16:33:06",
+    "timestamp":  "2026-04-07 20:33:06",
     "drives":  {
                    "D":  {
-                             "freeGB":  579.52,
+                             "freeGB":  578.49,
                              "totalGB":  690.87,
-                             "usedPercent":  16.1,
-                             "usedGB":  111.35
+                             "usedPercent":  16.3,
+                             "usedGB":  112.38
                          },
                    "C":  {
-                             "freeGB":  20.86,
+                             "freeGB":  20.3,
                              "totalGB":  117.42,
-                             "usedPercent":  82.2,
-                             "usedGB":  96.56
+                             "usedPercent":  82.7,
+                             "usedGB":  97.12
                          }
                },
     "alerts":  [

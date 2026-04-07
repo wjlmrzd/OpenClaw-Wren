@@ -127,7 +127,7 @@
 ### Agent 协作
 | 技能 | 用途 | 路径 |
 |------|------|------|
-| ~~clawteam~~ | ❌ 已禁用（Windows 兼容性，改为 sessions_spawn） | skills/clawteam.disabled/ |
+| clawteam | 多 Agent swarm 协调（git worktree + tmux + 文件消息） | skills/clawteam/ |
 | claw-kanban | AI Agent 看板编排（6 种 Agent，角色自动分配，实时监控） | skills/claw-kanban/ |
 | sessions | 主/子 Agent 会话管理（spawn/send/status） | 内置 |
 | task-dispatcher | 任务分发与协调 | skills/task-dispatcher/ |
@@ -263,12 +263,7 @@
 - Dashscope/MiniMax via 代理返回 404 → 检查 Clash Verge 域名规则
 - Telegram via 代理慢（6s+）→ 监控是否持续
 
-### ClawTeam Windows 兼容性 (2026-04-01, 已禁用 2026-04-07)
-- `clawteam spawn` 在 Windows 上失败：worktree 残留、config.json race condition
-- 症状：UnicodeDecodeError、FileExistsError、GitError
-- 每次 spawn 后需手动清理：`git worktree remove --force` + `git branch -D`
-- **2026-04-07: 已禁用** → 改用 `sessions_spawn` 做并行任务
-- 技能目录已重命名为 `clawteam.disabled`
+### ClawTeam Windows 兼容性 (2026-04-01)
 
 ### 备份管理员已删除 (2026-04-01)
 - git remote 不存在，每次 push 失败，状态长期 error
