@@ -163,6 +163,7 @@
 | paddleocr-text-recognition | 文字 OCR 识别 | skills/paddleocr-text-recognition/ |
 | paddleocr-doc-parsing | 文档 OCR + 解析 | skills/paddleocr-doc-parsing/ |
 | text-game-arcade-universe-v3 | 综合性 ASCII 文字游戏大厅 | skills/text-game-arcade-universe-v3/ |
+| openai-whisper | 本地语音转文字 (faster-whisper + small 模型) | skills/openai-whisper/ |
 
 - **Telegram**: `@WrenBot` (dmPolicy: allowlist)
 - **飞书**: App ID `cli_a92bb7f3923a5ccb`，User ID `ou_a5c4938f3a1fb4354f765ff9c3fcc68c`
