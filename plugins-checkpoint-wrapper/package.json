@@ -1,0 +1,15 @@
+{
+  "name": "checkpoint-wrapper",
+  "version": "0.1.0",
+  "description": "nanobot-style checkpoint/resume wrapper for OpenClaw ContextEngine — wraps lossless-claw with turn-level crash recovery",
+  "type": "module",
+  "main": "index.ts",
+  "license": "MIT",
+  "keywords": ["openclaw", "openclaw-plugin", "checkpoint", "crash-recovery", "context-management"],
+  "peerDependencies": {
+    "openclaw": "*"
+  },
+  "openclaw": {
+    "extensions": ["./index.ts"]
+  }
+}
