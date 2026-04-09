@@ -1,82 +1,78 @@
-# checkpoint-wrapper Skill
+# plugins-checkpoint-wrapper — 架构分析
 
-> ⚠️ **状态**: 实现中（engine wrapper 有 OpenClaw plugin 加载顺序问题）
+> ⚠️ 已废弃：2026-04-09 方案 B 已直接在 lossless-claw 源码实现。
 
-## 问题背景
+## 原方案回顾（已放弃）
 
-**核心问题**: OpenClaw 的 lossless-claw 在 `compact()` 时重建 DAG。如果在 tool call 之间触发 compaction（跨多工具的长任务），in-progress turn 的状态可能丢失。
+### 方案 A：Plugin Wrapper 包装 lossless-claw
+- **状态**：放弃
+- **原因**：OpenClaw workspace plugins 先于 global npm packages 加载，wrapper 无法干净地拦截 lossless-claw 的 `compact()` 调用
+- **已创建文件**：全部作废
+  - `plugins-checkpoint-wrapper/src/checkpoint-store.ts`
+  - `plugins-checkpoint-wrapper/src/checkpoint-engine.ts`
+  - `plugins-checkpoint-wrapper/index.ts`
+  - `scripts/lcm-snapshot.py`
 
-**nanobot 的解法** (Python):
-```python
-# 每个 tool call 后自动 checkpoint
-_checkpoint(payload)  # 保存到 session metadata
+### 方案 B：直接修改 lossless-claw 源码 ✅ 已实现
+- **状态**：已完成，commit `7c68cc2` → 新 commit
+- **路径**：`plugins-lossless-claw-enhanced/src/compaction.ts`
 
-# 重启后恢复未完成的 turn
-_restore_runtime_checkpoint(session)
+## 最终实现细节
+
+### 关键发现
+1. lossless-claw **已有** checkpoint 基础设施，但**没有自动 rollback**
+2. `CompactionEngine` 在每次 `compactFullSweep`/`compactLeaf` 前调用 `_writeCheckpoint()`
+3. `CompactionEngine._rollbackCheckpoint()` 方法存在且功能完整
+4. 唯一的缺失：pass 调用失败时不会触发 rollback，而是直接抛出异常留下不完整的 DAG 状态
+
+### 实现内容
+
+**新增方法**（`CompactionEngine`）：
+```typescript
+async _runPassWithRollback<T>(
+  compactId: string | null,
+  passName: string,
+  passFn: () => Promise<T | null>,
+): Promise<T | null>
+```
+- 包装任意 `leafPass` / `condensedPass` 调用
+- pass 成功 → 返回结果
+- pass 抛出异常 → `rollbackCheckpoint(compactId)` → re-throw
+- 4 处调用全部包装：`compactLeaf` × 2，`compactFullSweep` × 2
+
+**工作流程**：
+```
+compactFullSweep/compactLeaf
+  └─ _writeCheckpoint() → compactId
+      └─ _runPassWithRollback("leafPass", () => leafPass(...))
+          ├─ 成功 → 返回，continue
+          └─ 异常 → rollbackCheckpoint(compactId) → re-throw
+      └─ _runPassWithRollback("condensedPass", () => condensedPass(...))
+          └─ (同上)
+  └─ _cleanupCheckpoint(compactId)
 ```
 
-## 架构差异
+**Checkpoint 存储**：
+- 路径：`~/.openclaw/memory/lcm-checkpoints/{compactId}.json`
+- 内容：`CompactionCheckpoint` — `{compactId, conversationId, timestamp, tokensBefore, contextItems[], summaries[]}`
 
-| 维度 | nanobot | OpenClaw |
-|------|---------|---------|
-| **存储** | JSONL 文件 | SQLite (lossless-claw) |
-| **Checkpoint 时机** | 每个 tool call 后 | 无内置钩子 |
-| **恢复机制** | session metadata + 游标 | 无 |
-| **compact 影响** | JSONL append-only，更新的是 DAG 指针 | compact 重建 DAG |
+**Rollback 恢复范围**：
+- `context_items` 表：删除被 compact 的 range，重新插入旧的 ordinal
+- `summaries` 表：重新 `INSERT` 旧 summary 记录
+- `summary_parents` 表：重建父子关系
+- ⚠️ **不恢复**：messages 表（原始消息不会被删除，只是不再被 context_items 引用）
 
-## 技术限制
+### 已知限制
+1. **LLM summarization 失败时**：会 rollback，但原消息仍在 DB 中，下次 compact 会再次尝试压缩
+2. **DB 写入事务中间失败**：rollback 能恢复到上次的 context_items/summaries 状态，但事务边界外的变更（如 event message 写入失败）不会被恢复
+3. **OpenClaw 更新后需重新应用**：修改的是 workspace plugin 内的 lossless-claw 副本，openclaw 更新不会覆盖
 
-1. **Plugin 加载顺序**: workspace plugins 先于 global npm packages 加载。checkpoint-wrapper 注册 `checkpoint:` engine factory，但 lossless-claw 后加载时会覆盖它。
-2. **无 session-save hook**: 无法在每个 tool call 后触发 checkpoint。
-3. **lossless-claw 使用 SQLite**: checkpoint 需备份 DB 状态，而非 JSONL 文件。
+### 验证方式
+```bash
+# 查看 checkpoint 文件
+Get-ChildItem "$env:USERPROFILE\.openclaw\memory\lcm-checkpoints"
 
-## 替代方案
-
-### 方案 A: 预 compaction 快照（已实现）
-
-在 compact 前快照 SQLite DB：
-```python
-# 运行时机: cron 调度，每次 compact 前
-import shutil, sqlite3, datetime
-
-def pre_compaction_backup(db_path):
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    backup = db_path.parent / f"lcm_backup_{ts}.db"
-    shutil.copy2(db_path, backup)
-    # 保留最近 3 个备份
-    clean_old_backups(db_path.parent, keep=3)
+# 测试 rollback（手动触发 compaction 并检查日志）
+openclaw cron run <jobId>
+# 观察日志中出现：[lcm-compact] leafPass failed with error, rolling back
 ```
-
-### 方案 B: 定期 DB 快照（cron）
-
-每 4 小时备份一次 SQLite DB：
-```json
-{
-  "schedule": "cron: 0 */4 * * *",
-  "action": "python backup_lcm_db.py"
-}
-```
-
-### 方案 C: 软实时 checkpoint（推荐方案，需 OpenClaw 支持）
-
-在 OpenClaw 核心添加 `onTurnCheckpoint` hook：
-- 在 `_save_turn` 中调用 `hooks.emit('turn-checkpoint', session)`
-- checkpoint-wrapper 监听此 hook，备份 session state
-- OpenClaw 团队 PR 待提交
-
-## 文件清单
-
-```
-plugins-checkpoint-wrapper/
-├── src/
-│   ├── checkpoint-engine.ts   # CheckpointContextEngine (wrapper engine)
-│   └── store/
-│       └── checkpoint-store.ts # JSON 文件 checkpoint 持久化
-├── index.ts                  # plugin 入口（需手动注册到 lossless-claw 之后）
-└── package.json
-```
-
-## 已知问题
-
-- `CheckpointContextEngine` 理论上可以工作，但无法通过 workspace plugin 注册顺序覆盖 lossless-claw
-- 建议：直接修改 lossless-claw 源码添加 checkpoint 支持，或等待 OpenClaw 官方支持
