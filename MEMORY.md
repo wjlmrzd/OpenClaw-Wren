@@ -240,21 +240,29 @@
 
 **目的**：解决 compaction 后 agent 状态损坏无法回滚的问题。
 
-**实现**：直接修改 `plugins-lossless-claw-enhanced/src/compaction.ts` + `summary-store.ts`
+**实现**：直接修改 `plugins-lossless-claw-enhanced/` git repo (win4r/lossless-claw-enhanced)
 
-**修改内容**：
-- `CompactionEngine` 接受 `checkpointDir` 参数（`workspaceDir/memory/lcm-checkpoints/`）
-- `_writeCheckpoint(conversationId, tokensBefore)`：在 `compactFullSweep`/`compactLeaf` 开头保存 DAG 快照（contextItems + summaries + summaryParentLinks → JSON）
-- `_cleanupCheckpoint(compactId)`：compaction 成功后删除 checkpoint 文件
-- `rollbackCheckpoint(compactId)`：从 checkpoint 恢复 DAG（公开方法，可被 cron 任务调用）
+**架构（v1 已完成）**：
+- `_writeCheckpoint`：保存 contextItems + summaries + parentLinks + **messageLinks** → JSON
+- `_runPassWithRollback`：包裹 leafPass/condensedPass，异常时自动 rollback
+- `_cleanupCheckpoint`：成功后删除 checkpoint 文件
+- `rollbackCheckpoint`：清空 context_items → 重插入原始 items → 重建 summary 关联
 
-**Checkpoint 文件**：`memory/lcm-checkpoints/{conversationId}-{timestamp}-{rnd}.json`
+**关键修复（2026-04-09 完成）**：
+- `insertContextItem`：`INSERT OR IGNORE` → `INSERT OR REPLACE`（rollback 可覆盖）
+- `deleteContextItemsForConversation`：rollback 前清空脏状态
+- `summaryMessageLinks`：checkpoint 保存 leaf-summary → source-messages 关联，rollback 重建
 
-**触发时机**：每次 compaction 实际执行前（`tokensBefore > 0` 时）
+**Checkpoint 文件**：`~/.openclaw/agent-<id>/memory/lcm-checkpoints/{compactId}.json`
 
-**已知限制**：
-- Rollback 不恢复 message 内容本身（messages 在原始 session 文件中）
-- 依赖 `insertContextItem` + `getSummaryParentIds` 新增方法
+**Rollback 触发**：
+- ✅ `_runPassWithRollback` 捕获异常 → 自动 rollback
+- ⚠️ 无进展退出（tokens ≥ before）→ 暂不自动 rollback（future enhancement）
+- ✅ 手动：`engine.rollbackCheckpoint(compactId)`
+
+**Commit history**：
+- `64ca587` — 初始 checkpoint + rollback 框架
+- `c54a2de` — rollback 增强：clear before restore + message links
 
 ---
 
