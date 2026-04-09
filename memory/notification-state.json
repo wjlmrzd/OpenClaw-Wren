@@ -1,5 +1,7 @@
 {
   "pending_review": null,
-  "last_review": null,
-  "last_archive": null
+  "last_review": "2026-04-09T20:30:00+08:00",
+  "last_archive": null,
+  "mode": "evening",
+  "suppressed_levels": ["info", "notice"]
 }

@@ -236,6 +236,28 @@
 
 ---
 
+## 🛡️ Compaction Checkpoint 系统 (2026-04-09)
+
+**目的**：解决 compaction 后 agent 状态损坏无法回滚的问题。
+
+**实现**：直接修改 `plugins-lossless-claw-enhanced/src/compaction.ts` + `summary-store.ts`
+
+**修改内容**：
+- `CompactionEngine` 接受 `checkpointDir` 参数（`workspaceDir/memory/lcm-checkpoints/`）
+- `_writeCheckpoint(conversationId, tokensBefore)`：在 `compactFullSweep`/`compactLeaf` 开头保存 DAG 快照（contextItems + summaries + summaryParentLinks → JSON）
+- `_cleanupCheckpoint(compactId)`：compaction 成功后删除 checkpoint 文件
+- `rollbackCheckpoint(compactId)`：从 checkpoint 恢复 DAG（公开方法，可被 cron 任务调用）
+
+**Checkpoint 文件**：`memory/lcm-checkpoints/{conversationId}-{timestamp}-{rnd}.json`
+
+**触发时机**：每次 compaction 实际执行前（`tokensBefore > 0` 时）
+
+**已知限制**：
+- Rollback 不恢复 message 内容本身（messages 在原始 session 文件中）
+- 依赖 `insertContextItem` + `getSummaryParentIds` 新增方法
+
+---
+
 ## ⚡ 关键教训 (must follow)
 
 1. **飞书 DM 策略必须保持 `open`**（2026-04-09）：Wren 直接私聊机器人，不要配对流程。不要让它变回 pairing！
