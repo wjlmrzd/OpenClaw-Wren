@@ -71,7 +71,7 @@
                       "name":  "T004",
                       "desc":  "Gateway Health Check",
                       "details":  [
-                                      "HTTP 200 in 535ms"
+                                      "HTTP 200 in 113ms"
                                   ]
                   },
                   {
@@ -86,6 +86,7 @@
                                      "cost-tracker-scan.ps1: 18 syntax issue(s)",
                                      "count_minimax_calls.ps1: 30 syntax issue(s)",
                                      "daily-report-generator.ps1: 17 syntax issue(s)",
+                                     "debug-companion2.ps1: 5 syntax issue(s)",
                                      "download-plugins.ps1: 5 syntax issue(s)",
                                      "event-hub-spec.ps1: 152 syntax issue(s)",
                                      "event-hub-tools.ps1: 2 syntax issue(s)",
@@ -109,6 +110,8 @@
                                       "OK: analyze-syntax-detailed2.ps1",
                                       "OK: analyze-syntax-issues.ps1",
                                       "OK: apply-cron-fixes.ps1",
+                                      "OK: audit-check.ps1",
+                                      "OK: audit-detail.ps1",
                                       "OK: auto-healer-v2.ps1",
                                       "OK: auto-healer.ps1",
                                       "OK: batch-model-update.ps1",
@@ -123,11 +126,15 @@
                                       "OK: check-gateway.ps1",
                                       "OK: check-health.ps1",
                                       "OK: check-json.ps1",
+                                      "OK: check-memory.ps1",
                                       "OK: check-node-memory.ps1",
                                       "OK: check-node.ps1",
                                       "OK: check-obsidian-plugins.ps1",
                                       "OK: check-plugins.ps1",
+                                      "OK: check-port.ps1",
                                       "OK: check-resources.ps1",
+                                      "OK: check-rss-feeds.ps1",
+                                      "OK: check-rss-feeds2.ps1",
                                       "OK: check-syntax-detailed.ps1",
                                       "OK: check-system-resources.ps1",
                                       "OK: check_d.ps1",
@@ -139,9 +146,14 @@
                                       "OK: cleanup-safe.ps1",
                                       "OK: cleanup-temp.ps1",
                                       "OK: companion-check.ps1",
+                                      "OK: companion-debug.ps1",
                                       "OK: config-audit-backup.ps1",
                                       "OK: config-audit-check.ps1",
+                                      "OK: config-audit-temp.ps1",
+                                      "OK: config-audit-temp2.ps1",
+                                      "OK: config-audit-temp3.ps1",
                                       "OK: config-backup.ps1",
+                                      "OK: config-compare.ps1",
                                       "OK: config-integrity-checker.ps1",
                                       "OK: config-optimizer.ps1",
                                       "OK: create-shortcut.ps1",
@@ -150,6 +162,7 @@
                                       "OK: crontemp.ps1",
                                       "OK: daily-digest-generator.ps1",
                                       "OK: daily-light-maintenance.ps1",
+                                      "OK: debug-companion.ps1",
                                       "OK: debug-encoding.ps1",
                                       "OK: disable-problematic-crons.ps1",
                                       "OK: disaster-recovery-controller.ps1",
@@ -168,6 +181,7 @@
                                       "OK: edge-bookmark-sync.ps1",
                                       "OK: event-hub-check.ps1",
                                       "OK: excel-data-processor.ps1",
+                                      "OK: extract-bookmarks.ps1",
                                       "OK: fetch-websites.ps1",
                                       "OK: file-batch-processor.ps1",
                                       "OK: finalize-plugins.ps1",
@@ -197,6 +211,7 @@
                                       "OK: fix2-cron.ps1",
                                       "OK: gateway-monitor-debug.ps1",
                                       "OK: gateway-monitor.ps1",
+                                      "OK: git-audit.ps1",
                                       "OK: git-secret-scanner.ps1",
                                       "OK: kill_gateway.ps1",
                                       "OK: kill_old_gateway.ps1",
@@ -294,5 +309,5 @@
                   }
               ],
     "failed":  0,
-    "timestamp":  "2026-04-07 22:35:08"
+    "timestamp":  "2026-04-09 18:35:11"
 }

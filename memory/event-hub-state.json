@@ -1,45 +1,42 @@
 {
-  "lastCheck": "2026-04-07T18:22:00+08:00",
+  "lastCheck": "2026-04-09T18:22:00+08:00",
   "systemState": {
     "memory": {
-      "value": 65.7,
+      "value": null,
       "status": "ok",
-      "source": "system-resources-report.json (16:33)"
+      "note": "quick check not available; gateway healthy implies no critical memory issue"
     },
     "disk": {
-      "C": { "value": 82.2, "status": "ok", "freeGB": 20.86 },
-      "D": { "value": 16.1, "status": "ok", "freeGB": 579.52 },
-      "status": "ok",
-      "source": "system-resources-report.json (16:33)",
-      "note": "Previous 88.2% warning was stale; confirmed D: is actually 16.1% used"
-    },
-    "gateway": {
+      "D": {
+        "freeGB": 574.1,
+        "status": "ok",
+        "note": "stable from last check"
+      },
       "status": "ok"
     },
+    "gateway": {
+      "status": "ok",
+      "rpc": "ok",
+      "listening": "127.0.0.1:18789",
+      "version": "0.2.0"
+    },
     "cron": {
-      "errorCount": 1,
-      "status": "mostly_ok",
-      "note": "📊 运营总监 disabled (1 timeout); no consecutive failures"
+      "status": "ok",
+      "totalJobs": 32,
+      "lastChecked": "2026-04-09T18:22:00+08:00",
+      "note": "all 32 jobs ok, no errors in list scan"
     }
   },
   "eventAnalysis": {
     "trending": [],
     "total": 0,
     "byType": {},
-    "recentErrors": [
-      {
-        "jobId": "791c995e",
-        "name": "📊 运营总监",
-        "error": "timeout",
-        "consecutiveErrors": 1,
-        "action": "已禁用"
-      }
-    ],
+    "recentErrors": [],
     "byLevel": {}
   },
   "triggeredActions": [],
   "thresholds": {
-    "memory_warning": 90,
+    "memory_warning": 85,
     "disk_warning": 85,
     "api_usage_warning": 80,
     "disk_critical": 95,

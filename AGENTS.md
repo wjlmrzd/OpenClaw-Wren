@@ -13,7 +13,10 @@ Before doing anything else:
 2. Read `USER.md` — this is who you're helping
 3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
-5. **Proactive recall**: Use `gm_search` to search for relevant past experiences, decisions, or lessons related to the current task. Don't wait to be asked "do you remember?" — surface relevant context proactively.
+5. **Proactive recall**: Search TWO paths before answering anything about past:
+   - `gm_search` — knowledge graph (triplets: facts, lessons, decisions)
+   - `exec python scripts/session_search.py -Query "关键词"` — raw session transcripts in `memory/sessions/`
+   - Combine both results; don't rely on just one path
 
 Don't ask permission. Just do it.
 

@@ -1,12 +1,486 @@
 {
-  "timestamp": "2026-04-07T18:05:11.118998",
-  "total_new": 0,
-  "entries": [],
+  "timestamp": "2026-04-09T18:05:28.820792",
+  "total_new": 18,
+  "entries": [
+    {
+      "title": "CAD云线批注工具V3.0版下载",
+      "link": "https://www.cadzxw.com/62955.html",
+      "summary": "CAD云线批注工具V3.0 是一款专为CAD图纸审查与修改设计的高效插件。它将“修订云线、批注文字、外框包围和引线指向”四大操作合而为一，极大提升了审图效率。",
+      "published": "Wed, 08 Apr 2026 06:13:21 +0000",
+      "source": "CAD 技术博客",
+      "keywords": [
+        "插件"
+      ],
+      "hash": "3649004590e3fb75b31ed94ed0df4ab1"
+    },
+    {
+      "title": "CAD图块统计工具V1.0版下载",
+      "link": "https://www.cadzxw.com/62947.html",
+      "summary": "CAD图块统计工具V1.0版，它能帮您快速查清图纸中的图块数量，我们选定目标图块并框选统计范围后，插件会在当前图纸中自动插入一张统计表格，并在命令行输出明细。表格大小还会根据当前视图智能缩放，美观且无需繁琐调整。",
+      "published": "Thu, 02 Apr 2026 06:25:28 +0000",
+      "source": "CAD 技术博客",
+      "keywords": [
+        "插件"
+      ],
+      "hash": "26043c5cdcb30aa23bf8e58fb21642cb"
+    },
+    {
+      "title": "CAD图块批量重命名工具V2.1版下载",
+      "link": "https://www.cadzxw.com/62945.html",
+      "summary": "CAD图块批量重命名工具V2.1版是一款专为 CAD 用户打造的高效绘图辅助工具，通过直观的可视化对话框界面，解决复杂的图块改名难题。插件核心亮点在于其灵活的处理逻辑与强大的兼容性，助您轻松管理图纸资源。",
+      "published": "Wed, 01 Apr 2026 03:02:51 +0000",
+      "source": "CAD 技术博客",
+      "keywords": [
+        "插件"
+      ],
+      "hash": "08c9bef13801045e89e745831ecf4ac2"
+    },
+    {
+      "title": "CAD T型半圆连接插件下载（钣金打破口）",
+      "link": "https://www.cadzxw.com/62942.html",
+      "summary": "CAD T型半圆连接插件： 提取码和解压密码： CAD T型半圆连接插件使用教程：点击查看 插件介绍：它可以将 […]",
+      "published": "Tue, 31 Mar 2026 03:07:04 +0000",
+      "source": "CAD 技术博客",
+      "keywords": [
+        "插件",
+        "教程"
+      ],
+      "hash": "5c6c89b9c63f49b8a249b824873cdc56"
+    },
+    {
+      "title": "CAD二维多段线转多段线插件下载",
+      "link": "https://www.cadzxw.com/62940.html",
+      "summary": "CAD二维多段线转多段线插件，一键将旧版“重型多段线（POLYLINE）”转换为高效的“轻量多段线（LWPOLYLINE）”。在显著减小图纸体积、提升运行速度的同时，确保图形数据100%无损还原。",
+      "published": "Mon, 30 Mar 2026 04:27:23 +0000",
+      "source": "CAD 技术博客",
+      "keywords": [
+        "插件"
+      ],
+      "hash": "05780eedfd3eb8739f0bc57258d499be"
+    },
+    {
+      "title": "CAD曲线转多段线插件下载(支持圆、圆弧、椭圆、椭圆弧、样条曲线)",
+      "link": "https://www.cadzxw.com/62938.html",
+      "summary": "CAD曲线转多段线插件是一款专为CAD用户打造的高效转换工具，能将图纸中的圆、圆弧、椭圆和样条曲线一键精准转换为轻量多段线（LWPOLYLINE），特别适合需要优化图纸或导出数控加工（CNC）路径的场景。",
+      "published": "Sat, 28 Mar 2026 07:47:53 +0000",
+      "source": "CAD 技术博客",
+      "keywords": [
+        "插件"
+      ],
+      "hash": "e0b671fd3a98cd0f3525d24cb73fb388"
+    },
+    {
+      "title": "CAD云线批注工具V2.0版下载",
+      "link": "https://www.cadzxw.com/62936.html",
+      "summary": "还在为CAD中繁琐的图纸审查和修改标记头疼吗？云线批注工具 v2.0 是一款集“画云线、写批注、加外框与引线”于一体的高效辅助插件。无论是日常审图还是方案批注，它都能帮你省去大量重复操作！",
+      "published": "Fri, 27 Mar 2026 03:33:23 +0000",
+      "source": "CAD 技术博客",
+      "keywords": [
+        "插件"
+      ],
+      "hash": "69eac056b147382780b5fc804f269cc5"
+    },
+    {
+      "title": "Koofr 云存储：免费 10GB 空间，支持 WebDAV、Rclone｜终身订阅 1TB 特价129刀",
+      "link": "https://www.appinn.com/koofr-1tb/",
+      "summary": "Koofr 是一款青小蛙观察了一个多月，前天（2026年4月7日）趁着特价入手的云存储服务。@Appinn 原文在论坛，开放讨论：https://meta.appinn.net/t/topic/82391 前两天看到有人推荐 Koofr：再聊永久服务 | Another Dayu： 看了",
+      "published": "Thu, 09 Apr 2026 06:33:40 +0000",
+      "source": "小众软件",
+      "keywords": [
+        "免费"
+      ],
+      "hash": "801752379e1cbe5473171b06aec50223"
+    },
+    {
+      "title": "对话美团GN06刘炯：美团为什么做了一款AI浏览器？",
+      "link": "https://36kr.com/p/3759372854706953?f=rss",
+      "summary": "作者｜任彩茹 编辑｜乔芊 并入美团两年半，GN06（光年之外应团队并入美团后的名字）被赋予的使命始终是：在主营业务之外，找AI Native的增长点。今年3月，他们把这件事落到了一个具体的产品上——AI浏览器「Tabbit」正式进入公测。 为什么是浏览器？大公司在AI领域争展锋芒，行业如今的热词是“",
+      "published": "2026-04-09 17:15:38  +0800",
+      "source": "36氪",
+      "keywords": [
+        "AI"
+      ],
+      "hash": "7b3cc3e2b2c2facfa884d60cf3791bb5"
+    },
+    {
+      "title": "一个225平方公里的“庄”，如何成为AI“顶流”",
+      "link": "https://36kr.com/p/3759269095113219?f=rss",
+      "summary": "亦庄又“炸场”了。 AI未来大会现场 4月8日启幕的AI FUTURE北京亦庄AI未来大会上，一系列重磅消息密集释放，彻底点燃科技圈热度。这场为期两天的盛会，吸引了2000余位业内精英、34家头部企业参与。 AI未来大会现场 现场更有罗振宇、方汉等行业大佬现场分享洞见，成为亦庄AI实力的一次集中秀肌",
+      "published": "2026-04-09 16:08:48  +0800",
+      "source": "36氪",
+      "keywords": [
+        "科技",
+        "AI"
+      ],
+      "hash": "6d534aa8fc0d6a94dadd472e8a97005b"
+    },
+    {
+      "title": "OBSBOT寻影新品发布，在口袋直播摄像头中实现AI智能跟踪与4K画质｜最前线",
+      "link": "https://36kr.com/p/3759286934356744?f=rss",
+      "summary": "作者｜黄楠 编辑｜袁斯来 直播与视频会议已成为日常工作和生活的一部分，创作者对设备的需求也从“能拍就行”转向了“随时随地专业开播”。 但当前市场上的常见方案各有短板：手机直播容易过热降频，且无法灵活多机位；传统网络摄像头画质一般、对焦慢、缺少智能跟踪；单反加采集卡虽然画质好，但整套设备笨重，还需要复",
+      "published": "2026-04-09 15:45:46  +0800",
+      "source": "36氪",
+      "keywords": [
+        "AI"
+      ],
+      "hash": "be48498f08842e33a29b4e5cf835c84b"
+    },
+    {
+      "title": "杭钢股份：诚通金控拟减持不超2%公司股份",
+      "link": "https://36kr.com/newsflashes/3759418485211650?f=rss",
+      "summary": "36氪获悉，杭钢股份公告，持股10.18%的股东北京诚通金控投资有限公司，因自身资金需求，拟通过大宗交易方式，减持不超6754.38万股的公司股份，减持比例不超过2%。",
+      "published": "2026-04-09 17:58:14  +0800",
+      "source": "36氪",
+      "keywords": [
+        "投资"
+      ],
+      "hash": "0a83715caffa75baa41accddfaca8dac"
+    },
+    {
+      "title": "LLM | 整理了 MiroThinker 的技术报告 / 公开资料 - MoonOut",
+      "link": "https://www.cnblogs.com/moonout/p/19841257",
+      "summary": "整理了 MiroThinker 的技术报告和公开资料。目前 MiroThinker release 了三份技术报告，分别是 mirothinker 1.0、mirothinker 1.7 和 miroflow。 目录1. 官方网站2. 开源代码与模型资源3. 官方文档4. 中文社区的第三方解读（人类",
+      "published": "2026-04-09T09:18:00Z",
+      "source": "博客园",
+      "keywords": [
+        "技术"
+      ],
+      "hash": "fb462168d9f1581c307d75de4cf023ee"
+    },
+    {
+      "title": "复刻字节 AI 开发流：实践 Node.js 通用脚手架 - ai超级个体",
+      "link": "https://www.cnblogs.com/mengxiang2/p/19842137",
+      "summary": "复刻字节 AI 开发流：实践 Node.js 通用脚手架 前言 最近与前同事深入交流，他现为字节某组的 TL（组长），团队规模近 10 人。在讨论他们团队的 AI 工作流实践中，也得到一些八卦信息。 第一个是: 人才储备变化 他们团队已基本停止招聘实习生，今年仅招一人 个人解读： AI 协作模式下，",
+      "published": "2026-04-09T09:10:00Z",
+      "source": "博客园",
+      "keywords": [
+        "开发",
+        "AI"
+      ],
+      "hash": "96baaf66b171ac0f580ebca71b023d48"
+    },
+    {
+      "title": "AI编程一年后，我还记得怎么手写代码吗？答案让我沉默了 - 后端AI实验室",
+      "link": "https://www.cnblogs.com/taohaijun/p/19841860",
+      "summary": "上周，团队来了一个实习生。 第一天熟悉环境，他坐在我旁边看我写代码。 看了一会儿，他问我： \"老师，你平时不用AI的话，能写多快？\" 我当时很自然地回了他一句：\"当然能写，我写了12年代码。\" 然后他问了第二句： \"那你上次不用AI手写代码，是什么时候？\" 我愣了一下。 认真想了想，想不起来了。 那",
+      "published": "2026-04-09T08:37:00Z",
+      "source": "博客园",
+      "keywords": [
+        "编程",
+        "AI"
+      ],
+      "hash": "3e9b7a4bcad8c0389dbc86c148f78db4"
+    },
+    {
+      "title": "（六）以 WhaleStudio 三层开发管理框架为例，分享一套可落地的 DataOps 开发规范 - ApacheSeaTunnel",
+      "link": "https://www.cnblogs.com/seatunnel/p/19841494",
+      "summary": "随着数据平台从“能跑”走向“稳定运行”，团队面临的问题也在发生变化。早期更多关注任务是否成功执行，而在规模扩大之后，问题逐渐转向权限是否可控、链路是否清晰、变更是否可管理以及故障是否能够恢复。",
+      "published": "2026-04-09T08:05:00Z",
+      "source": "博客园",
+      "keywords": [
+        "开发"
+      ],
+      "hash": "6ae7e8c5c3609c171bef5aac234936ef"
+    },
+    {
+      "title": "【实操】如何在社交语音游戏中集成AI队友——以鹅鸭杀为例 - ZEGO即构开发者",
+      "link": "https://www.cnblogs.com/zegodeveloper/p/19841256",
+      "summary": "【实操】如何在社交语音游戏中集成AI队友——以鹅鸭杀为例 一、前言 社交推理游戏如鹅鸭杀、狼人杀深受玩家喜爱，但\"凑不齐人\"\"队友挂机\"\"新手体验差\"等痛点长期存在。 AI队友的引入能有效填补空位、提供陪练、降低门槛，让玩家随时随地享受高质量对局。 本文将详细介绍如何利用即构ZEGO AI Agen",
+      "published": "2026-04-09T07:39:00Z",
+      "source": "博客园",
+      "keywords": [
+        "开发",
+        "AI"
+      ],
+      "hash": "c4bb483443b094a23aa1cdbb9e80028e"
+    },
+    {
+      "title": "AI到底会不会导致大规模失业？一次性把所有问题讲透！（深度好文） - 狂师",
+      "link": "https://www.cnblogs.com/jinjiangongzuoshi/p/19840940",
+      "summary": "最近 AI 圈有一份非常重要的研究报告。 Anthropic 在3月5号发布了一篇名为：《Labor market impacts of AI: A new measure and early evidence》研究报告。 简单来说，这是一份AI对劳动力市场影响分析报告，不同的是这份报告全部采用的是",
+      "published": "2026-04-09T06:53:00Z",
+      "source": "博客园",
+      "keywords": [
+        "AI"
+      ],
+      "hash": "3430552ced0ea389aed32e5a6af5d471"
+    }
+  ],
   "by_source": [
     {
       "source": "CAD 技术博客",
       "url": "https://www.cadzxw.com/feed",
+      "total": 8,
+      "new": 7,
+      "entries": [
+        {
+          "title": "CAD云线批注工具V3.0版下载",
+          "link": "https://www.cadzxw.com/62955.html",
+          "summary": "CAD云线批注工具V3.0 是一款专为CAD图纸审查与修改设计的高效插件。它将“修订云线、批注文字、外框包围和引线指向”四大操作合而为一，极大提升了审图效率。",
+          "published": "Wed, 08 Apr 2026 06:13:21 +0000",
+          "source": "CAD 技术博客",
+          "keywords": [
+            "插件"
+          ],
+          "hash": "3649004590e3fb75b31ed94ed0df4ab1"
+        },
+        {
+          "title": "CAD图块统计工具V1.0版下载",
+          "link": "https://www.cadzxw.com/62947.html",
+          "summary": "CAD图块统计工具V1.0版，它能帮您快速查清图纸中的图块数量，我们选定目标图块并框选统计范围后，插件会在当前图纸中自动插入一张统计表格，并在命令行输出明细。表格大小还会根据当前视图智能缩放，美观且无需繁琐调整。",
+          "published": "Thu, 02 Apr 2026 06:25:28 +0000",
+          "source": "CAD 技术博客",
+          "keywords": [
+            "插件"
+          ],
+          "hash": "26043c5cdcb30aa23bf8e58fb21642cb"
+        },
+        {
+          "title": "CAD图块批量重命名工具V2.1版下载",
+          "link": "https://www.cadzxw.com/62945.html",
+          "summary": "CAD图块批量重命名工具V2.1版是一款专为 CAD 用户打造的高效绘图辅助工具，通过直观的可视化对话框界面，解决复杂的图块改名难题。插件核心亮点在于其灵活的处理逻辑与强大的兼容性，助您轻松管理图纸资源。",
+          "published": "Wed, 01 Apr 2026 03:02:51 +0000",
+          "source": "CAD 技术博客",
+          "keywords": [
+            "插件"
+          ],
+          "hash": "08c9bef13801045e89e745831ecf4ac2"
+        },
+        {
+          "title": "CAD T型半圆连接插件下载（钣金打破口）",
+          "link": "https://www.cadzxw.com/62942.html",
+          "summary": "CAD T型半圆连接插件： 提取码和解压密码： CAD T型半圆连接插件使用教程：点击查看 插件介绍：它可以将 […]",
+          "published": "Tue, 31 Mar 2026 03:07:04 +0000",
+          "source": "CAD 技术博客",
+          "keywords": [
+            "插件",
+            "教程"
+          ],
+          "hash": "5c6c89b9c63f49b8a249b824873cdc56"
+        },
+        {
+          "title": "CAD二维多段线转多段线插件下载",
+          "link": "https://www.cadzxw.com/62940.html",
+          "summary": "CAD二维多段线转多段线插件，一键将旧版“重型多段线（POLYLINE）”转换为高效的“轻量多段线（LWPOLYLINE）”。在显著减小图纸体积、提升运行速度的同时，确保图形数据100%无损还原。",
+          "published": "Mon, 30 Mar 2026 04:27:23 +0000",
+          "source": "CAD 技术博客",
+          "keywords": [
+            "插件"
+          ],
+          "hash": "05780eedfd3eb8739f0bc57258d499be"
+        },
+        {
+          "title": "CAD曲线转多段线插件下载(支持圆、圆弧、椭圆、椭圆弧、样条曲线)",
+          "link": "https://www.cadzxw.com/62938.html",
+          "summary": "CAD曲线转多段线插件是一款专为CAD用户打造的高效转换工具，能将图纸中的圆、圆弧、椭圆和样条曲线一键精准转换为轻量多段线（LWPOLYLINE），特别适合需要优化图纸或导出数控加工（CNC）路径的场景。",
+          "published": "Sat, 28 Mar 2026 07:47:53 +0000",
+          "source": "CAD 技术博客",
+          "keywords": [
+            "插件"
+          ],
+          "hash": "e0b671fd3a98cd0f3525d24cb73fb388"
+        },
+        {
+          "title": "CAD云线批注工具V2.0版下载",
+          "link": "https://www.cadzxw.com/62936.html",
+          "summary": "还在为CAD中繁琐的图纸审查和修改标记头疼吗？云线批注工具 v2.0 是一款集“画云线、写批注、加外框与引线”于一体的高效辅助插件。无论是日常审图还是方案批注，它都能帮你省去大量重复操作！",
+          "published": "Fri, 27 Mar 2026 03:33:23 +0000",
+          "source": "CAD 技术博客",
+          "keywords": [
+            "插件"
+          ],
+          "hash": "69eac056b147382780b5fc804f269cc5"
+        }
+      ]
+    },
+    {
+      "source": "异次元软件世界",
+      "url": "https://www.iplaysoft.com/feed",
+      "total": 10,
+      "new": 0,
+      "entries": []
+    },
+    {
+      "source": "小众软件",
+      "url": "https://www.appinn.com/feed",
+      "total": 4,
+      "new": 1,
+      "entries": [
+        {
+          "title": "Koofr 云存储：免费 10GB 空间，支持 WebDAV、Rclone｜终身订阅 1TB 特价129刀",
+          "link": "https://www.appinn.com/koofr-1tb/",
+          "summary": "Koofr 是一款青小蛙观察了一个多月，前天（2026年4月7日）趁着特价入手的云存储服务。@Appinn 原文在论坛，开放讨论：https://meta.appinn.net/t/topic/82391 前两天看到有人推荐 Koofr：再聊永久服务 | Another Dayu： 看了",
+          "published": "Thu, 09 Apr 2026 06:33:40 +0000",
+          "source": "小众软件",
+          "keywords": [
+            "免费"
+          ],
+          "hash": "801752379e1cbe5473171b06aec50223"
+        }
+      ]
+    },
+    {
+      "source": "筑龙论坛精华资料",
+      "url": "https://www.zhulong.com/bbs/down/rss",
+      "total": 0,
+      "new": 0,
+      "entries": []
+    },
+    {
+      "source": "36氪",
+      "url": "https://36kr.com/feed",
+      "total": 10,
+      "new": 4,
+      "entries": [
+        {
+          "title": "对话美团GN06刘炯：美团为什么做了一款AI浏览器？",
+          "link": "https://36kr.com/p/3759372854706953?f=rss",
+          "summary": "作者｜任彩茹 编辑｜乔芊 并入美团两年半，GN06（光年之外应团队并入美团后的名字）被赋予的使命始终是：在主营业务之外，找AI Native的增长点。今年3月，他们把这件事落到了一个具体的产品上——AI浏览器「Tabbit」正式进入公测。 为什么是浏览器？大公司在AI领域争展锋芒，行业如今的热词是“",
+          "published": "2026-04-09 17:15:38  +0800",
+          "source": "36氪",
+          "keywords": [
+            "AI"
+          ],
+          "hash": "7b3cc3e2b2c2facfa884d60cf3791bb5"
+        },
+        {
+          "title": "一个225平方公里的“庄”，如何成为AI“顶流”",
+          "link": "https://36kr.com/p/3759269095113219?f=rss",
+          "summary": "亦庄又“炸场”了。 AI未来大会现场 4月8日启幕的AI FUTURE北京亦庄AI未来大会上，一系列重磅消息密集释放，彻底点燃科技圈热度。这场为期两天的盛会，吸引了2000余位业内精英、34家头部企业参与。 AI未来大会现场 现场更有罗振宇、方汉等行业大佬现场分享洞见，成为亦庄AI实力的一次集中秀肌",
+          "published": "2026-04-09 16:08:48  +0800",
+          "source": "36氪",
+          "keywords": [
+            "科技",
+            "AI"
+          ],
+          "hash": "6d534aa8fc0d6a94dadd472e8a97005b"
+        },
+        {
+          "title": "OBSBOT寻影新品发布，在口袋直播摄像头中实现AI智能跟踪与4K画质｜最前线",
+          "link": "https://36kr.com/p/3759286934356744?f=rss",
+          "summary": "作者｜黄楠 编辑｜袁斯来 直播与视频会议已成为日常工作和生活的一部分，创作者对设备的需求也从“能拍就行”转向了“随时随地专业开播”。 但当前市场上的常见方案各有短板：手机直播容易过热降频，且无法灵活多机位；传统网络摄像头画质一般、对焦慢、缺少智能跟踪；单反加采集卡虽然画质好，但整套设备笨重，还需要复",
+          "published": "2026-04-09 15:45:46  +0800",
+          "source": "36氪",
+          "keywords": [
+            "AI"
+          ],
+          "hash": "be48498f08842e33a29b4e5cf835c84b"
+        },
+        {
+          "title": "杭钢股份：诚通金控拟减持不超2%公司股份",
+          "link": "https://36kr.com/newsflashes/3759418485211650?f=rss",
+          "summary": "36氪获悉，杭钢股份公告，持股10.18%的股东北京诚通金控投资有限公司，因自身资金需求，拟通过大宗交易方式，减持不超6754.38万股的公司股份，减持比例不超过2%。",
+          "published": "2026-04-09 17:58:14  +0800",
+          "source": "36氪",
+          "keywords": [
+            "投资"
+          ],
+          "hash": "0a83715caffa75baa41accddfaca8dac"
+        }
+      ]
+    },
+    {
+      "source": "博客园",
+      "url": "https://www.cnblogs.com/rss",
       "total": 7,
+      "new": 6,
+      "entries": [
+        {
+          "title": "LLM | 整理了 MiroThinker 的技术报告 / 公开资料 - MoonOut",
+          "link": "https://www.cnblogs.com/moonout/p/19841257",
+          "summary": "整理了 MiroThinker 的技术报告和公开资料。目前 MiroThinker release 了三份技术报告，分别是 mirothinker 1.0、mirothinker 1.7 和 miroflow。 目录1. 官方网站2. 开源代码与模型资源3. 官方文档4. 中文社区的第三方解读（人类",
+          "published": "2026-04-09T09:18:00Z",
+          "source": "博客园",
+          "keywords": [
+            "技术"
+          ],
+          "hash": "fb462168d9f1581c307d75de4cf023ee"
+        },
+        {
+          "title": "复刻字节 AI 开发流：实践 Node.js 通用脚手架 - ai超级个体",
+          "link": "https://www.cnblogs.com/mengxiang2/p/19842137",
+          "summary": "复刻字节 AI 开发流：实践 Node.js 通用脚手架 前言 最近与前同事深入交流，他现为字节某组的 TL（组长），团队规模近 10 人。在讨论他们团队的 AI 工作流实践中，也得到一些八卦信息。 第一个是: 人才储备变化 他们团队已基本停止招聘实习生，今年仅招一人 个人解读： AI 协作模式下，",
+          "published": "2026-04-09T09:10:00Z",
+          "source": "博客园",
+          "keywords": [
+            "开发",
+            "AI"
+          ],
+          "hash": "96baaf66b171ac0f580ebca71b023d48"
+        },
+        {
+          "title": "AI编程一年后，我还记得怎么手写代码吗？答案让我沉默了 - 后端AI实验室",
+          "link": "https://www.cnblogs.com/taohaijun/p/19841860",
+          "summary": "上周，团队来了一个实习生。 第一天熟悉环境，他坐在我旁边看我写代码。 看了一会儿，他问我： \"老师，你平时不用AI的话，能写多快？\" 我当时很自然地回了他一句：\"当然能写，我写了12年代码。\" 然后他问了第二句： \"那你上次不用AI手写代码，是什么时候？\" 我愣了一下。 认真想了想，想不起来了。 那",
+          "published": "2026-04-09T08:37:00Z",
+          "source": "博客园",
+          "keywords": [
+            "编程",
+            "AI"
+          ],
+          "hash": "3e9b7a4bcad8c0389dbc86c148f78db4"
+        },
+        {
+          "title": "（六）以 WhaleStudio 三层开发管理框架为例，分享一套可落地的 DataOps 开发规范 - ApacheSeaTunnel",
+          "link": "https://www.cnblogs.com/seatunnel/p/19841494",
+          "summary": "随着数据平台从“能跑”走向“稳定运行”，团队面临的问题也在发生变化。早期更多关注任务是否成功执行，而在规模扩大之后，问题逐渐转向权限是否可控、链路是否清晰、变更是否可管理以及故障是否能够恢复。",
+          "published": "2026-04-09T08:05:00Z",
+          "source": "博客园",
+          "keywords": [
+            "开发"
+          ],
+          "hash": "6ae7e8c5c3609c171bef5aac234936ef"
+        },
+        {
+          "title": "【实操】如何在社交语音游戏中集成AI队友——以鹅鸭杀为例 - ZEGO即构开发者",
+          "link": "https://www.cnblogs.com/zegodeveloper/p/19841256",
+          "summary": "【实操】如何在社交语音游戏中集成AI队友——以鹅鸭杀为例 一、前言 社交推理游戏如鹅鸭杀、狼人杀深受玩家喜爱，但\"凑不齐人\"\"队友挂机\"\"新手体验差\"等痛点长期存在。 AI队友的引入能有效填补空位、提供陪练、降低门槛，让玩家随时随地享受高质量对局。 本文将详细介绍如何利用即构ZEGO AI Agen",
+          "published": "2026-04-09T07:39:00Z",
+          "source": "博客园",
+          "keywords": [
+            "开发",
+            "AI"
+          ],
+          "hash": "c4bb483443b094a23aa1cdbb9e80028e"
+        },
+        {
+          "title": "AI到底会不会导致大规模失业？一次性把所有问题讲透！（深度好文） - 狂师",
+          "link": "https://www.cnblogs.com/jinjiangongzuoshi/p/19840940",
+          "summary": "最近 AI 圈有一份非常重要的研究报告。 Anthropic 在3月5号发布了一篇名为：《Labor market impacts of AI: A new measure and early evidence》研究报告。 简单来说，这是一份AI对劳动力市场影响分析报告，不同的是这份报告全部采用的是",
+          "published": "2026-04-09T06:53:00Z",
+          "source": "博客园",
+          "keywords": [
+            "AI"
+          ],
+          "hash": "3430552ced0ea389aed32e5a6af5d471"
+        }
+      ]
+    },
+    {
+      "source": "图欧学习资源",
+      "url": "https://tuostudy.com/feed",
+      "total": 0,
+      "new": 0,
+      "entries": []
+    },
+    {
+      "source": "V2EX",
+      "url": "https://www.v2ex.com/rss",
+      "total": 0,
+      "new": 0,
+      "entries": []
+    },
+    {
+      "source": "鸠摩搜索",
+      "url": "https://www.jiumodiary.com/feed",
+      "total": 0,
+      "new": 0,
+      "entries": []
+    },
+    {
+      "source": "Science 最新",
+      "url": "https://www.sciencemag.org/rss/current.xml",
+      "total": 5,
       "new": 0,
       "entries": []
     }

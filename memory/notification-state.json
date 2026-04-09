@@ -1,22 +1,5 @@
 {
-  "current_mode": "active",
-  "current_time_period": "morning",
-  "notifications_queue": [],
-  "silence_start": "22:00",
-  "silence_end": "06:00",
-  "stats": {
-    "total_sent": 0,
-    "total_queued": 0,
-    "total_discarded": 0
-  },
-  "severity_counts": {
-    "info": 0,
-    "attention": 0,
-    "warning": 0,
-    "emergency": 0,
-    "crisis": 0
-  },
-  "last_check": "2026-04-07T16:05:00+08:00",
-  "last_updated": "2026-04-07T16:05:00+08:00",
-  "notes": "活跃时段（16:05），15封未读邮件摘要已发送至 Telegram。"
+  "pending_review": null,
+  "last_review": null,
+  "last_archive": null
 }

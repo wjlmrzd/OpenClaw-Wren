@@ -1,16 +1,104 @@
 ﻿========================================
 Log Cleanup Report
 ========================================
-Execution Time: 2026-04-07 04:42:07
-Initial Free Space: 582.18 GB
+Execution Time: 2026-04-09 07:59:41
+Initial Free Space: 566.01 GB
 
 --- Batch 1: Session Log Scan ---
-Found 0 log files older than 7 days
-Total size: 0 MB
+Found 1528 log files older than 7 days
+Total size: 94.02 MB
+File list:
+  - 28e0c31f-d74b-4800-a5bb-69957a810d71.jsonl (2026-04-02)
+  - 28f56524-0c6c-444e-a8f6-4893226a31c6.jsonl (2026-04-02)
+  - 29027c6c-c5f0-4c3c-8ca4-d9281f3db260.jsonl (2026-04-02)
+  - 2945aca5-a67c-456d-b1db-a5e09ee71be5.jsonl (2026-04-02)
+  - 2996237b-c632-4e86-8f42-9fad217329a1.jsonl (2026-04-02)
+  - 29b28099-fa92-4a11-9653-7792d5c81e9a.jsonl (2026-04-02)
+  - 29cebc8d-94cf-43b8-be9d-48c714d1ef3e.jsonl (2026-04-02)
+  - 2a0f92be-191c-48e7-ab0a-b043e177b220.jsonl (2026-04-02)
+  - 2a368ed2-8ff8-4f32-80cc-342025461332.jsonl (2026-04-02)
+  - 2a3c5250-1599-4269-a152-b8c95b97e4a3.jsonl (2026-04-02)
+  ... and 1518 more files
 
 --- Batch 2: Compression ---
-No compression needed - no old log files
-Total: Compressed 0 files, Deleted 0 original files
+Batch 1 : Compression failed - 文件“D:\OpenClaw\.openclaw\agents\main\sessions\2b6a076e-7813-4ab7-b470-46c4803cbc58.jsonl”正由另一进程使用，因此该进程无法访问此文件。
+Batch 2 : Compressed 20 files -> logs-batch-2-20260409-075942.zip
+Batch 3 : Compressed 20 files -> logs-batch-3-20260409-075943.zip
+Batch 4 : Compression failed - 文件“D:\OpenClaw\.openclaw\agents\main\sessions\318baf94-46ab-4615-b3d3-b8055e674bf1.jsonl”正由另一进程使用，因此该进程无法访问此文件。
+Batch 5 : Compressed 20 files -> logs-batch-5-20260409-075943.zip
+Batch 6 : Compression failed - 文件“D:\OpenClaw\.openclaw\agents\main\sessions\37418ce7-f17e-445a-a8b8-ce0fea9e6ed3.jsonl”正由另一进程使用，因此该进程无法访问此文件。
+Batch 7 : Compressed 20 files -> logs-batch-7-20260409-075945.zip
+Batch 8 : Compression failed - 文件“D:\OpenClaw\.openclaw\agents\main\sessions\3e1d5091-d6f6-4318-bf76-2a63bb5403ba.jsonl”正由另一进程使用，因此该进程无法访问此文件。
+Batch 9 : Compressed 20 files -> logs-batch-9-20260409-075947.zip
+Batch 10 : Compressed 20 files -> logs-batch-10-20260409-075948.zip
+Batch 11 : Compression failed - 路径“D:\OpenClaw\.openclaw\agents\main\sessions\44e7de55-681f-4ad2-8d1a-9a48c5091343.jsonl”不存在，或者不是有效的文件系统路径。
+Batch 12 : Compressed 20 files -> logs-batch-12-20260409-075950.zip
+Batch 13 : Compressed 20 files -> logs-batch-13-20260409-075950.zip
+Batch 14 : Compressed 20 files -> logs-batch-14-20260409-075952.zip
+Batch 15 : Compressed 20 files -> logs-batch-15-20260409-075953.zip
+Batch 16 : Compressed 20 files -> logs-batch-16-20260409-075954.zip
+Batch 17 : Compressed 20 files -> logs-batch-17-20260409-075955.zip
+Batch 18 : Compressed 20 files -> logs-batch-18-20260409-075956.zip
+Batch 19 : Compressed 20 files -> logs-batch-19-20260409-075957.zip
+Batch 20 : Compressed 20 files -> logs-batch-20-20260409-075958.zip
+Batch 21 : Compressed 20 files -> logs-batch-21-20260409-075959.zip
+Batch 22 : Compressed 20 files -> logs-batch-22-20260409-080001.zip
+Batch 23 : Compressed 20 files -> logs-batch-23-20260409-080002.zip
+Batch 24 : Compressed 20 files -> logs-batch-24-20260409-080003.zip
+Batch 25 : Compressed 20 files -> logs-batch-25-20260409-080004.zip
+Batch 26 : Compressed 20 files -> logs-batch-26-20260409-080005.zip
+Batch 27 : Compressed 20 files -> logs-batch-27-20260409-080007.zip
+Batch 28 : Compressed 20 files -> logs-batch-28-20260409-080007.zip
+Batch 29 : Compressed 20 files -> logs-batch-29-20260409-080009.zip
+Batch 30 : Compressed 20 files -> logs-batch-30-20260409-080010.zip
+Batch 31 : Compressed 20 files -> logs-batch-31-20260409-080011.zip
+Batch 32 : Compressed 20 files -> logs-batch-32-20260409-080012.zip
+Batch 33 : Compressed 20 files -> logs-batch-33-20260409-080013.zip
+Batch 34 : Compressed 20 files -> logs-batch-34-20260409-080014.zip
+Batch 35 : Compressed 20 files -> logs-batch-35-20260409-080015.zip
+Batch 36 : Compressed 20 files -> logs-batch-36-20260409-080017.zip
+Batch 37 : Compressed 20 files -> logs-batch-37-20260409-080018.zip
+Batch 38 : Compressed 20 files -> logs-batch-38-20260409-080018.zip
+Batch 39 : Compressed 20 files -> logs-batch-39-20260409-080020.zip
+Batch 40 : Compressed 20 files -> logs-batch-40-20260409-080021.zip
+Batch 41 : Compressed 20 files -> logs-batch-41-20260409-080022.zip
+Batch 42 : Compressed 20 files -> logs-batch-42-20260409-080023.zip
+Batch 43 : Compressed 20 files -> logs-batch-43-20260409-080024.zip
+Batch 44 : Compressed 20 files -> logs-batch-44-20260409-080025.zip
+Batch 45 : Compressed 20 files -> logs-batch-45-20260409-080026.zip
+Batch 46 : Compressed 20 files -> logs-batch-46-20260409-080028.zip
+Batch 47 : Compressed 20 files -> logs-batch-47-20260409-080029.zip
+Batch 48 : Compressed 20 files -> logs-batch-48-20260409-080030.zip
+Batch 49 : Compressed 20 files -> logs-batch-49-20260409-080031.zip
+Batch 50 : Compressed 20 files -> logs-batch-50-20260409-080032.zip
+Batch 51 : Compressed 20 files -> logs-batch-51-20260409-080033.zip
+Batch 52 : Compressed 20 files -> logs-batch-52-20260409-080034.zip
+Batch 53 : Compressed 20 files -> logs-batch-53-20260409-080035.zip
+Batch 54 : Compressed 20 files -> logs-batch-54-20260409-080036.zip
+Batch 55 : Compressed 20 files -> logs-batch-55-20260409-080038.zip
+Batch 56 : Compressed 20 files -> logs-batch-56-20260409-080039.zip
+Batch 57 : Compressed 20 files -> logs-batch-57-20260409-080040.zip
+Batch 58 : Compressed 20 files -> logs-batch-58-20260409-080042.zip
+Batch 59 : Compressed 20 files -> logs-batch-59-20260409-080043.zip
+Batch 60 : Compressed 20 files -> logs-batch-60-20260409-080044.zip
+Batch 61 : Compressed 20 files -> logs-batch-61-20260409-080045.zip
+Batch 62 : Compressed 20 files -> logs-batch-62-20260409-080046.zip
+Batch 63 : Compressed 20 files -> logs-batch-63-20260409-080047.zip
+Batch 64 : Compressed 20 files -> logs-batch-64-20260409-080048.zip
+Batch 65 : Compressed 20 files -> logs-batch-65-20260409-080049.zip
+Batch 66 : Compressed 20 files -> logs-batch-66-20260409-080050.zip
+Batch 67 : Compressed 20 files -> logs-batch-67-20260409-080052.zip
+Batch 68 : Compressed 20 files -> logs-batch-68-20260409-080052.zip
+Batch 69 : Compressed 20 files -> logs-batch-69-20260409-080054.zip
+Batch 70 : Compressed 20 files -> logs-batch-70-20260409-080055.zip
+Batch 71 : Compressed 20 files -> logs-batch-71-20260409-080056.zip
+Batch 72 : Compressed 20 files -> logs-batch-72-20260409-080057.zip
+Batch 73 : Compressed 20 files -> logs-batch-73-20260409-080058.zip
+Batch 74 : Compressed 20 files -> logs-batch-74-20260409-080059.zip
+Batch 75 : Compressed 20 files -> logs-batch-75-20260409-080100.zip
+Batch 76 : Compressed 20 files -> logs-batch-76-20260409-080102.zip
+Batch 77 : Compressed 8 files -> logs-batch-77-20260409-080103.zip
+Total: Compressed 1428 files, Deleted 1428 original files
 
 --- Batch 3: Clean Old Archives ---
 Deleted 0 archives older than 30 days
@@ -20,17 +108,17 @@ Total cron run files: 36
 No cleanup needed (<=50 files)
 
 --- Batch 5: Disk Space Report ---
-Free space after cleanup: 582.18 GB
-Space freed: 0 GB
+Free space after cleanup: 566.09 GB
+Space freed: 0.07 GB
 
 ========================================
 Cleanup Summary
 ========================================
-Duration: 1.96 seconds
-Scanned log files: 0
-Compressed: 0 files
-Deleted originals: 0
+Duration: 84.44 seconds
+Scanned log files: 1528
+Compressed: 1428 files
+Deleted originals: 1428
 Cleaned old archives: 0
 Cleaned cron runs: 0
-Space freed: 0 GB
+Space freed: 0.07 GB
 ========================================

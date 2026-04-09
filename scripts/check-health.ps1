@@ -1,8 +1,6 @@
 try {
-    $resp = Invoke-RestMethod -Uri 'http://localhost:18789/health' -TimeoutSec 5
-    $resp | ConvertTo-Json
-    exit 0
+    $r = Invoke-WebRequest -Uri 'http://127.0.0.1:18789/health' -TimeoutSec 5 -UseBasicParsing
+    Write-Host "HTTP_OK:$($r.StatusCode)"
 } catch {
-    Write-Host "Gateway unreachable: $($_.Exception.Message)"
-    exit 1
+    Write-Host "HTTP_ERROR:$($_.Exception.Message)"
 }

@@ -292,8 +292,8 @@
 | 项目 | 值 |
 |------|-----|
 | 归档目录 | `memory/sessions/` |
-| 归档脚本 | `scripts/session-archiver.ps1`（每4h触发） |
-| 搜索脚本 | `scripts/session-search.ps1 -Query "关键词"` |
+| 归档脚本 | `scripts/session_archiver.py`（每4h触发） |
+| 搜索脚本 | `python scripts/session_search.py -Query "关键词"` |
 | 搜索入口 | AGENTS.md 双轨搜索：gm_search + session-search |
 
 ## 🗄️ 心跳微Review (2026-04-09)
@@ -302,6 +302,53 @@ HEARTBEAT.md 处理系统事件：
 - `USER_WEEKLY_UPDATE` → 生成 USER.md 周更新草稿
 
 pending_review 状态：其他 cron 完成重要任务后写字段，心跳读到触发 micro-review。
+
+---
+
+## 🗄️ nanobot 调研学习 (2026-04-09)
+
+> 参考 HKUDS/nanobot (4K 行 Python，v0.1.5) 的设计
+
+### 核心启发
+
+**1. HEARTBEAT 机制（最值得借鉴）**
+- nanobot 用 LLM 决定 skip/run，不只是读文件
+- Phase1：读取 HEARTBEAT.md → LLM 工具调用判断是否有任务 → 返回 `skip` 或 `run`
+- Phase2：仅当 Phase1 返回 `run` 才执行，避免无效调用
+- 后评估：执行后 LLM 决定是否通知（`evaluate_response`）
+- **行动**：已更新 HEARTBEAT.md，加入 skip/run 决策规则
+
+**2. Dream 记忆系统（两阶段设计）**
+- `history.jsonl`：append-only，游标管理，机器优先格式
+- `Consolidator`：对话膨胀时总结最旧片段，追加到 history.jsonl
+- `Dream`：cron 调度，慢而精确地处理 memory（读 history.jsonl + SOUL.md + USER.md + MEMORY.md）
+- Surgical edit：不重写整个文件，只做最小必要修改
+- GitStore 版本化：每次 Dream 改后可比较/回滚
+- 命令：`/dream` `/dream-log <sha>` `/dream-restore <sha>`
+- **行动**：创建 `scripts/nanobot-memory-cleanup.ps1` 清理旧文件，memory/ 144 文件
+
+**3. 文件结构哲学**
+```
+workspace/
+├── SOUL.md           # bot 的长期声音和沟通风格
+├── USER.md           # 用户是谁，有什么偏好
+└── memory/
+    ├── MEMORY.md     # 项目事实、决策、持久上下文
+    ├── history.jsonl # append-only 历史摘要
+    ├── .cursor       # Consolidator 游标
+    └── .dream_cursor # Dream 消费游标
+```
+
+**与当前系统的对比**：
+- OpenClaw：lossless-claw (DAG压缩) + graph-memory (三元组) + deflate (Zone)
+- nanobot：history.jsonl (游标) + Dream (两阶段编辑)
+- nanobot 的 append-only 游标比 DAG 压缩更可靠、更简单
+
+**4. 其他发现**
+- nanobot 是 OpenClaw 的"教育版"——4K 行覆盖核心功能，代码完全可读
+- HEARTBEAT 间隔 30min（比 OpenClaw 更频繁但更轻量）
+- 所有 channel 插件化设计，代码分离清晰
+- Provider registry 单点注册，新增 provider 仅需 2 步
 
 ---
 

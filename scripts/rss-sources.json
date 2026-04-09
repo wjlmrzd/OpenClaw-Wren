@@ -13,13 +13,86 @@
       "url": "https://www.cadzxw.com/feed",
       "keywords": ["AutoCAD", "Revit", "插件", "教程"],
       "enabled": true,
+      "note": "AutoCAD/Revit 插件、工具、教程分享博客。关键词：CAD图块统计、lisp、插件、建模",
       "max_items": 10
+    },
+    {
+      "name": "异次元软件世界",
+      "url": "https://www.iplaysoft.com/feed",
+      "keywords": ["软件", "工具", "效率"],
+      "enabled": true,
+      "note": "高质量正版软件工具推荐博客，实用工具发现",
+      "max_items": 10
+    },
+    {
+      "name": "小众软件",
+      "url": "https://www.appinn.com/feed",
+      "keywords": ["软件", "工具", "免费"],
+      "enabled": true,
+      "note": "分享免费、小巧、实用的软件，定位与异次元互补",
+      "max_items": 10
+    },
+    {
+      "name": "筑龙论坛精华资料",
+      "url": "https://www.zhulong.com/bbs/down/rss",
+      "keywords": ["工程", "建筑", "规范", "图集"],
+      "enabled": true,
+      "note": "建筑工程论坛精华资料下载区，工程资料发现",
+      "max_items": 10
+    },
+    {
+      "name": "36氪",
+      "url": "https://36kr.com/feed",
+      "keywords": ["科技", "创业", "投资", "AI"],
+      "enabled": true,
+      "note": "科技创业媒体，AI/互联网前沿动态",
+      "max_items": 10
+    },
+    {
+      "name": "博客园",
+      "url": "https://www.cnblogs.com/rss",
+      "keywords": ["开发", "技术", "编程", "AI"],
+      "enabled": true,
+      "note": "开发者技术博客平台，编程文章精选",
+      "max_items": 10
+    },
+    {
+      "name": "图欧学习资源",
+      "url": "https://tuostudy.com/feed",
+      "keywords": ["学习", "教程", "资源"],
+      "enabled": true,
+      "note": "学习资源导航，学习资料发现",
+      "max_items": 10
+    },
+    {
+      "name": "V2EX",
+      "url": "https://www.v2ex.com/rss",
+      "keywords": ["技术", "开源", "开发", "社区"],
+      "enabled": true,
+      "note": "程序员社区，技术话题讨论",
+      "max_items": 10
+    },
+    {
+      "name": "鸠摩搜索",
+      "url": "https://www.jiumodiary.com/feed",
+      "keywords": ["电子书", "文档", "图书"],
+      "enabled": true,
+      "note": "文档搜索引擎更新，新书上架提醒",
+      "max_items": 10
+    },
+    {
+      "name": "Science 最新",
+      "url": "https://www.sciencemag.org/rss/current.xml",
+      "keywords": ["Science", "科研", "前沿"],
+      "enabled": true,
+      "note": "Science期刊前沿研究摘要（英文）",
+      "max_items": 5
     }
   ],
   "telegram": {
     "chat_id": null,
     "use_bot": true
   },
-  "max_total_items": 20,
+  "max_total_items": 30,
   "summary_length": 80
 }

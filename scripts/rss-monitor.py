@@ -12,6 +12,11 @@ import io
 if sys.stdout.encoding.lower() != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
+# 抑制 requests/urllib3 弃用警告（被 cron exec 捕获会导致 exit code 非零）
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message=".*urllib3.*")
+
 import json
 import os
 import sys

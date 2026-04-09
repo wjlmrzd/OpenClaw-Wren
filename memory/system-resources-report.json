@@ -1,34 +1,39 @@
 ﻿{
     "summary":  {
-                    "status":  "OK",
-                    "actionCount":  0,
-                    "alertCount":  0
+                    "status":  "CRITICAL",
+                    "actionCount":  2,
+                    "alertCount":  1
                 },
     "actions":  [
-
+                    "Executed clean-c-drive.ps1",
+                    "Freed 6.86 GB on C drive"
                 ],
     "memory":  {
-                   "freeGB":  5.16,
+                   "freeGB":  5.96,
                    "totalGB":  15.86,
-                   "usedPercent":  67.5,
-                   "usedGB":  10.7
+                   "usedPercent":  62.4,
+                   "usedGB":  9.9
                },
-    "timestamp":  "2026-04-07 20:33:06",
+    "timestamp":  "2026-04-09 16:33:07",
     "drives":  {
                    "D":  {
-                             "freeGB":  578.49,
+                             "freeGB":  564.12,
                              "totalGB":  690.87,
-                             "usedPercent":  16.3,
-                             "usedGB":  112.38
+                             "usedPercent":  18.3,
+                             "usedGB":  126.75
                          },
                    "C":  {
-                             "freeGB":  20.3,
+                             "freeGB":  9.24,
                              "totalGB":  117.42,
-                             "usedPercent":  82.7,
-                             "usedGB":  97.12
+                             "afterCleanup":  {
+                                                  "freeGB":  16.1,
+                                                  "usedPercent":  86.3
+                                              },
+                             "usedPercent":  92.1,
+                             "usedGB":  108.18
                          }
                },
     "alerts":  [
-
+                   "CRITICAL: C drive usage 92.1% exceeds 90% threshold"
                ]
 }

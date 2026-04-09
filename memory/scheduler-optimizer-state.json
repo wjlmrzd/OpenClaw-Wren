@@ -1,0 +1,45 @@
+{
+  "lastCheck": "2026-04-08T04:15:00+08:00",
+  "systemHealth": "healthy",
+  "totalJobs": 36,
+  "enabledJobs": 35,
+  "disabledJobs": 1,
+  "issuesFound": 1,
+  "issuesFixed": 1,
+  "autoFixes": [
+    {
+      "task": "92af6946-🏥健康监控员",
+      "action": "timeout调整",
+      "before": "180秒",
+      "after": "240秒",
+      "reason": "执行时间120s刚好超180s限制(consecutiveErrors=1)，增加60s buffer"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "低",
+      "task": "🔔通知协调员",
+      "issue": "每3小时运行快速退出指令，效率低",
+      "suggestion": "可考虑延长间隔至4-6小时（但不影响功能，暂不强制）"
+    },
+    {
+      "priority": "低",
+      "task": "🤖伴侣检查员",
+      "issue": "每4小时+15%采样，实际触发约10次/天",
+      "suggestion": "当前设计合理，保持现状"
+    }
+  ],
+  "staleTasks": [],
+  "consecutiveErrorTasks": [
+    {
+      "task": "92af6946-🏥健康监控员",
+      "count": 1,
+      "status": "已修复（增加timeout至240s）"
+    }
+  ],
+  "cronOverlapAnalysis": {
+    "健康检查类": ["🔍系统自检员(04:00)", "🏥健康监控员(04:40)", "⚖️资源守护者(04:33)"],
+    "note": "三任务均在04:00-05:00窗口执行，逻辑独立不冲突，保持现状"
+  },
+  "notes": "所有cron任务健康。系统处于静默时段(22:00-06:00)，所有自动修复已静默执行，无需Telegram通知。"
+}

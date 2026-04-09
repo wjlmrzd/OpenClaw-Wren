@@ -1,13 +1,13 @@
 {
-  "lastCheck": "2026-04-07T12:17:00+08:00",
-  "lastNotification": "2026-04-03T00:00:00+08:00",
+  "lastCheck": "2026-04-09T18:17:00+08:00",
+  "lastNotification": "2026-04-09T12:17:00+08:00",
   "systemHealth": "healthy",
   "issuesFound": 0,
   "issuesFixed": 2,
   "alertsGenerated": 0,
   "knownIssues": [],
   "consecutiveFailures": {},
-  "notes": "Gateway运行正常，RPC正常，端口18789监听中。安全审计员(53b6edc8)今天10:15已成功运行，状态ok。运营总监(791c995e)已不在cron列表中（可能已删除）。系统整体健康，无需干预。",
+  "notes": "18:17 检查完成：手动触发通知协调员（7eb7f35e）后状态恢复为 ok；事件协调员（3a1df011）也通过手动触发恢复正常。两个 isolated 任务之前的 error 状态疑似因超时未完成导致状态标记异常。所有 33 个 Cron 任务均无 error 状态。Gateway 正常。",
   "scriptIssues": {
     "encodingProblem": false,
     "gatewayCheckHangs": false,
@@ -17,69 +17,29 @@
     "falseAlarm": false,
     "http404Fixed": true,
     "autoHealerStateStale": false,
-    "openClawStatusTimeout": false
+    "openClawStatusTimeout": false,
+    "healthMonitorTimeout": false
   },
   "notificationHistory": [
     {
-      "timestamp": "2026-03-29T22:07:00+08:00",
-      "action": "alert",
-      "reason": "调度优化员连续失误超3次，触发阈值警报"
-    },
-    {
-      "timestamp": "2026-03-30T00:05:00+08:00",
-      "action": "alert",
-      "reason": "Gateway重启失败，需要人工检查"
-    },
-    {
-      "timestamp": "2026-03-30T02:06:37+08:00",
-      "action": "recovery",
-      "reason": "系统恢复：Gateway运行正常，调度优化员重置"
-    },
-    {
-      "timestamp": "2026-03-30T22:01:04+08:00",
-      "action": "alert",
-      "reason": "Gateway重启失败，需要人工检查"
-    },
-    {
-      "timestamp": "2026-03-31T00:00:00+08:00",
-      "action": "recovery",
-      "reason": "Gateway已自动恢复，系统健康状态良好"
-    },
-    {
-      "timestamp": "2026-04-03T00:00:00+08:00",
-      "action": "recovery",
-      "reason": "Gateway已自动恢复"
-    },
-    {
-      "timestamp": "2026-04-07T12:17:00+08:00",
-      "action": "recovery",
-      "reason": "安全审计员(53b6edc8)今日10:15成功运行ok；运营总监已从cron列表移除。系统清清爽爽。"
+      "timestamp": "2026-04-09T18:17:00+08:00",
+      "action": "auto-healed",
+      "reason": "通知协调员/事件协调员 error 状态通过手动 cron run 恢复"
     }
   ],
   "lastCheckResults": {
-    "timestamp": "2026-04-07T12:17:00+08:00",
+    "timestamp": "2026-04-09T18:17:00+08:00",
     "gatewayStatus": "healthy",
     "gatewayDetails": {
-      "rpc": "正常",
-      "listening": "127.0.0.1:18789",
-      "note": "Gateway RPC测试正常"
+      "port18789": "open and responding",
+      "note": "Gateway RPC 正常"
     },
-    "cronJobsStatus": "healthy",
-    "cronSummary": "33 个任务全部正常 (ok)，0 disabled，0 error",
+    "stderrErrors": "none",
     "retriedTasks": [],
     "alerts": [],
-    "scriptError": null,
-    "recoveredIssues": [
-      {
-        "task": "53b6edc8-安全审计员",
-        "reason": "今日10:15成功运行，状态ok"
-      },
-      {
-        "task": "791c995e-运营总监",
-        "reason": "已从cron列表消失，清理已知问题记录"
-      }
-    ],
+    "scriptError": "none",
+    "recoveredIssues": ["通知协调员", "事件协调员"],
     "notificationSent": false,
-    "notificationReason": "常规：系统健康，无需通知"
+    "notificationReason": "所有问题已自动修复，无需通知"
   }
 }
