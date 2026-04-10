@@ -44,30 +44,22 @@
   "pausedTasks": [],
   "activeTasks": [
     "92af6946-b23b-4534-a6b8-5877cfa36f12",
-    "f9d88a78-616c-41dd-b683-b1248b836aa2",
-    "3a1df011-613d-4534-a6b8-5877cfa36f12",
+    "3a1df011-613d-4528-a274-530cfd84f4fb",
     "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
-    "5d0f90c4-8e0a-4f1f-8f1e-0e0a4f1f8f1e",
-    "c2e0a4f1-8f1e-0e0a-4f1f-8f1e0e0a4f1f",
-    "0e63f087-5446-4033-b826-19dafe65673b",
-    "b41843c3-9956-4992-860d-df21cd03a766"
+    "fbafcce3-b6c9-418a-a5bc-92a942531340",
+    "0b2d9131-2d6d-4979-a6ef-a67512040cd6"
   ],
   "priorityConfig": {
     "high": [
       "92af6946-b23b-4534-a6b8-5877cfa36f12",
-      "f9d88a78-616c-41dd-b683-b1248b836aa2",
       "3a1df011-613d-4528-a274-530cfd84f4fb"
     ],
     "medium": [
-      "f920c2a2-6afc-4fc8-84ad-01593d2d22d1",
-      "5d0f90c4-8e0a-4f1f-8f1e-0e0a4f1f8f1e",
-      "c2e0a4f1-8f1e-0e0a-4f1f-8f1e0e0a4f1f"
+      "f920c2a2-6afc-4fc8-84ad-01593d2d22d1"
     ],
     "low": [
-      "0e63f087-5446-4033-b826-19dafe65673b",
-      "b41843c3-9956-4992-860d-df21cd03a766",
-      "e0a4f1f8-f1e0-e0a4-f1f8-f1e0e0a4f1f8",
-      "f1f8f1e0-e0a4-f1f8-f1e0-e0a4f1f8f1e0"
+      "fbafcce3-b6c9-418a-a5bc-92a942531340",
+      "0b2d9131-2d6d-4979-a6ef-a67512040cd6"
     ]
   },
   "config": {
