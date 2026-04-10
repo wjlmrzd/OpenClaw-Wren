@@ -297,7 +297,7 @@
 10. **Cron 消息中含中文** → 通过 exec 传给 PowerShell 时乱码 → 改用脚本文件引用，避免内联命令
 11. **Obsidian 核心目录** → 个人信息、使用手册、知识 → **绝对不可删除**
 12. **C 盘自动清理** → 资源守护者检测到 C 盘 >90% → **自动触发清理**（无需确认，2026-04-03 Wren 设定）
-13. **Cron announce channel** → `announce` 模式默认 whatsapp（未配置），导致 5 个任务反复失败 → 必须显式指定 `channel: telegram`
+13. **Cron announce channel** → `announce` 模式默认 whatsapp（未配置），导致任务反复失败 → **必须显式指定 `channel: telegram`** ✅ 已修复 6 个 job (af025901/98d9b2a8/58540a34/0e63f087/b41843c3/fa020812) 的 top-level `delivery` 字段
 
 ---
 
@@ -430,6 +430,7 @@ workspace/
 
 > ⚠️ `7677e68c` 已禁用（被 `ddd96cfb` 每6h 版本取代）
 > ⚠️ `e430f8ec` / `b41843c3` 上次执行已恢复正常（MEMORY 未及时更新）
+> ✅ 2026-04-10 修复：6 个 job (af025901/98d9b2a8/58540a34/0e63f087/b41843c3/fa020812) 添加 top-level `delivery: {mode:"announce",channel:"telegram",to:"8542040756"}` 修复 whatsapp 报错；每周总结 (2428c991) 超时 240s→360s
 
 ### ✅ 正常任务（按时间排列）
 
@@ -503,6 +504,14 @@ workspace/
 - `memory/notification-state.json` — 通知状态
 - `scripts/` — 所有运维脚本
 - `Obsidian vault/` — E:\software\Obsidian\vault\
+
+---
+
+## 🚧 长期项目
+
+| 项目 | 状态 | 说明 |
+|------|------|------|
+| **翔图速印通重构** | 🟡 需求分析 | CAD批量打印工具重构，参考翔图速印通V9.0，详见 Obsidian |
 
 ---
 
